@@ -16,6 +16,9 @@ switch ($page) {
     case 'accueil':
         require __DIR__ . '/src/Controller/ControllerAccueil.php';
         break;
+    case 'tickets':
+        require __DIR__ . '/src/Controller/ControllerVos_tickets.php';
+        break;
     default:
         require __DIR__ . '/src/View/Template/erreur.php';
         exit();

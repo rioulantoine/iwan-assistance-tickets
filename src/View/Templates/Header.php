@@ -1,7 +1,7 @@
 <header>
     <img src="/iwan-assistance-tickets/public/assets/Logo_Iwan.png" alt="Logo Iwan" class="logo" />
     <nav class="menu-principal">
-        <a href="index.html" class="link-with-icon">
+        <a href="/iwan-assistance-tickets/index.php?page=accueil" class="link-with-icon">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -22,7 +22,7 @@
             <span>Tableau de bord</span>
         </a>
 
-        <a href="VosTickets/vos_tickets.html" class="link-with-icon">
+        <a href="index.php?page=tickets" class="link-with-icon">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
