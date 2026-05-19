@@ -1,0 +1,369 @@
+/* ==============================
+            MAIN
+================================= */
+main {
+  flex: 1;
+}
+
+.tableau-de-bord {
+  margin-left: 2%;
+}
+/* Box statut tickets */
+
+.container-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.box {
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffffff 50%, #e4f0f2 100%);
+  border: 2px solid transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.box.urgent {
+  background: linear-gradient(135deg, #ffffff 50%, #fdf2f2 100%);
+}
+
+.box-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.box-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #e8f5f8;
+  color: #0f2e48;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box.urgent .box-badge {
+  background-color: #fde8e8;
+  color: #c23934;
+}
+
+.box-header h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f2e48;
+}
+
+.box-desc {
+  margin: 0;
+  font-size: 12px;
+  color: #8a99a8;
+  line-height: 1.4;
+  max-width: 75%;
+  z-index: 2;
+}
+
+.box-desc strong {
+  color: #0f2e48;
+}
+
+.box-desc .text-red {
+  color: #c23934;
+}
+
+.box-value {
+  font-size: 42px;
+  font-weight: 700;
+  color: #0f2e48;
+  margin-top: auto;
+  z-index: 2;
+}
+
+.box.urgent .box-value {
+  color: #c23934;
+}
+
+.box-watermark {
+  position: absolute;
+  color: #0f2e48;
+  opacity: 0.15;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.box-watermark svg {
+  width: 130px;
+  height: 130px;
+}
+
+/* ==============================
+           BTN NOUVEAU TICKETS
+================================= */
+.container-tickets p {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-left: 1%;
+  font-size: 1.5rem;
+}
+
+.btn-nouveau-ticket {
+  display: flex;
+  padding: 10px 20px;
+  background-color: #0e2235;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-right: 2%;
+  margin-left: auto;
+  gap: 10px;
+  width: fit-content;
+  margin-bottom: 20px;
+}
+.btn-nouveau-ticket:hover {
+  background-color: #0e2235;
+  color: #ffffff;
+}
+
+/* ==============================
+            DASHBOARD TICKET
+================================= */
+.dashboard-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  padding: 3%;
+  margin: 3% auto;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.select-wrapper,
+.search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.select-wrapper select,
+.search-wrapper input {
+  width: 100%;
+  height: 42px;
+  padding: 0 36px 0 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #64748b;
+  font-size: 14px;
+  appearance: none;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.search-wrapper input {
+  padding: 0 16px 0 42px;
+}
+
+.select-wrapper svg {
+  position: absolute;
+  right: 12px;
+  top: 13px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.search-wrapper svg {
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.btn-filter {
+  height: 42px;
+  padding: 0 24px;
+  background-color: #b2bfc8;
+  color: #0f2e48;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-filter:hover {
+  background-color: #a1b0ba;
+}
+
+.ticket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.ticket-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ticket-header,
+.ticket-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-title-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.status-dot.critique {
+  background-color: #e15252;
+}
+.status-dot.majeur {
+  background-color: #f59e0b;
+}
+.status-dot.standard {
+  background-color: #10b981;
+}
+
+.ticket-title-block h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f2e48;
+}
+
+.ticket-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.avatar-placeholder {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #f59e0b;
+}
+
+.ticket-body h4 {
+  margin: 0 0 6px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f2e48;
+}
+
+.ticket-body p {
+  margin: 0;
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.ticket-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 14px;
+  margin-top: 4px;
+}
+
+.ticket-date {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.ticket-link {
+  font-size: 14px;
+  color: #0f2e48;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-nav,
+.page-num {
+  height: 34px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #64748b;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.page-num {
+  width: 34px;
+  padding: 0;
+}
+
+.page-num.active {
+  background-color: #94a3b8;
+  color: #ffffff;
+  border-color: #94a3b8;
+}
+
+.page-nav.disabled {
+  color: #cbd5e1;
+  border-color: #f1f5f9;
+  cursor: not-allowed;
+}

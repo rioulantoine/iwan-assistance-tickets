@@ -1,0 +1,100 @@
+body {
+  background-color: rgb(211, 211, 211);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color : rgb(15, 46, 72);
+}
+
+/* ==============================
+            HEADER
+================================= */
+
+header {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(10px, 1vw, 16px) clamp(14px, 2vw, 28px);
+  font-size: clamp(14px, 1.2vw, 20px);
+  border-radius: clamp(6px, 1vw, 12px);
+}
+
+header .logo {
+  height: auto;
+  width: clamp(50px, 8vw, 180px);
+  max-width: 100%;
+}
+
+header .menu-principal {
+  display: flex;
+  gap: clamp(10px, 1vw, 20px);
+  align-items: center;
+}
+
+header .menu-principal a {
+  text-decoration: none;
+  color: #4a4a4a;
+  font-size: 15px;
+  padding: clamp(6px, 0.5vw, 12px) clamp(10px, 1vw, 20px);
+  border-radius: clamp(4px, 0.5vw, 8px);
+
+  transition:
+    background-color 0.3s ease,
+    color 0.2s ease;
+}
+
+header .menu-principal a:hover {
+  color: #111111;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+header .menu-principal a.link-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /
+}
+
+
+/* ==============================
+            FOOTER
+================================= */
+footer {
+  background-color: #192127;
+  color: #ffffff;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.footer-columns {
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.footer-col h4 {
+  color: #5b8aae;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  margin-top: 20px;
+}
+
+.footer-col p {
+  margin: 0;
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+.footer-bottom {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
