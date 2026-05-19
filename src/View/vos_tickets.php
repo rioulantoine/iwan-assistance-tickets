@@ -1,4 +1,4 @@
-<!doctype html>
+<?php require_once __DIR__ . '/Templates/Header.php'; ?>
 <html lang="fr">
 
 <head>
@@ -219,3 +219,5 @@
 </body>
 
 </html>
+
+<?php require_once __DIR__ . '/Templates/Footer.php'; ?>
