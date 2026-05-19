@@ -141,19 +141,19 @@ main {
   gap: 10px;
 }
 
-.status-dot {
+.statut-dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
 }
 
-.status-dot.critique {
+.statut-dot.critique {
   background-color: #e15252;
 }
-.status-dot.majeur {
+.statut-dot.majeur {
   background-color: #f59e0b;
 }
-.status-dot.standard {
+.statut-dot.standard {
   background-color: #10b981;
 }
 
@@ -164,7 +164,7 @@ main {
   color: #0f2e48;
 }
 
-.status-badge {
+.statut-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -173,7 +173,7 @@ main {
   flex-shrink: 0;
 }
 
-.status-badge svg {
+.statut-badge svg {
   width: 100%;
   height: 100%;
 }
