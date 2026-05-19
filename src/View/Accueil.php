@@ -8,7 +8,7 @@
     <title>Tableau de bord</title>
     <link rel="icon" type="image/png" href="img/Logo_Iwan.png" />
     <link rel="stylesheet" href="public/styles/Accueil.css" />
-    <link rel="stylesheet" href="public/styles/global.css" />
+    <link rel="stylesheet" href="public/styles/Global.css" />
 </head>
 
 <body>
