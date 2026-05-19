@@ -25,6 +25,9 @@ switch ($page) {
     case 'premier_ticket':
         require __DIR__ . '/src/Controller/ControllerPremier_ticket.php';
         break;
+    case 'detail_ticket':
+        require __DIR__ . '/src/Controller/ControllerDetails_ticket.php';
+        break;
     default:
         require __DIR__ . '/src/View/Template/erreur.php';
         exit();

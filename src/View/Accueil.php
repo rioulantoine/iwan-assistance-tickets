@@ -309,7 +309,7 @@
                         </div>
                         <div class="ticket-footer">
                             <span class="ticket-date">12:45, 22/04/2026</span>
-                            <a href="#" class="ticket-link">Ouvrir le ticket</a>
+                            <a href="index.php?page=detail_ticket" class="ticket-link">Ouvrir le ticket</a>
                         </div>
                     </div>
 
@@ -336,7 +336,7 @@
                         </div>
                         <div class="ticket-footer">
                             <span class="ticket-date">12:45, 22/04/2026</span>
-                            <a href="#" class="ticket-link">Ouvrir le ticket</a>
+                            <a href="index.php?page=detail_ticket" class="ticket-link">Ouvrir le ticket</a>
                         </div>
                     </div>
 
@@ -361,7 +361,7 @@
                         </div>
                         <div class="ticket-footer">
                             <span class="ticket-date">12:45, 22/04/2026</span>
-                            <a href="#" class="ticket-link">Ouvrir le ticket</a>
+                            <a href="index.php?page=detail_ticket" class="ticket-link">Ouvrir le ticket</a>
                         </div>
                     </div>
                 </div>
