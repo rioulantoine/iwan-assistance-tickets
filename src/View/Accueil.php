@@ -1,6 +1,5 @@
 <?php require_once __DIR__ . '/Templates/Header.php'; ?>
 
-<!-- TA PAGE D'ACCUEIL -->
 <html lang="fr">
 
 <head>
@@ -212,7 +211,7 @@
         <div class="container-tickets">
             <!--Implémenter le php-->
             <p>Les Tickets de L&M Evasion</p>
-            <a href="NouveauTicket/nouveau_ticket.html" class="btn-nouveau-ticket">
+            <a href="index.php?page=nouveau_ticket" class="btn-nouveau-ticket">
                 <div class="icon-button">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

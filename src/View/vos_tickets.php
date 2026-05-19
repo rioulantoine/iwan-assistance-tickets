@@ -17,7 +17,7 @@
             sollicitations.
         </p>
 
-        <a href="../NouveauTicket/nouveau_ticket.html" class="btn-nouveau-ticket">
+        <a href="index.php?page=nouveau_ticket" class="btn-nouveau-ticket">
             <div class="icon-button">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
