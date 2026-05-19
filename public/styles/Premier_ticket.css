@@ -1,0 +1,47 @@
+main {
+    flex : 1;
+}
+.container-premier-ticket {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.container-premier-ticket svg {
+  width: 100%;          
+  max-width: 485px;     
+  height: auto;         
+  display: block;
+}
+.container-premier-ticket p {
+    margin: 0 0 12px 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: #0f2e48;
+}
+
+.btn-nouveau-ticket {
+  display: inline-flex;  
+  align-items: center;   
+  justify-content: center; 
+  gap: 10px;             
+  width: 100%;
+  max-width: 450px;      
+  height: 46px;          
+  background-color: #0e2235;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin: 0 auto 20px auto;
+}
+
+.btn-nouveau-ticket:hover {
+  background-color: #163c5d;
+  color: #ffffff;
+}
