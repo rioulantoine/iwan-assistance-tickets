@@ -124,46 +124,6 @@ textarea::placeholder {
   flex-direction: column;
 }
 
-input[type="file"] {
-  font-size: 14px;
-  color: #64748b;
-}
-
-input[type="file"]::file-selector-button {
-  height: 36px;
-  padding: 0 16px;
-  border-radius: 4px;
-  border: 1px solid #e2e8f0;
-  background-color: #f8fafc;
-  color: #0f2e48;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-right: 12px;
-  transition: background-color 0.2s ease;
-}
-.file-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.file-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: #0f2e48;
-  background-color: #f1f5f9;
-  padding: 6px 12px;
-  border-radius: 4px;
-  width: fit-content;
-}
-input[type="file"]::file-selector-button:hover {
-  background-color: #f1f5f9;
-}
-
 .btn-submit {
   height: 46px;
   padding: 0 28px;
@@ -175,10 +135,144 @@ input[type="file"]::file-selector-button:hover {
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  margin-top: 2%;
 }
 
 .btn-submit:hover {
   background-color: #163c5d;
+}
+/*=============================
+          AJOUT FICHIER
+===============================*/
+.ajouter-fichier-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-start;
+    margin-top: 15px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.btn-ajouter-fichiers {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border: 1.5px solid #000000;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    flex-shrink: 0; 
+    transition: background-color 0.2s ease;
+}
+
+.btn-ajouter-fichiers:hover {
+    background-color: #f8fafc;
+}
+
+#liste-fichiers,
+.fichiers-preview-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    flex-grow: 1;
+    min-width: 0;       
+    max-width: 100%;
+}
+
+.file-item-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    border: 1.5px solid #000000;
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    
+    width: 100%;          
+    min-width: 200px;     
+    max-width: 280px;     
+    flex-shrink: 1;       
+}
+
+.file-icon-pdf {
+    background-color: #e15252;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 4px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;       
+}
+
+.file-item-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;         
+    overflow: hidden;     
+}
+
+.file-item-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #0f2e48;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-item-size {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+.file-item-error-msg {
+    font-size: 11px;
+    color: #e15252;
+    font-weight: 500;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.remove-file, 
+.remove-file-btn, 
+.retry-file-btn {
+    background: none;
+    border: none;
+    color: #e15252;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    flex-shrink: 0;      
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease;
+}
+
+.retry-file-btn {
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+.remove-file:hover, 
+.remove-file-btn:hover, 
+.retry-file-btn:hover {
+    transform: scale(1.2);
 }
 
 @media (max-width: 768px) {

@@ -84,11 +84,18 @@
                             placeholder="Décrivez votre problème en détail"
                             required></textarea>
                     </div>
-                    <div class="ajouter-fichier">
-                        <label for="fichier">Ajouter un fichier (optionnel)</label>
-                        <input type="file" id="fichier" name="fichier[]" multiple />
-                        <div id="liste-fichiers" class="file-list"></div>
+                    <div class="ajouter-fichier-container">
+                        <input type="file" id="fichier" name="fichier[]" multiple style="display: none;">
+                        <label for="fichier" class="btn-ajouter-fichiers">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                            </svg>
+                            Ajouter un/des fichier(s)
+                        </label>
+
+                        <div id="liste-fichiers" class="fichiers-preview-list"></div>
                     </div>
+
                     <button type="submit" class="btn-submit">Créer le ticket</button>
                 </form>
             </div>
