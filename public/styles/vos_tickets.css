@@ -178,16 +178,8 @@ main {
   height: 100%;
 }
 
-.ticket-body {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-right: 50px;
-}
-
 .ticket-body h4 {
-  margin: 0;
+  margin: 0 0 6px 0;
   font-size: 15px;
   font-weight: 600;
   color: #0f2e48;
@@ -200,118 +192,6 @@ main {
   line-height: 1.5;
 }
 
-.btn-delete-ticket {
-  position: absolute;
-  top: 80%;
-  transform: translateY(-50%);
-  right: 0;
-  background: none;
-  border: none;
-  color: #e15252;
-  padding: 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.btn-delete-ticket svg {
-  width: 20px;
-  height: 20px;
-}
-
-.btn-delete-ticket:hover {
-  color: #c23934;
-  transform: translateY(-50%) scale(1.1);
-}
-
-
-
-/* ==============================
-   MODALE DE VALIDATION
-================================= */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(15, 46, 72, 0.5); 
-    display: none; 
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; 
-}
-
-.modal-overlay.active {
-    display: flex;
-}
-
-.modal-box {
-    background-color: #ffffff;
-    padding: 24px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.modal-header h3 {
-    margin: 0;
-    font-size: 18px;
-    color: #0f2e48;
-    font-weight: 700;
-}
-
-.modal-box p {
-    margin: 0 0 20px 0;
-    font-size: 14px;
-    color: #64748b;
-    line-height: 1.5;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
-
-.btn-cancel {
-    background-color: #f1f5f9;
-    color: #64748b;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 14px;
-}
-.btn-cancel:hover {
-    background-color: #e2e8f0;
-}
-
-.btn-confirm-delete {
-    background-color: #e15252;
-    color: #ffffff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 14px;
-}
-.btn-confirm-delete:hover {
-    background-color: #c23934;
-}
 .ticket-footer {
   border-top: 1px solid #f1f5f9;
   padding-top: 14px;
@@ -369,4 +249,3 @@ main {
   border-color: #f1f5f9;
   cursor: not-allowed;
 }
-
