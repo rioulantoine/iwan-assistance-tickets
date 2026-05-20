@@ -38,8 +38,8 @@
             </svg>
             <span>Vos tickets</span>
         </a>
-
-        <a href="/TicketManagerClient/r" class="link-with-icon">
+        <!-- Remplacer par le lien du menu principal-->
+        <a href="#" class="link-with-icon">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
