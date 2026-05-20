@@ -96,7 +96,7 @@
                         <div id="liste-fichiers" class="fichiers-preview-list"></div>
                     </div>
 
-                    <button type="submit" class="btn-submit">Créer le ticket</button>
+                    <button type="submit" class="btn-submit">Envoyer ma demande</button>
                 </form>
             </div>
         </div>
