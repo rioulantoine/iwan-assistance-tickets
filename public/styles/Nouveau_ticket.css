@@ -50,6 +50,7 @@ main {
   display: flex;
   gap: 24px;
   align-items: flex-start;
+  margin-bottom: 1%;
 }
 
 .ligne-double .groupe-input {
