@@ -220,3 +220,80 @@ main {
 .btn-submit:hover {
     background-color: #1a4366;
 }
+
+/* ==============================
+        PIÈCES JOINTES
+================================= */
+.message-attachments {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 20px;
+    width: 100%;
+}
+
+.attachment-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 12px;         
+    border: 1px solid #0f2e48; 
+    border-radius: 6px;
+    background-color: #ffffff;
+    text-decoration: none; 
+    color: inherit;
+    width: 220px;              
+    height: 45px;
+    box-sizing: border-box;
+}
+
+.attachment-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 32px;
+    flex-shrink: 0;
+}
+.attachment-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.attachment-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.attachment-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0f2e48;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.attachment-size {
+    font-size: 11px;
+    color: #94a3b8;
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+.attachment-download-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    color: #0f2e48;
+    flex-shrink: 0; 
+}
+.attachment-download-icon svg {
+    width: 100%;
+    height: 100%;
+}
