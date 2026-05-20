@@ -122,6 +122,7 @@
                                         En cours
                                     </text>
                                 </svg>
+
                             </div>
                         </div>
                         <div class="ticket-body">
@@ -131,7 +132,16 @@
                                 ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
                                 dolor sit amet, consectetur adipiscing elit.
                             </p>
+                            <button type="button" class="btn-delete-ticket" aria-label="Supprimer le ticket">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </button>
                         </div>
+
                         <div class="ticket-footer">
                             <span class="ticket-date">12:45, 22/04/2026</span>
                             <a href="index.php?page=detail_ticket" class="ticket-link">Ouvrir le ticket</a>
@@ -167,6 +177,14 @@
                                 ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
                                 dolor sit amet, consectetur adipiscing elit.
                             </p>
+                            <button type="button" class="btn-delete-ticket" aria-label="Supprimer le ticket">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </button>
                         </div>
                         <div class="ticket-footer">
                             <span class="ticket-date">12:45, 22/04/2026</span>
@@ -196,6 +214,14 @@
                                 ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
                                 dolor sit amet, consectetur adipiscing elit.
                             </p>
+                            <button type="button" class="btn-delete-ticket" aria-label="Supprimer le ticket">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </button>
                         </div>
                         <div class="ticket-footer">
                             <span class="ticket-date">12:45, 22/04/2026</span>
@@ -213,6 +239,25 @@
             </div>
         </div>
     </main>
+    <!-- Modal pour valider la suppression-->
+    <div class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#e15252" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <h3>Supprimer le ticket</h3>
+            </div>
+            <p>Êtes-vous sûr de vouloir supprimer ce ticket ? Cette action est irréversible.</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel">Annuler</button>
+                <button type="button" class="btn-confirm-delete">Supprimer</button>
+            </div>
+        </div>
+    </div>
+    <script src="public/scripts/valider_suppression.js"></script>
 </body>
 
 </html>
