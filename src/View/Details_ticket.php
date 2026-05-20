@@ -106,9 +106,10 @@
 
             <div class="reply-section">
                 <div class="reply-header">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M15 15l-6-6m0 0l6-6m-6 6h12"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
+                        <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
                     </svg>
+
                     <h3>En réponse à "Transaction Failed"</h3>
                 </div>
 
@@ -123,15 +124,17 @@
 
                         <div class="textarea-actions">
 
-                            <input type="file" id="fichier" name="fichier[]" multiple style="display: none;">
+                            <div class="ajouter-fichier-container">
+                                <input type="file" id="fichier" name="fichier[]" multiple style="display: none;">
+                                <label for="fichier" class="btn-ajouter-fichiers">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                                    </svg>
+                                    Ajouter un/des fichier(s)
+                                </label>
 
-                            <div id="liste-fichiers" class="file-name"></div>
-
-                            <label for="fichier" class="btn-attach" style="cursor: pointer;" aria-label="Joindre des fichiers">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
-                                </svg>
-                            </label>
+                                <div id="liste-fichiers" class="fichiers-preview-list"></div>
+                            </div>
 
                             <button type="submit" class="btn-submit" aria-label="Envoyer">
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
