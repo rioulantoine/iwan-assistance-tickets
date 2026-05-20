@@ -1,5 +1,7 @@
 <?php require_once __DIR__ . '/Templates/Header.php'; ?>
-
+<?php
+$total = "a";
+var_dump($total); ?>
 <html lang="fr">
 
 <head>

@@ -1,8 +1,9 @@
-<?php 
+<?php
 // ModelBDD.php
 // Fichier utilitaire pour la connexion à la base de données
 
-function get_bdd(){
+function get_bdd()
+{
     $hostname = $_ENV['DB_HOST'];
     $user = $_ENV['DB_USER'];
     $password = $_ENV['DB_PASSWORD'];
@@ -15,12 +16,23 @@ function get_bdd(){
 
 // Exemple d'utilisation
 // Fonction pour obtenir le nombre d'objets
-function get_nb_objets_reserves() {
+function get_nb_objets_reserves()
+{
     $pdo = get_bdd();
     $sql = "SELECT COUNT(*) AS total
             FROM  OBJET_RECYCLABLE
-            WHERE id_statut_recyclage_obj != 1"; 
+            WHERE id_statut_recyclage_obj != 1";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     return (int)$stmt->fetchColumn();
 }
+
+function getall()
+{
+    $pdo = get_bdd();
+    $sql = "SELECT COUNT(*) AS total
+            FROM  USER;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    return (int)$stmt->fetchColumn();
+};
