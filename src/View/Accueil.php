@@ -166,19 +166,11 @@
             <div class="box">
                 <div class="box-header">
                     <div class="box-badge">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path
-                                d="M12 2l2.4 1.2a2 2 0 0 0 1.8 0L18.6 2a2 2 0 0 1 2.6 1.1l.8 2.5a2 2 0 0 0 1.1 1.3l2.5.8a2 2 0 0 1 1.1 2.6l-1.2 2.4a2 2 0 0 0 0 1.8l1.2 2.4a2 2 0 0 1-1.1 2.6l-2.5.8a2 2 0 0 0-1.1 1.3l-.8 2.5a2 2 0 0 1-2.6 1.1l-2.4-1.2a2 2 0 0 0-1.8 0L14.4 21a2 2 0 0 1-2.8-1.1l-.8-2.5a2 2 0 0 0-1.1-1.3l-2.5-.8a2 2 0 0 1-1.1-2.6l1.2-2.4a2 2 0 0 0 0 1.8L4.1 10.6a2 2 0 0 1 1.1-2.6l2.5-.8A2 2 0 0 0 8.8 5.9l.8-2.5A2 2 0 0 1 12.4 2z" />
-                            <circle cx="12" cy="12" r="3" />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bg-percent-icon">
+                            <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+                            <line x1="8" y1="16" x2="16" y2="8" />
+                            <path d="M9 9.5h.01" stroke-width="2.5" />
+                            <path d="M15 14.5h.01" stroke-width="2.5" />
                         </svg>
                     </div>
                     <h3>Taux de Résolution</h3>
@@ -191,19 +183,11 @@
                 </p>
                 <div class="box-value">74%</div>
                 <div class="box-watermark" style="right: -15px; bottom: -20px">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path
-                            d="M12 2l2.4 1.2a2 2 0 0 0 1.8 0L18.6 2a2 2 0 0 1 2.6 1.1l.8 2.5a2 2 0 0 0 1.1 1.3l2.5.8a2 2 0 0 1 1.1 2.6l-1.2 2.4a2 2 0 0 0 0 1.8l1.2 2.4a2 2 0 0 1-1.1 2.6l-2.5.8a2 2 0 0 0-1.1 1.3l-.8 2.5a2 2 0 0 1-2.6 1.1l-2.4-1.2a2 2 0 0 0-1.8 0L14.4 21a2 2 0 0 1-2.8-1.1l-.8-2.5a2 2 0 0 0-1.1-1.3l-2.5-.8a2 2 0 0 1-1.1-2.6l1.2-2.4a2 2 0 0 0 0 1.8L4.1 10.6a2 2 0 0 1 1.1-2.6l2.5-.8A2 2 0 0 0 8.8 5.9l.8-2.5A2 2 0 0 1 12.4 2z" />
-                        <line x1="16" y1="8" x2="8" y2="16" />
-                        <circle cx="9.5" cy="9.5" r="1.5" fill="currentColor" />
-                        <circle cx="14.5" cy="14.5" r="1.5" fill="currentColor" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bg-percent-icon">
+                        <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+                        <line x1="8" y1="16" x2="16" y2="8" />
+                        <path d="M9 9.5h.01" stroke-width="2.5" />
+                        <path d="M15 14.5h.01" stroke-width="2.5" />
                     </svg>
                 </div>
             </div>
