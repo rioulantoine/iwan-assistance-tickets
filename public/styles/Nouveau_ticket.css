@@ -46,6 +46,15 @@ main {
   gap: 24px;
   margin-bottom: 24px;
 }
+.ligne-double {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.ligne-double .groupe-input {
+  flex: 1;
+}
 
 .groupe-input {
   flex: 1;
@@ -179,5 +188,9 @@ input[type="file"]::file-selector-button:hover {
 
   .container-nouveau-ticket {
     padding: 20px;
+  }
+  .ligne-double {
+    flex-direction: column;
+    gap: 24px;
   }
 }

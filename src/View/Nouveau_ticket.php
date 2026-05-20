@@ -26,6 +26,26 @@
             </p>
             <div class="formulaire-nouveau-ticket">
                 <form action="" method="POST" class="" auth-form>
+                    <div class="ligne-double">
+                        <div class="groupe-input">
+
+                            <label for="nom">Nom</label>
+                            <input
+                                type="text"
+                                id="nom"
+                                placeholder="Entrez votre nom"
+                                required />
+                        </div>
+                        <div class="groupe-input">
+                            <label for="prenom">Prénom</label>
+                            <input
+                                type="text"
+                                id="prenom"
+                                placeholder="Entrez votre prénom"
+                                required />
+                        </div>
+
+                    </div>
                     <div class="ligne-triple">
                         <div class="groupe-input">
                             <label for="email">Email</label>
