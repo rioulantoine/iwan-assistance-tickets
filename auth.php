@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once 'src/Model/ModelBDD.php';
 
-$id_user_test = 7;
+$id_user_test = 3;
 $pdo = get_bdd();
 $stmt = $pdo->prepare("SELECT * FROM USER WHERE id_user = ?");
 $stmt->execute([$id_user_test]);
