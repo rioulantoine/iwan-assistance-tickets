@@ -232,7 +232,10 @@
             </div>
         </div>
         <div class="container-tickets">
-            <p>Les Tickets de L&M Evasion</p>
+            <?php if ((int)($role_utilisateur ?? 0) === 3 && !empty($nom_affichage)): ?> <p>
+                    Espace client : <?= htmlspecialchars($nom_affichage) ?>
+                </p>
+            <?php endif ?>
             <a href="index.php?page=nouveau_ticket" class="btn-nouveau-ticket">
                 <div class="icon-button">
                     <svg

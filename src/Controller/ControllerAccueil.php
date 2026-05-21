@@ -6,12 +6,22 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+
 require_once __DIR__ . '/../Model/ModelBDD.php';
 require_once __DIR__ . '/../Model/ModelAccueil.php';
 
 try {
     $role_utilisateur = $_SESSION['user_role'] ?? 3;
     $id_cible = ($role_utilisateur == 1 || $role_utilisateur == 2) ? 0 : $_SESSION['user_id'];
+
+
+    $nom_affichage = '';
+
+    // Si c'est un client, on charge dynamiquement son nom depuis la BDD
+    if ((int)$role_utilisateur === 3) {
+        $nom_affichage = get_entreprise_user($_SESSION['user_id']);
+    }
+
 
     // Données principales des box
     $nb_tickets_actif  = count_tickets($id_cible, [1, 2]);
