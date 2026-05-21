@@ -110,12 +110,12 @@ function get_taux_resolution_mensuel($periode = 'courante', $id_user = 0)
     $pdo = get_bdd();
     $intervalle = ($periode === 'derniere') ? "- INTERVAL 1 MONTH" : "";
 
-    // 1. On compte le TOTAL des tickets créés ce mois-là
+    // Combien de tickets créer ce mois 
     $sqlTotal = "SELECT COUNT(id_ticket) FROM TICKETS 
                  WHERE YEAR(date_creation) = YEAR(NOW() $intervalle)
                  AND MONTH(date_creation) = MONTH(NOW() $intervalle)";
 
-    // 2. On compte combien de ces tickets sont RÉSOLUS (id_statut = 3)
+    // Combien de tickets résolu (id_statut = 3)
     $sqlResolus = $sqlTotal . " AND id_statut = 3";
 
     $params = [];
