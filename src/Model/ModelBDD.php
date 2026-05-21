@@ -26,13 +26,3 @@ function get_nb_objets_reserves()
     $stmt->execute();
     return (int)$stmt->fetchColumn();
 }
-
-function getall()
-{
-    $pdo = get_bdd();
-    $sql = "SELECT COUNT(*) AS total
-            FROM  USER;";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    return (int)$stmt->fetchColumn();
-};
