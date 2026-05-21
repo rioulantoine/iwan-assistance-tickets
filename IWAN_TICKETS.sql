@@ -5,7 +5,7 @@ CREATE TABLE ROLES(
    UNIQUE(libelle_role)
 );
 
-CREATE TABLE USER_(
+CREATE TABLE USER(
    id_user INT AUTO_INCREMENT,
    nom VARCHAR(100) NOT NULL,
    mot_de_passe VARCHAR(255) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE TICKETS(
    PRIMARY KEY(id_ticket),
    UNIQUE(numero_ticket),
    FOREIGN KEY(id_urgence) REFERENCES NIVEAU_URGENCE(id_urgence),
-   FOREIGN KEY(id_user) REFERENCES USER_(id_user),
+   FOREIGN KEY(id_user) REFERENCES USER(id_user),
    FOREIGN KEY(id_statut) REFERENCES STATUT(id_statut)
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE REPONSE(
    id_user INT NOT NULL,
    id_ticket INT NOT NULL,
    PRIMARY KEY(id_reponse),
-   FOREIGN KEY(id_user) REFERENCES USER_(id_user),
+   FOREIGN KEY(id_user) REFERENCES USER(id_user),
    FOREIGN KEY(id_ticket) REFERENCES TICKETS(id_ticket) ON DELETE CASCADE
 );
 
