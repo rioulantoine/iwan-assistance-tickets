@@ -1,7 +1,4 @@
 <?php require_once __DIR__ . '/Templates/Header.php'; ?>
-<?php
-$total = "a";
-var_dump($total); ?>
 <html lang="fr">
 
 <head>
@@ -17,10 +14,15 @@ var_dump($total); ?>
         <div class="tableau-de-bord">
             <h1>Tableau de bord</h1>
             <p>
-                <!-- Revoir avec le php pour adapter en fonction du statut-->
-
-                Forte activité ce mois-ci : nos équipes sont mobilisées sur vos
-                dossiers.
+                <?php if (($nb_tickets_actif ?? 0) > 15): ?>
+                    Forte activité ce mois-ci : nos équipes sont mobilisées sur vos dossiers (<strong><?= htmlspecialchars($nb_tickets_actif ?? 0) ?></strong> en cours).
+                <?php elseif (($nb_tickets_actif ?? 0) > 0): ?>
+                    Activité modérée : vos dossiers sont en cours de traitement par nos techniciens.
+                <?php elseif (($nb_tickets_resolu ?? 0) == 0): ?>
+                    Bienvenue sur votre tableau de bord ! Aucun ticket n'a encore été créé.
+                <?php else: ?>
+                    Excellente nouvelle ! Tous vos tickets ont été traités, aucun dossier en attente.
+                <?php endif; ?>
             </p>
         </div>
 
@@ -45,12 +47,20 @@ var_dump($total); ?>
                     </div>
                     <h3>Tickets actifs</h3>
                 </div>
-                <!--Inclure le php ici -->
                 <p class="box-desc">
-                    Augmentation de <strong>7%</strong> du nombre de tickets par rapport
-                    à avril 2026
+                    <?php if (($ecart_actifs ?? 0) > 0): ?>
+                        <span class="text-danger">Augmentation de <strong><?= htmlspecialchars($ecart_actifs ?? 0) ?>% </strong>par rapport au mois dernier</span>
+
+                    <?php elseif (($ecart_actifs ?? 0) < 0): ?>
+                        <span class="text-success">Baisse de <strong><?= htmlspecialchars(abs($ecart_actifs ?? 0)) ?>% </strong>par rapport au mois dernier</span>
+                    <?php elseif (($actifs_mois_dernier ?? 0) == 0): ?>
+                        <span class="text-success">Il n'y a plus aucun ticket actif du mois dernier.</span>
+                    <?php else: ?>
+                        <span class="text-muted">Stable par rapport au mois dernier</span>
+
+                    <?php endif ?>
                 </p>
-                <div class="box-value">210</div>
+                <div class="box-value"><?= htmlspecialchars($nb_tickets_actif ?? 0) ?></div>
                 <div
                     class="box-watermark"
                     style="transform: rotate(-15deg); right: -10px; bottom: -20px">
@@ -87,13 +97,22 @@ var_dump($total); ?>
                     </div>
                     <h3>Tickets résolus</h3>
                 </div>
-                <!--Inclure le php ici -->
 
                 <p class="box-desc">
-                    Augmentation de <strong>20%</strong> de tickets résolus par rapport
-                    à avril 2026
+                    <?php if (($ecart_resolus ?? 0) > 0): ?>
+                        <span class="text-danger">Augmentation de <strong><?= htmlspecialchars($ecart_resolus ?? 0) ?>% </strong> de tickets resolus par rapport au mois dernier</span>
+
+                    <?php elseif (($ecart_resolus ?? 0) < 0): ?>
+                        <span class="text-success">Baisse de <strong><?= htmlspecialchars(abs($ecart_resolus ?? 0)) ?>% </strong>par rapport au mois dernier</span>
+                    <?php elseif (($resolus_mois_dernier ?? 0) == 0): ?>
+                        <span class="text-success">Il n’y a eu aucun ticket résolu le mois dernier.</span>
+
+                    <?php else: ?>
+                        <span class="text-muted">Stable par rapport au mois dernier</span>
+
+                    <?php endif ?>
                 </p>
-                <div class="box-value">178</div>
+                <div class="box-value"><?= htmlspecialchars($nb_tickets_resolu ?? 0) ?></div>
                 <div class="box-watermark" style="right: -15px; bottom: -25px">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -131,13 +150,22 @@ var_dump($total); ?>
                     </div>
                     <h3>Tickets Urgents</h3>
                 </div>
-                <!--Inclure le php ici -->
 
                 <p class="box-desc">
-                    Augmentation de <strong class="text-red">2%</strong> du nombre de
-                    tickets urgent par rapport à avril 2026
+                    <?php if (($ecart_urgents ?? 0) > 0): ?>
+                        <span class="text-danger">Augmentation de <strong style="color: #C71500;"><?= htmlspecialchars($ecart_urgents ?? 0) ?>% </strong> du nombre de tickets urgent par rapport au mois dernier</span>
+
+                    <?php elseif (($ecart_urgents ?? 0) < 0): ?>
+                        <span class="text-success">Baisse de <strong><?= htmlspecialchars(abs($ecart_urgents ?? 0)) ?>% </strong> du nombre de tickets urgent par rapport au mois dernier</span>
+                    <?php elseif (($urgents_mois_dernier ?? 0) == 0): ?>
+                        <span class="text-success">Il n'y a eu aucun ticket de urgent le mois dernier.</span>
+
+                    <?php else: ?>
+                        <span class="text-muted">Stable par rapport au mois dernier</span>
+
+                    <?php endif ?>
                 </p>
-                <div class="box-value">08</div>
+                <div class="box-value"><?= htmlspecialchars($nb_tickets_urgent ?? 0) ?></div>
                 <div
                     class="box-watermark"
                     style="
@@ -175,15 +203,24 @@ var_dump($total); ?>
                             <path d="M15 14.5h.01" stroke-width="2.5" />
                         </svg>
                     </div>
-                    <h3>Taux de Résolution</h3>
+                    <h3>Taux de Résolution global</h3>
                 </div>
-                <!--Inclure le php ici -->
 
                 <p class="box-desc">
-                    Le taux de résolution à baissé de
-                    <strong class="text-red">2%</strong> depuis avril 2026
+                <p class="box-desc">
+                    <?php if (($ecart_taux ?? 0) > 0): ?>
+                        <span class="text-muted">Efficacité en hausse de <strong style="color: green;">+<?= htmlspecialchars($ecart_taux ?? 0) ?> points</strong> par rapport au mois dernier</span>
+
+                    <?php elseif (($ecart_taux ?? 0) < 0): ?>
+                        <span class="text-muted">Efficacité en baisse de <strong style="color: red;"><?= htmlspecialchars($ecart_taux ?? 0) ?> points</strong> par rapport au mois dernier</span>
+
+                    <?php else: ?>
+                        <span class="text-muted">Le taux de résolution est stable par rapport au mois dernier</span>
+
+                    <?php endif ?>
                 </p>
-                <div class="box-value">74%</div>
+                </p>
+                <div class="box-value"><?= htmlspecialchars($taux_resolution ?? 0) ?>%</div>
                 <div class="box-watermark" style="right: -15px; bottom: -20px">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bg-percent-icon">
                         <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
@@ -195,7 +232,6 @@ var_dump($total); ?>
             </div>
         </div>
         <div class="container-tickets">
-            <!--Implémenter le php-->
             <p>Les Tickets de L&M Evasion</p>
             <a href="index.php?page=nouveau_ticket" class="btn-nouveau-ticket">
                 <div class="icon-button">
