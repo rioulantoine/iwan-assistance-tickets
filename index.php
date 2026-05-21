@@ -1,13 +1,17 @@
 <?php
-//ajout de l'autoload de composer pour charger les classes automatiquement
 require_once __DIR__ . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once __DIR__ . '/auth.php';
+
 // Définition de la variable $base pour les chemins relatifs
 $base = $_ENV['BASE_URL'] ?? '';
 
-session_start();
 // Récupération des paramètres de l'URL
 $page = $_GET['page'] ?? 'accueil';
 
