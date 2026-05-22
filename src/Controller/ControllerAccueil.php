@@ -44,7 +44,7 @@ try {
     $urgents_mois_dernier = count_tickets_mensuels('derniere', $id_cible, null, 3);
     $ecart_urgents = ($urgents_mois_dernier > 0) ? round((($urgents_ce_mois - $urgents_mois_dernier) / $urgents_mois_dernier) * 100, 1) : 0;
 
-
+    $total_crees_ce_mois = $actifs_ce_mois + $resolus_ce_mois;
     // Calcul taux de résolution global
 
     $nb_tickets_total = $nb_tickets_actif + $nb_tickets_resolu;

@@ -145,7 +145,7 @@ function get_taux_resolution_mensuel($periode = 'courante', $id_user = 0)
 
 
 /**
- * Récupère le nom de l'utilisateur/entreprise depuis la base de données
+ * Récupère le nom de l'entreprise depuis la base de données
  * @param int $id_user
  * @return string
  */
@@ -153,7 +153,6 @@ function get_entreprise_user($id_user)
 {
     $pdo = get_bdd();
 
-    // Utilisation de ta table USER et de ta colonne nom
     $sql = "SELECT nom FROM USER WHERE id_user = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id_user]);

@@ -13,17 +13,33 @@
     <main>
         <div class="tableau-de-bord">
             <h1>Tableau de bord</h1>
-            <p>
-                <?php if (($nb_tickets_actif ?? 0) > 15): ?>
-                    Forte activité ce mois-ci : nos équipes sont mobilisées sur vos dossiers (<strong><?= htmlspecialchars($nb_tickets_actif ?? 0) ?></strong> en cours).
-                <?php elseif (($nb_tickets_actif ?? 0) > 0): ?>
-                    Activité modérée : vos dossiers sont en cours de traitement par nos techniciens.
-                <?php elseif (($nb_tickets_resolu ?? 0) == 0): ?>
-                    Bienvenue sur votre tableau de bord ! Aucun ticket n'a encore été créé.
-                <?php else: ?>
-                    Excellente nouvelle ! Tous vos tickets ont été traités, aucun dossier en attente.
-                <?php endif; ?>
-            </p>
+            <!-- Adapter les valeurs en fonction des besoins-->
+            <?php if ((int)($role_utilisateur ?? 0) === 3 && !empty($nom_affichage)): ?>
+                <p>
+                    <?php if (($nb_tickets_actif ?? 0) > 15): ?>
+                        Forte activité ce mois-ci : nos équipes sont mobilisées sur vos dossiers (<strong><?= htmlspecialchars($nb_tickets_actif ?? 0) ?></strong> en cours).
+                    <?php elseif (($nb_tickets_actif ?? 0) > 0): ?>
+                        Activité modérée : vos dossiers sont en cours de traitement par nos techniciens.
+                    <?php elseif (($nb_tickets_resolu ?? 0) == 0): ?>
+                        Bienvenue sur votre tableau de bord ! Aucun ticket n'a encore été créé.
+                    <?php else: ?>
+                        Excellente nouvelle ! Tous vos tickets ont été traités, aucun dossier en attente.
+                    <?php endif; ?>
+                </p>
+
+            <?php elseif (in_array((int)($role_utilisateur ?? 0), [1, 2])): ?>
+                <p>
+                    <?php if (($total_crees_ce_mois ?? 0) > 50): ?>
+                        Forte activité ce mois-ci : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été crées.
+                    <?php elseif (($total_crees_ce_mois ?? 0) > 25): ?>
+                        Activité modéré : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été crées.
+                    <?php else: ?>
+                        Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été crées.
+                    <?php endif; ?>
+                </p>
+
+            <?php endif; ?>
+
         </div>
 
         <div class="container-boxes">
