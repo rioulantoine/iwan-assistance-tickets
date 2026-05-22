@@ -367,3 +367,62 @@ main {
   border-color: #f1f5f9;
   cursor: not-allowed;
 }
+
+/* ==============================
+     BOÎTE GRAPHIQUE 
+================================= */
+.panel-graphique {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    margin: 20px 2%;
+    max-width: 550px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.panel-titre-bloc h3 {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.panel-titre-bloc p {
+    margin: 0;
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+.btn-filtres {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #64748b;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-filtres:hover {
+    border-color: #94a3b8;
+    color: #475569;
+}
+
+.chart-container {
+    position: relative;
+    height: 350px; 
+    width: 100%;
+}

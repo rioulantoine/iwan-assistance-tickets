@@ -159,3 +159,29 @@ function get_entreprise_user($id_user)
 
     return $stmt->fetchColumn() ?: 'Client Anonyme';
 }
+
+
+/**
+ * Récupère le nombre de ticket non archivé par urgence
+ * @param int $id_cible $id_urgence
+ * @return
+ */
+function count_tickets_non_archives_par_urgence($id_cible, $id_urgence)
+{
+    global $pdo;
+
+    $id_statut_archive = 4;
+
+    $sql = "SELECT COUNT(*) FROM TICKETS 
+            WHERE id_urgence = :urgence 
+            AND id_statut != :statut_archive";
+
+    $params = [
+        ':urgence' => $id_urgence,
+        ':statut_archive' => $id_statut_archive
+    ];
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+
+    return (int)$stmt->fetchColumn();
+}

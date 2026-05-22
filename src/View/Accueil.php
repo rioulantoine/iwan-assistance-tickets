@@ -26,7 +26,7 @@
                         Excellente nouvelle ! Tous vos tickets ont été traités, aucun dossier en attente.
                     <?php endif; ?>
                 </p>
-
+                <!--Ne s'affiche que si l'utilisateur est admin ou technicien-->
             <?php elseif (in_array((int)($role_utilisateur ?? 0), [1, 2])): ?>
                 <p>
                     <?php if (($total_crees_ce_mois ?? 0) > 50): ?>
@@ -270,6 +270,21 @@
                 </div>
                 <span>Nouveau ticket</span>
             </a>
+            <?php if (in_array((int)($role_utilisateur ?? 0), [1, 2])): ?>
+
+                <div class="panel-graphique">
+                    <div class="panel-header">
+                        <div class="panel-titre-bloc">
+                            <h3>Répartition des tickets</h3>
+                            <p>Volume des demandes enregistrées ce mois-ci selon leur niveau de criticité.</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+            <?php endif ?>
             <div class="dashboard-content">
                 <div class="filter-bar">
                     <div class="select-wrapper">
@@ -416,6 +431,17 @@
             </div>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const radarLabels = <?= json_encode($labels_radar ?? ['Standard', 'Majeur', 'Critique'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+        const radarValues = <?= json_encode($valeurs_radar ?? [0, 0, 0], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+    </script>
+
+    <script src="public/scripts/graphiques_accueil.js"></script>
+</body>
+
+</html>
 </body>
 
 </html>

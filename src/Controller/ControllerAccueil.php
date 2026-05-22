@@ -59,10 +59,18 @@ try {
     die("Erreur de base de données sur l'accueil : " . $e->getMessage());
 }
 
+// Données pour le graphique radar
 
+$id_urgence_standard = 1;
+$id_urgence_majeur   = 2;
+$id_urgence_critique = 3;
 
+$nb_standard = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_standard);
+$nb_majeur   = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_majeur);
+$nb_critique = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_critique);
 
-
+$labels_radar = ['Standard', 'Majeur', 'Critique'];
+$valeurs_radar = [$nb_standard, $nb_majeur, $nb_critique];
 
 // Chargement de la vue
 require_once __DIR__ . '/../View/Accueil.php';
