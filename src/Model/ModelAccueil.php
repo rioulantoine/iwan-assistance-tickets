@@ -185,3 +185,44 @@ function count_tickets_non_archives_par_urgence($id_cible, $id_urgence)
 
     return (int)$stmt->fetchColumn();
 }
+
+/**
+ * Calcule le nombre de tickets passés au statut "Résolu" durant la semaine en cours.
+ * Effectue une requête groupée par jour pour optimiser les performances.
+ *
+ * @global PDO $pdo L'objet de connexion à la base de données.
+ * @return array Un tableau indexé de 7 entiers contenant les tickets résolus (Index 0 = Lundi, 6 = Dimanche).
+ */
+function get_tickets_resolus_semaine_en_cours()
+{
+    global $pdo;
+
+    $debut_semaine = date('Y-m-d', strtotime('monday this week'));
+    $fin_semaine   = date('Y-m-d', strtotime('sunday this week'));
+
+    $id_statut_resolu = 3;
+
+    $sql = "SELECT DATE(DATE_RESOLUTION) as jour, COUNT(*) as total 
+            FROM TICKETS 
+            WHERE id_statut = :statut 
+            AND DATE(DATE_RESOLUTION) BETWEEN :debut AND :fin 
+            GROUP BY DATE(DATE_RESOLUTION)";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':statut' => $id_statut_resolu,
+        ':debut'  => $debut_semaine,
+        ':fin'    => $fin_semaine
+    ]);
+
+    $resultats = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+
+    $donnees_semaine = [];
+    for ($i = 0; $i < 7; $i++) {
+        $jour_courant = date('Y-m-d', strtotime("monday this week +$i days"));
+
+        $donnees_semaine[] = $resultats[$jour_courant] ?? 0;
+    }
+
+    return $donnees_semaine;
+}

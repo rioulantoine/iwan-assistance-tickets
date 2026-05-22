@@ -72,5 +72,15 @@ $nb_critique = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_cri
 $labels_radar = ['Standard', 'Majeur', 'Critique'];
 $valeurs_radar = [$nb_standard, $nb_majeur, $nb_critique];
 
+// Données pour le diagramme à bar
+$date_debut_semaine = date('d/m/y', strtotime('monday this week'));
+$date_fin_semaine = date('d/m/y', strtotime('sunday this week'));
+
+$labels_barres = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+
+$valeurs_barres = get_tickets_resolus_semaine_en_cours();
+
+
+$nb_nouveaux_tickets = 26;
 // Chargement de la vue
 require_once __DIR__ . '/../View/Accueil.php';
