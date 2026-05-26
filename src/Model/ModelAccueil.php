@@ -41,11 +41,17 @@ function count_tickets($id_cible = 0, $statut = null, $id_urgence = null)
         }
     }
     // Filtre urgence
+    // Filtre urgence (gère désormais un ID seul OU un tableau d'IDs)
     if ($id_urgence !== null) {
-        $sql .= " AND id_urgence = ?";
-        $params[] = $id_urgence;
+        if (is_array($id_urgence)) {
+            $les_urgences = implode(',', array_fill(0, count($id_urgence), '?'));
+            $sql .= " AND id_urgence IN ($les_urgences)";
+            $params = array_merge($params, $id_urgence);
+        } else {
+            $sql .= " AND id_urgence = ?";
+            $params[] = $id_urgence;
+        }
     }
-
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
 
@@ -89,9 +95,16 @@ function count_tickets_mensuels($periode = 'courante', $id_cible = 0, $statut = 
     }
 
     // Filtre Urgence
+    // Filtre urgence (gère désormais un ID seul OU un tableau d'IDs)
     if ($id_urgence !== null) {
-        $sql .= " AND id_urgence = ?";
-        $params[] = $id_urgence;
+        if (is_array($id_urgence)) {
+            $les_urgences = implode(',', array_fill(0, count($id_urgence), '?'));
+            $sql .= " AND id_urgence IN ($les_urgences)";
+            $params = array_merge($params, $id_urgence);
+        } else {
+            $sql .= " AND id_urgence = ?";
+            $params[] = $id_urgence;
+        }
     }
 
     $stmt = $pdo->prepare($sql);

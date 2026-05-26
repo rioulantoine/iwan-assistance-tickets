@@ -24,7 +24,7 @@ try {
 
     $nb_tickets_actif  = count_tickets($id_cible, [1, 2]);
     $nb_tickets_resolu = count_tickets($id_cible, 3);
-    $nb_tickets_urgent = count_tickets($id_cible, null, 3);
+    $nb_tickets_urgent = count_tickets($id_cible, null, [1, 2]);
 
     // Écarts mensuels - Tickets ACTIFS
     $actifs_ce_mois = count_tickets_mensuels('courante', $id_cible, [1, 2]);
@@ -37,8 +37,8 @@ try {
     $ecart_resolus = ($resolus_mois_dernier > 0) ? round((($resolus_ce_mois - $resolus_mois_dernier) / $resolus_mois_dernier) * 100, 1) : 0;
 
     // Écarts mensuels - Tickets URGENTS
-    $urgents_ce_mois = count_tickets_mensuels('courante', $id_cible, null, 3);
-    $urgents_mois_dernier = count_tickets_mensuels('derniere', $id_cible, null, 3);
+    $urgents_ce_mois = count_tickets_mensuels('courante', $id_cible, null, [1, 2]);
+    $urgents_mois_dernier = count_tickets_mensuels('derniere', $id_cible, null, [1, 2]);
     $ecart_urgents = ($urgents_mois_dernier > 0) ? round((($urgents_ce_mois - $urgents_mois_dernier) / $urgents_mois_dernier) * 100, 1) : 0;
 
     // Statistiques globales d'activité
