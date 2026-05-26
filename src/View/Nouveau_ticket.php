@@ -25,7 +25,7 @@
                 Rédiger et traiter les nouvelles demandes et les nouveaux problèmes
             </p>
             <div class="formulaire-nouveau-ticket">
-                <form action="" method="POST" class="" auth-form>
+                <form action="" method="POST" enctype="multipart/form-data" class="" auth-form>
                     <div class="ligne-double">
                         <div class="groupe-input">
 
@@ -33,6 +33,7 @@
                             <input
                                 type="text"
                                 id="nom"
+                                name="nom"
                                 placeholder="Entrez votre nom"
                                 required />
                         </div>
@@ -41,6 +42,7 @@
                             <input
                                 type="text"
                                 id="prenom"
+                                name="prenom"
                                 placeholder="Entrez votre prénom"
                                 required />
                         </div>
@@ -57,24 +59,35 @@
                                 required />
                         </div>
                         <div class="groupe-input">
-                            <label for="Titre">Titre</label>
+                            <label for="telephone">Numéro de téléphone</label>
                             <input
-                                type="text"
-                                id="Titre"
-                                name="Titre"
-                                placeholder="Entrez le titre du ticket" />
+                                type="tel"
+                                id="telephone"
+                                name="telephone"
+                                pattern="[0-9]{10}"
+                                title="Veuillez saisir un numéro à 10 chiffres (ex: 0612345678)"
+                                placeholder="Entrez votre numéro de téléphone" />
                         </div>
                         <div class="groupe-input">
-                            <label for="Niveau-urgence">Niveau d'urgence</label>
-                            <select id="Niveau-urgence" name="Niveau-urgence" required>
+                            <label for="niveau_urgence">Niveau d'urgence</label>
+                            <select id="niveau_urgence" name="niveau_urgence" required>
                                 <option value="" disabled selected>
                                     Choisissez un niveau d'urgence
                                 </option>
-                                <option value="basse">Critique</option>
-                                <option value="moyenne">Majeur</option>
-                                <option value="haute">Standart</option>
+                                <option value="1">Bloquant/ Très urgent</option>
+                                <option value="2">Urgent</option>
+                                <option value="3">Normal</option>
+                                <option value="4">Non urgent / Demande d'évolution</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="groupe-input">
+                        <label for="titre">Titre</label>
+                        <input
+                            type="text"
+                            id="titre"
+                            name="titre"
+                            placeholder="Entrez le titre du ticket" />
                     </div>
                     <div class="detail-ticket">
                         <label for="description">Description</label>

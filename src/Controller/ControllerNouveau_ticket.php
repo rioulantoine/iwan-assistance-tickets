@@ -2,5 +2,122 @@
 // ControllerNouveau_ticket.php
 // Fichier qui permet de gérer la page Nouveau ticket
 require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
-// Traitement des données pour l'affichage sur la page Vos tickets
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $nom_declarant = trim($_POST['nom'] ?? '');
+    $prenom_declarant = trim($_POST['prenom'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $telephone = trim($_POST['telephone'] ?? '');
+    $niveau_urgence = trim($_POST['niveau_urgence'] ?? '');
+    $titre = trim($_POST['titre'] ?? '');
+    $description = trim($_POST['description'] ?? '');
+
+    $erreurs = [];
+
+    // Vérification nom
+    if (empty($nom_declarant)) {
+        $erreurs[] = "Le nom est obligatoire.";
+    }
+
+    // Vérification prénom
+    if (empty($prenom_declarant)) {
+        $erreurs[] = "Le prénom est obligatoire.";
+    }
+
+    // Vérification email
+    if (empty($email)) {
+        $erreurs[] = "L'email est obligatoire.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erreurs[] = "L'email n'est pas valide.";
+    }
+
+    // Vérification téléphone
+    if (!empty($telephone) && !preg_match('/^[0-9+\s.-]{10,20}$/', $telephone)) {
+        $erreurs[] = "Le numéro de téléphone n'est pas valide.";
+    }
+
+    // Vérification urgence
+    $urgences_valides = ['1', '2', '3', '4'];
+
+    if (!in_array($niveau_urgence, $urgences_valides)) {
+        $erreurs[] = "Le niveau d'urgence est invalide.";
+    }
+
+    // Vérification titre
+    if (empty($titre)) {
+        $erreurs[] = "Le titre est obligatoire.";
+    } elseif (strlen($titre) > 255) {
+        $erreurs[] = "Le titre est trop long.";
+    }
+
+    // Vérification description
+    if (empty($description)) {
+        $erreurs[] = "La description est obligatoire.";
+    }
+
+    // Si aucune erreur
+    if (empty($erreurs)) {
+
+        $numero_ticket = generer_numero_ticket();
+        $date_creation = date('Y-m-d H:i:s');
+        $id_entreprise = $_SESSION['id_client'];
+        $nom_entreprise = $_SESSION['name'];
+        $id_statut = 1;
+        // Appel du modèle
+        $id_ticket = inserer_nouveau_ticket(
+            $numero_ticket,
+            $nom_declarant,
+            $prenom_declarant,
+            $telephone,
+            $email,
+            $titre,
+            $description,
+            $date_creation,
+            $id_entreprise,
+            $nom_entreprise,
+            $niveau_urgence,
+            $id_statut
+        );
+
+        $fichiers = $_FILES['fichier'] ?? null;
+
+        if (!empty($fichiers['name'][0]) && $id_ticket) {
+
+            $dossier = __DIR__ . '/../../public/uploads/';
+            if (!is_dir($dossier)) {
+                mkdir($dossier, 0777, true);
+            }
+            for ($i = 0; $i < count($fichiers['name']); $i++) {
+
+                $nom_original = $fichiers['name'][$i];
+                $nom_original = preg_replace('/[^a-zA-Z0-9._-]/', '_', $nom_original);
+                $tmp = $fichiers['tmp_name'][$i];
+                $type = $fichiers['type'][$i];
+                $taille = $fichiers['size'][$i];
+
+                $extension = pathinfo($nom_original, PATHINFO_EXTENSION);
+                $nom_stockage = uniqid() . '.' . $extension;
+
+                $chemin = $dossier . $nom_stockage;
+
+                if (!move_uploaded_file($tmp, $chemin)) {
+                    $erreurs[] = "Erreur lors de l'upload du fichier : " . $nom_original;
+                    continue;
+                }
+
+                inserer_piece_jointe(
+                    $nom_original,
+                    $nom_stockage,
+                    $type,
+                    $taille,
+                    date('Y-m-d H:i:s'),
+                    $id_ticket
+                );
+            }
+            header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
+            exit();
+        }
+    }
+}
 require_once __DIR__ . '/../View/Nouveau_ticket.php';
