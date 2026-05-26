@@ -252,7 +252,7 @@ require_once __DIR__ . '/Templates/Header.php'; ?>
         <div class="container-tickets">
             <?php if (isset($_SESSION['id_client'])): ?>
                 <p>
-                    Espace client : <strong><?= htmlspecialchars($_SESSION['client_nom'] ?? $_SESSION['id_client']) ?></strong>
+                    Espace client : <strong><?= htmlspecialchars($_SESSION['name'] ?? 0) ?></strong>
                 </p>
                 <a href="index.php?page=nouveau_ticket" class="btn-nouveau-ticket">
                     <div class="icon-button">
