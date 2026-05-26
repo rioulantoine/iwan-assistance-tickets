@@ -21,7 +21,7 @@
             </svg>
             <span>Tableau de bord</span>
         </a>
-        <?php if (in_array((int)($role_utilisateur ?? 0), [1, 2])): ?>
+        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
             <a href="index.php?page=admin_tickets" class="link-with-icon">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
