@@ -61,16 +61,19 @@ try {
 // =========================================================================
 
 // Graphique radar selon la criticité
-$id_urgence_standard = 1;
-$id_urgence_majeur   = 2;
-$id_urgence_critique = 3;
+$id_urgence_bloquant = 1;
+$id_urgence_urgent = 2;
+$id_urgence_normal = 3;
+$id_urgence_non_urgent = 4;
 
-$nb_standard = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_standard);
-$nb_majeur   = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_majeur);
-$nb_critique = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_critique);
 
-$labels_radar = ['Standard', 'Majeur', 'Critique'];
-$valeurs_radar = [$nb_standard, $nb_majeur, $nb_critique];
+$nb_bloquant = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_bloquant);
+$nb_urgent   = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_urgent);
+$nb_normal = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_normal);
+$nb_non_urgent = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_non_urgent);
+
+$labels_radar = ['Bloquant', 'Urgent', 'Normal', 'Non_urgent'];
+$valeurs_radar = [$nb_bloquant, $nb_urgent, $nb_normal, $nb_non_urgent];
 
 // Diagramme à barres 
 $date_debut_semaine = date('d/m/y', strtotime('monday this week'));
