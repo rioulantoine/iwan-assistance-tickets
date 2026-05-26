@@ -3,18 +3,23 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once 'src/Model/ModelBDD.php';
+$id_iwan = $_ENV['ID_IWAN'] ?? 'Erreur ID';
 
-$id_user_test = 3;
-$pdo = get_bdd();
-$stmt = $pdo->prepare("SELECT * FROM USER WHERE id_user = ?");
-$stmt->execute([$id_user_test]);
-$user = $stmt->fetch();
+// Détection si client ou IWAN
+if (isset($_GET['ID']) && !empty($_GET['ID'])) {
 
-if ($user) {
-    $_SESSION['user_id']   = $user['id_user'];
-    $_SESSION['user_nom']  = $user['nom'];
-    $_SESSION['user_role'] = $user['id_role'];
+    $id_url = $_GET['ID'];
+
+    if ($id_url === $id_iwan) {
+        $_SESSION['is_admin'] = true;
+        unset($_SESSION['id_client']); // enleve l'ancien id si il y en a un
+    } else {
+        $_SESSION['is_admin'] = false;
+        $_SESSION['id_client'] = htmlspecialchars($id_url);
+    }
 } else {
-    die("Erreur : L'ID de test n'existe pas dans ton jeu d'essai !");
+    // Si il n'y a aucun id on vérifie si on n'en a pas déjà un
+    if (!isset($_SESSION['is_admin']) && !isset($_SESSION['id_client'])) {
+        die("ERREUR : Lien invalide ou expiré. Impossible d'ouvrir l'application sans identification");
+    }
 }

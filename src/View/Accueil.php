@@ -1,4 +1,6 @@
-<?php require_once __DIR__ . '/Templates/Header.php'; ?>
+<?php
+
+require_once __DIR__ . '/Templates/Header.php'; ?>
 <html lang="fr">
 
 <head>
@@ -13,8 +15,8 @@
     <main>
         <div class="tableau-de-bord">
             <h1>Tableau de bord</h1>
-            <!-- Adapter les valeurs en fonction des besoins-->
-            <?php if ((int)($role_utilisateur ?? 0) === 3 && !empty($nom_affichage)): ?>
+
+            <?php if (isset($_SESSION['id_client'])): ?>
                 <p>
                     <?php if (($nb_tickets_actif ?? 0) > 15): ?>
                         Forte activité ce mois-ci : nos équipes sont mobilisées sur vos dossiers (<strong><?= htmlspecialchars($nb_tickets_actif ?? 0) ?></strong> en cours).
@@ -26,20 +28,18 @@
                         Excellente nouvelle ! Tous vos tickets ont été traités, aucun dossier en attente.
                     <?php endif; ?>
                 </p>
-                <!--Ne s'affiche que si l'utilisateur est admin ou technicien-->
-            <?php elseif (in_array((int)($role_utilisateur ?? 0), [1, 2])): ?>
+
+            <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
                 <p>
                     <?php if (($total_crees_ce_mois ?? 0) > 50): ?>
-                        Forte activité ce mois-ci : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été crées.
+                        Forte activité ce mois-ci : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés.
                     <?php elseif (($total_crees_ce_mois ?? 0) > 25): ?>
-                        Activité modéré : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été crées.
+                        Activité modérée : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés.
                     <?php else: ?>
-                        Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été crées.
+                        Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés.
                     <?php endif; ?>
                 </p>
-
             <?php endif; ?>
-
         </div>
 
         <div class="container-boxes">
@@ -248,8 +248,9 @@
             </div>
         </div>
         <div class="container-tickets">
-            <?php if ((int)($role_utilisateur ?? 0) === 3 && !empty($nom_affichage)): ?> <p>
-                    Espace client : <?= htmlspecialchars($nom_affichage) ?>
+            <?php if (isset($_SESSION['id_client'])): ?>
+                <p>
+                    Espace client : <strong><?= htmlspecialchars($_SESSION['client_nom'] ?? $_SESSION['id_client']) ?></strong>
                 </p>
                 <a href="index.php?page=nouveau_ticket" class="btn-nouveau-ticket">
                     <div class="icon-button">
@@ -262,7 +263,9 @@
                 </a>
             <?php endif ?>
 
-            <?php if (in_array((int)($role_utilisateur ?? 0), [1, 2])): ?>
+
+
+            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
                 <div class="dashboard-layout">
 
                     <div class="colonne-principale">

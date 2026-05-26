@@ -1,66 +1,66 @@
 <?php
 // ControllerAccueil.php
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php'); // Redirection simple si pas de session
+if (!isset($_SESSION['is_admin']) && !isset($_SESSION['id_client'])) {
+    header('Location: index.php');
     exit();
 }
-
 
 require_once __DIR__ . '/../Model/ModelBDD.php';
 require_once __DIR__ . '/../Model/ModelAccueil.php';
 
 try {
-    $role_utilisateur = $_SESSION['user_role'] ?? 3;
-    $id_cible = ($role_utilisateur == 1 || $role_utilisateur == 2) ? 0 : $_SESSION['user_id'];
-
-
-    $nom_affichage = '';
-
-    // Si c'est un client, on charge dynamiquement son nom depuis la BDD
-    if ((int)$role_utilisateur === 3) {
-        $nom_affichage = get_entreprise_user($_SESSION['user_id']);
+    if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true) {
+        $id_cible = 0;
+        $nom_affichage = '';
+    } else {
+        $id_cible = $_SESSION['id_client'];
+        $nom_affichage = $_SESSION['client_nom'] ?? $_SESSION['id_client'];
     }
 
+    // =========================================================================
+    // Calcul des statistiques
+    // =========================================================================
 
-    // Données principales des box
     $nb_tickets_actif  = count_tickets($id_cible, [1, 2]);
     $nb_tickets_resolu = count_tickets($id_cible, 3);
     $nb_tickets_urgent = count_tickets($id_cible, null, 3);
 
-
-    // Tickets ACTIFS
+    // Écarts mensuels - Tickets ACTIFS
     $actifs_ce_mois = count_tickets_mensuels('courante', $id_cible, [1, 2]);
     $actifs_mois_dernier = count_tickets_mensuels('derniere', $id_cible, [1, 2]);
     $ecart_actifs = ($actifs_mois_dernier > 0) ? round((($actifs_ce_mois - $actifs_mois_dernier) / $actifs_mois_dernier) * 100, 1) : 0;
 
-    // Tickets RÉSOLUS
+    // Écarts mensuels - Tickets RÉSOLUS
     $resolus_ce_mois = count_tickets_mensuels('courante', $id_cible, 3);
     $resolus_mois_dernier = count_tickets_mensuels('derniere', $id_cible, 3);
     $ecart_resolus = ($resolus_mois_dernier > 0) ? round((($resolus_ce_mois - $resolus_mois_dernier) / $resolus_mois_dernier) * 100, 1) : 0;
 
-    // Tickets URGENT
+    // Écarts mensuels - Tickets URGENTS
     $urgents_ce_mois = count_tickets_mensuels('courante', $id_cible, null, 3);
     $urgents_mois_dernier = count_tickets_mensuels('derniere', $id_cible, null, 3);
     $ecart_urgents = ($urgents_mois_dernier > 0) ? round((($urgents_ce_mois - $urgents_mois_dernier) / $urgents_mois_dernier) * 100, 1) : 0;
 
+    // Statistiques globales d'activité
     $total_crees_ce_mois = $actifs_ce_mois + $resolus_ce_mois;
-    // Calcul taux de résolution global
 
+    // Calcul du taux de résolution global
     $nb_tickets_total = $nb_tickets_actif + $nb_tickets_resolu;
     $taux_resolution = ($nb_tickets_total > 0) ? round(($nb_tickets_resolu / $nb_tickets_total) * 100, 1) : 0;
 
-    // Comparaison taux de résolution 
+    // Comparaison du taux de résolution avec le mois dernier
     $taux_ce_mois = get_taux_resolution_mensuel('courante', $id_cible);
     $taux_mois_dernier = get_taux_resolution_mensuel('derniere', $id_cible);
-
     $ecart_taux = $taux_ce_mois - $taux_mois_dernier;
 } catch (PDOException $e) {
     die("Erreur de base de données sur l'accueil : " . $e->getMessage());
 }
 
-// Données pour le graphique radar
+// =========================================================================
+// Données pour les graphiques
+// =========================================================================
 
+// Graphique radar selon la criticité
 $id_urgence_standard = 1;
 $id_urgence_majeur   = 2;
 $id_urgence_critique = 3;
@@ -72,15 +72,15 @@ $nb_critique = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_cri
 $labels_radar = ['Standard', 'Majeur', 'Critique'];
 $valeurs_radar = [$nb_standard, $nb_majeur, $nb_critique];
 
-// Données pour le diagramme à bar
+// Diagramme à barres 
 $date_debut_semaine = date('d/m/y', strtotime('monday this week'));
 $date_fin_semaine = date('d/m/y', strtotime('sunday this week'));
 
 $labels_barres = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-
 $valeurs_barres = get_tickets_resolus_semaine_en_cours();
 
-
+// Simulation ou compte des nouveaux tickets pour la sidebar admin
 $nb_nouveaux_tickets = 26;
-// Chargement de la vue
+
+
 require_once __DIR__ . '/../View/Accueil.php';

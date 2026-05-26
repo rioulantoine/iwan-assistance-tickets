@@ -11,12 +11,12 @@ require_once __DIR__ . '/ModelBDD.php';
 /**
  * Compte générique de tickets (Global ou par Utilisateur)
  * Permet de filtrer à la volée par statut, par liste de statuts ou par urgence.
- * * @param int $id_user ID de l'utilisateur (0 = Tous les utilisateurs / Mode Global)
+ * * @param int $id_cible ID de l'utilisateur (0 = Tous les utilisateurs / Mode Global)
  * @param int|array|null $statut Un ID de statut (ex: 3), un tableau d'IDs (ex: [1,2]) ou null
  * @param int|null $id_urgence Un ID d'urgence spécifique (ex: 3) ou null
  * @return int Le nombre de tickets correspondants
  */
-function count_tickets($id_user = 0, $statut = null, $id_urgence = null)
+function count_tickets($id_cible = 0, $statut = null, $id_urgence = null)
 {
     $pdo = get_bdd();
 
@@ -24,9 +24,9 @@ function count_tickets($id_user = 0, $statut = null, $id_urgence = null)
     $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE 1=1"; //Le WHERE 1=1 permet d'ajouter des AND dynamiquement
     $params = [];
     // Filtre utilisateur
-    if ($id_user > 0) {
-        $sql .= " AND id_user = ?";
-        $params[] = $id_user;
+    if ($id_cible > 0) {
+        $sql .= " AND id_entreprise = ?";
+        $params[] = $id_cible;
     }
     // Filte statut(s)
     if ($statut !== null) {
@@ -54,12 +54,12 @@ function count_tickets($id_user = 0, $statut = null, $id_urgence = null)
 /**
  * Compte de tickets par période mensuelle 
  * @param string $periode 'courante' ou 'derniere'
- * @param int $id_user ID de l'utilisateur (0 = Global)
+ * @param int $id_cible ID de l'utilisateur (0 = Global)
  * @param int|array|null $statut ID de statut ou tableau d'IDs
  * @param int|null $id_urgence ID d'urgence
  * @return int
  */
-function count_tickets_mensuels($periode = 'courante', $id_user = 0, $statut = null, $id_urgence = null)
+function count_tickets_mensuels($periode = 'courante', $id_cible = 0, $statut = null, $id_urgence = null)
 {
     $pdo = get_bdd();
     $intervalle = ($periode === 'derniere') ? "- INTERVAL 1 MONTH" : "";
@@ -71,9 +71,9 @@ function count_tickets_mensuels($periode = 'courante', $id_user = 0, $statut = n
     $params = [];
 
     // Filtre utilisateur
-    if ($id_user > 0) {
-        $sql .= " AND id_user = ?";
-        $params[] = $id_user;
+    if ($id_cible > 0) {
+        $sql .= " AND id_entreprise = ?";
+        $params[] = $id_cible;
     }
 
     // Filtre Statut(s)
@@ -102,10 +102,10 @@ function count_tickets_mensuels($periode = 'courante', $id_user = 0, $statut = n
 /**
  * Calcule le taux de résolution spécifique à une période mensuelle
  * @param string $periode 'courante' ou 'derniere'
- * @param int $id_user ID de l'utilisateur (0 = Global)
+ * @param int $id_cible ID de l'utilisateur (0 = Global)
  * @return float Le taux de résolution en pourcentage
  */
-function get_taux_resolution_mensuel($periode = 'courante', $id_user = 0)
+function get_taux_resolution_mensuel($periode = 'courante', $id_cible = 0)
 {
     $pdo = get_bdd();
     $intervalle = ($periode === 'derniere') ? "- INTERVAL 1 MONTH" : "";
@@ -119,10 +119,10 @@ function get_taux_resolution_mensuel($periode = 'courante', $id_user = 0)
     $sqlResolus = $sqlTotal . " AND id_statut = 3";
 
     $params = [];
-    if ($id_user > 0) {
-        $sqlTotal .= " AND id_user = ?";
-        $sqlResolus .= " AND id_user = ?";
-        $params[] = $id_user;
+    if ($id_cible > 0) {
+        $sqlTotal .= " AND id_entreprise = ?";
+        $sqlResolus .= " AND id_entreprise = ?";
+        $params[] = $id_cible;
     }
 
     // Exécution du calcul du total
@@ -146,10 +146,11 @@ function get_taux_resolution_mensuel($periode = 'courante', $id_user = 0)
 
 /**
  * Récupère le nom de l'entreprise depuis la base de données
- * @param int $id_user
+ * @param int $id_cible
  * @return string
  */
-function get_entreprise_user($id_user)
+/*
+function get_entreprise_user($id_cible)
 {
     $pdo = get_bdd();
 
@@ -159,8 +160,7 @@ function get_entreprise_user($id_user)
 
     return $stmt->fetchColumn() ?: 'Client Anonyme';
 }
-
-
+ */
 /**
  * Récupère le nombre de ticket non archivé par urgence
  * @param int $id_cible $id_urgence
@@ -168,8 +168,7 @@ function get_entreprise_user($id_user)
  */
 function count_tickets_non_archives_par_urgence($id_cible, $id_urgence)
 {
-    global $pdo;
-
+    $pdo = get_bdd();
     $id_statut_archive = 4;
 
     $sql = "SELECT COUNT(*) FROM TICKETS 
@@ -195,8 +194,7 @@ function count_tickets_non_archives_par_urgence($id_cible, $id_urgence)
  */
 function get_tickets_resolus_semaine_en_cours()
 {
-    global $pdo;
-
+    $pdo = get_bdd();
     $debut_semaine = date('Y-m-d', strtotime('monday this week'));
     $fin_semaine   = date('Y-m-d', strtotime('sunday this week'));
 
