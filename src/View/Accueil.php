@@ -32,11 +32,11 @@ require_once __DIR__ . '/Templates/Header.php'; ?>
             <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
                 <p>
                     <?php if (($total_crees_ce_mois ?? 0) > 50): ?>
-                        Forte activité ce mois-ci : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés.
+                        Forte activité ce mois-ci : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
                     <?php elseif (($total_crees_ce_mois ?? 0) > 25): ?>
-                        Activité modérée : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés.
+                        Activité modérée : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
                     <?php else: ?>
-                        Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés.
+                        Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
                     <?php endif; ?>
                 </p>
             <?php endif; ?>
