@@ -9,6 +9,7 @@ $id_iwan = $_ENV['ID_IWAN'] ?? 'Erreur ID';
 if (isset($_GET['ID']) && !empty($_GET['ID'])) {
 
     $id_url = $_GET['ID'];
+    $nom_url = $_GET['NOM'];
 
     if ($id_url === $id_iwan) {
         $_SESSION['is_admin'] = true;
@@ -16,6 +17,7 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
     } else {
         $_SESSION['is_admin'] = false;
         $_SESSION['id_client'] = htmlspecialchars($id_url);
+        $_SESSION['name'] = htmlspecialchars(($nom_url));
     }
 } else {
     // Si il n'y a aucun id on vérifie si on n'en a pas déjà un
