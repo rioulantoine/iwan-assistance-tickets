@@ -35,6 +35,8 @@ require_once __DIR__ . '/Templates/Header.php'; ?>
                         Forte activité ce mois-ci : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
                     <?php elseif (($total_crees_ce_mois ?? 0) > 25): ?>
                         Activité modérée : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
+                    <?php elseif (($total_crees_ce_mois ?? 0) === 1): ?>
+                        Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> ticket a été créé ce mois-ci.
                     <?php else: ?>
                         Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
                     <?php endif; ?>
@@ -361,7 +363,18 @@ require_once __DIR__ . '/Templates/Header.php'; ?>
                             </svg>
 
                             <h4 class="titre-box-action">
-                                Vous avez <span><?= $nb_nouveaux_tickets ?? 0 ?></span> nouveaux tickets
+                                <?php $nb = $nb_tickets_du_jour ?? 0; ?>
+
+                                <?php if ($nb === 0): ?>
+                                    Vous n'avez <span>aucun</span> nouveau ticket aujourd'hui
+
+                                <?php elseif ($nb === 1): ?>
+                                    Vous avez <span>1</span> nouveau ticket aujourd'hui
+
+                                <?php else: ?>
+                                    Vous avez <span><?= htmlspecialchars($nb) ?></span> nouveaux tickets aujourd'hui
+
+                                <?php endif; ?>
                             </h4>
 
                             <a href=" /iwan-assistance-tickets/index.php?page=admin_tickets" class="btn-action-dark">Voir tous les tickets</a>

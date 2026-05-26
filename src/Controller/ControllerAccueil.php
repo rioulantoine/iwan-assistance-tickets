@@ -85,5 +85,9 @@ $valeurs_barres = get_tickets_resolus_semaine_en_cours();
 // Simulation ou compte des nouveaux tickets pour la sidebar admin
 $nb_nouveaux_tickets = 26;
 
+//======================================
+// Données nouveau tickets aujourd'hui
+//======================================
+$nb_tickets_du_jour = get_nb_tickets_du_jour();
 
 require_once __DIR__ . '/../View/Accueil.php';

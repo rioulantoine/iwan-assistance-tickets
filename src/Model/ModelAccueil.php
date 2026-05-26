@@ -237,3 +237,18 @@ function get_tickets_resolus_semaine_en_cours()
 
     return $donnees_semaine;
 }
+
+
+/**
+ * Calcul le nombre de tickets crée aujourd'hui et qui ne sont pas encore résolu 
+ */
+function get_nb_tickets_du_jour()
+{
+    $pdo = get_bdd();
+
+    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE DATE(date_creation) = CURDATE() AND id_statut != 3";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
+    return (int)$stmt->fetchColumn();
+}
