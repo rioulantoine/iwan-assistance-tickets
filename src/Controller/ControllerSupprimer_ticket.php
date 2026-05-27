@@ -8,13 +8,22 @@ if (!($_SESSION['is_admin'] ?? false)) {
     die("Accès refusé. Vous devez être administrateur pour supprimer un ticket.");
 }
 
-//Récupération du numéro de ticket depuis l'URL
+// Récupération du numéro de ticket depuis l'URL
 $num_ticket = $_GET['ticket'] ?? '';
 
 if (!empty($num_ticket)) {
-    supprimer_ticket_par_numero($num_ticket);
+    $succes = supprimer_ticket_par_numero($num_ticket);
+
+    if ($succes) {
+        // Enregistrement du message de confirmation en session
+        $_SESSION['flash_message'] = "Le ticket <strong>" . htmlspecialchars($num_ticket) . "</strong> a été supprimé avec succès, ainsi que toutes ses réponses et pièces jointes.";
+        $_SESSION['flash_type'] = "success"; // Pour afficher le bandeau en vert
+    } else {
+        $_SESSION['flash_message'] = "Une erreur est survenue lors de la suppression du ticket.";
+        $_SESSION['flash_type'] = "error"; // Pour afficher le bandeau en rouge
+    }
 }
 
-// Redirection vers le tableau de bord principal (la liste des tickets)
+// Redirection vers la page admin (ajusté selon ton index.php)
 header("Location: index.php?page=admin_tickets");
 exit();
