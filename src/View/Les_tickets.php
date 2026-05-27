@@ -104,7 +104,7 @@
 
                         // Formatage des dates
                         $date_creation = (new DateTime($ticket['date_creation']))->format('d/m à H:i');
-                        // Si tu as une date de résolution ou autre, adapte ici, sinon on met une valeur exemple
+
                         $date_fait = !empty($ticket['date_resolution']) ? (new DateTime($ticket['date_resolution']))->format('d/m à H:i') : '---';
                         ?>
                         <tr>

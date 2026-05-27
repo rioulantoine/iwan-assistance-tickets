@@ -138,9 +138,17 @@
 }
 
 /* Couleurs des textes d'urgence */
-.text-critique { color: #e53e3e; } /* Rouge */
-.text-majeur { color: #dd6b20; }   /* Orange */
-.text-standard { color: #38a169; } /* Vert */
+.table-tickets td.text-critique {
+    color: #e53e3e;
+}
+
+.table-tickets td.text-majeur {
+    color: #dd6b20;
+}
+
+.table-tickets td.text-standard {
+    color: #38a169;
+}
 .font-bold { font-weight: bold; }
 
 /* Boutons d'action */
