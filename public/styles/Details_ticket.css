@@ -7,7 +7,7 @@ main {
   display: flex;
   flex-flow: row wrap;          
   align-items: center;        
-  width: 100%;
+  width: 96%;
   max-width: 100%;
   box-sizing: border-box;
   margin-left: 2%;
@@ -60,6 +60,7 @@ main {
     gap: 12px;
 }
 
+/* Indicateur de l'urgence du ticket avec des points de couleur */
 .status-dot {
     width: 12px;
     height: 12px;
@@ -67,8 +68,19 @@ main {
 }
 
 .status-dot.red { 
-    background-color: #e15252; 
+    background-color: #e53e3e; 
 }
+.status-dot.orange { 
+    background-color: #dd6b20; 
+}
+.status-dot.blue {
+    background-color:#3182ce;
+}
+.status-dot.green { 
+    background-color: #38a169;
+}
+
+
 
 .meta-title {
     font-size: 16px;
@@ -118,6 +130,8 @@ main {
     line-height: 1.6;
     margin: 0;
 }
+
+
 
 /* ==============================
    ZONE DE RÉPONSE
@@ -195,13 +209,6 @@ main {
     gap: 10px;
 }
 
-.btn-attach {
-    background: none;
-    border: none;
-    color: #64748b;
-    cursor: pointer;
-    padding: 5px;
-}
 
 .btn-submit {
     background-color: #0e2235;
@@ -224,78 +231,19 @@ main {
 /* ==============================
         PIÈCES JOINTES
 ================================= */
-.message-attachments {
-    display: flex;
-    justify-content: flex-end; 
-    margin-top: 20px;
-    width: 100%;
-}
-
 .attachment-card {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 6px 12px;         
-    border: 1px solid #0f2e48; 
+    padding: 10px 14px;
+    border: 1.5px solid #e2e8f0;
     border-radius: 6px;
     background-color: #ffffff;
-    text-decoration: none; 
-    color: inherit;
-    width: 220px;              
-    height: 45px;
     box-sizing: border-box;
-}
-
-.attachment-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 32px;
-    flex-shrink: 0;
-}
-.attachment-icon svg {
-    width: 100%;
-    height: 100%;
-}
-
-.attachment-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-grow: 1;
-    overflow: hidden;
-}
-
-.attachment-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: #0f2e48;
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.attachment-size {
-    font-size: 11px;
-    color: #94a3b8;
-    line-height: 1.2;
-    margin-top: 2px;
-}
-
-.attachment-download-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    color: #0f2e48;
-    flex-shrink: 0; 
-}
-.attachment-download-icon svg {
-    width: 100%;
-    height: 100%;
+     width: 100%;          
+     min-width: 200px;     
+     max-width: 280px;     
+     flex-shrink: 1;
 }
 
 /*=============================
@@ -431,3 +379,6 @@ main {
 .retry-file-btn:hover {
     transform: scale(1.2);
 }
+
+
+
