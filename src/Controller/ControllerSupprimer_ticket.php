@@ -16,5 +16,5 @@ if (!empty($num_ticket)) {
 }
 
 // Redirection vers le tableau de bord principal (la liste des tickets)
-header("Location: index.php?page=les_tickets");
+header("Location: index.php?page=admin_tickets");
 exit();
