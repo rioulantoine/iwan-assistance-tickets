@@ -138,15 +138,18 @@
 }
 
 /* Couleurs des textes d'urgence */
-.table-tickets td.text-critique {
+.table-tickets td.text-bloquant {
     color: #e53e3e;
 }
 
-.table-tickets td.text-majeur {
+.table-tickets td.text-urgent {
     color: #dd6b20;
 }
+.table-tickets td.text-normal {
+    color: #3182ce;
+}
 
-.table-tickets td.text-standard {
+.table-tickets td.text-non-urgent {
     color: #38a169;
 }
 .font-bold { font-weight: bold; }

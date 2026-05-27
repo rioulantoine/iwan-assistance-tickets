@@ -98,9 +98,10 @@
                     <?php foreach ($liste_tickets ?? [] as $ticket) : ?>
                         <?php
                         // Gestion de la couleur du texte de l'urgence
-                        $classe_urgence = 'text-standard';
-                        if ($ticket['id_urgence'] == 1) $classe_urgence = 'text-critique';
-                        if ($ticket['id_urgence'] == 2) $classe_urgence = 'text-majeur';
+                        $classe_urgence = 'text-non-urgent';
+                        if ($ticket['id_urgence'] == 1) $classe_urgence = 'text-bloquant';
+                        if ($ticket['id_urgence'] == 2) $classe_urgence = 'text-urgent';
+                        if ($ticket['id_urgence'] == 3) $classe_urgence = 'text-normal';
 
                         // Formatage des dates
                         $date_creation = (new DateTime($ticket['date_creation']))->format('d/m à H:i');
