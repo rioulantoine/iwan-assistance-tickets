@@ -15,8 +15,8 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
         unset($_SESSION['id_client']); // enleve l'ancien id si il y en a un
         $_SESSION['name'] = 'IWAN';
     } else {
-        $nom_url = $_GET['NOM'];
 
+        $nom_url = $_GET['NOM'] ?? 'Client';
         $_SESSION['is_admin'] = false;
         $_SESSION['id_client'] = htmlspecialchars($id_url);
         $_SESSION['name'] = htmlspecialchars(($nom_url));
