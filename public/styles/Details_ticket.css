@@ -7,7 +7,7 @@ main {
   display: flex;
   flex-flow: row wrap;          
   align-items: center;        
-  width: 96%;
+  width: 93%;
   max-width: 100%;
   box-sizing: border-box;
   margin-left: 2%;
@@ -382,3 +382,98 @@ main {
 
 
 
+/* Dropdown de sélection du statut du ticket */
+
+.status-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-trigger-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: block;
+    outline: none;
+    transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.dropdown-trigger-btn:hover {
+    filter: brightness(1.08); 
+}
+
+.dropdown-trigger-btn:active {
+    transform: scale(0.98);
+}
+
+/* Le menu déroulant */
+.status-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(15, 46, 72, 0.12);
+    width: 181px; 
+    z-index: 100;
+    padding: 6px 0;
+    box-sizing: border-box;
+}
+
+/* Affichage du menu via le JS */
+.status-dropdown-container.open .status-dropdown-menu {
+    display: block;
+}
+
+.dropdown-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    padding: 6px 14px 4px 14px;
+    letter-spacing: 0.5px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f2e48;
+    text-decoration: none;
+    transition: background-color 0.15s;
+}
+
+.dropdown-item:hover {
+    background-color: #f8fafc;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #e2e8f0;
+    margin: 6px 0;
+}
+
+
+/* Barre d'outils regroupant les boutons de gestion du ticket */
+.ticket-actions-bar {
+    display: flex;
+    align-items: center; 
+    gap: 16px;           
+    flex-wrap: wrap;    
+}

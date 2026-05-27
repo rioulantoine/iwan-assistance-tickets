@@ -37,16 +37,20 @@ switch ($page) {
     case 'detail_ticket':
         require __DIR__ . '/src/Controller/ControllerDetails_ticket.php';
         break;
+    case 'changer_statut':
+        require_once __DIR__ . '/src/Controller/ControllerChanger_statut.php';
+        break;
+    case 'supprimer_ticket':
+        require_once __DIR__ . '/src/Controller/ControllerSupprimer_ticket.php';
+        break;
 
     case 'admin_tickets':
         if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
-            require __DIR__ . '/src/View/Template/erreur.php'; // On lui montre une page d'erreur
+            require __DIR__ . '/src/View/Templates/erreur.php'; // On lui montre une page d'erreur
             exit();
         }
         require __DIR__ . '/src/Controller/ControllerLes_tickets.php';
-        break;
-
     default:
-        require __DIR__ . '/src/View/Template/erreur.php';
+        require __DIR__ . '/src/View/Templates/erreur.php';
         exit();
 }
