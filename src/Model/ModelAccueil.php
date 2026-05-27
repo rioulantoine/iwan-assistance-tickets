@@ -191,20 +191,19 @@ function count_tickets_non_archives_par_urgence($id_cible, $id_urgence)
 function get_tickets_resolus_semaine_en_cours()
 {
     $pdo = get_bdd();
+
     $debut_semaine = date('Y-m-d', strtotime('monday this week'));
     $fin_semaine   = date('Y-m-d', strtotime('sunday this week'));
 
-    $id_statut_resolu = 3;
-
-    $sql = "SELECT DATE(DATE_RESOLUTION) as jour, COUNT(*) as total 
+    $sql = "SELECT DATE(date_resolution) as jour, COUNT(*) as total 
             FROM TICKETS 
             WHERE id_statut = :statut 
-            AND DATE(DATE_RESOLUTION) BETWEEN :debut AND :fin 
-            GROUP BY DATE(DATE_RESOLUTION)";
+            AND DATE(date_resolution) BETWEEN :debut AND :fin 
+            GROUP BY DATE(date_resolution)";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
-        ':statut' => $id_statut_resolu,
+        ':statut' => 3, // 3 = Résolu
         ':debut'  => $debut_semaine,
         ':fin'    => $fin_semaine
     ]);
@@ -212,6 +211,7 @@ function get_tickets_resolus_semaine_en_cours()
     $resultats = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
 
     $donnees_semaine = [];
+
     for ($i = 0; $i < 7; $i++) {
         $jour_courant = date('Y-m-d', strtotime("monday this week +$i days"));
 
@@ -220,7 +220,6 @@ function get_tickets_resolus_semaine_en_cours()
 
     return $donnees_semaine;
 }
-
 
 /**
  * Calcul le nombre de tickets crée aujourd'hui et qui ne sont pas encore résolu 
