@@ -90,4 +90,13 @@ $nb_nouveaux_tickets = 26;
 //======================================
 $nb_tickets_du_jour = get_nb_tickets_du_jour();
 
+
+//===========================================
+// Affichage des tickets de l'utilisateur
+//===========================================
+
+
+
+
+
 require_once __DIR__ . '/../View/Accueil.php';

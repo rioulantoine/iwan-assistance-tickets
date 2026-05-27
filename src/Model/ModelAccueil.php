@@ -158,23 +158,6 @@ function get_taux_resolution_mensuel($periode = 'courante', $id_cible = 0)
 
 
 /**
- * Récupère le nom de l'entreprise depuis la base de données
- * @param int $id_cible
- * @return string
- */
-/*
-function get_entreprise_user($id_cible)
-{
-    $pdo = get_bdd();
-
-    $sql = "SELECT nom FROM USER WHERE id_user = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id_user]);
-
-    return $stmt->fetchColumn() ?: 'Client Anonyme';
-}
- */
-/**
  * Récupère le nombre de ticket non archivé par urgence
  * @param int $id_cible $id_urgence
  * @return
@@ -252,3 +235,7 @@ function get_nb_tickets_du_jour()
 
     return (int)$stmt->fetchColumn();
 }
+/**
+ * Retourne les 3 derniers tickets crée par l'utilisateur
+ * 
+ */
