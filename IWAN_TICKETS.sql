@@ -1,60 +1,229 @@
-CREATE TABLE STATUT(
-   id_statut INT AUTO_INCREMENT,
-   libelle_statut VARCHAR(50) NOT NULL,
-   PRIMARY KEY(id_statut)
-);
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : localhost
+-- Généré le : jeu. 28 mai 2026 à 14:29
+-- Version du serveur : 10.4.28-MariaDB
+-- Version de PHP : 8.2.4
 
-CREATE TABLE NIVEAU_URGENCE(
-   id_urgence INT AUTO_INCREMENT,
-   libelle_urgence VARCHAR(50) NOT NULL,
-   PRIMARY KEY(id_urgence)
-);
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-CREATE TABLE TICKETS(
-   id_ticket INT AUTO_INCREMENT,
-   numero_ticket VARCHAR(30) NOT NULL,
-   declarant_nom VARCHAR(50) NOT NULL,
-   declarant_prenom VARCHAR(50),
-   declarant_telephone VARCHAR(16),
-   declarant_email VARCHAR(100) NOT NULL,
-   titre VARCHAR(100) NOT NULL,
-   description TEXT NOT NULL,
-   date_creation DATETIME NOT NULL,
-   date_archivage DATETIME NULL,
-   date_resolution DATETIME NULL,
-   id_entreprise VARCHAR(50) NOT NULL,
-   nom_entreprise VARCHAR(100) NOT NULL,
-   id_urgence INT NOT NULL,
-   id_statut INT NOT NULL,
-   PRIMARY KEY(id_ticket),
-   UNIQUE(numero_ticket),
-   FOREIGN KEY(id_urgence) REFERENCES NIVEAU_URGENCE(id_urgence),
-   FOREIGN KEY(id_statut) REFERENCES STATUT(id_statut)
-);
 
-CREATE TABLE REPONSE(
-   id_reponse INT AUTO_INCREMENT,
-   titre VARCHAR(100) NOT NULL,
-   contenu TEXT NOT NULL,
-   date_envoi DATETIME NOT NULL,
-   auteur_nom VARCHAR(50) NOT NULL,
-   auteur_prenom VARCHAR(50) NOT NULL,
-   auteur_type VARCHAR(50) NOT NULL,
-   id_ticket INT NOT NULL,
-   PRIMARY KEY(id_reponse),
-   FOREIGN KEY(id_ticket) REFERENCES TICKETS(id_ticket) ON DELETE CASCADE
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-CREATE TABLE PIECES_JOINTES(
-   id_piece_jointe INT AUTO_INCREMENT,
-   nom_origine VARCHAR(255) NOT NULL,
-   nom_stockage VARCHAR(255) NOT NULL,
-   type VARCHAR(50) NOT NULL,
-   taille_octets INT NOT NULL,
-   date_upload DATETIME NOT NULL,
-   id_reponse INT NULL,
-   id_ticket INT NULL,
-   PRIMARY KEY(id_piece_jointe),
-   FOREIGN KEY(id_reponse) REFERENCES REPONSE(id_reponse) ON DELETE CASCADE,
-   FOREIGN KEY(id_ticket) REFERENCES TICKETS(id_ticket) ON DELETE CASCADE
-);
+--
+-- Base de données : `IWAN_TICKETS`
+--
+CREATE DATABASE IF NOT EXISTS `IWAN_TICKETS` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `IWAN_TICKETS`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `NIVEAU_URGENCE`
+--
+
+CREATE TABLE `NIVEAU_URGENCE` (
+  `id_urgence` int(11) NOT NULL,
+  `libelle_urgence` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `NIVEAU_URGENCE`
+--
+
+INSERT INTO `NIVEAU_URGENCE` (`id_urgence`, `libelle_urgence`) VALUES
+(1, 'Bloquant / Très urgent'),
+(2, 'Urgent'),
+(3, 'Normal'),
+(4, 'Non urgent / Demande d\'évolution');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `PIECES_JOINTES`
+--
+
+CREATE TABLE `PIECES_JOINTES` (
+  `id_piece_jointe` int(11) NOT NULL,
+  `nom_origine` varchar(255) NOT NULL,
+  `nom_stockage` varchar(255) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `taille_octets` int(11) NOT NULL,
+  `date_upload` datetime NOT NULL,
+  `id_reponse` int(11) DEFAULT NULL,
+  `id_ticket` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `REPONSE`
+--
+
+CREATE TABLE `REPONSE` (
+  `id_reponse` int(11) NOT NULL,
+  `titre` varchar(100) NOT NULL,
+  `contenu` text NOT NULL,
+  `date_envoi` datetime NOT NULL,
+  `auteur_nom` varchar(50) NOT NULL,
+  `auteur_prenom` varchar(50) NOT NULL,
+  `auteur_type` varchar(50) NOT NULL,
+  `id_ticket` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `STATUT`
+--
+
+CREATE TABLE `STATUT` (
+  `id_statut` int(11) NOT NULL,
+  `libelle_statut` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `STATUT`
+--
+
+INSERT INTO `STATUT` (`id_statut`, `libelle_statut`) VALUES
+(1, 'En attente'),
+(2, 'En cours'),
+(3, 'Résolu'),
+(4, 'Archivé');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `TICKETS`
+--
+
+CREATE TABLE `TICKETS` (
+  `id_ticket` int(11) NOT NULL,
+  `numero_ticket` varchar(30) NOT NULL,
+  `declarant_nom` varchar(50) NOT NULL,
+  `declarant_prenom` varchar(50) DEFAULT NULL,
+  `declarant_telephone` varchar(16) DEFAULT NULL,
+  `declarant_email` varchar(100) NOT NULL,
+  `titre` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `date_creation` datetime NOT NULL,
+  `date_archivage` datetime DEFAULT NULL,
+  `date_resolution` datetime DEFAULT NULL,
+  `date_maj` datetime DEFAULT NULL,
+  `id_entreprise` varchar(50) NOT NULL,
+  `nom_entreprise` varchar(100) NOT NULL,
+  `id_urgence` int(11) NOT NULL,
+  `id_statut` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `NIVEAU_URGENCE`
+--
+ALTER TABLE `NIVEAU_URGENCE`
+  ADD PRIMARY KEY (`id_urgence`);
+
+--
+-- Index pour la table `PIECES_JOINTES`
+--
+ALTER TABLE `PIECES_JOINTES`
+  ADD PRIMARY KEY (`id_piece_jointe`),
+  ADD KEY `id_reponse` (`id_reponse`),
+  ADD KEY `id_ticket` (`id_ticket`);
+
+--
+-- Index pour la table `REPONSE`
+--
+ALTER TABLE `REPONSE`
+  ADD PRIMARY KEY (`id_reponse`),
+  ADD KEY `id_ticket` (`id_ticket`);
+
+--
+-- Index pour la table `STATUT`
+--
+ALTER TABLE `STATUT`
+  ADD PRIMARY KEY (`id_statut`);
+
+--
+-- Index pour la table `TICKETS`
+--
+ALTER TABLE `TICKETS`
+  ADD PRIMARY KEY (`id_ticket`),
+  ADD UNIQUE KEY `numero_ticket` (`numero_ticket`),
+  ADD KEY `id_urgence` (`id_urgence`),
+  ADD KEY `id_statut` (`id_statut`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `NIVEAU_URGENCE`
+--
+ALTER TABLE `NIVEAU_URGENCE`
+  MODIFY `id_urgence` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `PIECES_JOINTES`
+--
+ALTER TABLE `PIECES_JOINTES`
+  MODIFY `id_piece_jointe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT pour la table `REPONSE`
+--
+ALTER TABLE `REPONSE`
+  MODIFY `id_reponse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `STATUT`
+--
+ALTER TABLE `STATUT`
+  MODIFY `id_statut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `TICKETS`
+--
+ALTER TABLE `TICKETS`
+  MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `PIECES_JOINTES`
+--
+ALTER TABLE `PIECES_JOINTES`
+  ADD CONSTRAINT `pieces_jointes_ibfk_1` FOREIGN KEY (`id_reponse`) REFERENCES `REPONSE` (`id_reponse`) ON DELETE CASCADE,
+  ADD CONSTRAINT `pieces_jointes_ibfk_2` FOREIGN KEY (`id_ticket`) REFERENCES `TICKETS` (`id_ticket`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `REPONSE`
+--
+ALTER TABLE `REPONSE`
+  ADD CONSTRAINT `reponse_ibfk_1` FOREIGN KEY (`id_ticket`) REFERENCES `TICKETS` (`id_ticket`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `TICKETS`
+--
+ALTER TABLE `TICKETS`
+  ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`id_urgence`) REFERENCES `NIVEAU_URGENCE` (`id_urgence`),
+  ADD CONSTRAINT `tickets_ibfk_2` FOREIGN KEY (`id_statut`) REFERENCES `STATUT` (`id_statut`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
