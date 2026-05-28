@@ -110,9 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $id_ticket
                 );
             }
-            header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
-            exit();
         }
     }
+
+    header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
+    exit();
 }
 require_once __DIR__ . '/../View/Nouveau_ticket.php';
