@@ -49,20 +49,23 @@ function modifier_statut_ticket($num_ticket, $id_statut)
     if ($id_statut == $id_resolu) {
         $sql = "UPDATE TICKETS
                 SET id_statut = ?, date_resolution = NOW(), date_archivage = NULL, date_maj = NOW()
-                WHERE numero_ticket = ?";
+                WHERE numero_ticket = ? 
+                AND id_statut != ?";
     } elseif ($id_statut == $id_archive) {
         $sql = "UPDATE TICKETS
             SET id_statut = ? , date_archivage = NOW(), date_maj = NOW()
-            WHERE numero_ticket = ?";
+            WHERE numero_ticket = ?
+            AND id_statut != ?";
     } else {
         $sql = "UPDATE TICKETS
               SET id_statut = ?, date_resolution = NULL, date_archivage = NULL, date_maj = NOW()
-              WHERE numero_ticket = ?";
+              WHERE numero_ticket = ?
+              AND id_statut != ?";
     }
 
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id_statut, $num_ticket]);
+    $stmt->execute([$id_statut, $num_ticket, $id_statut]);
 }
 
 function modifier_urgence_ticket($num_ticket, $nouvel_id_urgence)
