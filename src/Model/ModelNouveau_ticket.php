@@ -3,6 +3,38 @@
 // Fichier qui permet de récuperer les données pour le controlleur de la page Nouveau ticket
 require_once __DIR__ . '/ModelBDD.php';
 
+/**
+ * Récupère la liste des entreprises ayant déjà créé un ticket
+ */
+function obtenir_liste_entreprise()
+{
+    $pdo = get_bdd();
+
+    $sql = "SELECT DISTINCT nom_entreprise
+            FROM TICKETS
+            WHERE nom_entreprise IS NOT NULL";
+    $stmt = $pdo->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Trouve l'id de l'entreprise à partir de son nom, ou retourne false si elle n'existe pas
+ */
+function trouver_id_entreprise($nom_entreprise)
+{
+    $pdo = get_bdd();
+
+    $sql = "SELECT id_entreprise 
+            FROM TICKETS
+            WHERE nom_entreprise = ? 
+            LIMIT 1 ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$nom_entreprise]);
+    $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $resultat ? $resultat['id_entreprise'] : false;
+}
+
+
 
 /**
  * Génere un numero de ticket unique 

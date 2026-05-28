@@ -26,6 +26,21 @@
             </p>
             <div class="formulaire-nouveau-ticket">
                 <form action="" method="POST" enctype="multipart/form-data" class="" auth-form>
+                    <?php if ($_SESSION['is_admin'] ?? false): ?>
+                        <label for="nom_entreprise">Nom entreprise</label>
+                        <input
+                            type="text"
+                            id="nom_entreprise"
+                            name="nom_entreprise"
+                            list="entreprises_suggestion"
+                            placeholder="Entrez le nom de l'entreprise"
+                            autocomplete="off">
+                        <datalist id="entreprises_suggestion">
+                            <?php foreach ($liste_nom_entreprise ?? [] as $entreprise): ?>
+                                <option value="<?= htmlspecialchars($entreprise['nom_entreprise']) ?>">
+                                <?php endforeach; ?>
+                        </datalist>
+                    <?php endif; ?>
                     <div class="ligne-double">
                         <div class="groupe-input">
 
