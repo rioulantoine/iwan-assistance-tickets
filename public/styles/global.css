@@ -2,16 +2,22 @@
     box-sizing: border-box;
 }
 body, html {
+    height: 100%;
     overflow-x: hidden; /* Coupe tout ce qui dépasse à droite et à gauche de l'écran*/
 }
 body {
   background-color: rgb(211, 211, 211);
   display: flex;
+  flex: 1;
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
   font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color : rgb(15, 46, 72);
+}
+
+main {
+  flex: 1;
 }
 
 /* ==============================
