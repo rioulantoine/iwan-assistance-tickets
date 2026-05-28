@@ -36,16 +36,30 @@ function get_pieces_jointes_par_ticket($num_ticket)
 
 
 /**
- * Met à jour le statut d'un ticket spécifique
+ * Met a jour le statut d'un ticket et les dates de résolution et d'archivage en fonction du nouveau statut
+ * @param string $num_ticket Le numéro unique du ticket à modifier
+ * @param int $id_statut L'ID du nouveau statut (1: En attente, 2: En cours, 3: Résolu, 4: Archivé)
  */
 function modifier_statut_ticket($num_ticket, $id_statut)
 {
     $pdo = get_bdd();
+    $id_resolu = 3;
+    $id_archive = 4;
 
-    // On change l'id_statut du ticket qui possède ce numero_ticket
-    $sql = "UPDATE TICKETS 
-            SET id_statut = ? 
+    if ($id_statut == $id_resolu) {
+        $sql = "UPDATE TICKETS
+                SET id_statut = ?, date_resolution = NOW(), date_archivage = NULL 
+                WHERE numero_ticket = ?";
+    } elseif ($id_statut == $id_archive) {
+        $sql = "UPDATE TICKETS
+            SET id_statut = ? , date_archivage = NOW()
             WHERE numero_ticket = ?";
+    } else {
+        $sql = "UPDATE TICKETS
+              SET id_statut = ?, date_resolution = NULL, date_archivage = NULL
+              WHERE numero_ticket = ?";
+    }
+
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id_statut, $num_ticket]);
