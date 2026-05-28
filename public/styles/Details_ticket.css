@@ -477,3 +477,37 @@ main {
     gap: 16px;           
     flex-wrap: wrap;    
 }
+
+/* Dropdown partie urgence */
+.urgence-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.urgence-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(15, 46, 72, 0.12);
+    width: 100%; 
+    min-width: 100%;
+    z-index: 100;
+    padding: 6px 0;
+    box-sizing: border-box;
+}
+
+.urgence-dropdown-container.open .urgence-dropdown-menu {
+    display: block;
+}
+
+.urgence-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}

@@ -65,6 +65,19 @@ function modifier_statut_ticket($num_ticket, $id_statut)
     $stmt->execute([$id_statut, $num_ticket]);
 }
 
+function modifier_urgence_ticket($num_ticket, $nouvel_id_urgence)
+{
+    $pdo = get_bdd();
+
+    $sql = "UPDATE TICKETS
+            SET id_urgence = ?
+            WHERE numero_ticket = ? 
+            AND id_urgence != ?";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->execute([$nouvel_id_urgence, $num_ticket, $nouvel_id_urgence]);
+}
 
 function supprimer_ticket_par_numero($num_ticket)
 {

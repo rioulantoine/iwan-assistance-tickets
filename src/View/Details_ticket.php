@@ -30,6 +30,54 @@
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M43.3751 9.75H40.6251C40.4428 9.75 40.2679 9.82243 40.139 9.95136C40.01 10.0803 39.9376 10.2552 39.9376 10.4375V11.125H44.0626V10.4375C44.0626 10.2552 43.9902 10.0803 43.8612 9.95136C43.7323 9.82243 43.5574 9.75 43.3751 9.75ZM46.1251 11.125V10.4375C46.1251 9.70815 45.8354 9.00868 45.3196 8.49296C44.8039 7.97723 44.1044 7.6875 43.3751 7.6875H40.6251C39.8957 7.6875 39.1963 7.97723 38.6805 8.49296C38.1648 9.00868 37.8751 9.70815 37.8751 10.4375V11.125H34.0952C33.8217 11.125 33.5594 11.2336 33.366 11.427C33.1726 11.6204 33.064 11.8827 33.064 12.1562C33.064 12.4298 33.1726 12.6921 33.366 12.8855C33.5594 13.0789 33.8217 13.1875 34.0952 13.1875H34.5242L34.9601 23.6719C35.0044 24.7354 35.4582 25.7405 36.2264 26.4772C36.9946 27.214 38.0179 27.6252 39.0823 27.625H44.9192C45.9834 27.6249 47.0063 27.2135 47.7743 26.4768C48.5422 25.7401 48.9957 24.7351 49.0401 23.6719L49.4773 13.1875H49.9063C50.1798 13.1875 50.4421 13.0789 50.6355 12.8855C50.8289 12.6921 50.9376 12.4298 50.9376 12.1562C50.9376 11.8827 50.8289 11.6204 50.6355 11.427C50.4421 11.2336 50.1798 11.125 49.9063 11.125H46.1251ZM47.4121 13.1875H36.5881L37.0212 23.5853C37.0432 24.1171 37.27 24.6199 37.6541 24.9884C38.0383 25.3569 38.55 25.5626 39.0823 25.5625H44.9192C45.4513 25.5622 45.9627 25.3564 46.3465 24.9879C46.7304 24.6194 46.957 24.1169 46.979 23.5853L47.4121 13.1875ZM38.9063 15.9375V22.8125C38.9063 23.086 39.015 23.3483 39.2084 23.5417C39.4018 23.7351 39.6641 23.8438 39.9376 23.8438C40.2111 23.8438 40.4734 23.7351 40.6668 23.5417C40.8602 23.3483 40.9688 23.086 40.9688 22.8125V15.9375C40.9688 15.664 40.8602 15.4017 40.6668 15.2083C40.4734 15.0149 40.2111 14.9062 39.9376 14.9062C39.6641 14.9062 39.4018 15.0149 39.2084 15.2083C39.015 15.4017 38.9063 15.664 38.9063 15.9375ZM44.0626 14.9062C44.3361 14.9062 44.5984 15.0149 44.7918 15.2083C44.9852 15.4017 45.0938 15.664 45.0938 15.9375V22.8125C45.0938 23.086 44.9852 23.3483 44.7918 23.5417C44.5984 23.7351 44.3361 23.8438 44.0626 23.8438C43.7891 23.8438 43.5268 23.7351 43.3334 23.5417C43.14 23.3483 43.0313 23.086 43.0313 22.8125V15.9375C43.0313 15.664 43.14 15.4017 43.3334 15.2083C43.5268 15.0149 43.7891 14.9062 44.0626 14.9062Z" fill="white" />
                         </svg>
                     </a>
+                    <!-- Bouton modification niveau d'urgence admin -->
+                    <div class="urgence-dropdown-container" style="position : relative; display: inline-block">
+                        <button id="urgenceDropdownBtn" class="dropdown-trigger-btn" type="button" style="background : non; border: non; padding: 0; margin: 0; cursor: pointer; display:block; outline: none;">
+                            <?php if (($details_ticket['id_urgence'] ?? null) == 1): ?>
+                                <svg width="241" height="35" viewBox="0 0 241 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="241" height="35" rx="4" fill="#e53e3e" />
+                                    <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Bloquant / Très urgent</text>
+                                    <path d="M210 15 L215 20 L220 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            <?php elseif (($details_ticket['id_urgence'] ?? null) == 2): ?>
+                                <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="181" height="35" rx="4" fill="#dd6b20" />
+                                    <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Urgent</text>
+                                    <path d="M153 15 L158 20 L163 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            <?php elseif (($details_ticket['id_urgence'] ?? null) == 3): ?>
+                                <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="181" height="35" rx="4" fill="#3182ce" />
+                                    <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Normal</text>
+                                    <path d="M153 15 L158 20 L163 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            <?php else : ?>
+                                <svg width="291" height="35" viewBox="0 0 291 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="291" height="35" rx="4" fill="#38a169" />
+                                    <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Non urgent / Demande d'évolution</text>
+                                    <path d="M263 15 L268 20 L273 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            <?php endif; ?>
+
+                        </button>
+                        <div class="urgence-dropdown-menu" id="urgenceDropdownMenu" style="display: none; position: absolute; top: calc(100% + 6px); right: 0; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 10px 25px rgba(15, 46, 72, 0.12); width: 181px; z-index: 100; padding: 6px 0; box-sizing: border-box;">
+                            <div class="dropdown-title" style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; padding: 6px 14px 4px 14px; letter-spacing: 0.5px;">Changer le niveau d'urgence :</div>
+
+                            <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=1" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #e53e3e;"></span> Bloquant / Très urgent
+                            </a>
+                            <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=2" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #dd6b20;"></span> Urgent
+                            </a>
+                            <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=3" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #3182ce;"></span> Normal
+                            </a>
+                            <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=4" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #38a169;"></span> Non urgent / Demande d'évolution
+                            </a>
+                        </div>
+
+                    </div>
                 <?php endif; ?>
                 <!--Dropdown pour statut ticket admin-->
                 <?php if ($_SESSION['is_admin'] ?? false) : ?>

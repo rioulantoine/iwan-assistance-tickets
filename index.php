@@ -40,6 +40,9 @@ switch ($page) {
     case 'changer_statut':
         require_once __DIR__ . '/src/Controller/ControllerChanger_statut.php';
         break;
+    case 'changer_urgence':
+        require_once __DIR__ . '/src/Controller/ControllerChanger_urgence.php';
+        break;
     case 'supprimer_ticket':
         require_once __DIR__ . '/src/Controller/ControllerSupprimer_ticket.php';
         break;
