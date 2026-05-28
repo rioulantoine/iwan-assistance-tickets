@@ -197,13 +197,12 @@ function get_tickets_resolus_semaine_en_cours()
 
     $sql = "SELECT DATE(date_resolution) as jour, COUNT(*) as total 
             FROM TICKETS 
-            WHERE id_statut = :statut 
+            WHERE id_statut IN (3,4)
             AND DATE(date_resolution) BETWEEN :debut AND :fin 
             GROUP BY DATE(date_resolution)";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
-        ':statut' => 3, // 3 = Résolu
         ':debut'  => $debut_semaine,
         ':fin'    => $fin_semaine
     ]);
