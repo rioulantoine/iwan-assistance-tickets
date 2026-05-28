@@ -48,15 +48,15 @@ function modifier_statut_ticket($num_ticket, $id_statut)
 
     if ($id_statut == $id_resolu) {
         $sql = "UPDATE TICKETS
-                SET id_statut = ?, date_resolution = NOW(), date_archivage = NULL 
+                SET id_statut = ?, date_resolution = NOW(), date_archivage = NULL, date_maj = NOW()
                 WHERE numero_ticket = ?";
     } elseif ($id_statut == $id_archive) {
         $sql = "UPDATE TICKETS
-            SET id_statut = ? , date_archivage = NOW()
+            SET id_statut = ? , date_archivage = NOW(), date_maj = NOW()
             WHERE numero_ticket = ?";
     } else {
         $sql = "UPDATE TICKETS
-              SET id_statut = ?, date_resolution = NULL, date_archivage = NULL
+              SET id_statut = ?, date_resolution = NULL, date_archivage = NULL, date_maj = NOW()
               WHERE numero_ticket = ?";
     }
 
