@@ -116,6 +116,7 @@
                         <th>Auteur</th>
                         <th>Fait le <span>▲</span></th>
                         <th>Demandé le <span>▲</span></th>
+                        <th>Modifié le <span>▲</span></th>
                         <th>Statut <span>▲</span></th>
                         <th>Accès aux détails</th>
                     </tr>
@@ -133,6 +134,8 @@
                         $date_creation = (new DateTime($ticket['date_creation']))->format('d/m à H:i');
 
                         $date_fait = !empty($ticket['date_resolution']) ? (new DateTime($ticket['date_resolution']))->format('d/m à H:i') : '---';
+                        $date_maj = !empty($ticket['date_maj']) ? (new DateTime($ticket['date_maj']))->format('d/m à H:i') : '---';
+
                         ?>
                         <tr>
                             <td class="<?= $classe_urgence ?> font-bold"><?= htmlspecialchars($ticket['libelle_urgence']) ?></td>
@@ -141,6 +144,7 @@
                             <td><?= htmlspecialchars($ticket['declarant_prenom'] . ' ' . $ticket['declarant_nom']) ?></td>
                             <td><?= $date_fait ?></td>
                             <td><?= $date_creation ?></td>
+                            <td><?= $date_maj ?></td>
                             <td class="font-bold"><?= htmlspecialchars($ticket['libelle_statut']) ?></td>
                             <td>
                                 <div class="actions-cell">
