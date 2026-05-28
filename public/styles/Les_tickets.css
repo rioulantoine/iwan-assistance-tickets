@@ -1,6 +1,3 @@
-.main {
-    flex:1;
-}
 .container-tickets {
   display: flex;
   flex-direction: column;
