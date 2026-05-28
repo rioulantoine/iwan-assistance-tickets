@@ -64,8 +64,6 @@
                                 type="tel"
                                 id="telephone"
                                 name="telephone"
-                                pattern="[0-9]{10}"
-                                title="Veuillez saisir un numéro à 10 chiffres (ex: 0612345678)"
                                 placeholder="Entrez votre numéro de téléphone" />
                         </div>
                         <div class="groupe-input">

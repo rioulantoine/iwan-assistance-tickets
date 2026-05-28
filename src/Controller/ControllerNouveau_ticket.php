@@ -32,11 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreurs[] = "L'email n'est pas valide.";
     }
 
-    // Vérification téléphone
-    if (!empty($telephone) && !preg_match('/^[0-9+\s.-]{10,20}$/', $telephone)) {
-        $erreurs[] = "Le numéro de téléphone n'est pas valide.";
-    }
-
     // Vérification urgence
     $urgences_valides = ['1', '2', '3', '4'];
 
