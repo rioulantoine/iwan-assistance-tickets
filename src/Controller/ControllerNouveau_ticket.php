@@ -53,12 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreurs[] = "La description est obligatoire.";
     }
 
-    // 🟢 PLACE DE LA VÉRIFICATION DE L'ENTREPRISE (AVANT le if empty erreurs)
     if ($_SESSION['is_admin'] ?? false) {
         $nom_entreprise = strtoupper(trim($_POST['nom_entreprise'] ?? ''));
         $id_entreprise = trouver_id_entreprise($nom_entreprise);
 
-        // Si l'admin a tapé une entreprise inconnue, on lève l'erreur ici !
+        // Si l'admin a tapé une entreprise inconnue on lève l'erreur
         if ($id_entreprise === false) {
             $erreurs[] = "L'entreprise '" . htmlspecialchars($nom_entreprise) . "' n'est pas enregistrée dans le système. Impossible de créer ce ticket.";
         }
@@ -68,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_entreprise = $_SESSION['id_client'];
     }
 
-    // Si aucune erreur (Y compris l'erreur d'entreprise de l'admin)
+    // Si aucune erreur 
     $numero_ticket = null;
     if (empty($erreurs)) {
 
