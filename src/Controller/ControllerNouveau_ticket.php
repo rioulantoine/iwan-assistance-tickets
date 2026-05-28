@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Si aucune erreur
+    $numero_ticket = null;
     if (empty($erreurs)) {
 
         $numero_ticket = generer_numero_ticket();
@@ -113,7 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
-    exit();
+    if ($numero_ticket) {
+        header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
+        exit();
+    }
 }
 require_once __DIR__ . '/../View/Nouveau_ticket.php';
