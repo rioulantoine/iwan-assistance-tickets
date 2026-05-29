@@ -7,24 +7,52 @@ require_once __DIR__ . '/ModelBDD.php';
 /**
  * Récupère le nombre total de tickets dans la base de données
  */
-function get_nb_tickets()
+function get_nb_tickets($filtres)
 {
     $pdo = get_bdd();
+    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE 1=1";
+    $params = [];
 
-    $sql = "SELECT COUNT(id_ticket) FROM TICKETS";
+    // Filtre date
+    if (!empty($filtres['date_filtre'])) {
+        if ($filtres['date_filtre'] === '1') {
+            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+        } elseif ($filtres['date_filtre'] === '2') {
+            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+        } elseif ($filtres['date_filtre'] === '3') {
+            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 YEAR)";
+        }
+    }
+
+    // Filtre statut 
+    if (!empty($filtres['statut'])) {
+        $sql .= " AND id_statut = :id_statut";
+        $params['id_statut'] = (int)$filtres['statut'];
+    }
+
+    // Filtre urgence 
+    if (!empty($filtres['urgence'])) {
+        $sql .= " AND id_urgence = :id_urgence";
+        $params['id_urgence'] = (int)$filtres['urgence'];
+    }
+
+    // Filtre recherche 
+    if (!empty($filtres['recherche'])) {
+        $sql .= " AND (titre LIKE :recherche OR numero_ticket LIKE :recherche OR nom_entreprise LIKE :recherche)";
+        $params['recherche'] = '%' . $filtres['recherche'] . '%';
+    }
+
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $stmt->execute($params);
 
-    $count = $stmt->fetchColumn();
-    return (int) $count;
+    return (int) $stmt->fetchColumn();
 }
-
 /**
  * Récupère la liste de tous les tickets avec leurs urgences et statuts associés
  * Trié par date de création décroissante (les plus récents en premier)
  * @return array Un tableau associatif contenant les données des tickets
  */
-function get_tickets()
+function get_tickets($filtres)
 {
     $pdo = get_bdd();
 
@@ -34,10 +62,41 @@ function get_tickets()
             FROM TICKETS t
             LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
             LEFT JOIN STATUT s ON t.id_statut = s.id_statut
-            ORDER BY t.date_creation DESC";
+            WHERE 1=1";
+
+    $params = [];
+
+    // Filtre date
+    if (!empty($filtres['date_filtre'])) {
+        if ($filtres['date_filtre'] === '1') {
+            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+        } elseif ($filtres['date_filtre'] === '2') {
+            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+        } elseif ($filtres['date_filtre'] === '3') {
+            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 YEAR)";
+        }
+    }
+    // Filtre statut 
+    if (!empty($filtres['statut'])) {
+        $sql .= " AND t.id_statut = :statut";
+        $params['statut'] = $filtres['statut'];
+    }
+
+    // Filtre urgence 
+    if (!empty($filtres['urgence'])) {
+        $sql .= " AND t.id_urgence = :id_urgence";
+        $params['id_urgence'] = (int)$filtres['urgence'];
+    }
+
+    // Filtre recherche 
+    if (!empty($filtres['recherche'])) {
+        $sql .= " AND (titre LIKE :recherche OR numero_ticket LIKE :recherche OR nom_entreprise LIKE :recherche)";
+        $params['recherche'] = '%' . $filtres['recherche'] . '%';
+    }
+
+    $sql .= " ORDER BY t.date_creation DESC";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-
+    $stmt->execute($params);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

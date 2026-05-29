@@ -44,10 +44,37 @@
             <p>
                 Un total de <span class="ticket-count"><?php echo $nb_ticket ?? 0 ?></span> tickets ont été trouvés.
             </p>
-            <div class="filter-bar">
+            <form method="GET" action="" class="filtre-bar">
+                <input type="hidden" name="page" value="admin_tickets">
+
                 <div class="select-wrapper">
-                    <select>
-                        <option>Cette Semaine</option>
+                    <select name="date_filtre">
+                        <option value="" <?= (!isset($_GET['date_filtre']) || $_GET['date_filtre'] === '') ? 'selected' : '' ?>>Tout le temps</option>
+                        <option value="1" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '1') ? 'selected' : '' ?>>Cette Semaine</option>
+                        <option value="2" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '2') ? 'selected' : '' ?>>Ce Mois</option>
+                        <option value="3" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '3') ? 'selected' : '' ?>>Cette Année</option>
+                    </select>
+                    <!--iconne de la fleche vers le bas -->
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="select-wrapper">
+                    <select name="statut_filtre">
+                        <option value="" <?= (!isset($_GET['statut_filtre']) || $_GET['statut_filtre'] === '') ? 'selected' : '' ?>>Tous les statuts</option>
+                        <option value="1" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '1') ? 'selected' : '' ?>>En attente</option>
+                        <option value="2" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '2') ? 'selected' : '' ?>>En cours</option>
+                        <option value="3" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '3') ? 'selected' : '' ?>>Résolu</option>
+                        <option value="4" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '4') ? 'selected' : '' ?>>Archivé</option>
                     </select>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -64,14 +91,12 @@
                 </div>
 
                 <div class="select-wrapper">
-                    <select>
-                        <option value="" disabled selected>
-                            Choisissez un niveau d'urgence
-                        </option>
-                        <option value="1">Bloquant/ Très urgent</option>
-                        <option value="2">Urgent</option>
-                        <option value="3">Normal</option>
-                        <option value="4">Non urgent / Demande d'évolution</option>
+                    <select name="urgence_filtre">
+                        <option value="" <?= (!isset($_GET['urgence_filtre']) || $_GET['urgence_filtre'] === '') ? 'selected' : '' ?>>Toutes les urgences</option>
+                        <option value="1" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '1') ? 'selected' : '' ?>>Bloquant/ Très urgent</option>
+                        <option value="2" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '2') ? 'selected' : '' ?>>Urgent</option>
+                        <option value="3" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '3') ? 'selected' : '' ?>>Normal</option>
+                        <option value="4" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '4') ? 'selected' : '' ?>>Non urgent / Demande d'évolution</option>
                     </select>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -101,11 +126,11 @@
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="text" placeholder="Rechercher un ticket" />
+                    <input type="text" name="recherche" placeholder="Rechercher un ticket" value="<?= trim(htmlspecialchars($_GET['recherche'] ?? '')) ?>" />
                 </div>
 
-                <button class="btn-filter">Appliquer les filtres</button>
-            </div>
+                <button type="submit" class="btn-filtre">Appliquer les filtres</button>
+            </form>
             <!-- Liste des tickets -->
             <table class="table-tickets">
                 <thead>
@@ -114,9 +139,9 @@
                         <th>Titre <span>▲</span></th>
                         <th>Établissement</th>
                         <th>Auteur</th>
-                        <th>Fait le <span>▲</span></th>
                         <th>Demandé le <span>▲</span></th>
                         <th>Modifié le <span>▲</span></th>
+                        <th>Résolu le <span>▲</span></th>
                         <th>Statut <span>▲</span></th>
                         <th>Accès aux détails</th>
                     </tr>
@@ -133,7 +158,7 @@
                         // Formatage des dates
                         $date_creation = (new DateTime($ticket['date_creation']))->format('d/m à H:i');
 
-                        $date_fait = !empty($ticket['date_resolution']) ? (new DateTime($ticket['date_resolution']))->format('d/m à H:i') : '---';
+                        $date_resolution = !empty($ticket['date_resolution']) ? (new DateTime($ticket['date_resolution']))->format('d/m à H:i') : '---';
                         $date_maj = !empty($ticket['date_maj']) ? (new DateTime($ticket['date_maj']))->format('d/m à H:i') : '---';
 
                         ?>
@@ -142,9 +167,10 @@
                             <td><?= htmlspecialchars($ticket['titre']) ?></td>
                             <td><?= htmlspecialchars($ticket['nom_entreprise'] ?? 'L&M Evasion') ?></td>
                             <td><?= htmlspecialchars($ticket['declarant_prenom'] . ' ' . $ticket['declarant_nom']) ?></td>
-                            <td><?= $date_fait ?></td>
                             <td><?= $date_creation ?></td>
                             <td><?= $date_maj ?></td>
+                            <td><?= $date_resolution ?></td>
+
                             <td class="font-bold"><?= htmlspecialchars($ticket['libelle_statut']) ?></td>
                             <td>
                                 <div class="actions-cell">
