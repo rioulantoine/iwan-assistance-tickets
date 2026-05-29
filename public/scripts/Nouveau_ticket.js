@@ -56,3 +56,18 @@ listConteneur.addEventListener("click", function(e) {
         syncInputAndRender();
     }
 });
+
+
+   // Fonction pour ouvrir la fenêtre pop-up information niveau d'urgence
+        function ouvrirModalUrgence() {
+            const modal = document.getElementById('modalUrgence');
+            modal.style.display = 'flex';
+        }
+
+        // Fonction pour fermer la fenêtre si on clique à l'extérieur de la boîte blanche
+        function fermerModalUrgence(event) {
+            const modal = document.getElementById('modalUrgence');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }

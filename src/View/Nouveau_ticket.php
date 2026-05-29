@@ -116,7 +116,9 @@
                                 value="<?= htmlspecialchars($_POST['telephone'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">
-                            <label for="niveau_urgence">Niveau d'urgence</label>
+                            <label for="niveau_urgence">Niveau d'urgence
+                                <button type="button" class="btn-help-modal" onclick="ouvrirModalUrgence()">?</button>
+                            </label>
                             <select id="niveau_urgence" name="niveau_urgence" required>
                                 <option value="" disabled selected>
                                     Choisissez un niveau d'urgence
@@ -136,6 +138,22 @@
 
                             </select>
                         </div>
+                        <div id="modalUrgence" class="modal-urgence-overlay" onclick="fermerModalUrgence(event)">
+                            <div class="modal-urgence-content">
+                                <div class="modal-urgence-header">
+                                    <h2>Détails des niveaux d'urgence</h2>
+                                    <button type="button" class="modal-urgence-close" onclick="document.getElementById('modalUrgence').style.display='none'">&times;</button>
+                                </div>
+                                <div class="modal-urgence-body">
+                                    <ul>
+                                        <li><strong>Bloquant / Très urgent :</strong> Je ne peux plus travailler : logiciel inaccessible, caisse inutilisable, facturation impossible, plusieurs utilisateurs bloqués.</li>
+                                        <li><strong>Urgent :</strong> Je peux encore travailler, mais un point important me bloque fortement : erreur sur un dossier, impression impossible, envoi de mails bloqué, problème avec une échéance proche.</li>
+                                        <li><strong>Normal :</strong> Problème gênant mais contournable : anomalie sur un écran, question de fonctionnement, petit bug sans blocage immédiat.</li>
+                                        <li><strong>Non urgent / Demande d'évolution :</strong> Idée d’amélioration, modification souhaitée, demande de paramétrage, confort d’utilisation.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="groupe-input">
                         <label for="titre">Titre</label>
@@ -153,7 +171,6 @@
                         <textarea
                             id="description"
                             name="description"
-                            required
                             placeholder="Décrivez votre problème en détail"><?= htmlspecialchars(trim($_POST['description'] ?? '')) ?></textarea>
                     </div>
                     <div class="ajouter-fichier-container">
@@ -174,7 +191,7 @@
         </div>
     </main>
     <!-- Permet d'avoir plusieurs fichiers joints -->
-    <script src="public/scripts/upload_fichiers.js"></script>
+    <script src="public/scripts/Nouveau_ticket.js"></script>
 </body>
 
 </html>
