@@ -16,10 +16,14 @@ function get_nb_tickets($filtres)
     // Filtre date
     if (!empty($filtres['date_filtre'])) {
         if ($filtres['date_filtre'] === '1') {
-            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
         } elseif ($filtres['date_filtre'] === '2') {
-            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 14 DAY)";
         } elseif ($filtres['date_filtre'] === '3') {
+            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+        } elseif ($filtres['date_filtre'] === '4') {
+            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+        } elseif ($filtres['date_filtre'] === '5') {
             $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 YEAR)";
         }
     }
@@ -38,7 +42,7 @@ function get_nb_tickets($filtres)
 
     // Filtre recherche 
     if (!empty($filtres['recherche'])) {
-        $sql .= " AND (titre LIKE :recherche OR numero_ticket LIKE :recherche OR nom_entreprise LIKE :recherche)";
+        $sql .= " AND (titre LIKE :recherche OR numero_ticket LIKE :recherche OR nom_entreprise LIKE :recherche OR declarant_prenom LIKE :recherche OR declarant_nom LIKE :recherche OR description LIKE :recherche)";
         $params['recherche'] = '%' . $filtres['recherche'] . '%';
     }
 
@@ -92,7 +96,7 @@ function get_tickets($filtres)
 
     // Filtre recherche 
     if (!empty($filtres['recherche'])) {
-        $sql .= " AND (titre LIKE :recherche OR numero_ticket LIKE :recherche OR nom_entreprise LIKE :recherche)";
+        $sql .= " AND (titre LIKE :recherche OR numero_ticket LIKE :recherche OR nom_entreprise LIKE :recherche OR declarant_prenom LIKE :recherche OR declarant_nom LIKE :recherche OR description LIKE :recherche)";
         $params['recherche'] = '%' . $filtres['recherche'] . '%';
     }
 
