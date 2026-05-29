@@ -135,14 +135,32 @@
             <table class="table-tickets">
                 <thead>
                     <tr>
-                        <th>Urgence <span>▲</span></th>
-                        <th>Titre <span>▲</span></th>
+                        <th class="sortable" data-col="id_urgence"
+                            data-order="<?= (($filtres['tri_col'] ?? '') === 'id_urgence') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
+                            Urgence <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'id_urgence') ? ($filtres['tri_ordre'] ?? '' == 2 ? '▼' : '▲') : '▲' ?></span>
+                        </th>
+                        <th class="sortable" data-col="titre"
+                            data-order="<?= (($filtres['tri_col'] ?? '') === 'titre') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
+                            Titre <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'titre') ? ($filtres['tri_ordre'] ?? '' == 2 ? '▼' : '▲') : '▲' ?></span>
+                        </th>
                         <th>Établissement</th>
                         <th>Auteur</th>
-                        <th>Demandé le <span>▲</span></th>
-                        <th>Modifié le <span>▲</span></th>
-                        <th>Résolu le <span>▲</span></th>
-                        <th>Statut <span>▲</span></th>
+                        <th class="sortable" data-col="date_creation"
+                            data-order="<?= (($filtres['tri_col'] ?? '') === 'date_creation') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
+                            Demandé le <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'date_creation') ? ($filtres['tri_ordre'] ?? '' == 2 ? '▼' : '▲') : '▲' ?></span>
+                        </th>
+                        <th class="sortable" data-col="date_maj"
+                            data-order="<?= (($filtres['tri_col'] ?? '') === 'date_maj') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
+                            Modifié le <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'date_maj') ? ($filtres['tri_ordre'] ?? '' == 2 ? '▼' : '▲') : '▲' ?></span>
+                        </th>
+                        <th class="sortable" data-col="date_resolution"
+                            data-order="<?= (($filtres['tri_col'] ?? '') === 'date_resolution') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
+                            Résolu le <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'date_resolution') ? ($filtres['tri_ordre'] ?? '' == 2 ? '▼' : '▲') : '▲' ?></span>
+                        </th>
+                        <th class="sortable" data-col="id_statut"
+                            data-order="<?= (($filtres['tri_col'] ?? '') === 'id_statut') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
+                            Statut <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'id_statut') ? ($filtres['tri_ordre'] ?? '' == 2 ? '▼' : '▲') : '▲' ?></span>
+                        </th>
                         <th>Accès aux détails</th>
                     </tr>
                 </thead>
@@ -156,16 +174,15 @@
                         if ($ticket['id_urgence'] == 3) $classe_urgence = 'text-normal';
 
                         // Formatage des dates
-                        $date_creation = (new DateTime($ticket['date_creation']))->format('d/m à H:i');
-
-                        $date_resolution = !empty($ticket['date_resolution']) ? (new DateTime($ticket['date_resolution']))->format('d/m à H:i') : '---';
-                        $date_maj = !empty($ticket['date_maj']) ? (new DateTime($ticket['date_maj']))->format('d/m à H:i') : '---';
+                        $date_creation = (new DateTime($ticket['date_creation']))->format('d/m/y à H:i');
+                        $date_resolution = !empty($ticket['date_resolution']) ? (new DateTime($ticket['date_resolution']))->format('d/m/y à H:i') : '---';
+                        $date_maj = !empty($ticket['date_maj']) ? (new DateTime($ticket['date_maj']))->format('d/m/y à H:i') : '---';
 
                         ?>
                         <tr>
                             <td class="<?= $classe_urgence ?> font-bold"><?= htmlspecialchars($ticket['libelle_urgence']) ?></td>
                             <td><?= htmlspecialchars($ticket['titre']) ?></td>
-                            <td><?= htmlspecialchars($ticket['nom_entreprise'] ?? 'L&M Evasion') ?></td>
+                            <td><?= htmlspecialchars($ticket['nom_entreprise'] ?? '') ?></td>
                             <td><?= htmlspecialchars($ticket['declarant_prenom'] . ' ' . $ticket['declarant_nom']) ?></td>
                             <td><?= $date_creation ?></td>
                             <td><?= $date_maj ?></td>
@@ -193,6 +210,6 @@
             </div>
 
         </div>
-
+        <script src="public/scripts/Les_tickets.js"></script>
 </main>
 <?php require_once __DIR__ . '/Templates/Footer.php'; ?>

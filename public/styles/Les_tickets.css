@@ -107,6 +107,29 @@
     text-align: left;
     font-size: 14px;
 }
+.table-tickets th:last-child,
+.table-tickets td:last-child {
+    text-align: left;
+    padding-left: 16px;
+}
+.table-tickets th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.table-tickets th.sortable .sort-icon {
+    opacity: 0.4;
+    font-size: 11px;
+    margin-left: 4px;
+}
+
+.table-tickets th.sortable.active .sort-icon {
+    opacity: 1;
+}
+
+.table-tickets th.sortable:hover .sort-icon {
+    opacity: 0.8;
+}
 
 /* Header sombre de la maquette */
 .table-tickets th {

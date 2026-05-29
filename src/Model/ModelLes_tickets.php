@@ -49,7 +49,9 @@ function get_nb_tickets($filtres)
 }
 /**
  * Récupère la liste de tous les tickets avec leurs urgences et statuts associés
- * Trié par date de création décroissante (les plus récents en premier)
+ * Trié par date de création décroissante par défaut (les plus récents en premier)
+ * Trié en fonction des filtres appliqués 
+ * @param array $filtres Un tableau associatif contenant les filtres appliqués (date, statut, urgence, recherche)
  * @return array Un tableau associatif contenant les données des tickets
  */
 function get_tickets($filtres)
@@ -94,8 +96,11 @@ function get_tickets($filtres)
         $params['recherche'] = '%' . $filtres['recherche'] . '%';
     }
 
-    $sql .= " ORDER BY t.date_creation DESC";
+    $colonnes_autorisees = ['id_urgence', 'titre', 'date_creation', 'date_maj', 'date_resolution', 'id_statut'];
+    $tri_col = in_array($filtres['tri_col'] ?? '', $colonnes_autorisees) ? $filtres['tri_col'] : 'date_creation';
+    $tri_ordre = (int)($filtres['tri_ordre'] ?? 2) === 2 ? 'DESC' : 'ASC';
 
+    $sql .= " ORDER BY t.{$tri_col} {$tri_ordre}";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
