@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
         // Pour un client classique, on prend directement ses données de session
-        $nom_entreprise = $_SESSION['name'];
+        $nom_entreprise = strtoupper(trim($_SESSION['name'] ?? ''));
         $id_entreprise = $_SESSION['id_client'];
     }
 
