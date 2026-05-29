@@ -13,19 +13,30 @@ function get_nb_tickets($filtres)
     $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE 1=1";
     $params = [];
 
-    // Filtre date
-    if (!empty($filtres['date_filtre'])) {
-        if ($filtres['date_filtre'] === '1') {
-            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
-        } elseif ($filtres['date_filtre'] === '2') {
-            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 14 DAY)";
-        } elseif ($filtres['date_filtre'] === '3') {
-            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
-        } elseif ($filtres['date_filtre'] === '4') {
-            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 3 MONTH)";
-        } elseif ($filtres['date_filtre'] === '5') {
-            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 YEAR)";
+    if (empty($filtres['date_debut']) && empty($filtres['date_fin'])) {
+        if (!empty($filtres['date_filtre'])) {
+            if ($filtres['date_filtre'] === '1') {
+                $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+            } elseif ($filtres['date_filtre'] === '2') {
+                $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 14 DAY)";
+            } elseif ($filtres['date_filtre'] === '3') {
+                $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+            } elseif ($filtres['date_filtre'] === '4') {
+                $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+            } elseif ($filtres['date_filtre'] === '5') {
+                $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 YEAR)";
+            }
         }
+    }
+
+    // Filtre date personnalisée (prioritaire sur le select si renseigné)
+    if (!empty($filtres['date_debut'])) {
+        $sql .= " AND date_creation >= :date_debut";
+        $params['date_debut'] = $filtres['date_debut'] . ' 00:00:00';
+    }
+    if (!empty($filtres['date_fin'])) {
+        $sql .= " AND date_creation <= :date_fin";
+        $params['date_fin'] = $filtres['date_fin'] . ' 23:59:59';
     }
 
     // Filtre statut 
@@ -73,14 +84,30 @@ function get_tickets($filtres)
     $params = [];
 
     // Filtre date
-    if (!empty($filtres['date_filtre'])) {
-        if ($filtres['date_filtre'] === '1') {
-            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 WEEK)";
-        } elseif ($filtres['date_filtre'] === '2') {
-            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
-        } elseif ($filtres['date_filtre'] === '3') {
-            $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 YEAR)";
+    if (empty($filtres['date_debut']) && empty($filtres['date_fin'])) {
+        if (!empty($filtres['date_filtre'])) {
+            if ($filtres['date_filtre'] === '1') {
+                $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+            } elseif ($filtres['date_filtre'] === '2') {
+                $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 14 DAY)";
+            } elseif ($filtres['date_filtre'] === '3') {
+                $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+            } elseif ($filtres['date_filtre'] === '4') {
+                $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+            } elseif ($filtres['date_filtre'] === '5') {
+                $sql .= " AND date_creation >= DATE_SUB(NOW(), INTERVAL 1 YEAR)";
+            }
         }
+    }
+
+    // Filtre date personnalisée (prioritaire sur le select si renseigné)
+    if (!empty($filtres['date_debut'])) {
+        $sql .= " AND date_creation >= :date_debut";
+        $params['date_debut'] = $filtres['date_debut'] . ' 00:00:00';
+    }
+    if (!empty($filtres['date_fin'])) {
+        $sql .= " AND date_creation <= :date_fin";
+        $params['date_fin'] = $filtres['date_fin'] . ' 23:59:59';
     }
     // Filtre statut 
     if (!empty($filtres['statut'])) {

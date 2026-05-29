@@ -70,6 +70,22 @@
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
+                <div class="date-range-wrapper">
+                    <div class="date-field">
+                        <label>Du</label>
+                        <div class="input-clearable-wrapper">
+                            <input type="date" id="date_debut" name="date_debut" value="<?= htmlspecialchars($_GET['date_debut'] ?? '') ?>">
+                            <button type="button" class="btn-clear-date" onclick="viderChampDate('date_debut')">&times;</button>
+                        </div>
+                    </div>
+                    <div class="date-field">
+                        <label>Au</label>
+                        <div class="input-clearable-wrapper">
+                            <input type="date" id="date_fin" name="date_fin" value="<?= htmlspecialchars($_GET['date_fin'] ?? '') ?>">
+                            <button type="button" class="btn-clear-date" onclick="viderChampDate('date_fin')">&times;</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="select-wrapper">
                     <select name="statut_filtre">
                         <option value="" <?= (!isset($_GET['statut_filtre']) || $_GET['statut_filtre'] === '') ? 'selected' : '' ?>>Tous les statuts</option>
