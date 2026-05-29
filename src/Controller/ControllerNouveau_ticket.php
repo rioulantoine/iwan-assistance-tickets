@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $erreurs = [];
 
+
     // Vérification nom
     if (empty($nom_declarant)) {
         $erreurs[] = "Le nom est obligatoire.";
@@ -33,6 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreurs[] = "L'email est obligatoire.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreurs[] = "L'email n'est pas valide.";
+    }
+    // Vérification téléphone
+    if (empty($telephone)) {
+        $erreurs[] = "Le téléphone est obligatoire.";
     }
 
     // Vérification urgence
@@ -56,10 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_SESSION['is_admin'] ?? false) {
         $nom_entreprise = strtoupper(trim($_POST['nom_entreprise'] ?? ''));
         $id_entreprise = trouver_id_entreprise($nom_entreprise);
+        if (empty($nom_entreprise)) {
+            $erreurs[] = "Le nom de l'entreprise est obligatoire";
+        }
 
         // Si l'admin a tapé une entreprise inconnue on lève l'erreur
         if ($id_entreprise === false) {
-            $erreurs[] = "L'entreprise '" . htmlspecialchars($nom_entreprise) . "' n'est pas enregistrée dans le système. Impossible de créer ce ticket.";
+            $_SESSION['flash_message'] = "L'entreprise '" . htmlspecialchars($nom_entreprise) . "' n'est pas enregistrée dans le système. Impossible de créer ce ticket.";
+            $_SESSION['flash_type'] = "error";
         }
     } else {
         // Pour un client classique, on prend directement ses données de session
@@ -69,8 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Si aucune erreur 
     $numero_ticket = null;
+    if (!empty($erreurs)) {
+        $_SESSION['flash_message'] = implode('<br>', $erreurs);
+        $_SESSION['flash_type'] = "error";
+    }
     if (empty($erreurs)) {
-
         $numero_ticket = generer_numero_ticket();
         $date_creation = date('Y-m-d H:i:s');
         $id_statut = 1;
@@ -130,10 +142,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // La redirection ne se fera QUE si le $numero_ticket a bien été généré au-dessus
+    // La redirection ne se fera que si le $numero_ticket a bien été généré 
     if ($numero_ticket) {
-        header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
-        exit();
+        if ($_SESSION['is_admin'] ?? false) {
+            $url_ticket = "index.php?page=detail_ticket&ticket=" . urlencode($numero_ticket);
+
+            $_SESSION['flash_message'] = 'Le ticket <a href="' . $url_ticket . '">#' . htmlspecialchars($numero_ticket) . ' - ' . htmlspecialchars($titre) . '</a> a bien été créé.';
+            $_SESSION['flash_type'] = "success";
+            header("Location: index.php?page=nouveau_ticket");
+            exit();
+        } else {
+            if ($_SESSION['flash_message']) {
+            } else {
+                header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
+                exit();
+            }
+        }
     }
 }
 require_once __DIR__ . '/../View/Nouveau_ticket.php';

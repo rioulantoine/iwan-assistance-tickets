@@ -24,6 +24,32 @@
             <p>
                 Rédiger et traiter les nouvelles demandes et les nouveaux problèmes
             </p>
+            <?php if (isset($_SESSION['flash_message'])) : ?>
+                <div class="flash-alert alert-<?= $_SESSION['flash_type'] ?>" id="flashAlert">
+                    <div class="flash-content">
+                        <?php if ($_SESSION['flash_type'] === 'success') : ?>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        <?php else : ?>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        <?php endif; ?>
+
+                        <span><?= $_SESSION['flash_message'] ?></span>
+                    </div>
+                    <button class="close-flash" onclick="document.getElementById('flashAlert').style.display='none'">&times;</button>
+                </div>
+
+                <?php
+                // On vide le message pour qu'il ne se re affiche pas 
+                unset($_SESSION['flash_message']);
+                unset($_SESSION['flash_type']);
+                ?>
+            <?php endif; ?>
             <div class="formulaire-nouveau-ticket">
                 <form action="" method="POST" enctype="multipart/form-data" class="" auth-form>
                     <?php if ($_SESSION['is_admin'] ?? false): ?>
@@ -34,7 +60,9 @@
                             name="nom_entreprise"
                             list="entreprises_suggestion"
                             placeholder="Entrez le nom de l'entreprise"
-                            autocomplete="off">
+                            autocomplete="off"
+                            required
+                            value="<?= htmlspecialchars($_POST['nom_entreprise'] ?? '') ?>">
                         <datalist id="entreprises_suggestion">
                             <?php foreach ($liste_nom_entreprise ?? [] as $entreprise): ?>
                                 <option value="<?= htmlspecialchars($entreprise['nom_entreprise']) ?>">
@@ -50,7 +78,8 @@
                                 id="nom"
                                 name="nom"
                                 placeholder="Entrez votre nom"
-                                required />
+                                required
+                                value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">
                             <label for="prenom">Prénom</label>
@@ -59,7 +88,8 @@
                                 id="prenom"
                                 name="prenom"
                                 placeholder="Entrez votre prénom"
-                                required />
+                                required
+                                value="<?= htmlspecialchars($_POST['prenom'] ?? '') ?>" />
                         </div>
 
                     </div>
@@ -71,7 +101,9 @@
                                 id="email"
                                 name="email"
                                 placeholder="Entrez votre adresse e-mail"
-                                required />
+                                required
+                                value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" />
+
                         </div>
                         <div class="groupe-input">
                             <label for="telephone">Numéro de téléphone</label>
@@ -79,7 +111,9 @@
                                 type="tel"
                                 id="telephone"
                                 name="telephone"
-                                placeholder="Entrez votre numéro de téléphone" />
+                                placeholder="Entrez votre numéro de téléphone"
+                                required
+                                value="<?= htmlspecialchars($_POST['telephone'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">
                             <label for="niveau_urgence">Niveau d'urgence</label>
@@ -87,10 +121,19 @@
                                 <option value="" disabled selected>
                                     Choisissez un niveau d'urgence
                                 </option>
-                                <option value="1">Bloquant/ Très urgent</option>
-                                <option value="2">Urgent</option>
-                                <option value="3">Normal</option>
-                                <option value="4">Non urgent / Demande d'évolution</option>
+                                <option value="1" <?= ($_POST['niveau_urgence'] ?? '') === '1' ? 'selected' : '' ?>>
+                                    Bloquant/ Très urgent
+                                </option>
+                                <option value="2" <?= ($_POST['niveau_urgence'] ?? '') === '2' ? 'selected' : '' ?>>
+                                    Urgent
+                                </option>
+                                <option value="3" <?= ($_POST['niveau_urgence'] ?? '') === '3' ? 'selected' : '' ?>>
+                                    Normal
+                                </option>
+                                <option value="4" <?= ($_POST['niveau_urgence'] ?? '') === '4' ? 'selected' : '' ?>>
+                                    Non urgent / Demande d'évolution
+                                </option>
+
                             </select>
                         </div>
                     </div>
@@ -100,15 +143,18 @@
                             type="text"
                             id="titre"
                             name="titre"
-                            placeholder="Entrez le titre du ticket" />
+                            placeholder="Entrez le titre du ticket"
+                            required
+                            value="<?= htmlspecialchars($_POST['titre'] ?? '') ?>" />
+
                     </div>
                     <div class="detail-ticket">
                         <label for="description">Description</label>
                         <textarea
                             id="description"
                             name="description"
-                            placeholder="Décrivez votre problème en détail"
-                            required></textarea>
+                            required
+                            placeholder="Décrivez votre problème en détail"><?= htmlspecialchars(trim($_POST['description'] ?? '')) ?></textarea>
                     </div>
                     <div class="ajouter-fichier-container">
                         <input type="file" id="fichier" name="fichier[]" multiple style="display: none;">
