@@ -340,7 +340,7 @@
 
 .input-clearable-wrapper input[type="date"] {
     width: 100%;
-    padding-right:14%; /* On laisse de la place pour la croix à droite */
+    padding-right:14%; 
 }
 
 /* Le petit bouton croix */
@@ -358,15 +358,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    visibility: hidden; /* Masqué par défaut si le champ est vide */
+    visibility: hidden; 
     opacity: 0;
     transition: color 0.2s, opacity 0.2s;
     z-index: 5;
 }
 
 .btn-clear-date:hover {
-    color: #ef4444; /* Devient rouge au survol */
+    color: #ef4444; 
 }
+
+
 /* regles importantes pour le champ date sur safari */
 
 input[type="date"].empty-date {
@@ -426,7 +428,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding-right: 50px;
 }
 
-/* Cache le picker natif UNIQUEMENT sur Safari, pas Chrome */
+/* Cache le picker natif uniquement sur Safari*/
 @media not all and (min-resolution:.001dpcm) { @supports (-webkit-appearance:none) {
     input[type="date"]::-webkit-calendar-picker-indicator {
         opacity: 0;
