@@ -29,22 +29,19 @@ main {
 }
 
 .dashboard-content {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 90%;
+  max-width: none;
+  margin: 1% auto;
   padding: 20px;
   box-sizing: border-box;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: #ffffff;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
-  padding: 3%;
-  margin: 3% auto;
 }
 
-.filter-bar {
+.filtre-bar {
   display: flex;
   gap: 16px;
   margin-bottom: 24px;
@@ -93,7 +90,94 @@ main {
   color: #94a3b8;
   pointer-events: none;
 }
+/* Style pour la selection de dates */
+.date-range-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
 
+.date-field {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0 12px;
+    height: 42px;
+}
+
+.date-field label {
+    font-size: 13px;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+.date-field input[type="date"] {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #2d3748;
+    background: transparent;
+    cursor: pointer;
+}
+
+.btn-filtre {
+  height: 42px;
+  padding: 0 24px;
+  background-color: #b2bfc8;
+  color: #0f2e48;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-filtre:hover {
+  background-color: #a1b0ba;
+}
+
+
+/* Conteneur pour positionner la croix par rapport à l'input */
+.input-clearable-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-clearable-wrapper input[type="date"] {
+    width: 100%;
+    padding-right:14%; /* On laisse de la place pour la croix à droite */
+}
+
+/* Le petit bouton croix */
+.btn-clear-date {
+    position: absolute;
+    right: 2%;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden; /* Masqué par défaut si le champ est vide */
+    opacity: 0;
+    transition: color 0.2s, opacity 0.2s;
+    z-index: 5;
+}
+
+.btn-clear-date:hover {
+    color: #ef4444; /* Devient rouge au survol */
+}
 .btn-filter {
   height: 42px;
   padding: 0 24px;
@@ -133,6 +217,15 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+}
+.btn-ouvrir {
+  padding: 8px 16px;
+  background-color: #0e2235;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
 .ticket-title-block {
@@ -141,21 +234,25 @@ main {
   gap: 10px;
 }
 
-.statut-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
 }
 
-.statut-dot.critique {
-  background-color: #e15252;
+.status-dot.red { 
+    background-color: #e53e3e; 
 }
-.statut-dot.majeur {
-  background-color: #f59e0b;
+.status-dot.orange { 
+    background-color: #dd6b20; 
 }
-.statut-dot.standard {
-  background-color: #10b981;
+.status-dot.blue {
+    background-color:#3182ce;
 }
+.status-dot.green { 
+    background-color: #38a169;
+}
+
 
 .ticket-title-block h3 {
   margin: 0;
@@ -249,3 +346,22 @@ main {
   border-color: #f1f5f9;
   cursor: not-allowed;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
