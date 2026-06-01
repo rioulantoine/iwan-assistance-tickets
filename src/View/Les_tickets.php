@@ -228,6 +228,7 @@
             </div>
 
         </div>
-        <script src="public/scripts/Les_tickets.js"></script>
+    </div>
+    <script src="public/scripts/Les_tickets.js"></script>
 </main>
 <?php require_once __DIR__ . '/Templates/Footer.php'; ?>
