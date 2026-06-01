@@ -11,7 +11,8 @@
 
 <body>
 
-    <?php require_once __DIR__ . '/Templates/Header.php'; ?>
+    <?php require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
+
 
     <main>
         <div class="container-premier-ticket">

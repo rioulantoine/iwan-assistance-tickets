@@ -39,7 +39,7 @@
                 <span>Les tickets</span>
             </a>
         <?php endif; ?>
-        <?php if ($nb_ticket_client ?? 0 == 0): ?>
+        <?php if (($GLOBALS['nb_ticket_client'] ?? 0) == 0): ?>
             <a href="index.php?page=premier_ticket" class="link-with-icon">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@
                 </svg>
                 <span>Vos tickets</span>
             </a>
-        <?php else: ?>
+        <?php elseif (($GLOBALS['nb_ticket_client'] ?? 0) > 0): ?>
             <a href="index.php?page=tickets" class="link-with-icon">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

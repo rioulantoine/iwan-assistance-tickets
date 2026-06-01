@@ -1,4 +1,5 @@
-<?php require_once __DIR__ . '/Templates/Header.php'; ?>
+<?php require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
+
 <html lang="fr">
 
 <head>

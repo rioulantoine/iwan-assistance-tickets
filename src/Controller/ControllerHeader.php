@@ -4,10 +4,10 @@
 require_once __DIR__ . '/../Model/ModelHeader.php';
 
 if ($_SESSION['is_admin'] ?? false) {
-    $id_client = $_SESSION['id_admin'];
+    $id = $_SESSION['id_admin'];
 } else {
-    $id_client = $_SESSION['id_client'];
+    $id = $_SESSION['id_client'];
 }
-$nb_ticket_client = get_nb_tickets($id_client);
-
-require_once __DIR__ . '/../View/TemplatesHeader.php';
+// Dans ControllerHeader.php
+$GLOBALS['nb_ticket_client'] = get_nb_tickets($id);
+require_once __DIR__ . '/../View/Templates/Header.php';
