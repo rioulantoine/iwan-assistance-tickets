@@ -32,9 +32,7 @@ $filtres = [
     'tri_ordre'   => $tri_ordre,
 ];
 
-$ordre_sql = $tri_ordre === 2 ? 'DESC' : 'ASC';
 
-$query = "SELECT * FROM tickets ORDER BY {$tri_col} {$ordre_sql}";
 $nb_ticket = get_nb_tickets($filtres);
 $liste_tickets = get_tickets($filtres);
 
