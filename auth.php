@@ -12,6 +12,7 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
 
     if ($id_url === $id_iwan) {
         $_SESSION['is_admin'] = true;
+        $_SESSION['id_admin'] = $id_iwan;
         unset($_SESSION['id_client']); // enleve l'ancien id si il y en a un
         $_SESSION['name'] = 'IWAN';
     } else {
