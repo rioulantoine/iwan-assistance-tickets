@@ -135,13 +135,13 @@
                 <?php else: ?>
                     <?php if (($details_ticket['id_statut'] ?? null) == 1) : ?>
                         <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="181" height="35" rx="4" fill="#d9ad7a" />
+                            <rect width="181" height="35" rx="4" fill="#d97706" />
                             <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">En attente</text>
                         </svg>
                     <?php elseif (($details_ticket['id_statut'] ?? null) == 2) : ?>
 
                         <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="181" height="35" rx="4" fill="#7FAAD4" />
+                            <rect width="181" height="35" rx="4" fill="#7faad4" />
                             <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">En cours</text>
                         </svg>
                     <?php elseif (($details_ticket['id_statut'] ?? null) == 3) : ?>
@@ -152,7 +152,7 @@
                         </svg>
                     <?php else : ?>
                         <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="181" height="35" rx="4" fill="#718096" />
+                            <rect width="181" height="35" rx="4" fill="#94a3b8" />
                             <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Archivé</text>
                         </svg>
                     <?php endif; ?>
