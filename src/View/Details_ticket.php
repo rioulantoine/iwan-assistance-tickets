@@ -20,8 +20,7 @@
                 <!--Bouton suppression-->
                 <?php if ($_SESSION['is_admin'] ?? false) : ?>
                     <a href="index.php?page=supprimer_ticket&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>"
-                        class="btn-delete-trigger"
-                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement ce ticket ? Cette action est irréversible.');"
+                        class="btn-delete-ticket"
                         style="display: block; text-decoration: none; border: none; background: none; padding: 0; cursor: pointer;">
 
                         <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -294,8 +293,21 @@
                 </div>
 
             </div>
+            <!-- POP UP Suprpession ticket -->
+            <div class="modal-overlay">
+                <div class="modal">
+                    <h3>Supprimer le ticket ?</h3>
+                    <p>Cette action est irréversible.</p>
+
+                    <div class="modal-actions">
+                        <button class="btn-cancel">Annuler</button>
+                        <a href="#" class="btn-confirm">Supprimer</a>
+                    </div>
+                </div>
+            </div>
             <script src="public/scripts/upload_fichiers.js"></script>
             <script src="public/scripts/menu_deroulant_statut.js"></script>
+            <script src="public/scripts/valider_suppression.js"></script>
     </main>
 
 </body>
