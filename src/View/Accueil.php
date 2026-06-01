@@ -252,7 +252,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
         <div class="container-tickets">
             <?php if (isset($_SESSION['id_client'])): ?>
                 <p>
-                    Espace client : <strong><?= htmlspecialchars($_SESSION['name'] ?? 0) ?></strong>
+                    Espace client : <strong> <?= htmlspecialchars($_SESSION['name'] ?? 0) ?></strong>
                 </p>
                 <a href="index.php?page=nouveau_ticket" class="btn-nouveau-ticket">
                     <div class="icon-button">
@@ -398,93 +398,106 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
             <?php endif ?>
 
             <div class="dashboard-content">
-                <h1>Vos derniers tickets</h1>
+                <?php if (!empty($_SESSION['is_admin'])) : ?>
+                    <h1>Les derniers tickets</h1>
+                <?php else : ?>
+                    <h1>Vos derniers tickets</h1>
+                <?php endif; ?>
 
-                <div class="ticket-list">
-                    <div class="ticket-card">
-                        <div class="ticket-header">
-                            <div class="ticket-title-block">
-                                <span class="status-dot critique"></span>
-                                <h3>Critique - Ticket# 2026-CS123</h3>
+                <?php foreach ($ticket_maj_user ?? [] as $ticket): ?>
+
+                    <div class="ticket-list">
+                        <div class="ticket-card">
+                            <div class="ticket-header">
+                                <div class="ticket-title-block">
+                                    <?php
+                                    if (($ticket['id_urgence'] ?? null) == 1) {
+                                        echo '<span class="status-dot red"></span>';
+                                    } elseif (($ticket['id_urgence'] ?? null) == 2) {
+                                        echo '<span class="status-dot orange"></span>';
+                                    } elseif (($ticket['id_urgence'] ?? null) == 3) {
+                                        echo '<span class="status-dot blue"></span>';
+                                    } else {
+                                        echo '<span class="status-dot green"></span>';
+                                    }
+                                    ?>
+                                    <div class="ticket-title-text">
+                                        <h3><?= htmlspecialchars($ticket['libelle_urgence']) . " #" . htmlspecialchars($ticket['numero_ticket']) ?></h3>
+                                        <h4><?= htmlspecialchars($ticket['titre']) ?></h4>
+                                        <div class="nom-entreprise">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+
+                                                <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+
+                                                <path d="M6 7h2M6 11h2M6 15h2" />
+
+                                                <path d="M15 14h2M15 18h2" />
+                                            </svg>
+                                            <p> <?= htmlspecialchars($ticket['nom_entreprise']) ?></p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ticket-header-right">
+                                    <div class="ticket-author">
+                                        <div class="avatar-placeholder">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#64748b" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5Z" />
+                                                <path d="M12 14c-4.42 0-8 2.58-8 6v2h16v-2c0-3.42-3.58-6-8-6Z" />
+                                            </svg>
+                                        </div>
+                                        <span><?= htmlspecialchars($ticket['declarant_nom']) . " " . htmlspecialchars($ticket['declarant_prenom']) ?></span>
+                                    </div>
+                                    <div class="statut-badge">
+                                        <?php if (($ticket['id_statut'] ?? null) == 1) : ?>
+                                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="181" height="35" rx="4" fill="#d97706" />
+                                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">En attente</text>
+                                            </svg>
+                                        <?php elseif (($ticket['id_statut'] ?? null) == 2) : ?>
+                                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="181" height="35" rx="4" fill="#7FAAD4" />
+                                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">En cours</text>
+                                            </svg>
+                                        <?php elseif (($ticket['id_statut'] ?? null) == 3) : ?>
+                                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="181" height="35" rx="4" fill="#38a169" />
+                                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Résolu</text>
+                                            </svg>
+                                        <?php else : ?>
+                                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="181" height="35" rx="4" fill="#718096" />
+                                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Archivé</text>
+                                            </svg>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="ticket-author">
-                                <div class="avatar-placeholder"></div>
-                                <span>John Snow</span>
+
+                            <div class="ticket-body">
+
+                                <p>
+                                    <?= htmlspecialchars(
+                                        mb_strlen($ticket['description'], 'UTF-8') > 600
+
+                                            ? mb_substr($ticket['description'], 0, 600, 'UTF-8') . '...'
+
+                                            : $ticket['description']
+
+                                    ) ?>
+                                </p>
                             </div>
-                        </div>
-                        <div class="ticket-body">
-                            <h4>Le site est inaccessible</h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
-                                ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
-                                dolor sit amet, consectetur adipiscing elit.
-                            </p>
-                        </div>
-                        <div class="ticket-footer">
-                            <span class="ticket-date">12:45, 22/04/2026</span>
-                            <a href="index.php?page=detail_ticket" class="ticket-link">Ouvrir le ticket</a>
+                            <?php $date_creation = (new DateTime($ticket['date_creation']))->format('d/m/y à H:i'); ?>
+
+                            <div class="ticket-footer">
+                                <span class="ticket-date"><?= $date_creation ?></span>
+                                <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir"> Ouvrir le ticket </a>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="ticket-card">
-                        <div class="ticket-header">
-                            <div class="ticket-title-block">
-                                <span class="status-dot majeur"></span>
-                                <h3>Majeur - Ticket# 2026-CS124</h3>
-                            </div>
-                            <div class="ticket-author">
-                                <div class="avatar-placeholder"></div>
-                                <span>John Cow</span>
-                            </div>
-                        </div>
-                        <div class="ticket-body">
-                            <h4>
-                                Le site est mets une erreur lorsque l'on cherche "%admin%"
-                            </h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
-                                ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
-                                dolor sit amet, consectetur adipiscing elit.
-                            </p>
-                        </div>
-                        <div class="ticket-footer">
-                            <span class="ticket-date">12:45, 22/04/2026</span>
-                            <a href="index.php?page=detail_ticket" class="ticket-link">Ouvrir le ticket</a>
-                        </div>
-                    </div>
-
-                    <div class="ticket-card">
-                        <div class="ticket-header">
-                            <div class="ticket-title-block">
-                                <span class="status-dot standard"></span>
-                                <h3>Standard - Ticket# 2026-CS125</h3>
-                            </div>
-                            <div class="ticket-author">
-                                <div class="avatar-placeholder"></div>
-                                <span>John Doe</span>
-                            </div>
-                        </div>
-                        <div class="ticket-body">
-                            <h4>Augmenter la taille des titres de séjour</h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
-                                ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
-                                dolor sit amet, consectetur adipiscing elit.
-                            </p>
-                        </div>
-                        <div class="ticket-footer">
-                            <span class="ticket-date">12:45, 22/04/2026</span>
-                            <a href="index.php?page=detail_ticket" class="ticket-link">Ouvrir le ticket</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pagination">
-                    <button class="page-nav disabled">Précédent</button>
-                    <button class="page-num active">1</button>
-                    <button class="page-num">2</button>
-                    <button class="page-nav">Suivant</button>
-                </div>
+                <?php endforeach ?>
             </div>
         </div>
     </main>

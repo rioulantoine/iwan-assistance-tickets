@@ -146,7 +146,7 @@ main {
 ================================= */
 .dashboard-content {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
@@ -182,7 +182,47 @@ main {
   gap: 14px;
 }
 
-.ticket-header,
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.ticket-title-block {
+    display: flex;
+    align-items: flex-start; 
+    gap: 8px;
+}
+
+.ticket-title-text {
+    display: flex;
+    flex-direction: column; 
+    gap: 5px;
+}
+
+.ticket-title-text h3 {
+    margin: 0;
+}
+
+.ticket-title-text h4 {
+    margin: 0;
+    font-weight: 400;
+    color: #64748b;
+}
+
+.ticket-header-right {
+    display: flex;
+    flex-direction: column;  
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.ticket-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 .ticket-footer {
   display: flex;
   justify-content: space-between;
@@ -191,24 +231,30 @@ main {
 
 .ticket-title-block {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
 }
 
 .status-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 3px;
+    flex-shrink: 0;
+    
 }
 
-.status-dot.critique {
-  background-color: #e15252;
+.status-dot.red { 
+    background-color: #e53e3e; 
 }
-.status-dot.majeur {
-  background-color: #f59e0b;
+.status-dot.orange { 
+    background-color: #dd6b20; 
 }
-.status-dot.standard {
-  background-color: #10b981;
+.status-dot.blue {
+    background-color:#3182ce;
+}
+.status-dot.green { 
+    background-color: #38a169;
 }
 
 .ticket-title-block h3 {
@@ -226,11 +272,32 @@ main {
   font-size: 14px;
 }
 
-.avatar-placeholder {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: #f59e0b;
+
+.nom-entreprise {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; 
+    background-color: #eff4fa; 
+    padding: 6px 14px; 
+    border-radius: 8px;
+    color: #4a5d78; 
+    width: fit-content; 
+}
+
+.nom-entreprise svg {
+    display: block;
+    width: 18px; 
+    height: 18px;
+    color: #4a5d78; 
+    flex-shrink: 0; 
+}
+
+.nom-entreprise p {
+    margin: 0; 
+    font-size: 14px;
+    font-weight: 500; 
+    line-height: 1; 
+    white-space: nowrap; 
 }
 
 .ticket-body h4 {
@@ -265,45 +332,29 @@ main {
   text-decoration: underline;
 }
 
-.pagination {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 8px;
-}
 
-.page-nav,
-.page-num {
-  height: 34px;
-  border: 1px solid #e2e8f0;
-  background-color: #ffffff;
-  color: #64748b;
-  border-radius: 4px;
-  font-size: 13px;
-  cursor: pointer;
-  display: flex;
+.btn-ouvrir {
+  padding: 8px 16px;
+  background-color: #0e2235;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.statut-badge {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 12px;
-  box-sizing: border-box;
+  width: 181px;
+  height: 35px;
+  flex-shrink: 0;
 }
 
-.page-num {
-  width: 34px;
-  padding: 0;
+.statut-badge svg {
+  width: 100%;
+  height: 100%;
 }
 
-.page-num.active {
-  background-color: #94a3b8;
-  color: #ffffff;
-  border-color: #94a3b8;
-}
-
-.page-nav.disabled {
-  color: #cbd5e1;
-  border-color: #f1f5f9;
-  cursor: not-allowed;
-}
 
 /* ==============================
      BOÎTE GRAPHIQUE 
