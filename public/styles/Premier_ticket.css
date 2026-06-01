@@ -45,3 +45,12 @@ main {
   background-color: #163c5d;
   color: #ffffff;
 }
+
+.container-premier-ticket p {
+    text-align: center;
+    width: 100%;
+}
+.container-premier-ticket {
+    position: relative;
+}
+
