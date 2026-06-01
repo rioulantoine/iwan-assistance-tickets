@@ -2,8 +2,9 @@
 function viderChampDate(idChamp) {
     const input = document.getElementById(idChamp);
     if (input) {
-        input.value = ""; // On vide la date
-        toggleCroixDate(input); // On masque la croix
+        input.value = "";
+        input.classList.add('empty-date');
+        toggleCroixDate(input);
     }
 }
 
@@ -13,7 +14,6 @@ function toggleCroixDate(input) {
     if (container) {
         const btnClear = container.querySelector('.btn-clear-date');
         if (btnClear) {
-            // Si le champ a une valeur, on affiche la croix, sinon on la cache
             if (input.value !== "") {
                 btnClear.style.visibility = "visible";
                 btnClear.style.opacity = "1";
@@ -25,20 +25,37 @@ function toggleCroixDate(input) {
     }
 }
 
-// Au chargement de la page et lors des changements, on gère l'état initial des croix
-document.addEventListener("DOMContentLoaded", function() {
+// Fonction pour gérer la classe empty-date (masque la date par défaut sur Safari)
+function gererDateVide(input) {
+    if (!input.value) {
+        input.classList.add('empty-date');
+    } else {
+        input.classList.remove('empty-date');
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
     const inputsDate = [document.getElementById('date_debut'), document.getElementById('date_fin')];
-    
+
     inputsDate.forEach(input => {
         if (input) {
-            // Init au chargement de la page (si filtres déjà appliqués)
+
+            if (!input.getAttribute('value')) {
+                input.value = '';
+            }
+
+            gererDateVide(input);
             toggleCroixDate(input);
-            
-            // Écouteur pour dès que l'utilisateur modifie la date
-            input.addEventListener('input', function() {
+
+            input.addEventListener('input', function () {
                 toggleCroixDate(this);
+                gererDateVide(this);
+            });
+
+            input.addEventListener('change', function () {
+                toggleCroixDate(this);
+                gererDateVide(this);
             });
         }
     });
 });
-
