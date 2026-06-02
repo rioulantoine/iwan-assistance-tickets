@@ -57,6 +57,8 @@ function get_ticket($filtres)
         $params['recherche'] = '%' . $filtres['recherche'] . '%';
     }
 
+    $sql .= " ORDER BY date_creation DESC";
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
