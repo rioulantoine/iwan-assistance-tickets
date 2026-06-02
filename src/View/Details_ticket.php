@@ -330,6 +330,40 @@
                             </p>
                         </div>
                     </div>
+                    <!-- Affichage pieces jointes -->
+                    <?php if (!empty($reponse['pieces_jointes'])): ?>
+                        <div class="attachments-list">
+                            <?php foreach ($reponse['pieces_jointes'] as $pj) :
+                                $taille_kb = round($pj['taille_octets'] / 1024);
+                            ?>
+                                <div class="attachment-card">
+
+                                    <div class="file-icon-wrapper existing-file-icon" data-filename="<?= htmlspecialchars($pj['nom_origine']) ?>"></div>
+
+                                    <div class="file-info">
+                                        <span class="file-title" title="<?= htmlspecialchars($pj['nom_origine']) ?>">
+                                            <?= htmlspecialchars($pj['nom_origine']) ?>
+                                        </span>
+                                        <span class="file-size"><?= $taille_kb ?> KB</span>
+                                    </div>
+
+                                    <!-- bouton télécharger -->
+                                    <a href="public/uploads/<?= htmlspecialchars($pj['nom_stockage']) ?>"
+                                        download="<?= htmlspecialchars($pj['nom_origine']) ?>"
+                                        class="download-btn"
+                                        title="Télécharger">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
+                                            <polyline points="7 10 12 15 17 10"></polyline>
+                                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                                        </svg>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="separation"></div>
+
+                    <?php endif; ?>
                     <div class="separation"></div>
                 <?php endforeach; ?>
 

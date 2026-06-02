@@ -120,3 +120,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+
+
+// Fonction pour synchroniser le tableau allFiles avec l'input et mettre à jour l'affichage
+function syncInputAndRender() {
+    const dataTransfer = new DataTransfer();
+    allFiles.forEach((file) => dataTransfer.items.add(file));
+    fileInput.files = dataTransfer.files;
+
+    listConteneur.innerHTML = "";
+
+    allFiles.forEach((file, index) => {
+        const item = document.createElement("div");
+        item.className = "file-item-card";
+
+        const fileSizeKB = Math.round(file.size / 1024);
+
+        // Intégration du module obtenirSvgParExtension à la place du texte statique PDF
+        item.innerHTML = `
+            <div class="file-icon-wrapper">
+                ${obtenirSvgParExtension(file.name)}
+            </div>
+            <div class="file-item-info">
+                <span class="file-item-name">${file.name}</span>
+                <span class="file-item-size">${fileSizeKB} KB</span>
+            </div>
+            <button type="button" class="remove-file" data-index="${index}" aria-label="Supprimer le fichier">✕</button>
+        `;
+
+        listConteneur.appendChild(item);
+    });
+}

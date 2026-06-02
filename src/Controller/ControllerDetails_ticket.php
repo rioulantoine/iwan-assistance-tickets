@@ -20,6 +20,11 @@ if (isset($details_ticket['date_creation'])) {
 }
 $id_ticket = $details_ticket['id_ticket'];
 $reponses = get_reponse_ticket($id_ticket);
+foreach ($reponses as &$reponse) {
+    // On crée une nouvelle clé 'pieces_jointes' dans le tableau de la réponse
+    $reponse['pieces_jointes'] = get_pieces_jointes_par_reponse($reponse['id_reponse']);
+}
+unset($reponse);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titre = trim($_POST['titre']);
@@ -76,9 +81,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         maj($id_ticket);
+
+
+        $fichiers = $_FILES['fichier'] ?? null;
+        if (!empty($fichiers['name'][0]) && $id_reponse) {
+            $dossier = __DIR__ . '/../../public/uploads/';
+            if (!is_dir($dossier)) {
+                mkdir($dossier, 0777, true);
+            }
+            for ($i = 0; $i < count($fichiers['name']); $i++) {
+                $nom_original = $fichiers['name'][$i];
+                $nom_original = preg_replace('/[^a-zA-Z0-9._-]/', '_', $nom_original);
+                $tmp = $fichiers['tmp_name'][$i];
+                $type = $fichiers['type'][$i];
+                $taille = $fichiers['size'][$i];
+                $extension = pathinfo($nom_original, PATHINFO_EXTENSION);
+                $nom_stockage = uniqid() . '.' . $extension;
+                $chemin = $dossier . $nom_stockage;
+                if (!move_uploaded_file($tmp, $chemin)) {
+                    $erreurs[] = "Erreur lors de l'upload du fichier : " . $nom_original;
+                    continue;
+                }
+                inserer_piece_jointe(
+                    $nom_original,
+                    $nom_stockage,
+                    $type,
+                    $taille,
+                    date('Y-m-d H:i:s'),
+                    $id_reponse
+                );
+            }
+        }
     }
 
+
+
     header("Location: index.php?page=detail_ticket&ticket=" . $details_ticket['numero_ticket'] . "#formulaire-reponse");
+    exit;
 }
 
 

@@ -212,8 +212,62 @@ function inserer_nouvelle_reponse(
         print_r($stmt->errorInfo());
         return false;
     }
+    return $pdo->lastInsertId();
 }
 
+
+/**
+ * Récupère les pièces jointes d'une réponse
+ */
+function get_pieces_jointes_par_reponse($id_reponse)
+{
+    $pdo = get_bdd();
+    $sql = "SELECT pj.* FROM PIECES_JOINTES pj
+            WHERE id_reponse = ?";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_reponse]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Function pour insérer le ticket dans la bdd
+ */
+
+function inserer_piece_jointe(
+    $nom_origine,
+    $nom_stockage,
+    $type,
+    $taille_octets,
+    $date_upload,
+    $id_reponse,
+    $id_ticket = null
+) {
+
+    $pdo = get_bdd();
+
+    $sql = "INSERT INTO PIECES_JOINTES (
+        nom_origine,
+        nom_stockage,
+        type,
+        taille_octets,
+        date_upload,
+        id_reponse,
+        id_ticket
+    ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $pdo->prepare($sql);
+
+    return $stmt->execute([
+        $nom_origine,
+        $nom_stockage,
+        $type,
+        $taille_octets,
+        $date_upload,
+        $id_reponse,
+        $id_ticket
+    ]);
+}
 
 /**
  * Mettre a jour la date du ticket
