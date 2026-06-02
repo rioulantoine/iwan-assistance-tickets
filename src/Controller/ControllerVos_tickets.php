@@ -16,7 +16,7 @@ if (!empty($date_debut) && !empty($date_fin)) {
 }
 
 if ($_SESSION['is_admin'] ?? false) {
-    $id_client = $_GET['id_admin'] ?? null;
+    $id_client = $_SESSION['id_admin'] ?? null;
 } else {
     $id_client = $_SESSION['id_client'] ?? null;
     if (!$id_client) {
