@@ -5,7 +5,11 @@ require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
 
 // On récupère le nom de toutes les entreprises ayant déjà créé un ticket
 $liste_nom_entreprise = obtenir_liste_entreprise();
+$entreprises = array_column($liste_nom_entreprise, 'nom_entreprise');
+if (!in_array('IWAN', $entreprises, true)) {
 
+    $liste_nom_entreprise[] = ['nom_entreprise' => 'IWAN'];
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $nom_declarant = trim($_POST['nom'] ?? '');
@@ -60,7 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($_SESSION['is_admin'] ?? false) {
         $nom_entreprise = strtoupper(trim($_POST['nom_entreprise'] ?? ''));
-        $id_entreprise = trouver_id_entreprise($nom_entreprise);
+        if ($nom_entreprise === 'IWAN') {
+            $id_entreprise = 1;
+        } else {
+            $id_entreprise = trouver_id_entreprise($nom_entreprise);
+        }
         if (empty($nom_entreprise)) {
             $erreurs[] = "Le nom de l'entreprise est obligatoire";
         }
