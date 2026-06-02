@@ -9,9 +9,6 @@
 </head>
 
 <body>
-    <pre>
-<?php print_r($details_ticket ?? []); ?>
-</pre>
     <main>
         <div class="container-details">
             <h1>Détails du ticket</h1>
