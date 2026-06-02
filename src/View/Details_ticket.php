@@ -377,7 +377,7 @@
                         <button type="button" id="cancel-reply" style="background:none; border:none; color:red; cursor:pointer; margin-left:10px">✖ Annuler</button>
                     </div>
 
-                    <form action="" method="POST" class="reply-form">
+                    <form action="" method="POST" class="reply-form" enctype="multipart/form-data">
                         <input type="hidden" name="id_parent" id="id_parent_input" value="">
                         <input type="hidden" name="id_ticket" value="<?= $details_ticket['id_ticket'] ?? '' ?> ">
                         <div class=" input-group">
