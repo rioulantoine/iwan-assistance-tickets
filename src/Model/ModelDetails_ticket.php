@@ -159,3 +159,18 @@ function supprimer_ticket_par_numero($num_ticket)
         return false;
     }
 }
+
+/**
+ * Récupère la/les réponse d'un ticket
+ */
+function get_reponse_ticket($id_ticket)
+{
+    $pdo = get_bdd();
+
+    $sql = "SELECT r.*
+            FROM REPONSE r
+            WHERE id_ticket = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_ticket]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

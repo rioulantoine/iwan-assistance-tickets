@@ -18,4 +18,7 @@ if (isset($details_ticket['date_creation'])) {
         $ecart_date_ticket = $hours . 'h' . str_pad($minutes, 2, '0', STR_PAD_LEFT) . ' plus tôt';
     }
 }
+$id_ticket = $details_ticket['id_ticket'];
+$reponses = get_reponse_ticket($id_ticket);
+
 require_once __DIR__ . '/../View/Details_ticket.php';

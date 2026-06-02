@@ -194,90 +194,138 @@
                     </div>
                 </div>
                 <div class="message-body">
-                    <h3><?= htmlspecialchars($details_ticket['titre'] ?? 'Titre non spécifié') ?></h3>
-                    <div class="info-client">
-                        <p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="7" r="4" />
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                            </svg><strong>Déclarant :</strong> <?= htmlspecialchars(
-                                                                    ($details_ticket['declarant_prenom'] ?? '') . ' ' .
-                                                                        mb_strtoupper($details_ticket['declarant_nom'] ?? '', 'UTF-8')
-                                                                ) ?></p>
-                        <p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
-                                <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
-                                <path d="M6 7h2M6 11h2M6 15h2" />
-                                <path d="M15 14h2M15 18h2" />
-                            </svg><strong>Entreprise :</strong> <?= htmlspecialchars($details_ticket['nom_entreprise'] ?? 'Entreprise non spécifié') ?></p>
-                        <p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="2" y="4" width="20" height="16" rx="2" />
-                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                            </svg><strong>Email :</strong> <?= htmlspecialchars($details_ticket['declarant_email'] ?? 'Email non spécifié') ?></p>
-                        <p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                            </svg><strong>Téléphone :</strong> <?= htmlspecialchars($details_ticket['declarant_telephone'] ?? 'Numéro non spécifié') ?></p>
-                    </div>
-                    <p class="message-text"><?= htmlspecialchars($details_ticket['description'] ?? 'Description non spécifiée') ?></p>
+                    <div class="ticket-body">
+                        <h3><?= htmlspecialchars($details_ticket['titre'] ?? 'Titre non spécifié') ?></h3>
+                        <div class="info-client">
+                            <p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="7" r="4" />
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                </svg><strong>Déclarant :</strong> <?= htmlspecialchars(
+                                                                        ($details_ticket['declarant_prenom'] ?? '') . ' ' .
+                                                                            mb_strtoupper($details_ticket['declarant_nom'] ?? '', 'UTF-8')
+                                                                    ) ?></p>
+                            <p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+                                    <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+                                    <path d="M6 7h2M6 11h2M6 15h2" />
+                                    <path d="M15 14h2M15 18h2" />
+                                </svg><strong>Entreprise :</strong> <?= htmlspecialchars($details_ticket['nom_entreprise'] ?? 'Entreprise non spécifié') ?></p>
+                            <p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                                </svg><strong>Email :</strong> <?= htmlspecialchars($details_ticket['declarant_email'] ?? 'Email non spécifié') ?></p>
+                            <p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                </svg><strong>Téléphone :</strong> <?= htmlspecialchars($details_ticket['declarant_telephone'] ?? 'Numéro non spécifié') ?></p>
+                        </div>
+                        <p class="message-text"><?= htmlspecialchars($details_ticket['description'] ?? 'Description non spécifiée') ?></p>
 
-                    <!-- Affichage pieces jointes -->
-                    <?php if (!empty($pieces_jointes)): ?>
-                        <div class="attachments-list">
-                            <?php foreach ($pieces_jointes as $pj) :
-                                $taille_kb = round($pj['taille_octets'] / 1024);
-                            ?>
-                                <div class="attachment-card">
+                        <!-- Affichage pieces jointes -->
+                        <?php if (!empty($pieces_jointes)): ?>
+                            <div class="attachments-list">
+                                <?php foreach ($pieces_jointes as $pj) :
+                                    $taille_kb = round($pj['taille_octets'] / 1024);
+                                ?>
+                                    <div class="attachment-card">
 
-                                    <div class="file-icon-wrapper existing-file-icon" data-filename="<?= htmlspecialchars($pj['nom_origine']) ?>"></div>
+                                        <div class="file-icon-wrapper existing-file-icon" data-filename="<?= htmlspecialchars($pj['nom_origine']) ?>"></div>
 
-                                    <div class="file-info">
-                                        <span class="file-title" title="<?= htmlspecialchars($pj['nom_origine']) ?>">
-                                            <?= htmlspecialchars($pj['nom_origine']) ?>
-                                        </span>
-                                        <span class="file-size"><?= $taille_kb ?> KB</span>
+                                        <div class="file-info">
+                                            <span class="file-title" title="<?= htmlspecialchars($pj['nom_origine']) ?>">
+                                                <?= htmlspecialchars($pj['nom_origine']) ?>
+                                            </span>
+                                            <span class="file-size"><?= $taille_kb ?> KB</span>
+                                        </div>
+
+                                        <!-- bouton télécharger -->
+                                        <a href="public/uploads/<?= htmlspecialchars($pj['nom_stockage']) ?>"
+                                            download="<?= htmlspecialchars($pj['nom_origine']) ?>"
+                                            class="download-btn"
+                                            title="Télécharger">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </a>
                                     </div>
-
-                                    <!-- bouton télécharger -->
-                                    <a href="public/uploads/<?= htmlspecialchars($pj['nom_stockage']) ?>"
-                                        download="<?= htmlspecialchars($pj['nom_origine']) ?>"
-                                        class="download-btn"
-                                        title="Télécharger">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
-                                            <polyline points="7 10 12 15 17 10"></polyline>
-                                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                                        </svg>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-
-                <div class="message-card">
-                    <div class="message-header">
-                        <div class="header-left">
-                            <span class="meta-title">Transaction Failed</span>
-                        </div>
-                        <div class="header-right">
-                            <span class="message-time">15:44 (4 plus tot)</span>
-                            <div class="action-icons">
-                                <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                                    <rect x="6" y="14" width="12" height="8"></rect>
-                                </svg>
-                                <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="9 17 4 12 9 7"></polyline>
-                                    <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
-                                </svg>
+                                <?php endforeach; ?>
                             </div>
-                        </div>
-                    </div>
-                    <div class="message-body">
-                        <p class="reply-indicator">Réponse à "Le site est inaccessible"</p>
-                        <p class="message-text">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+                            <div class="separation"></div>
+
+                        <?php endif; ?>
                     </div>
                 </div>
+                <!-- Affichage de la / les réponses-->
+                <?php foreach (($reponses ?? []) as $reponse): ?>
+                    <?php
+                    // On vérifie si c'est un admin (1) ou un client (0)
+                    // On stocke le nom de la classe CSS correspondante dans une variable
+                    $classe_fond = (isset($reponse['est_admin']) && $reponse['est_admin'] == 1) ? 'bg-admin' : 'bg-client';
+                    ?>
+
+                    <div class="message-card <?= $classe_fond ?>">
+                        <div class="message-header">
+
+                            <div class="header-left">
+                                <span class="meta-title"><?= htmlspecialchars($reponse['titre'] ?? 'Sans titre') ?></span>
+                                <?php if ($reponse['est_admin']): ?>
+                                    <div class="nom-IWAN">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+
+                                            <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+
+                                            <path d="M6 7h2M6 11h2M6 15h2" />
+
+                                            <path d="M15 14h2M15 18h2" />
+                                        </svg>
+                                        <p>IWAN</p>
+
+                                    </div>
+                                <?php else : ?>
+                                    <div class="nom-entreprise">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+
+                                            <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+
+                                            <path d="M6 7h2M6 11h2M6 15h2" />
+
+                                            <path d="M15 14h2M15 18h2" />
+                                        </svg>
+                                        <p> <?= htmlspecialchars($details_ticket['nom_entreprise'] ?? []) ?></p>
+
+                                    </div>
+                                <?php endif ?>
+                            </div>
+                            <div class="header-right">
+                                <span class="message-time">
+                                    <?= isset($reponse['date_envoi']) ? date('d/m/Y H:i', strtotime($reponse['date_envoi'])) : 'Date non spécifiée' ?>
+                                </span>
+                                <div class="action-icons">
+                                    <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                        <rect x="6" y="14" width="12" height="8"></rect>
+                                    </svg>
+                                    <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="9 17 4 12 9 7"></polyline>
+                                        <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+                                    </svg>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="message-body">
+                            <p class="message-text">
+                                <?= nl2br(htmlspecialchars($reponse['contenu'] ?? 'Message vide')) ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="separation"></div>
+                <?php endforeach; ?>
 
                 <div class="reply-section">
                     <div class="reply-header">
