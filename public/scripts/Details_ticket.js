@@ -1,8 +1,5 @@
 // public/scripts/Details_ticket.js
-let allFiles = [];
-const fileInput = document.getElementById("fichier");
-const listConteneur = document.getElementById("liste-fichiers");
-console.log(listConteneur);
+
 /**
  * Génère un SVG épuré adapté au type de fichier
  * @param {string} nomFichier - Le nom complet du fichier
@@ -21,7 +18,6 @@ function obtenirSvgParExtension(nomFichier) {
         default: '#7F8C8D'  
     };
 
-    // PDF
     if (extension === 'pdf') {
         return `
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +26,6 @@ function obtenirSvgParExtension(nomFichier) {
         </svg>`;
     }
 
-    // IMAGES
     if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp','heic'].includes(extension)) {
         return `
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +35,6 @@ function obtenirSvgParExtension(nomFichier) {
         </svg>`;
     }
 
-    // DOCUMENTS WORD
     if (['doc', 'docx'].includes(extension)) {
         return `
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +43,6 @@ function obtenirSvgParExtension(nomFichier) {
         </svg>`;
     }
 
-    // FEUILLES EXCEL / SPREADSHEETS
     if (['xls', 'xlsx', 'csv'].includes(extension)) {
         return `
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -58,7 +51,6 @@ function obtenirSvgParExtension(nomFichier) {
         </svg>`;
     }
 
-    // ARCHIVES COMPRESSÉES
     if (['zip', 'rar', '7z'].includes(extension)) {
         return `
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -67,25 +59,64 @@ function obtenirSvgParExtension(nomFichier) {
         </svg>`;
     }
 
-    // SQUELETTE PAR DÉFAUT
     return `
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="32" height="32" rx="6" fill="${couleurs.default}"/>
         <path d="M12 11H17V13H12V11ZM12 15H20V17H12V15ZM12 19H20V21H12V19Z" fill="white"/>
     </svg>`;
 }
-// Affiche les icônes SVG pour les fichiers déjà existants dans le ticket
+
 document.addEventListener('DOMContentLoaded', () => {
-    // On cible tous les conteneurs d'icônes qu'on vient de créer en PHP
+
+    let allFiles = [];
+    const localFileInput = document.getElementById("fichier"); 
+    const listConteneur = document.getElementById("liste-fichiers");
+    
     const existingIcons = document.querySelectorAll('.existing-file-icon');
     
     existingIcons.forEach(container => {
-        // On récupère le nom du fichier stocké dans l'attribut data-filename
         const filename = container.getAttribute('data-filename');
-        
         if (filename) {
-            // On utilise TA fonction pour générer le SVG et on l'injecte dans la div
             container.innerHTML = obtenirSvgParExtension(filename);
         }
     });
+// GESTION DES REPONSES PARENTS
+    const replyButtons = document.querySelectorAll('.btn-reply-to'); 
+    const idParentInput = document.getElementById('id_parent_input');
+    const replyContextBox = document.getElementById('reply-context'); 
+    const replyContextText = document.getElementById('reply-context-text'); 
+    const cancelReplyBtn = document.getElementById('cancel-reply');
+    const formSection = document.getElementById('formulaire-reponse');
+
+    if (replyButtons.length > 0) {
+        replyButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const idReponse = this.getAttribute('data-id');
+                const titreReponse = this.getAttribute('data-titre');
+
+                if (idParentInput && replyContextBox && replyContextText && formSection) {
+                    idParentInput.value = idReponse;
+                    replyContextText.textContent = `En réponse à "${titreReponse}"`;
+                    replyContextBox.style.display = 'flex';
+                    
+                    formSection.scrollIntoView({ behavior: 'smooth' });
+                    
+                    const titleInput = document.querySelector('.reply-form input[name="title"]');
+                    if(titleInput) titleInput.focus();
+                } else {
+                    console.error("Erreur JS : Un élément HTML est introuvable (Vérifiez les IDs)");
+                }
+            });
+        });
+    }
+
+    if(cancelReplyBtn) {
+        cancelReplyBtn.addEventListener('click', () => {
+            if (idParentInput && replyContextBox) {
+                idParentInput.value = ''; 
+                replyContextBox.style.display = 'none'; 
+            }
+        });
+    }
+
 });

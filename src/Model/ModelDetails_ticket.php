@@ -167,10 +167,64 @@ function get_reponse_ticket($id_ticket)
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT r.*
-            FROM REPONSE r
-            WHERE id_ticket = ?";
+    $sql = "SELECT r.*, parent.titre AS titre_parent 
+        FROM REPONSE r
+        LEFT JOIN REPONSE parent ON r.id_parent = parent.id_reponse
+        WHERE r.id_ticket = ?
+        ORDER BY r.date_envoi ASC";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id_ticket]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+/**
+ * Insere la réponse
+ */
+function inserer_nouvelle_reponse(
+    $titre,
+    $contenu,
+    $date_envoi,
+    $est_admin,
+    $id_ticket,
+    $id_parent = null
+) {
+    $pdo = get_bdd();
+    $sql = "INSERT INTO REPONSE (
+        titre,
+        contenu,
+        date_envoi,
+        est_admin,
+        id_ticket,
+        id_parent)
+        VALUES (?,?,?,?,?,?)";
+    $stmt = $pdo->prepare($sql);
+    $resultat = $stmt->execute([
+        $titre,
+        $contenu,
+        $date_envoi,
+        $est_admin,
+        $id_ticket,
+        $id_parent
+    ]);
+
+    if (!$resultat) {
+        print_r($stmt->errorInfo());
+        return false;
+    }
+}
+
+
+/**
+ * Mettre a jour la date du ticket
+ */
+function maj($id_ticket)
+{
+    $pdo = get_bdd();
+
+    $sql = "UPDATE TICKETS
+            SET date_maj = NOW()
+            WHERE id_ticket = ? ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_ticket]);
 }
