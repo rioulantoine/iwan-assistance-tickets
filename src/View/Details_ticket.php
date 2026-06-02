@@ -218,30 +218,38 @@
                             </svg><strong>Téléphone :</strong> <?= htmlspecialchars($details_ticket['declarant_telephone'] ?? 'Numéro non spécifié') ?></p>
                     </div>
                     <p class="message-text"><?= htmlspecialchars($details_ticket['description'] ?? 'Description non spécifiée') ?></p>
+
+                    <!-- Affichage pieces jointes -->
                     <?php if (!empty($pieces_jointes)): ?>
-                        <?php foreach ($pieces_jointes as $pj) :
-                            $extension = strtolower(pathinfo($pj['nom_origine'], PATHINFO_EXTENSION));
-                            $taille_kb = round($pj['taille_octets'] / 1024);
-                        ?>
-                            <div class="attachment-card">
-                                <div class="file-icon-wrapper file-<?= $extension ?>">
-                                    <div class="file-badge"><?= strtoupper($extension) ?></div>
+                        <div class="attachments-list">
+                            <?php foreach ($pieces_jointes as $pj) :
+                                $taille_kb = round($pj['taille_octets'] / 1024);
+                            ?>
+                                <div class="attachment-card">
+
+                                    <div class="file-icon-wrapper existing-file-icon" data-filename="<?= htmlspecialchars($pj['nom_origine']) ?>"></div>
+
+                                    <div class="file-info">
+                                        <span class="file-title" title="<?= htmlspecialchars($pj['nom_origine']) ?>">
+                                            <?= htmlspecialchars($pj['nom_origine']) ?>
+                                        </span>
+                                        <span class="file-size"><?= $taille_kb ?> KB</span>
+                                    </div>
+
+                                    <!-- bouton télécharger -->
+                                    <a href="public/uploads/<?= htmlspecialchars($pj['nom_stockage']) ?>"
+                                        download="<?= htmlspecialchars($pj['nom_origine']) ?>"
+                                        class="download-btn"
+                                        title="Télécharger">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
+                                            <polyline points="7 10 12 15 17 10"></polyline>
+                                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                                        </svg>
+                                    </a>
                                 </div>
-                                <div class="file-info">
-                                    <span class="file-title"><?= htmlspecialchars($pj['nom_origine']) ?></span>
-                                    <span class="file-size"><?= $taille_kb ?> KB</span>
-                                </div>
-                                <a href="public/uploads/<?= htmlspecialchars($pj['nom_stockage']) ?>"
-                                    download="<?= htmlspecialchars($pj['nom_origine']) ?>"
-                                    class="download-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
-                                        <polyline points="7 10 12 15 17 10"></polyline>
-                                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                                    </svg>
-                                </a>
-                            </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        </div>
                     <?php endif; ?>
                 </div>
 
@@ -327,9 +335,9 @@
                     </div>
                 </div>
             </div>
-            <script src="public/scripts/upload_fichiers.js"></script>
             <script src="public/scripts/menu_deroulant_statut.js"></script>
             <script src="public/scripts/valider_suppression.js"></script>
+            <script src="public/scripts/Details_ticket.js"></script>
     </main>
 
 </body>

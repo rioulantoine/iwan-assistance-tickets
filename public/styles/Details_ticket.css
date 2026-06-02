@@ -80,7 +80,15 @@ main {
     background-color: #38a169;
 }
 
-
+#liste-fichiers,
+.fichiers-preview-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    flex-grow: 1;
+    min-width: 0;       
+    max-width: 100%;
+}
 
 .meta-title {
     font-size: 16px;
@@ -284,19 +292,75 @@ main {
 /* ==============================
         PIÈCES JOINTES
 ================================= */
+.attachments-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+}
+
 .attachment-card {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 14px;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 6px;
+    padding: 8px 14px 8px 8px;
     background-color: #ffffff;
+    border: 1.5px solid #0f172a; 
+    border-radius: 8px;
+    width: 280px; 
     box-sizing: border-box;
-     width: 100%;          
-     min-width: 200px;     
-     max-width: 280px;     
-     flex-shrink: 1;
+}
+
+.file-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.file-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+    flex: 1; 
+}
+
+.file-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+/* Le poids du fichier en gris clair */
+.file-size {
+    font-size: 13px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+/* Le bouton de téléchargement à droite */
+.download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.download-btn:hover {
+    color: #3182ce;
+    transform: translateY(-2px);
 }
 
 /*=============================
