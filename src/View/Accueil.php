@@ -490,9 +490,14 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                 </p>
                             </div>
                             <?php $date_creation = (new DateTime($ticket['date_creation']))->format('d/m/y à H:i'); ?>
+                            <?php $date_maj = (new DateTime($ticket['date_maj']))->format('d/m/Y à H:i'); ?>
 
                             <div class="ticket-footer">
-                                <span class="ticket-date"><?= $date_creation ?></span>
+                                <?php if ($_SESSION['is_admin'] ?? false): ?>
+                                    <span class="ticket-date"><?= $date_creation ?></span>
+                                <?php else : ?>
+                                    <span class="ticket-date"> Date de mise à jour : <?= $date_maj ?></span>
+                                <?php endif ?>
                                 <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir"> Ouvrir le ticket </a>
                             </div>
                         </div>
