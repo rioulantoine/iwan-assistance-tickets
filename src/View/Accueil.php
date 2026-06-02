@@ -490,8 +490,11 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                 </p>
                             </div>
                             <?php $date_creation = (new DateTime($ticket['date_creation']))->format('d/m/y à H:i'); ?>
-                            <?php $date_maj = (new DateTime($ticket['date_maj']))->format('d/m/Y à H:i'); ?>
-
+                            <?php
+                            $date_maj = !empty($ticket['date_maj'])
+                                ? (new DateTime($ticket['date_maj']))->format('d/m/Y à H:i')
+                                : null;
+                            ?>
                             <div class="ticket-footer">
                                 <?php if ($_SESSION['is_admin'] ?? false): ?>
                                     <span class="ticket-date"><?= $date_creation ?></span>
