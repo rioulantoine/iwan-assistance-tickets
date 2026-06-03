@@ -414,7 +414,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                         <button class="<?= $id_statut == 3 ? 'actif' : '' ?>" type="submit" name="statut" value="3">Résolus</button>
                     </form>
                 <?php else : ?>
-                    <h1>Vos derniers tickets</h1>
+                    <h1>Mes derniers tickets</h1>
                 <?php endif; ?>
 
                 <?php foreach ($ticket_maj_user ?? [] as $ticket): ?>

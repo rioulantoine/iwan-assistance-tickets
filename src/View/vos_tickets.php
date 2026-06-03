@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Vos tickets</title>
+    <title>Historique de mes tickets</title>
     <link rel="icon" type="image/png" href="../img/Logo_Iwan.png" />
     <link rel="stylesheet" href="public/styles/Vos_tickets.css" />
     <link rel="stylesheet" href="public/styles/Global.css" />
@@ -13,7 +13,7 @@
 <body>
     <main>
         <div class="container-tickets">
-            <h1>Vos tickets</h1>
+            <h1>Historique de mes tickets</h1>
             <p>
                 Retrouvez ici l'historique et l'état d'avancement de toutes vos
                 sollicitations.
