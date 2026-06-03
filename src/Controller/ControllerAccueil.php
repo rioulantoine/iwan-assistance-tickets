@@ -82,8 +82,6 @@ $date_fin_semaine = date('d/m/y', strtotime('sunday this week'));
 $labels_barres = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 $valeurs_barres = get_tickets_resolus_semaine_en_cours();
 
-// Simulation ou compte des nouveaux tickets pour la sidebar admin
-$nb_nouveaux_tickets = 26;
 
 //======================================
 // Données nouveau tickets aujourd'hui
