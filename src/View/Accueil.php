@@ -252,8 +252,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
         <div class="container-tickets">
             <?php if (isset($_SESSION['id_client'])): ?>
                 <p>
-                    Espace client : <strong> <?= htmlspecialchars($_SESSION['name'] ?? 0) ?></strong>
-                </p>
+                    Espace client :&nbsp;<strong><?= htmlspecialchars($_SESSION['name'] ?? 0) ?></strong> </p>
                 <a href="index.php?page=nouveau_ticket" class="btn-nouveau-ticket">
                     <div class="icon-button">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
