@@ -45,10 +45,10 @@ function count_tickets($id_cible = 0, $statut = null, $id_urgence = null)
     if ($id_urgence !== null) {
         if (is_array($id_urgence)) {
             $les_urgences = implode(',', array_fill(0, count($id_urgence), '?'));
-            $sql .= " AND id_urgence IN ($les_urgences)";
+            $sql .= " AND id_urgence IN ($les_urgences) AND id_statut != 3";
             $params = array_merge($params, $id_urgence);
         } else {
-            $sql .= " AND id_urgence = ?";
+            $sql .= " AND id_urgence = ? AND id_statut != 3";
             $params[] = $id_urgence;
         }
     }
