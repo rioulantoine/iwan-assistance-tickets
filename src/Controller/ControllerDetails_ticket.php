@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Vérification titre
-    if (empty($titre)) {
+    if (empty($titre) && !($_SESSION['is_admin'] ?? false)) {
         $erreurs[] = "Le titre est obligatoire";
     }
 

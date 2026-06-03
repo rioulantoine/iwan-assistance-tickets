@@ -366,7 +366,7 @@
                     <?php endif; ?>
                     <div class="separation"></div>
                 <?php endforeach; ?>
-
+                <!-- Partie pour répondre -->
                 <div class="reply-section" id="formulaire-reponse">
                     <div class="reply-header" id="reply-context" style="display: none;">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
@@ -382,7 +382,7 @@
                         <input type="hidden" name="id_ticket" value="<?= $details_ticket['id_ticket'] ?? '' ?> ">
                         <div class=" input-group">
                             <label for="reply-title">Titre</label>
-                            <input type="text" id="reply-title" name="titre" placeholder="Entrez le titre de votre réponse" required>
+                            <input type="text" id="reply-title" name="titre" placeholder="Entrez le titre de votre réponse" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>>
                         </div>
 
                         <div class="textarea-wrapper">
