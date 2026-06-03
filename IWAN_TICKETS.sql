@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : jeu. 28 mai 2026 à 14:29
+-- Généré le : mer. 03 juin 2026 à 09:03
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -34,16 +34,6 @@ CREATE TABLE `NIVEAU_URGENCE` (
   `libelle_urgence` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `NIVEAU_URGENCE`
---
-
-INSERT INTO `NIVEAU_URGENCE` (`id_urgence`, `libelle_urgence`) VALUES
-(1, 'Bloquant / Très urgent'),
-(2, 'Urgent'),
-(3, 'Normal'),
-(4, 'Non urgent / Demande d\'évolution');
-
 -- --------------------------------------------------------
 
 --
@@ -54,7 +44,7 @@ CREATE TABLE `PIECES_JOINTES` (
   `id_piece_jointe` int(11) NOT NULL,
   `nom_origine` varchar(255) NOT NULL,
   `nom_stockage` varchar(255) NOT NULL,
-  `type` varchar(50) NOT NULL,
+  `type` varchar(255) NOT NULL,
   `taille_octets` int(11) NOT NULL,
   `date_upload` datetime NOT NULL,
   `id_reponse` int(11) DEFAULT NULL,
@@ -72,10 +62,11 @@ CREATE TABLE `REPONSE` (
   `titre` varchar(100) NOT NULL,
   `contenu` text NOT NULL,
   `date_envoi` datetime NOT NULL,
-  `auteur_nom` varchar(50) NOT NULL,
-  `auteur_prenom` varchar(50) NOT NULL,
-  `auteur_type` varchar(50) NOT NULL,
-  `id_ticket` int(11) NOT NULL
+  `auteur_nom` varchar(50) DEFAULT NULL,
+  `auteur_prenom` varchar(50) DEFAULT NULL,
+  `est_admin` tinyint(1) NOT NULL DEFAULT 0,
+  `id_ticket` int(11) NOT NULL,
+  `id_parent` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -89,16 +80,6 @@ CREATE TABLE `STATUT` (
   `libelle_statut` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `STATUT`
---
-
-INSERT INTO `STATUT` (`id_statut`, `libelle_statut`) VALUES
-(1, 'En attente'),
-(2, 'En cours'),
-(3, 'Résolu'),
-(4, 'Archivé');
-
 -- --------------------------------------------------------
 
 --
@@ -110,7 +91,7 @@ CREATE TABLE `TICKETS` (
   `numero_ticket` varchar(30) NOT NULL,
   `declarant_nom` varchar(50) NOT NULL,
   `declarant_prenom` varchar(50) DEFAULT NULL,
-  `declarant_telephone` varchar(16) DEFAULT NULL,
+  `declarant_telephone` varchar(100) DEFAULT NULL,
   `declarant_email` varchar(100) NOT NULL,
   `titre` varchar(100) NOT NULL,
   `description` text NOT NULL,
@@ -118,12 +99,12 @@ CREATE TABLE `TICKETS` (
   `date_archivage` datetime DEFAULT NULL,
   `date_resolution` datetime DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
+  `derniere_action` varchar(255) DEFAULT '''Ticket créé''',
   `id_entreprise` varchar(50) NOT NULL,
   `nom_entreprise` varchar(100) NOT NULL,
   `id_urgence` int(11) NOT NULL,
   `id_statut` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 --
 -- Index pour les tables déchargées
@@ -148,7 +129,8 @@ ALTER TABLE `PIECES_JOINTES`
 --
 ALTER TABLE `REPONSE`
   ADD PRIMARY KEY (`id_reponse`),
-  ADD KEY `id_ticket` (`id_ticket`);
+  ADD KEY `id_ticket` (`id_ticket`),
+  ADD KEY `fk_reponse_parent` (`id_parent`);
 
 --
 -- Index pour la table `STATUT`
@@ -173,31 +155,31 @@ ALTER TABLE `TICKETS`
 -- AUTO_INCREMENT pour la table `NIVEAU_URGENCE`
 --
 ALTER TABLE `NIVEAU_URGENCE`
-  MODIFY `id_urgence` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_urgence` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `PIECES_JOINTES`
 --
 ALTER TABLE `PIECES_JOINTES`
-  MODIFY `id_piece_jointe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_piece_jointe` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `REPONSE`
 --
 ALTER TABLE `REPONSE`
-  MODIFY `id_reponse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_reponse` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `STATUT`
 --
 ALTER TABLE `STATUT`
-  MODIFY `id_statut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_statut` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `TICKETS`
 --
 ALTER TABLE `TICKETS`
-  MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
@@ -214,6 +196,7 @@ ALTER TABLE `PIECES_JOINTES`
 -- Contraintes pour la table `REPONSE`
 --
 ALTER TABLE `REPONSE`
+  ADD CONSTRAINT `fk_reponse_parent` FOREIGN KEY (`id_parent`) REFERENCES `REPONSE` (`id_reponse`) ON DELETE SET NULL,
   ADD CONSTRAINT `reponse_ibfk_1` FOREIGN KEY (`id_ticket`) REFERENCES `TICKETS` (`id_ticket`) ON DELETE CASCADE;
 
 --
