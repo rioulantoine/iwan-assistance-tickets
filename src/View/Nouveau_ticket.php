@@ -15,16 +15,11 @@
     <main>
         <div class="nouveau-ticket">
             <h1>Nouveau ticket</h1>
-            <p>
-                Aidez-nous à vous aider: détaillez votre demande pour une prise en
-                charge prioritaire.
-            </p>
+            <p>Aidez-nous à vous aider : détaillez votre demande pour une prise en charge prioritaire.</p>
         </div>
         <div class="container-nouveau-ticket">
             <h1>Créez votre ticket rapidement !</h1>
-            <p>
-                Rédiger et traiter les nouvelles demandes et les nouveaux problèmes
-            </p>
+            <p>Rédiger et traiter les nouvelles demandes et les nouveaux problèmes.</p>
             <?php if (isset($_SESSION['flash_message'])) : ?>
                 <div class="flash-alert alert-<?= $_SESSION['flash_type'] ?>" id="flashAlert">
                     <div class="flash-content">
@@ -125,7 +120,7 @@
                                     Choisissez un niveau d'urgence
                                 </option>
                                 <option value="1" <?= ($_POST['niveau_urgence'] ?? '') === '1' ? 'selected' : '' ?>>
-                                    Bloquant/ Très urgent
+                                    Bloquant / Très urgent
                                 </option>
                                 <option value="2" <?= ($_POST['niveau_urgence'] ?? '') === '2' ? 'selected' : '' ?>>
                                     Urgent

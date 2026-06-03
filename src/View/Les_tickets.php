@@ -42,20 +42,27 @@
                 unset($_SESSION['flash_type']);
                 ?>
             <?php endif; ?>
+
+
             <p>
-                Un total de <span class="ticket-count"><?php echo $nb_ticket ?? 0 ?></span> tickets ont été trouvés.
-            </p>
+                <?php if (($nb_ticket ?? 0) > 1) : ?>
+                    Un total de <span class="ticket-count"><?= htmlspecialchars($nb_ticket ?? 0) ?></span> tickets ont été trouvés.
+                <?php elseif (($nb_ticket ?? 0) === 1) : ?>
+                    Un total de <span class="ticket-count">1</span> ticket a été trouvé.
+                <?php else : ?>
+                    Aucun ticket n'a été trouvé.
+                <?php endif; ?>
             <form method="GET" action="" class="filtre-bar">
                 <input type="hidden" name="page" value="admin_tickets">
 
                 <div class="select-wrapper">
                     <select name="date_filtre">
                         <option value="" <?= (!isset($_GET['date_filtre']) || $_GET['date_filtre'] === '') ? 'selected' : '' ?>>Tout le temps</option>
-                        <option value="1" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '1') ? 'selected' : '' ?>>Cette Semaine</option>
+                        <option value="1" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '1') ? 'selected' : '' ?>>Cette semaine</option>
                         <option value="2" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '2') ? 'selected' : '' ?>>14 derniers jours</option>
-                        <option value="3" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '3') ? 'selected' : '' ?>>Ce Mois</option>
-                        <option value="4" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '4') ? 'selected' : '' ?>>Dernier Trimestre</option>
-                        <option value="5" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '5') ? 'selected' : '' ?>>Cette Année</option>
+                        <option value="3" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '3') ? 'selected' : '' ?>>Ce mois</option>
+                        <option value="4" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '4') ? 'selected' : '' ?>>Dernier trimestre</option>
+                        <option value="5" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '5') ? 'selected' : '' ?>>Cette année</option>
                     </select>
                     <!--iconne de la fleche vers le bas -->
                     <svg
@@ -134,7 +141,7 @@
                 <div class="select-wrapper">
                     <select name="urgence_filtre">
                         <option value="" <?= (!isset($_GET['urgence_filtre']) || $_GET['urgence_filtre'] === '') ? 'selected' : '' ?>>Toutes les urgences</option>
-                        <option value="1" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '1') ? 'selected' : '' ?>>Bloquant/ Très urgent</option>
+                        <option value="1" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '1') ? 'selected' : '' ?>>Bloquant / Très urgent</option>
                         <option value="2" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '2') ? 'selected' : '' ?>>Urgent</option>
                         <option value="3" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '3') ? 'selected' : '' ?>>Normal</option>
                         <option value="4" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '4') ? 'selected' : '' ?>>Non urgent / Demande d'évolution</option>

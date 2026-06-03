@@ -1,4 +1,5 @@
 <?php require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8" />
@@ -208,7 +209,7 @@
                                 <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
                                 <path d="M6 7h2M6 11h2M6 15h2" />
                                 <path d="M15 14h2M15 18h2" />
-                            </svg><strong>Entreprise :</strong> <?= htmlspecialchars($details_ticket['nom_entreprise'] ?? 'Entreprise non spécifié') ?></p>
+                            </svg><strong>Entreprise :</strong> <?= htmlspecialchars($details_ticket['nom_entreprise'] ?? 'Entreprise non spécifiée') ?></p>
                         <p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="2" y="4" width="20" height="16" rx="2" />
                                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
@@ -432,5 +433,7 @@
     </main>
 
 </body>
+
+</html>
 
 <?php require_once __DIR__ . '/Templates/Footer.php'; ?>

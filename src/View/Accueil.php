@@ -130,7 +130,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
 
                 <p class="box-desc">
                     <?php if (($ecart_resolus ?? 0) > 0): ?>
-                        <span class="text-danger">Augmentation de <strong><?= htmlspecialchars($ecart_resolus ?? 0) ?>% </strong> de tickets resolus par rapport au mois dernier</span>
+                        <span class="text-danger">Augmentation de <strong><?= htmlspecialchars($ecart_resolus ?? 0) ?>% </strong> de tickets résolus par rapport au mois dernier</span>
 
                     <?php elseif (($ecart_resolus ?? 0) < 0): ?>
                         <span class="text-success">Baisse de <strong><?= htmlspecialchars(abs($ecart_resolus ?? 0)) ?>% </strong>par rapport au mois dernier</span>
@@ -178,17 +178,17 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                             <circle cx="12" cy="16" r="1" fill="#ffffff" />
                         </svg>
                     </div>
-                    <h3>Tickets Urgents</h3>
+                    <h3>Tickets urgents</h3>
                 </div>
 
                 <p class="box-desc">
                     <?php if (($ecart_urgents ?? 0) > 0): ?>
-                        <span class="text-danger">Augmentation de <strong style="color: #C71500;"><?= htmlspecialchars($ecart_urgents ?? 0) ?>% </strong> du nombre de tickets urgent par rapport au mois dernier</span>
+                        <span class="text-danger">Augmentation de <strong style="color: #C71500;"><?= htmlspecialchars($ecart_urgents ?? 0) ?>% </strong> du nombre de tickets urgents par rapport au mois dernier</span>
 
                     <?php elseif (($ecart_urgents ?? 0) < 0): ?>
-                        <span class="text-success">Baisse de <strong><?= htmlspecialchars(abs($ecart_urgents ?? 0)) ?>% </strong> du nombre de tickets urgent par rapport au mois dernier</span>
+                        <span class="text-success">Baisse de <strong><?= htmlspecialchars(abs($ecart_urgents ?? 0)) ?>% </strong> du nombre de tickets urgents par rapport au mois dernier</span>
                     <?php elseif (($urgents_mois_dernier ?? 0) == 0): ?>
-                        <span class="text-success">Il n'y a eu aucun ticket de urgent le mois dernier.</span>
+                        <span class="text-success">Il n'y a eu aucun ticket urgent le mois dernier.</span>
 
                     <?php else: ?>
                         <span class="text-muted">Stable par rapport au mois dernier</span>
@@ -233,7 +233,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                 <path d="M15 14.5h.01" stroke-width="2.5" />
                             </svg>
                         </div>
-                        <h3>Taux de Résolution global</h3>
+                        <h3>Taux de résolution global</h3>
                     </div>
 
                     <p class="box-desc">
@@ -294,7 +294,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                 <div class="panel-header">
                                     <div class="panel-titre-bloc">
                                         <h3>Tickets par semaine</h3>
-                                        <p>Les tickets résolus sur la période du : <?= $date_debut_semaine ?? '00/00/00' ?> - <?= $date_fin_semaine ?? '00/00/00' ?></p>
+                                        <p>Les tickets résolus sur la période du <?= $date_debut_semaine ?? '00/00/00' ?> - <?= $date_fin_semaine ?? '00/00/00' ?></p>
                                     </div>
                                 </div>
 
@@ -513,7 +513,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                     <span class="ticket-date"><?= $date_creation ?></span>
                                 <?php else : ?>
 
-                                    <span class="ticket-date"> Mis a jour le <?= $date_maj ?> : <?= $ticket['derniere_action'] ?? "" ?></span>
+                                    <span class="ticket-date"> Mis à jour le <?= $date_maj ?> : <?= $ticket['derniere_action'] ?? "" ?></span>
                                 <?php endif ?>
                                 <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir"> Ouvrir le ticket </a>
                             </div>
@@ -539,9 +539,4 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
 </body>
 
 </html>
-</body>
-
-</html>
-
-
 <?php require_once __DIR__ . '/Templates/Footer.php'; ?>

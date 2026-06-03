@@ -76,7 +76,7 @@ $nb_urgent   = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_urg
 $nb_normal = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_normal);
 $nb_non_urgent = count_tickets_non_archives_par_urgence($id_cible, $id_urgence_non_urgent);
 
-$labels_radar = ['Bloquant', 'Urgent', 'Normal', 'Non_urgent'];
+$labels_radar = ['Bloquant', 'Urgent', 'Normal', 'Non urgent'];
 $valeurs_radar = [$nb_bloquant, $nb_urgent, $nb_normal, $nb_non_urgent];
 
 // Diagramme à barres 
