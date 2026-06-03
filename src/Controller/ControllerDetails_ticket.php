@@ -113,12 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 );
             }
         }
+        header("Location: index.php?page=detail_ticket&ticket=" . $details_ticket['numero_ticket'] . "#reponse-" . $id_reponse);
+        exit;
     }
-
-
-
-    header("Location: index.php?page=detail_ticket&ticket=" . $details_ticket['numero_ticket'] . "#formulaire-reponse");
-    exit;
 }
 
 

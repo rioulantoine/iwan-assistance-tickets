@@ -262,7 +262,7 @@
                     $classe_fond = (isset($reponse['est_admin']) && $reponse['est_admin'] == 1) ? 'bg-admin' : 'bg-client';
                     ?>
 
-                    <div class="message-card <?= $classe_fond ?>">
+                    <div class="message-card <?= $classe_fond ?>" id="reponse-<?= $reponse['id_reponse'] ?? 'unknown' ?>">
                         <div class="message-header">
 
                             <div class="header-left">
