@@ -7,7 +7,10 @@ $details_ticket = get_ticket_par_numero($num_ticket);
 $pieces_jointes = get_pieces_jointes_par_ticket($num_ticket);
 $date_ticket = isset($details_ticket['date_creation']) ? date('d/m/Y H:i', strtotime($details_ticket['date_creation'])) : 'Date non spécifiée';
 $ecart_date_ticket = null;
-
+if ($details_ticket === false) {
+    header("Location: index.php?page=accueil");
+    exit;
+}
 if (isset($details_ticket['date_creation'])) {
     $diffMinutes = floor((time() - strtotime($details_ticket['date_creation'])) / 60);
 
