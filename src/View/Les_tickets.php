@@ -174,6 +174,7 @@
             </form>
             <!-- Liste des tickets -->
             <table class="table-tickets">
+
                 <thead>
                     <tr>
                         <th class="sortable" data-col="id_urgence"
@@ -206,6 +207,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php if (($nb_ticket ?? 0) === 0) : ?>
+                        <td colspan="10" class="no-tickets">Aucun ticket trouvé avec les critères sélectionnés.</td>
+                    <?php endif; ?>
                     <?php foreach ($liste_tickets ?? [] as $ticket) : ?>
                         <?php
                         // Gestion de la couleur du texte de l'urgence
