@@ -14,36 +14,48 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
 <body>
     <main>
         <div class="tableau-de-bord">
-            <h1>Tableau de bord</h1>
+            <div class="header-text">
+                <h1>Tableau de bord</h1>
+
+                <?php if (isset($_SESSION['id_client'])): ?>
+                    <p>
+                        <?php if (($nb_tickets_actif ?? 0) > 15): ?>
+                            Forte activité ce mois-ci : nos équipes sont mobilisées sur vos dossiers (<strong><?= htmlspecialchars($nb_tickets_actif ?? 0) ?></strong> en cours).
+                        <?php elseif (($nb_tickets_actif ?? 0) > 0): ?>
+                            Activité modérée : vos dossiers sont en cours de traitement par nos techniciens.
+                        <?php elseif (($nb_tickets_resolu ?? 0) == 0): ?>
+                            Bienvenue sur votre tableau de bord ! Aucun ticket n'a encore été créé.
+                        <?php else: ?>
+                            Excellente nouvelle ! Tous vos tickets ont été traités, aucun dossier en attente.
+                        <?php endif; ?>
+                    </p>
+                <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
+                    <p>
+                        <?php if (($total_crees_ce_mois ?? 0) > 50): ?>
+                            Forte activité ce mois-ci : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
+                        <?php elseif (($total_crees_ce_mois ?? 0) > 25): ?>
+                            Activité modérée : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
+                        <?php elseif (($total_crees_ce_mois ?? 0) === 1): ?>
+                            Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> ticket a été créé ce mois-ci.
+                        <?php else: ?>
+                            Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
+                        <?php endif; ?>
+                    </p>
+                <?php endif; ?>
+            </div>
 
             <?php if (isset($_SESSION['id_client'])): ?>
-                <p>
-                    <?php if (($nb_tickets_actif ?? 0) > 15): ?>
-                        Forte activité ce mois-ci : nos équipes sont mobilisées sur vos dossiers (<strong><?= htmlspecialchars($nb_tickets_actif ?? 0) ?></strong> en cours).
-                    <?php elseif (($nb_tickets_actif ?? 0) > 0): ?>
-                        Activité modérée : vos dossiers sont en cours de traitement par nos techniciens.
-                    <?php elseif (($nb_tickets_resolu ?? 0) == 0): ?>
-                        Bienvenue sur votre tableau de bord ! Aucun ticket n'a encore été créé.
-                    <?php else: ?>
-                        Excellente nouvelle ! Tous vos tickets ont été traités, aucun dossier en attente.
-                    <?php endif; ?>
-                </p>
-
-            <?php elseif (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
-                <p>
-                    <?php if (($total_crees_ce_mois ?? 0) > 50): ?>
-                        Forte activité ce mois-ci : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
-                    <?php elseif (($total_crees_ce_mois ?? 0) > 25): ?>
-                        Activité modérée : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
-                    <?php elseif (($total_crees_ce_mois ?? 0) === 1): ?>
-                        Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> ticket a été créé ce mois-ci.
-                    <?php else: ?>
-                        Faible activité : <?= htmlspecialchars($total_crees_ce_mois ?? 0) ?> tickets ont été créés ce mois-ci.
-                    <?php endif; ?>
-                </p>
+                <a href="index.php?page=nouveau_ticket" class="btn-nouveau-ticket">
+                    <div class="icon-button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </div>
+                    <span>Nouveau ticket</span>
+                </a>
             <?php endif; ?>
         </div>
-
         <div class="container-boxes">
             <div class="box">
                 <div class="box-header">
@@ -210,10 +222,36 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                     </svg>
                 </div>
             </div>
+            <?php if ($montrer_taux ?? false): ?>
+                <div class="box">
+                    <div class="box-header">
+                        <div class="box-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bg-percent-icon">
+                                <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+                                <line x1="8" y1="16" x2="16" y2="8" />
+                                <path d="M9 9.5h.01" stroke-width="2.5" />
+                                <path d="M15 14.5h.01" stroke-width="2.5" />
+                            </svg>
+                        </div>
+                        <h3>Taux de Résolution global</h3>
+                    </div>
 
-            <div class="box">
-                <div class="box-header">
-                    <div class="box-badge">
+                    <p class="box-desc">
+                    <p class="box-desc">
+                        <?php if (($ecart_taux ?? 0) > 0): ?>
+                            <span class="text-muted">Efficacité en hausse de <strong style="color: green;">+<?= htmlspecialchars($ecart_taux ?? 0) ?> points</strong> par rapport au mois dernier</span>
+
+                        <?php elseif (($ecart_taux ?? 0) < 0): ?>
+                            <span class="text-muted">Efficacité en baisse de <strong style="color: red;"><?= htmlspecialchars($ecart_taux ?? 0) ?> points</strong> par rapport au mois dernier</span>
+
+                        <?php else: ?>
+                            <span class="text-muted">Le taux de résolution est stable par rapport au mois dernier</span>
+
+                        <?php endif ?>
+                    </p>
+                    </p>
+                    <div class="box-value"><?= htmlspecialchars($taux_resolution ?? 0) ?>%</div>
+                    <div class="box-watermark" style="right: -15px; bottom: -20px">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bg-percent-icon">
                             <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
                             <line x1="8" y1="16" x2="16" y2="8" />
@@ -221,47 +259,14 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                             <path d="M15 14.5h.01" stroke-width="2.5" />
                         </svg>
                     </div>
-                    <h3>Taux de Résolution global</h3>
                 </div>
-
-                <p class="box-desc">
-                <p class="box-desc">
-                    <?php if (($ecart_taux ?? 0) > 0): ?>
-                        <span class="text-muted">Efficacité en hausse de <strong style="color: green;">+<?= htmlspecialchars($ecart_taux ?? 0) ?> points</strong> par rapport au mois dernier</span>
-
-                    <?php elseif (($ecart_taux ?? 0) < 0): ?>
-                        <span class="text-muted">Efficacité en baisse de <strong style="color: red;"><?= htmlspecialchars($ecart_taux ?? 0) ?> points</strong> par rapport au mois dernier</span>
-
-                    <?php else: ?>
-                        <span class="text-muted">Le taux de résolution est stable par rapport au mois dernier</span>
-
-                    <?php endif ?>
-                </p>
-                </p>
-                <div class="box-value"><?= htmlspecialchars($taux_resolution ?? 0) ?>%</div>
-                <div class="box-watermark" style="right: -15px; bottom: -20px">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bg-percent-icon">
-                        <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
-                        <line x1="8" y1="16" x2="16" y2="8" />
-                        <path d="M9 9.5h.01" stroke-width="2.5" />
-                        <path d="M15 14.5h.01" stroke-width="2.5" />
-                    </svg>
-                </div>
-            </div>
+            <?php endif; ?>
         </div>
         <div class="container-tickets">
             <?php if (isset($_SESSION['id_client'])): ?>
                 <p>
                     Espace client :&nbsp;<strong><?= htmlspecialchars($_SESSION['name'] ?? 0) ?></strong> </p>
-                <a href="index.php?page=nouveau_ticket" class="btn-nouveau-ticket">
-                    <div class="icon-button">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                    </div>
-                    <span>Nouveau ticket</span>
-                </a>
+
             <?php endif ?>
 
 

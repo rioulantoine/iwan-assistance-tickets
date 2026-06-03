@@ -6,7 +6,25 @@ main {
 }
 
 .tableau-de-bord {
-  margin-left: 2%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%;
+    margin-bottom: 24px; 
+   padding: 1% 2%;
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column; 
+    flex: 1; 
+}
+.header-text h1 {
+    margin: 0 0 8px 0; 
+}
+
+.header-text p {
+    margin: 0; 
 }
 /* Box statut tickets */
 
@@ -124,17 +142,18 @@ main {
 
 .btn-nouveau-ticket {
   display: flex;
-  padding: 10px 20px;
+  padding: 20px 8%;
   background-color: #0e2235;
   color: #ffffff;
   text-decoration: none;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 18px;
   margin-right: 2%;
   margin-left: auto;
   gap: 10px;
   width: fit-content;
-  margin-bottom: 20px;
+  margin-top: 20px;
+
 }
 .btn-nouveau-ticket:hover {
   background-color: #0e2235;
