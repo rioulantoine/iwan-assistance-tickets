@@ -396,10 +396,19 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
 
                 </div>
             <?php endif ?>
-
-            <div class="dashboard-content">
+            <!-- Affichage des tickets client -->
+            <div class="dashboard-content" id="tickets">
                 <?php if (!empty($_SESSION['is_admin'])) : ?>
                     <h1>Les derniers tickets</h1>
+                    <form action="#tickets" method="GET" class="filtre">
+                        <button class="<?= $id_statut == 0 ? 'actif' : '' ?>" type="submit" name="statut" value="0">Tous</button>
+
+                        <button class="<?= $id_statut == 1 ? 'actif' : '' ?>" type="submit" name="statut" value="1">En attente</button>
+
+                        <button class="<?= $id_statut == 2 ? 'actif' : '' ?>" type="submit" name="statut" value="2">En cours</button>
+
+                        <button class="<?= $id_statut == 3 ? 'actif' : '' ?>" type="submit" name="statut" value="3">Résolus</button>
+                    </form>
                 <?php else : ?>
                     <h1>Vos derniers tickets</h1>
                 <?php endif; ?>
@@ -521,6 +530,8 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
     </script>
 
     <script src="public/scripts/graphiques_accueil.js"></script>
+    <script src="public/scripts/Accueil.js"></script>
+
 </body>
 
 </html>

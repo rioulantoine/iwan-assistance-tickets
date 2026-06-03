@@ -92,13 +92,16 @@ $nb_tickets_du_jour = get_nb_tickets_du_jour();
 //===========================================
 // Affichage des tickets de l'utilisateur
 //===========================================
-
+$id_statut = $_GET['statut'] ?? 2; // 2 = En cours par défaut
+if ($id_statut == 0) {
+    $id_statut = null; // Affiche tous les statuts
+}
 if ($_SESSION['is_admin'] ?? false) {
     $is_admin = true;
-    $ticket_maj_user = get_ticket_maj(null, $is_admin);
+    $ticket_maj_user = get_ticket_maj(null, $is_admin, $id_statut);
 } else {
     $id_client = $_SESSION['id_client'];
-    $ticket_maj_user = get_ticket_maj($id_client, false);
+    $ticket_maj_user = get_ticket_maj($id_client, false, $id_statut);
 }
 
 

@@ -172,6 +172,38 @@ main {
   margin-bottom: 30px;
 }
 
+/* Filtre de statut */
+.filtre {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+.filtre button {
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1.5px solid #d1d5db;
+    background: white;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filtre button:hover {
+    border-color: #1e3a6e;
+    color: #1e3a6e;
+}
+
+.filtre button.actif {
+    background: #1e3a6e;
+    color: white;
+    border-color: #1e3a6e;
+}
+
 .ticket-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
