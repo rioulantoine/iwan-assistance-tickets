@@ -79,7 +79,7 @@
                                 id="nom"
                                 name="nom"
                                 placeholder="Entrez votre nom"
-                                required
+                                <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
                                 value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">
@@ -89,7 +89,7 @@
                                 id="prenom"
                                 name="prenom"
                                 placeholder="Entrez votre prénom"
-                                required
+                                <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
                                 value="<?= htmlspecialchars($_POST['prenom'] ?? '') ?>" />
                         </div>
 
@@ -102,7 +102,7 @@
                                 id="email"
                                 name="email"
                                 placeholder="Entrez votre adresse e-mail"
-                                required
+                                <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
                                 value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" />
 
                         </div>
@@ -113,7 +113,7 @@
                                 id="telephone"
                                 name="telephone"
                                 placeholder="Entrez votre numéro de téléphone"
-                                required
+                                <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
                                 value="<?= htmlspecialchars($_POST['telephone'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">

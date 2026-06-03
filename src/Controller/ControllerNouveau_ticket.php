@@ -24,23 +24,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     // Vérification nom
-    if (empty($nom_declarant)) {
+    if (empty($nom_declarant) && !($_SESSION['is_admin'] ?? false)) {
         $erreurs[] = "Le nom est obligatoire.";
     }
 
     // Vérification prénom
-    if (empty($prenom_declarant)) {
+    if (empty($prenom_declarant) && !($_SESSION['is_admin'] ?? false)) {
         $erreurs[] = "Le prénom est obligatoire.";
     }
 
     // Vérification email
-    if (empty($email)) {
+    if (empty($email) && !($_SESSION['is_admin'] ?? false)) {
         $erreurs[] = "L'email est obligatoire.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)  && !($_SESSION['is_admin'] ?? false)) {
         $erreurs[] = "L'email n'est pas valide.";
     }
     // Vérification téléphone
-    if (empty($telephone)) {
+    if (empty($telephone) && !($_SESSION['is_admin'] ?? false)) {
         $erreurs[] = "Le téléphone est obligatoire.";
     }
 
