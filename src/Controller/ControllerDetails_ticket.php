@@ -16,10 +16,18 @@ if (isset($details_ticket['date_creation'])) {
 
     if ($diffMinutes < 60) {
         $ecart_date_ticket = $diffMinutes . 'min plus tôt';
-    } else {
+    } elseif ($diffMinutes < 1440) {
         $hours = floor($diffMinutes / 60);
         $minutes = $diffMinutes % 60;
         $ecart_date_ticket = $hours . 'h' . str_pad($minutes, 2, '0', STR_PAD_LEFT) . ' plus tôt';
+    } else {
+        $days = floor($diffMinutes / 1440);
+        $hours = floor(($diffMinutes % 1440) / 60);
+        if ($hours == 0) {
+            $ecart_date_ticket = $days . 'j' . ' plus tôt';
+        } else {
+            $ecart_date_ticket = $days . 'j' . ' et ' . $hours  . 'h' . ' plus tôt';
+        }
     }
 }
 $id_ticket = $details_ticket['id_ticket'];
