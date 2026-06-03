@@ -26,6 +26,24 @@ USE `IWAN_TICKETS`;
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `CLIENT`
+--
+
+CREATE TABLE `CLIENT` (
+  `id_client` varchar(50) NOT NULL,
+  `nom_entreprise` varchar(100) DEFAULT NULL,
+  `cp` varchar(50) DEFAULT NULL,
+  `ville` varchar(50) DEFAULT NULL,
+  `nom` varchar(50) DEFAULT NULL,
+  `prenom` varchar(50) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `telephone` varchar(100) DEFAULT NULL,
+  `observation` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `NIVEAU_URGENCE`
 --
 
@@ -89,19 +107,14 @@ CREATE TABLE `STATUT` (
 CREATE TABLE `TICKETS` (
   `id_ticket` int(11) NOT NULL,
   `numero_ticket` varchar(30) NOT NULL,
-  `declarant_nom` varchar(50) NOT NULL,
-  `declarant_prenom` varchar(50) DEFAULT NULL,
-  `declarant_telephone` varchar(100) DEFAULT NULL,
-  `declarant_email` varchar(100) NOT NULL,
   `titre` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `date_creation` datetime NOT NULL,
   `date_archivage` datetime DEFAULT NULL,
   `date_resolution` datetime DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
-  `derniere_action` varchar(255) DEFAULT '''Ticket créé''',
+  `derniere_action` varchar(255) DEFAULT 'Ticket créé',
   `id_entreprise` varchar(50) NOT NULL,
-  `nom_entreprise` varchar(100) NOT NULL,
   `id_urgence` int(11) NOT NULL,
   `id_statut` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -109,6 +122,12 @@ CREATE TABLE `TICKETS` (
 --
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `CLIENT`
+--
+ALTER TABLE `CLIENT`
+  ADD PRIMARY KEY (`id_client`);
 
 --
 -- Index pour la table `NIVEAU_URGENCE`
@@ -145,7 +164,8 @@ ALTER TABLE `TICKETS`
   ADD PRIMARY KEY (`id_ticket`),
   ADD UNIQUE KEY `numero_ticket` (`numero_ticket`),
   ADD KEY `id_urgence` (`id_urgence`),
-  ADD KEY `id_statut` (`id_statut`);
+  ADD KEY `id_statut` (`id_statut`),
+  ADD KEY `id_entreprise` (`id_entreprise`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -203,6 +223,7 @@ ALTER TABLE `REPONSE`
 -- Contraintes pour la table `TICKETS`
 --
 ALTER TABLE `TICKETS`
+  ADD CONSTRAINT `fk_ticket_client` FOREIGN KEY (`id_entreprise`) REFERENCES `CLIENT` (`id_client`) ON DELETE RESTRICT,
   ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`id_urgence`) REFERENCES `NIVEAU_URGENCE` (`id_urgence`),
   ADD CONSTRAINT `tickets_ibfk_2` FOREIGN KEY (`id_statut`) REFERENCES `STATUT` (`id_statut`);
 COMMIT;
