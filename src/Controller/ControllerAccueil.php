@@ -44,6 +44,10 @@ try {
     // Statistiques globales d'activité
     $total_crees_ce_mois = $actifs_ce_mois + $resolus_ce_mois;
 
+    $isAdmin = $_SESSION['is_admin'] ?? false;
+    $affichageGlobal = (int) ($_ENV['AFFICHAGE_TAUX_RESOLUTION'] ?? 0);
+    $montrer_taux = $isAdmin || $affichageGlobal === 1;
+
     // Calcul du taux de résolution global
     $nb_tickets_total = $nb_tickets_actif + $nb_tickets_resolu;
     $taux_resolution = ($nb_tickets_total > 0) ? round(($nb_tickets_resolu / $nb_tickets_total) * 100, 1) : 0;
