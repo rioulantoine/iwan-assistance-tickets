@@ -234,7 +234,7 @@ function get_nb_tickets_du_jour()
     return (int)$stmt->fetchColumn();
 }
 /**
- * Retourne les 3 derniers tickets mis a jour pour le client
+ * Retourne les 3 derniers tickets mis a jour pour un utilisateur donné ou pour tous les utilisateurs si en mode admin
  */
 function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 2)
 {
@@ -247,7 +247,7 @@ function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 2)
                 LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
                 WHERE id_statut IN (1,2,3)
                 ORDER BY date_creation DESC
-                LIMIT 3";
+                LIMIT 10";
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
         } else {
@@ -256,7 +256,7 @@ function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 2)
                 LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
                 WHERE id_statut = ?
                 ORDER BY date_creation DESC
-                LIMIT 3";
+                LIMIT 10";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$id_statut]);
         }
@@ -266,7 +266,7 @@ function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 2)
                 LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
                 WHERE t.id_entreprise = ?
                 ORDER BY date_maj DESC
-                LIMIT 3";
+                LIMIT 10";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id_client]);
     }
