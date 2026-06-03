@@ -272,13 +272,15 @@ function inserer_piece_jointe(
 /**
  * Mettre a jour la date du ticket
  */
-function maj($id_ticket)
+function maj($id_ticket, $derniere_action = "Ticket créé",)
 {
     $pdo = get_bdd();
 
     $sql = "UPDATE TICKETS
-            SET date_maj = NOW()
+            SET 
+                date_maj = NOW(),
+                derniere_action = ?
             WHERE id_ticket = ? ";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id_ticket]);
+    $stmt->execute([$derniere_action, $id_ticket]);
 }
