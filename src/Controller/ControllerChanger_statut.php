@@ -8,6 +8,13 @@ if (!empty($num_ticket) && $nouvel_id_statut >= 1 && $nouvel_id_statut <= 4) {
 
     modifier_statut_ticket($num_ticket, $nouvel_id_statut);
 }
-maj(null, $num_ticket, "Changement du statut");
+if ($nouvel_id_statut === 2) {
+    $message = "En cours de résolution";
+} elseif ($nouvel_id_statut === 3) {
+    $message = "Ticket résolu";
+} else {
+    $message = "Changement de statut";
+}
+maj(null, $num_ticket, $message);
 header("Location: index.php?page=detail_ticket&ticket=" . urlencode($num_ticket));
 exit();
