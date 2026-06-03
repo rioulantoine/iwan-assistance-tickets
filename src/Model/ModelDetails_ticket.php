@@ -272,7 +272,7 @@ function inserer_piece_jointe(
 /**
  * Mettre a jour la date du ticket
  */
-function maj($id_ticket, $derniere_action = "Ticket créé",)
+function maj($id_ticket = null, $num_ticket = null, $derniere_action = "Ticket créé")
 {
     $pdo = get_bdd();
 
@@ -280,7 +280,7 @@ function maj($id_ticket, $derniere_action = "Ticket créé",)
             SET 
                 date_maj = NOW(),
                 derniere_action = ?
-            WHERE id_ticket = ? ";
+            WHERE id_ticket = ? OR numero_ticket = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$derniere_action, $id_ticket]);
+    $stmt->execute([$derniere_action, $id_ticket, $num_ticket]);
 }

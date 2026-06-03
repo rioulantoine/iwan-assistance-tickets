@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
         }
 
-        maj($id_ticket, "Nouvelle réponse");
+        maj($id_ticket, null, "Nouvelle réponse");
 
 
         $fichiers = $_FILES['fichier'] ?? null;

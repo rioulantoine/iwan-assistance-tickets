@@ -500,7 +500,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                     <span class="ticket-date"><?= $date_creation ?></span>
                                 <?php else : ?>
 
-                                    <span class="ticket-date"> Date de mise à jour : <?= $date_maj ?> <?= $ticket['derniere_action'] ?? "" ?></span>
+                                    <span class="ticket-date"> Mis a jour le <?= $date_maj ?> : <?= $ticket['derniere_action'] ?? "" ?></span>
                                 <?php endif ?>
                                 <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir"> Ouvrir le ticket </a>
                             </div>
