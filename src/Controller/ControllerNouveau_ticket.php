@@ -153,18 +153,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // La redirection ne se fera que si le $numero_ticket a bien été généré 
     if ($numero_ticket) {
         if ($_SESSION['is_admin'] ?? false) {
-            $url_ticket = "index.php?page=detail_ticket&ticket=" . urlencode($numero_ticket);
-
-            $_SESSION['flash_message'] = 'Le ticket <a href="' . $url_ticket . '">#' . htmlspecialchars($numero_ticket) . ' - ' . htmlspecialchars($titre) . '</a> a bien été créé.';
-            $_SESSION['flash_type'] = "success";
-            header("Location: index.php?page=nouveau_ticket");
+            header("Location: index.php?page=accueil");
             exit();
         } else {
-            if ($_SESSION['flash_message']) {
-            } else {
-                header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
-                exit();
-            }
+
+            header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
+            exit();
         }
     }
 }
