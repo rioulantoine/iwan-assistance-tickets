@@ -125,6 +125,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 listConteneur.appendChild(item);
             });
+            const textarea = document.querySelector('.textarea-wrapper textarea');
+    const actionsBox = document.querySelector('.textarea-actions');
+    
+    if (textarea && actionsBox) {
+        // 1. On mesure la hauteur réelle de la zone contenant les fichiers et le bouton
+        const actionsHeight = actionsBox.offsetHeight;
+        
+        // 2. On pousse le "fond" (padding) du textarea vers le bas pour ne pas cacher le texte
+        // (actionsHeight + 15 pixels de marge de sécurité)
+        textarea.style.paddingBottom = (actionsHeight + 15) + 'px';
+        
+        // 3. On "simule" une frappe au clavier pour forcer l'auto-resize qu'on a codé tout à l'heure !
+        textarea.dispatchEvent(new Event('input'));
+    }
         }
     }
 });
+
+
+// resize du textarea de réponse pour s'adapter au contenu
+const textareas = document.querySelectorAll('.textarea-wrapper textarea');
+
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto'; 
+            this.style.height = (this.scrollHeight + 20) + 'px'; 
+        });
+    });
