@@ -26,6 +26,38 @@ main {
 .header-text p {
     margin: 0; 
 }
+/* ==============================
+           BTN NOUVEAU TICKETS
+================================= */
+.container-tickets p {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-left: 2%;
+  font-size: 1.5rem;
+}
+
+.btn-nouveau-ticket {
+  display: flex;
+  padding: 20px 8%;
+  background-color: #0e2235;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 18px;
+  margin-right: 2%;
+  margin-left: auto;
+  gap: 10px;
+  width: fit-content;
+  margin-top: 20px;
+
+}
+.btn-nouveau-ticket:hover {
+  background-color: #0e2235;
+  color: #ffffff;
+}
+
 /* Box statut tickets */
 
 .container-boxes {
@@ -128,37 +160,6 @@ main {
   height: 130px;
 }
 
-/* ==============================
-           BTN NOUVEAU TICKETS
-================================= */
-.container-tickets p {
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  margin-left: 2%;
-  font-size: 1.5rem;
-}
-
-.btn-nouveau-ticket {
-  display: flex;
-  padding: 20px 8%;
-  background-color: #0e2235;
-  color: #ffffff;
-  text-decoration: none;
-  border-radius: 6px;
-  font-size: 18px;
-  margin-right: 2%;
-  margin-left: auto;
-  gap: 10px;
-  width: fit-content;
-  margin-top: 20px;
-
-}
-.btn-nouveau-ticket:hover {
-  background-color: #0e2235;
-  color: #ffffff;
-}
 
 /* ==============================
             DASHBOARD TICKET
