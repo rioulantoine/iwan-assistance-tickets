@@ -4,8 +4,10 @@
 require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
 
 // On récupère le nom de toutes les entreprises ayant déjà créé un ticket
-$liste_nom_entreprise = obtenir_liste_entreprise();
-$entreprises = array_column($liste_nom_entreprise, 'nom_entreprise');
+$liste_entreprises = obtenir_liste_entreprise();
+$nb_entreprises = count($liste_entreprises);
+$liste_nom_entreprises = array_column($liste_entreprises, 'nom_entreprise');
+$entreprises = array_column($liste_nom_entreprises, 'nom_entreprise');
 if (!in_array('IWAN', $entreprises, true)) {
 
     $liste_nom_entreprise[] = ['nom_entreprise' => 'IWAN'];
@@ -15,134 +17,137 @@ if (!$_SESSION['is_admin'] ?? false) {
     $id_client = $_SESSION['id_client'];
     $infos_client = get_info_client($id_client);
 }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['nouveau-ticket'])) {
 
-    $nom_declarant = trim($_POST['nom'] ?? '');
-    $prenom_declarant = trim($_POST['prenom'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $telephone = trim($_POST['telephone'] ?? '');
-    $niveau_urgence = trim($_POST['niveau_urgence'] ?? '');
-    $titre = trim($_POST['titre'] ?? '');
-    $description = trim($_POST['description'] ?? '');
+        $nom_declarant = trim($_POST['nom'] ?? '');
+        $prenom_declarant = trim($_POST['prenom'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $telephone = trim($_POST['telephone'] ?? '');
+        $niveau_urgence = trim($_POST['niveau_urgence'] ?? '');
+        $titre = trim($_POST['titre'] ?? '');
+        $description = trim($_POST['description'] ?? '');
 
-    $erreurs = [];
+        $erreurs = [];
 
 
-    // Vérification nom
-    if (empty($nom_declarant) && !($_SESSION['is_admin'] ?? false)) {
-        $erreurs[] = "Le nom est obligatoire.";
-    }
+        // Vérification nom
+        if (empty($nom_declarant) && !($_SESSION['is_admin'] ?? false)) {
+            $erreurs[] = "Le nom est obligatoire.";
+        }
 
-    // Vérification prénom
-    if (empty($prenom_declarant) && !($_SESSION['is_admin'] ?? false)) {
-        $erreurs[] = "Le prénom est obligatoire.";
-    }
+        // Vérification prénom
+        if (empty($prenom_declarant) && !($_SESSION['is_admin'] ?? false)) {
+            $erreurs[] = "Le prénom est obligatoire.";
+        }
 
-    // Vérification email
-    if (empty($email) && !($_SESSION['is_admin'] ?? false)) {
-        $erreurs[] = "L'email est obligatoire.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)  && !($_SESSION['is_admin'] ?? false)) {
-        $erreurs[] = "L'email n'est pas valide.";
-    }
-    // Vérification téléphone
-    if (empty($telephone) && !($_SESSION['is_admin'] ?? false)) {
-        $erreurs[] = "Le téléphone est obligatoire.";
-    }
+        // Vérification email
+        if (empty($email) && !($_SESSION['is_admin'] ?? false)) {
+            $erreurs[] = "L'email est obligatoire.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)  && !($_SESSION['is_admin'] ?? false)) {
+            $erreurs[] = "L'email n'est pas valide.";
+        }
+        // Vérification téléphone
+        if (empty($telephone) && !($_SESSION['is_admin'] ?? false)) {
+            $erreurs[] = "Le téléphone est obligatoire.";
+        }
 
-    // Vérification urgence
-    $urgences_valides = ['1', '2', '3', '4'];
-    if (!in_array($niveau_urgence, $urgences_valides)) {
-        $erreurs[] = "Le niveau d'urgence est invalide.";
-    }
+        // Vérification urgence
+        $urgences_valides = ['1', '2', '3', '4'];
+        if (!in_array($niveau_urgence, $urgences_valides)) {
+            $erreurs[] = "Le niveau d'urgence est invalide.";
+        }
 
-    // Vérification titre
-    if (empty($titre)) {
-        $erreurs[] = "Le titre est obligatoire.";
-    } elseif (strlen($titre) > 255) {
-        $erreurs[] = "Le titre est trop long.";
-    }
+        // Vérification titre
+        if (empty($titre)) {
+            $erreurs[] = "Le titre est obligatoire.";
+        } elseif (strlen($titre) > 255) {
+            $erreurs[] = "Le titre est trop long.";
+        }
 
-    // Vérification description
-    if (empty($description)) {
-        $erreurs[] = "La description est obligatoire.";
-    }
+        // Vérification description
+        if (empty($description)) {
+            $erreurs[] = "La description est obligatoire.";
+        }
 
-    $id_entreprise = $infos_client['id_client'];
+        $id_entreprise = $infos_client['id_client'];
 
-    // Si aucune erreur 
-    $numero_ticket = null;
-    if (!empty($erreurs)) {
-        $_SESSION['flash_message'] = implode('<br>', $erreurs);
-        $_SESSION['flash_type'] = "error";
-    }
-    if (empty($erreurs)) {
-        $numero_ticket = generer_numero_ticket();
-        $date_creation = date('Y-m-d H:i:s');
-        $id_statut = 1;
+        // Si aucune erreur 
+        $numero_ticket = null;
+        if (!empty($erreurs)) {
+            $_SESSION['flash_message'] = implode('<br>', $erreurs);
+            $_SESSION['flash_type'] = "error";
+        }
+        if (empty($erreurs)) {
+            $numero_ticket = generer_numero_ticket();
+            $date_creation = date('Y-m-d H:i:s');
+            $id_statut = 1;
 
-        // Appel du modèle (S'exécute uniquement si tout est OK)
-        $id_ticket = inserer_nouveau_ticket(
-            $numero_ticket,
-            $nom_declarant,
-            $prenom_declarant,
-            $telephone,
-            $email,
-            $titre,
-            $description,
-            $date_creation,
-            $id_entreprise,
-            $niveau_urgence,
-            $id_statut
-        );
+            // Appel du modèle (S'exécute uniquement si tout est OK)
+            $id_ticket = inserer_nouveau_ticket(
+                $numero_ticket,
+                $nom_declarant,
+                $prenom_declarant,
+                $telephone,
+                $email,
+                $titre,
+                $description,
+                $date_creation,
+                $id_entreprise,
+                $niveau_urgence,
+                $id_statut
+            );
 
-        // Upload de fichier
-        $fichiers = $_FILES['fichier'] ?? null;
+            // Upload de fichier
+            $fichiers = $_FILES['fichier'] ?? null;
 
-        if (!empty($fichiers['name'][0]) && $id_ticket) {
+            if (!empty($fichiers['name'][0]) && $id_ticket) {
 
-            $dossier = __DIR__ . '/../../public/uploads/';
-            if (!is_dir($dossier)) {
-                mkdir($dossier, 0777, true);
-            }
-            for ($i = 0; $i < count($fichiers['name']); $i++) {
-
-                $nom_original = $fichiers['name'][$i];
-                $nom_original = preg_replace('/[^a-zA-Z0-9._-]/', '_', $nom_original);
-                $tmp = $fichiers['tmp_name'][$i];
-                $type = $fichiers['type'][$i];
-                $taille = $fichiers['size'][$i];
-
-                $extension = pathinfo($nom_original, PATHINFO_EXTENSION);
-                $nom_stockage = uniqid() . '.' . $extension;
-
-                $chemin = $dossier . $nom_stockage;
-
-                if (!move_uploaded_file($tmp, $chemin)) {
-                    $erreurs[] = "Erreur lors de l'upload du fichier : " . $nom_original;
-                    continue;
+                $dossier = __DIR__ . '/../../public/uploads/';
+                if (!is_dir($dossier)) {
+                    mkdir($dossier, 0777, true);
                 }
+                for ($i = 0; $i < count($fichiers['name']); $i++) {
 
-                inserer_piece_jointe(
-                    $nom_original,
-                    $nom_stockage,
-                    $type,
-                    $taille,
-                    date('Y-m-d H:i:s'),
-                    $id_ticket
-                );
+                    $nom_original = $fichiers['name'][$i];
+                    $nom_original = preg_replace('/[^a-zA-Z0-9._-]/', '_', $nom_original);
+                    $tmp = $fichiers['tmp_name'][$i];
+                    $type = $fichiers['type'][$i];
+                    $taille = $fichiers['size'][$i];
+
+                    $extension = pathinfo($nom_original, PATHINFO_EXTENSION);
+                    $nom_stockage = uniqid() . '.' . $extension;
+
+                    $chemin = $dossier . $nom_stockage;
+
+                    if (!move_uploaded_file($tmp, $chemin)) {
+                        $erreurs[] = "Erreur lors de l'upload du fichier : " . $nom_original;
+                        continue;
+                    }
+
+                    inserer_piece_jointe(
+                        $nom_original,
+                        $nom_stockage,
+                        $type,
+                        $taille,
+                        date('Y-m-d H:i:s'),
+                        $id_ticket
+                    );
+                }
             }
         }
-    }
 
-    // La redirection ne se fera que si le $numero_ticket a bien été généré 
-    if ($numero_ticket) {
-        if ($_SESSION['is_admin'] ?? false) {
-            header("Location: index.php?page=accueil");
-            exit();
-        } else {
+        // La redirection ne se fera que si le $numero_ticket a bien été généré 
+        if ($numero_ticket) {
+            if ($_SESSION['is_admin'] ?? false) {
+                header("Location: index.php?page=accueil");
+                exit();
+            } else {
 
-            header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
-            exit();
+                header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
+                exit();
+            }
         }
     }
 }

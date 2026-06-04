@@ -10,9 +10,8 @@ function obtenir_liste_entreprise()
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT DISTINCT nom_entreprise
-            FROM CLIENT
-            WHERE nom_entreprise IS NOT NULL";
+    $sql = "SELECT DISTINCT nom_entreprise,nom,prenom,email,telephone
+            FROM CLIENT";
     $stmt = $pdo->query($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

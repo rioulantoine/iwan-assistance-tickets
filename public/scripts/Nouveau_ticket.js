@@ -149,6 +149,22 @@ function fermerModalUrgence(event) {
         }
 }
 
+// Fonction pour ouvrir la fenêtre pop-up liste des entreprises
+function ouvrirModalListeEntreprises(){
+    const modal = document.getElementById('modalListeEntreprises');
+            modal.style.display = 'flex';
+}
+
+// Fonction pour fermer la fenêtre si on clique à l'extérieur de la boite blanche
+function fermerModalListeEntreprises(event){
+    const modal = document.getElementById('modalListeEntreprises');
+        if (event.target === modal) {
+            modal.style.display = 'non';
+        }
+}
+
+
+
 // resize automatique des textarea
 const textareas = document.querySelectorAll('.textarea-wrapper textarea, #description');
 

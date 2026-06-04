@@ -20,8 +20,95 @@
         <div class="container-nouveau-ticket">
             <h1>Créez votre ticket rapidement !</h1>
             <p>Rédiger et traiter les nouvelles demandes et les nouveaux problèmes.</p>
+            <?php if ($_SESSION['is_admin'] ?? false) : ?>
+                <button type="button" class="btn-modal-liste-entreprises" onclick="ouvrirModalListeEntreprises()">Liste des entreprises</button>
+
+                <div id="modalListeEntreprises" class="modal-liste-entreprises" onclick="fermerModalListeEntreprises(event)">
+                    <div class="modal-liste-entreprises-content">
+                        <div class="modal-liste-entreprises-header">
+                            <div class="header-titre-groupe">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+                                    <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+                                    <path d="M6 7h2M6 11h2M6 15h2" />
+                                    <path d="M15 14h2M15 18h2" />
+                                </svg>
+                                <div class="header-textes">
+                                    <h2>Liste des entreprises</h2>
+                                    <p>Retrouvez ici toutes les entreprises enregistrées.</p>
+                                </div>
+                            </div>
+                            <button type="button" class="modal-liste-entreprises-close" onclick="document.getElementById('modalListeEntreprises').style.display='none'">&times;</button>
+                        </div>
+                        <form class="modal-liste-entreprises-filtre">
+                            <div class="search-wrapper">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" name="recherche" placeholder="Rechercher un ticket" value="<?= trim(htmlspecialchars($_GET['recherche'] ?? '')) ?>" />
+                            </div>
+                            <button type="submit" class="btn-filtre">Appliquer les filtres</button>
+
+                        </form>
+                        <div class="modal-liste-entreprises-body">
+                            <table class="table-liste-entreprises">
+                                <thead>
+                                    <tr>
+                                        <th class=" sortable" data-col="nom_entreprise">
+                                            Nom entreprise
+                                        </th>
+                                        <th class="sortable" data-col="nom">
+                                            Nom
+                                        </th>
+                                        <th class="sortable" data-col="prenom">
+                                            Prénom
+                                        </th>
+                                        <th class="sortable" data-col="email">
+                                            Email
+                                        </th>
+                                        <th class="sortable" data-col="telephone">
+                                            Téléphone
+                                        </th>
+                                        <th class="sortable" data-col="action">
+                                            Action
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (($nb_entreprises ?? 0) === 0) : ?>
+                                        <td colspan="10" class="pas-entreprise"> Aucune entreprise trouvé. </td>
+                                    <?php endif; ?>
+                                    <?php foreach ($liste_entreprises ?? [] as $entreprise) : ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($entreprise['nom_entreprise']) ?></td>
+                                            <td><?= htmlspecialchars($entreprise['nom']) ?></td>
+                                            <td><?= htmlspecialchars($entreprise['prenom']) ?></td>
+                                            <td><?= htmlspecialchars($entreprise['email']) ?></td>
+                                            <td><?= htmlspecialchars($entreprise['telephone']) ?></td>
+                                            <td><button>Sélectionner</button></td>
+
+
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
             <?php if (isset($_SESSION['flash_message'])) : ?>
-                <div class="flash-alert alert-<?= $_SESSION['flash_type'] ?>" id="flashAlert">
+                <div class=" flash-alert alert-<?= $_SESSION['flash_type'] ?>" id="flashAlert">
                     <div class="flash-content">
                         <?php if ($_SESSION['flash_type'] === 'success') : ?>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -180,7 +267,7 @@
                         <div id="liste-fichiers" class="fichiers-preview-list"></div>
                     </div>
 
-                    <button type="submit" class="btn-submit">Envoyer ma demande</button>
+                    <button type="submit" class="btn-submit" name="nouveau-ticket">Envoyer ma demande</button>
                 </form>
             </div>
         </div>
