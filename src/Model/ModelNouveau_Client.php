@@ -47,3 +47,18 @@ function inserer_nouveau_client(
         return false;
     }
 }
+
+/**
+ * Vérifie que l'id que l'on veut rentrer n'existe pas déjà dans la base et si oui pour quelle entreprise
+ */
+function verifier_id($id_client)
+{
+    $pdo = get_bdd();
+
+    $sql = "SELECT nom_entreprise
+            FROM CLIENT
+            WHERE id_client = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_client]);
+    return $stmt->fetchColumn();
+}

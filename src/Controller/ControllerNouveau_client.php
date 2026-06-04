@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vérification id client
     if (empty($id_client)) {
-        $erreur[] = "L'id client est obligatoire";
+        $erreurs[] = "L'id client est obligatoire";
     }
     // Vérification nom entreprise
     if (empty($nom_entreprise)) {
@@ -56,10 +56,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!empty($erreurs)) {
-        $_SESSION['flashmessage'] = implode('<br>', $erreurs);
+        $_SESSION['flash_message'] = implode('<br>', $erreurs);
         $_SESSION['flash_type'] = 'error';
     }
-
+    $id_existant = verifier_id($id_client);
+    if ($id_existant) {
+        $_SESSION['flash_message'] = "L'id client existe déjà pour l'entreprise : $id_existant";
+        $_SESSION['flash_type'] = 'error';
+        header("Location: index.php?page=nouveau_client");
+        exit();
+    }
     if (empty($erreurs)) {
         inserer_nouveau_client(
             $id_client,
@@ -72,9 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $telephone,
             $observation
         );
+        header("Location: index.php?page=accueil");
+        exit();
     }
-    header("Location: index.php?page=accueil");
-    exit();
 }
 
 
