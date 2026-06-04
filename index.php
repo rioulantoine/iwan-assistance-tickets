@@ -53,6 +53,15 @@ switch ($page) {
             exit();
         }
         require __DIR__ . '/src/Controller/ControllerLes_tickets.php';
+        break;
+
+    case 'nouveau_client':
+        if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+            require __DIR__ . '/src/View/Templates/erreur.php'; // On lui montre une page d'erreur
+            exit();
+        }
+        require __DIR__ . '/src/Controller/ControllerNouveau_client.php';
+        break;
     default:
         require __DIR__ . '/src/View/Templates/erreur.php';
         exit();

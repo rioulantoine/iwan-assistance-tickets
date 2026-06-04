@@ -165,9 +165,9 @@
                     <div class="detail-ticket">
                         <label for="description">Description</label>
                         <textarea
-                            id="description"
-                            name="description"
-                            placeholder="Décrivez votre problème en détail"><?= htmlspecialchars(trim($_POST['description'] ?? '')) ?></textarea>
+                            id="observation"
+                            name="observation"
+                            placeholder="Ajoutez toutes informations complémentaires"><?= htmlspecialchars(trim($_POST['observation'] ?? '')) ?></textarea>
                     </div>
                     <div class="ajouter-fichier-container">
                         <input type="file" id="fichier" name="fichier[]" multiple style="display: none;">
