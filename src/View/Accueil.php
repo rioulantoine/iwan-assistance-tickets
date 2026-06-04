@@ -405,13 +405,13 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                 <?php if (!empty($_SESSION['is_admin'])) : ?>
                     <h1>Les derniers tickets</h1>
                     <form action="#tickets" method="GET" class="filtre">
-                        <button class="<?= $id_statut == 0 ? 'actif' : '' ?>" type="submit" name="statut" value="0">Tous</button>
+                        <button class="<?= $id_statut ?? '' == 0 ? 'actif' : '' ?>" type="submit" name="statut" value="0">Tous</button>
 
-                        <button class="<?= $id_statut == 1 ? 'actif' : '' ?>" type="submit" name="statut" value="1">En attente</button>
+                        <button class="<?= $id_statut ?? '' == 1 ? 'actif' : '' ?>" type="submit" name="statut" value="1">En attente</button>
 
-                        <button class="<?= $id_statut == 2 ? 'actif' : '' ?>" type="submit" name="statut" value="2">En cours</button>
+                        <button class="<?= $id_statut  ?? '' == 2 ? 'actif' : '' ?>" type="submit" name="statut" value="2">En cours</button>
 
-                        <button class="<?= $id_statut == 3 ? 'actif' : '' ?>" type="submit" name="statut" value="3">Résolus</button>
+                        <button class="<?= $id_statut  ?? '' == 3 ? 'actif' : '' ?>" type="submit" name="statut" value="3">Résolus</button>
                     </form>
                 <?php else : ?>
                     <h1>Mes derniers tickets</h1>

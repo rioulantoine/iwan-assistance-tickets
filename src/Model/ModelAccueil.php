@@ -262,18 +262,20 @@ function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 2)
 
     if ($is_admin) {
         if ($id_statut === null) {
-            $sql = "SELECT t.*, u.libelle_urgence
+            $sql = "SELECT t.*, u.libelle_urgence, c.nom_entreprise
                 FROM TICKETS t
                 LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
+                LEFT JOIN CLIENT c ON t.id_entreprise = c.id_client
                 WHERE id_statut IN (1,2,3)
                 ORDER BY date_creation DESC
                 LIMIT 10";
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
         } else {
-            $sql = "SELECT t.*, u.libelle_urgence
+            $sql = "SELECT t.*, u.libelle_urgence, c.nom_entreprise
                 FROM TICKETS t
                 LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
+                LEFT JOIN CLIENT c ON t.id_entreprise = c.id_client
                 WHERE id_statut = ?
                 ORDER BY date_creation DESC
                 LIMIT 10";
@@ -281,9 +283,10 @@ function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 2)
             $stmt->execute([$id_statut]);
         }
     } else {
-        $sql = "SELECT t.*, u.libelle_urgence
+        $sql = "SELECT t.*, u.libelle_urgence, c.nom_entreprise
                 FROM TICKETS t
                 LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
+                LEFT JOIN CLIENT c ON t.id_entreprise = c.id_client
                 WHERE t.id_entreprise = ?
                 ORDER BY date_maj DESC
                 LIMIT 10";
