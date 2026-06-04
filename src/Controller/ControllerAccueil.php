@@ -15,7 +15,6 @@ try {
         $nom = '';
     } else {
         $id_cible = $_SESSION['id_client'];
-        echo $id_cible;
         $nom_client = nom_client($id_cible);
     }
 
