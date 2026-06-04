@@ -8,10 +8,11 @@ require_once __DIR__ . '/ModelBDD.php';
 function get_ticket_par_numero($num_ticket)
 {
     $pdo = get_bdd();
-    $sql = "SELECT t.*, s.libelle_statut, u.libelle_urgence 
+    $sql = "SELECT t.*, s.libelle_statut, u.libelle_urgence, c.nom_entreprise
             FROM TICKETS t
             LEFT JOIN STATUT s ON t.id_statut = s.id_statut
             LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
+            LEFT JOIN CLIENT c ON t.id_entreprise = c.id_client
             WHERE t.numero_ticket = ?";
 
     $stmt = $pdo->prepare($sql);
