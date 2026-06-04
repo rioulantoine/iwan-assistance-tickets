@@ -11,7 +11,7 @@ function obtenir_liste_entreprise()
     $pdo = get_bdd();
 
     $sql = "SELECT DISTINCT nom_entreprise
-            FROM TICKETS
+            FROM CLIENT
             WHERE nom_entreprise IS NOT NULL";
     $stmt = $pdo->query($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -19,6 +19,7 @@ function obtenir_liste_entreprise()
 
 /**
  * Trouve l'id de l'entreprise à partir de son nom, ou retourne false si elle n'existe pas
+ * innutile avec la table client
  */
 function trouver_id_entreprise($nom_entreprise)
 {
@@ -35,7 +36,20 @@ function trouver_id_entreprise($nom_entreprise)
 }
 
 
-
+/**
+ * Récupérer les informations client
+ * @param id_client
+ */
+function get_info_client($id_client)
+{
+    $pdo = get_bdd();
+    $sql = "SELECT id_client, nom, prenom, email, telephone 
+            FROM CLIENT
+            WHERE id_client = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_client]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 /**
  * Génere un numero de ticket unique 
  */
@@ -84,7 +98,6 @@ function inserer_nouveau_ticket(
     $description,
     $date_creation,
     $id_entreprise,
-    $nom_entreprise,
     $niveau_urgence,
     $id_statut
 ) {
@@ -99,10 +112,9 @@ function inserer_nouveau_ticket(
     description,
     date_creation,
     id_entreprise,
-    nom_entreprise,
     id_urgence,
     id_statut)
-    VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+    VALUES(?,?,?,?,?,?,?,?,?,?,?)";
     $stmt = $pdo->prepare($sql);
     $resultat = $stmt->execute([
         $numero_ticket,
@@ -114,7 +126,6 @@ function inserer_nouveau_ticket(
         $description,
         $date_creation,
         $id_entreprise,
-        $nom_entreprise,
         $niveau_urgence,
         $id_statut
     ]);

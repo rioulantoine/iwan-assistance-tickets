@@ -10,6 +10,11 @@ if (!in_array('IWAN', $entreprises, true)) {
 
     $liste_nom_entreprise[] = ['nom_entreprise' => 'IWAN'];
 }
+
+if (!$_SESSION['is_admin'] ?? false) {
+    $id_client = $_SESSION['id_client'];
+    $infos_client = get_info_client($id_client);
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $nom_declarant = trim($_POST['nom'] ?? '');
@@ -62,27 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreurs[] = "La description est obligatoire.";
     }
 
-    if ($_SESSION['is_admin'] ?? false) {
-        $nom_entreprise = strtoupper(trim($_POST['nom_entreprise'] ?? ''));
-        if ($nom_entreprise === 'IWAN') {
-            $id_entreprise = 1;
-        } else {
-            $id_entreprise = trouver_id_entreprise($nom_entreprise);
-        }
-        if (empty($nom_entreprise)) {
-            $erreurs[] = "Le nom de l'entreprise est obligatoire";
-        }
-
-        // Si l'admin a tapé une entreprise inconnue on lève l'erreur
-        if ($id_entreprise === false) {
-            $_SESSION['flash_message'] = "L'entreprise '" . htmlspecialchars($nom_entreprise) . "' n'est pas enregistrée dans le système. Impossible de créer ce ticket.";
-            $_SESSION['flash_type'] = "error";
-        }
-    } else {
-        // Pour un client classique, on prend directement ses données de session
-        $nom_entreprise = strtoupper(trim($_SESSION['name'] ?? ''));
-        $id_entreprise = $_SESSION['id_client'];
-    }
+    $id_entreprise = $infos_client['id_client'];
 
     // Si aucune erreur 
     $numero_ticket = null;
@@ -106,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $description,
             $date_creation,
             $id_entreprise,
-            $nom_entreprise,
             $niveau_urgence,
             $id_statut
         );

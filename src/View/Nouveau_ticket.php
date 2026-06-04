@@ -58,7 +58,7 @@
                             placeholder="Entrez le nom de l'entreprise"
                             autocomplete="off"
                             required
-                            value="<?= htmlspecialchars($_POST['nom_entreprise'] ?? '') ?>">
+                            value=" <?= htmlspecialchars($_POST['nom_entreprise'] ?? '') ?>">
                         <datalist id="entreprises_suggestion">
                             <?php foreach ($liste_nom_entreprise ?? [] as $entreprise): ?>
                                 <option value="<?= htmlspecialchars($entreprise['nom_entreprise']) ?>">
@@ -75,7 +75,7 @@
                                 name="nom"
                                 placeholder="Entrez votre nom"
                                 <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
-                                value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>" />
+                                value="<?= htmlspecialchars($_POST['nom'] ?? $infos_client['nom'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">
                             <label for="prenom">Prénom</label>
@@ -85,7 +85,7 @@
                                 name="prenom"
                                 placeholder="Entrez votre prénom"
                                 <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
-                                value="<?= htmlspecialchars($_POST['prenom'] ?? '') ?>" />
+                                value="<?= htmlspecialchars($_POST['prenom'] ?? $infos_client['prenom'] ?? '') ?>" />
                         </div>
 
                     </div>
@@ -98,8 +98,7 @@
                                 name="email"
                                 placeholder="Entrez votre adresse e-mail"
                                 <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
-                                value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" />
-
+                                value="<?= htmlspecialchars($_POST['email'] ?? $infos_client['email'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">
                             <label for="telephone">Numéro de téléphone</label>
@@ -109,7 +108,7 @@
                                 name="telephone"
                                 placeholder="Entrez votre numéro de téléphone"
                                 <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
-                                value="<?= htmlspecialchars($_POST['telephone'] ?? '') ?>" />
+                                value="<?= htmlspecialchars($_POST['telephone'] ?? $infos_client['telephone'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">
                             <label for="niveau_urgence">Niveau d'urgence
@@ -165,8 +164,8 @@
                     <div class="detail-ticket">
                         <label for="description">Description</label>
                         <textarea
-                            id="observation"
-                            name="observation"
+                            id="description"
+                            name="description"
                             placeholder="Ajoutez toutes informations complémentaires"><?= htmlspecialchars(trim($_POST['observation'] ?? '')) ?></textarea>
                     </div>
                     <div class="ajouter-fichier-container">
