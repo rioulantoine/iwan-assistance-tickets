@@ -265,7 +265,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
         <div class="container-tickets">
             <?php if (isset($_SESSION['id_client'])): ?>
                 <p>
-                    Espace client :&nbsp;<strong><?= htmlspecialchars($_SESSION['name'] ?? 0) ?></strong> </p>
+                    Espace client :&nbsp;<strong><?= htmlspecialchars($nom_client ?? '') ?></strong> </p>
 
             <?php endif ?>
 

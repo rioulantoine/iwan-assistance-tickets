@@ -8,6 +8,27 @@
  */
 
 require_once __DIR__ . '/ModelBDD.php';
+
+/**
+ * Récupere le nom du client 
+ * 
+ */
+function nom_client($id_cible)
+{
+    $pdo = get_bdd();
+    $sql = "SELECT nom_entreprise
+            FROM CLIENT
+            WHERE id_client = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_cible]);
+
+    $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($resultat && isset($resultat['nom_entreprise'])) {
+        return $resultat['nom_entreprise'];
+    } else {
+        return "Entreprise inconnue";
+    }
+}
 /**
  * Compte générique de tickets (Global ou par Utilisateur)
  * Permet de filtrer à la volée par statut, par liste de statuts ou par urgence.
@@ -20,7 +41,6 @@ function count_tickets($id_cible = 0, $statut = null, $id_urgence = null)
 {
     $pdo = get_bdd();
 
-    // Base de la requête 
     $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE 1=1"; //Le WHERE 1=1 permet d'ajouter des AND dynamiquement
     $params = [];
     // Filtre utilisateur

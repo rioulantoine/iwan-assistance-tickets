@@ -12,10 +12,11 @@ require_once __DIR__ . '/../Model/ModelAccueil.php';
 try {
     if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true) {
         $id_cible = 0;
-        $nom_affichage = '';
+        $nom = '';
     } else {
         $id_cible = $_SESSION['id_client'];
-        $nom_affichage = $_SESSION['client_nom'] ?? $_SESSION['id_client'];
+        echo $id_cible;
+        $nom_client = nom_client($id_cible);
     }
 
     // =========================================================================
