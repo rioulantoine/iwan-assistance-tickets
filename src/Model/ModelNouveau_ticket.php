@@ -3,6 +3,54 @@
 // Fichier qui permet de récuperer les données pour le controlleur de la page Nouveau ticket
 require_once __DIR__ . '/ModelBDD.php';
 
+
+/**
+ * Récupère les entreprises avec une limite et un filtre de recherche
+ */
+function obtenir_entreprises_filtres_pagine($recherche, $limite, $offset)
+{
+    $pdo = get_bdd();
+
+    $sql = "SELECT DISTINCT nom_entreprise,ville, nom, prenom, email, telephone
+            FROM CLIENT
+            WHERE nom_entreprise LIKE :recherche 
+            OR nom LIKE :recherche 
+            OR prenom LIKE :recherche
+            OR email LIKE :recherche 
+            OR telephone LIKE :recherche 
+            OR ville LIKE :recherche
+            ORDER BY nom_entreprise ASC
+            LIMIT :limite OFFSET :offset";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindValue(':recherche', '%' . $recherche . '%', PDO::PARAM_STR);
+    $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+/**
+ * Compte le nombre total d'entreprises correspondant a la recherche 
+ * Sert a générer les bouton de pagination
+ */
+function compter_entreprises_filtres($recherche)
+{
+    $pdo = get_bdd();
+    $sql = "SELECT COUNT(DISTINCT nom_entreprise)
+            FROM CLIENT
+            WHERE nom_entreprise LIKE :recherche";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['recherche' => '%' . $recherche . '%']);
+
+    return (int)$stmt->fetchColumn();
+}
+
+
+
 /**
  * Récupère la liste des entreprises ayant déjà créé un ticket
  */
@@ -10,7 +58,7 @@ function obtenir_liste_entreprise()
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT DISTINCT nom_entreprise,nom,prenom,email,telephone
+    $sql = "SELECT DISTINCT nom_entreprise,ville,nom,prenom,email,telephone
             FROM CLIENT";
     $stmt = $pdo->query($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

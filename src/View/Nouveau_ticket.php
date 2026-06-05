@@ -37,7 +37,9 @@
                     </button>
 
             </div>
-            <div id="modalListeEntreprises" class="modal-liste-entreprises" onclick="fermerModalListeEntreprises(event)">
+            <div id="modalListeEntreprises" class="modal-liste-entreprises"
+                style="<?= (isset($_GET['ouvrir_modal']) && $_GET['ouvrir_modal'] == '1') ? 'display: flex;' : '' ?>"
+                onclick="fermerModalListeEntreprises(event)">
                 <div class="modal-liste-entreprises-content">
                     <div class="modal-liste-entreprises-header">
                         <div class="header-titre-groupe">
@@ -54,25 +56,18 @@
                         </div>
                         <button type="button" class="modal-liste-entreprises-close" onclick="document.getElementById('modalListeEntreprises').style.display='none'">&times;</button>
                     </div>
-                    <form class="modal-liste-entreprises-filtre">
+                    <form method="GET" action="index.php" class="modal-liste-entreprises-filtre">
+                        <input type="hidden" name="page" value="nouveau_ticket">
+                        <input type="hidden" name="ouvrir_modal" value="1">
+
                         <div class="search-wrapper">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
-                            <input type="text" name="recherche" placeholder="Rechercher un ticket" value="<?= trim(htmlspecialchars($_GET['recherche'] ?? '')) ?>" />
+                            <input type="text" name="recherche" placeholder="Rechercher une entreprise..." value="<?= htmlspecialchars($_GET['recherche'] ?? '') ?>" />
                         </div>
-                        <button type="submit" class="btn-filtre">Appliquer les filtres</button>
-
+                        <button type="submit" class="btn-filtre">Appliquer le filtre</button>
                     </form>
                     <div class="modal-liste-entreprises-body">
                         <table class="table-liste-entreprises">
@@ -93,6 +88,9 @@
                                     <th class="sortable" data-col="telephone">
                                         Téléphone
                                     </th>
+                                    <th class="sortable" date-col="vilel">
+                                        Ville
+                                    </th>
                                     <th class="sortable" data-col="action">
                                         Action
                                     </th>
@@ -110,6 +108,7 @@
                                         <td><?= htmlspecialchars($entreprise['prenom']) ?></td>
                                         <td><?= htmlspecialchars($entreprise['email']) ?></td>
                                         <td><?= htmlspecialchars($entreprise['telephone']) ?></td>
+                                        <td><?= htmlspecialchars($entreprise['ville']) ?></td>
                                         <td>
                                             <form method="POST" action="" style="margin: 0;">
                                                 <input type="hidden" name="action" value="selectionner_entreprise">
@@ -131,6 +130,26 @@
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+                        </table> <?php if (($total_pages ?? 0) > 1) : ?>
+                            <div class="pagination-container">
+
+                                <?php if (($page_entreprise ?? 0) > 1) : ?>
+                                    <a href="index.php?page=nouveau_ticket&ouvrir_modal=1&recherche=<?= urlencode($_GET['recherche'] ?? '') ?>&page_entreprise=<?= ($page_entreprise ?? 0) - 1 ?>" class="page-link">&laquo; Précédent</a>
+                                <?php endif; ?>
+
+                                <?php for ($i = 1; $i <= ($total_pages ?? 0); $i++) : ?>
+                                    <a href="index.php?page=nouveau_ticket&ouvrir_modal=1&recherche=<?= urlencode($_GET['recherche'] ?? '') ?>&page_entreprise=<?= $i ?>"
+                                        class="page-link <?= ($i === ($page_entreprise ?? 0)) ? 'active' : '' ?>">
+                                        <?= $i ?>
+                                    </a>
+                                <?php endfor; ?>
+
+                                <?php if (($page_entreprise ?? 0) < ($total_pages ?? 0)) : ?>
+                                    <a href="index.php?page=nouveau_ticket&ouvrir_modal=1&recherche=<?= urlencode($_GET['recherche'] ?? '') ?>&page_entreprise=<?= ($page_entreprise ?? 0) + 1 ?>" class="page-link">Suivant &raquo;</a>
+                                <?php endif; ?>
+
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

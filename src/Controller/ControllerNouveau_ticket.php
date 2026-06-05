@@ -3,22 +3,53 @@
 // Fichier qui permet de gérer la page Nouveau ticket
 require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
 
-// On récupère le nom de toutes les entreprises ayant déjà créé un ticket
-$liste_entreprises = obtenir_liste_entreprise();
-$nb_entreprises = count($liste_entreprises);
-$liste_nom_entreprises = array_column($liste_entreprises, 'nom_entreprise');
-$entreprises = array_column($liste_nom_entreprises, 'nom_entreprise');
-if (!in_array('IWAN', $entreprises, true)) {
+// =======================================================
+//    GESTION DE LA MODALE ET DE LA PAGINATION (Via GET)
+// =======================================================
+$recherche = trim($_GET['recherche'] ?? '');
+// On s'assure que la page est au moins à 1 (pas de page 0)
+$page_entreprise = max(1, (int)($_GET['page_entreprise'] ?? 1));
+$limite = 10;
+$offset = ($page_entreprise - 1) * $limite;
 
+// Récupération des données pour le tableau de la modale (avec LIMIT et OFFSET)
+$liste_entreprises = obtenir_entreprises_filtres_pagine($recherche, $limite, $offset);
+$total_entreprises = compter_entreprises_filtres($recherche);
+$total_pages = ceil($total_entreprises / $limite);
+$nb_entreprises = count($liste_entreprises);
+
+// =======================================================
+//      GESTION DE L'AUTOCOMPLÉTION (DATALIST ADMIN)
+// =======================================================
+// On récupère la liste complète uniquement pour les suggestions de la barre de saisie
+$liste_nom_entreprise = obtenir_liste_entreprise();
+$entreprises_noms = array_column($liste_nom_entreprise, 'nom_entreprise');
+if (!in_array('IWAN', $entreprises_noms, true)) {
     $liste_nom_entreprise[] = ['nom_entreprise' => 'IWAN'];
 }
 
+// =======================================================
+//   INFOS DU CLIENT CONNECTÉ (Si ce n'est pas un Admin)
+// =======================================================
+if (!($_SESSION['is_admin'] ?? false)) {
+    $id_client = $_SESSION['id_client'] ?? null;
+    $infos_client = get_info_client($id_client);
+} else {
+    $infos_client = []; // Initialisation vide pour éviter les erreurs côté vue
+}
 
+// =======================================================
+//    TRAITEMENT DU FORMULAIRE DE TICKET (Via POST)
+// =======================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Action A : L'Admin clique sur "Sélectionner" dans la modale
     if (isset($_POST['selectionner_entreprise'])) {
-        $id_client = trim($_POST['id_client'] ?? '');
-        echo $id_client;
+        // La page se recharge. Les variables $_POST pré-rempliront ton formulaire HTML.
+        // On n'a pas besoin de faire de requête SQL ici.
     }
+
+    // Action B : Soumission du ticket
     if (isset($_POST['nouveau-ticket'])) {
 
         $nom_declarant = trim($_POST['nom'] ?? '');
@@ -31,75 +62,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $erreurs = [];
 
-        // Vérification nom
+        // --- Vérifications des champs ---
         if (empty($nom_declarant) && !($_SESSION['is_admin'] ?? false)) {
             $erreurs[] = "Le nom est obligatoire.";
         }
 
-        // Vérification prénom
         if (empty($prenom_declarant) && !($_SESSION['is_admin'] ?? false)) {
             $erreurs[] = "Le prénom est obligatoire.";
         }
 
-        // Vérification email
         if (empty($email) && !($_SESSION['is_admin'] ?? false)) {
             $erreurs[] = "L'email est obligatoire.";
-        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)  && !($_SESSION['is_admin'] ?? false)) {
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) && !($_SESSION['is_admin'] ?? false)) {
             $erreurs[] = "L'email n'est pas valide.";
         }
-        // Vérification téléphone
+
         if (empty($telephone) && !($_SESSION['is_admin'] ?? false)) {
             $erreurs[] = "Le téléphone est obligatoire.";
-        }
-        if (strlen($telephone) > 50) {
+        } elseif (strlen($telephone) > 50) {
             $erreurs[] = "Le numéro de téléphone est trop long.";
         }
 
-        // Vérification urgence
         $urgences_valides = ['1', '2', '3', '4'];
         if (!in_array($niveau_urgence, $urgences_valides)) {
             $erreurs[] = "Le niveau d'urgence est invalide.";
         }
 
-        // Vérification titre
         if (empty($titre)) {
             $erreurs[] = "Le titre est obligatoire.";
         } elseif (strlen($titre) > 255) {
             $erreurs[] = "Le titre est trop long.";
         }
 
-        // Vérification description
         if (empty($description)) {
             $erreurs[] = "La description est obligatoire.";
         }
 
-        // Si c'est un Admin, on récupère l'ID caché dans le grand formulaire
+        // --- Récupération sécurisée de l'ID Entreprise ---
         if ($_SESSION['is_admin'] ?? false) {
-            $nom_entreprise = trim($_POST['nom_entreprise']);
+            // L'admin a soit tapé le nom, soit cliqué sur "Sélectionner"
+            $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
             $id_entreprise = trouver_id_entreprise($nom_entreprise);
-            echo $nom_entreprise;
-            echo $id_entreprise;
 
             if (empty($id_entreprise)) {
-                $erreurs[] = "Veuillez sélectionner une entreprise avant de créer le ticket.";
+                $erreurs[] = "Veuillez sélectionner une entreprise valide avant de créer le ticket.";
             }
         } else {
-            // Si c'est un client connecté, on prend sa session
+            // Le client connecté utilise automatiquement son propre ID
             $id_entreprise = $_SESSION['id_client'];
         }
 
-        // Si aucune erreur 
+        // --- Insertion dans la base de données ---
         $numero_ticket = null;
+
         if (!empty($erreurs)) {
             $_SESSION['flash_message'] = implode('<br>', $erreurs);
             $_SESSION['flash_type'] = "error";
-        }
-        if (empty($erreurs)) {
+        } else {
+            // Pas d'erreur, on génère le ticket
             $numero_ticket = generer_numero_ticket();
             $date_creation = date('Y-m-d H:i:s');
             $id_statut = 1;
 
-            // Appel du modèle (S'exécute uniquement si tout est OK)
             $id_ticket = inserer_nouveau_ticket(
                 $numero_ticket,
                 $nom_declarant,
@@ -114,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $id_statut
             );
 
-            // Upload de fichier
+            // --- Upload des fichiers joints ---
             $fichiers = $_FILES['fichier'] ?? null;
 
             if (!empty($fichiers['name'][0]) && $id_ticket) {
@@ -123,8 +147,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!is_dir($dossier)) {
                     mkdir($dossier, 0777, true);
                 }
-                for ($i = 0; $i < count($fichiers['name']); $i++) {
 
+                for ($i = 0; $i < count($fichiers['name']); $i++) {
                     $nom_original = $fichiers['name'][$i];
                     $nom_original = preg_replace('/[^a-zA-Z0-9._-]/', '_', $nom_original);
                     $tmp = $fichiers['tmp_name'][$i];
@@ -152,19 +176,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            // La redirection ne se fera que si le $numero_ticket a bien été généré 
-
-            if ($numero_ticket) {
+            // --- Redirection de succès ---
+            // On s'assure qu'il n'y a pas eu d'erreur d'upload avant de rediriger
+            if ($numero_ticket && empty($erreurs)) {
                 if ($_SESSION['is_admin'] ?? false) {
                     header("Location: index.php?page=accueil");
                     exit();
                 } else {
-
                     header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
                     exit();
                 }
+            } elseif (!empty($erreurs)) {
+                // S'il y a eu des erreurs pendant l'upload, on les affiche
+                $_SESSION['flash_message'] = implode('<br>', $erreurs);
+                $_SESSION['flash_type'] = "error";
             }
         }
     }
 }
+
+
 require_once __DIR__ . '/../View/Nouveau_ticket.php';

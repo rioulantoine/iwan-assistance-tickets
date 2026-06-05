@@ -159,7 +159,7 @@ function ouvrirModalListeEntreprises(){
 function fermerModalListeEntreprises(event){
     const modal = document.getElementById('modalListeEntreprises');
         if (event.target === modal) {
-            modal.style.display = 'non';
+            modal.style.display = 'none';
         }
 }
 
