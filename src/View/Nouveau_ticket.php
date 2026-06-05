@@ -268,7 +268,7 @@
                         <textarea
                             id="description"
                             name="description"
-                            placeholder="Ajoutez toutes informations complémentaires"><?= htmlspecialchars(trim($_POST['observation'] ?? '')) ?></textarea>
+                            placeholder="Ajoutez toutes informations complémentaires"><?= htmlspecialchars(trim($_POST['description'] ?? '')) ?></textarea>
                     </div>
                     <div class="ajouter-fichier-container">
                         <input type="file" id="fichier" name="fichier[]" multiple style="display: none;">
