@@ -75,10 +75,12 @@ function get_tickets($filtres)
 
     $sql = "SELECT t.*, 
                    u.libelle_urgence, 
-                   s.libelle_statut
+                   s.libelle_statut,
+                   c.nom_entreprise
             FROM TICKETS t
             LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
             LEFT JOIN STATUT s ON t.id_statut = s.id_statut
+            LEFT JOIN CLIENT c ON t.id_entreprise = c.id_client
             WHERE 1=1";
 
     $params = [];
