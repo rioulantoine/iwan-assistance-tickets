@@ -122,7 +122,7 @@
 
 
 
-                                                <button type="submit" name="selectionner_entreprise">sélectionner</button>
+                                                <button type="submit" name="selectionner_entreprise" class="btn-selectionner-entreprise">sélectionner</button>
                                             </form>
                                         </td>
 

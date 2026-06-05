@@ -36,7 +36,21 @@ main {
 .btn-modal-liste-entreprises:hover {
     background-color: #e8eeff;
 }
+/* Placement btn ouverture modal */
+.en-tete-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
 
+.en-tete-textes h1 {
+    margin: 0;
+}
+
+.en-tete-textes p {
+    margin: 5px 0 0 0;
+}
 .modal-liste-entreprises {
     display: none; /* Caché par défaut */
     position: fixed;
@@ -195,6 +209,21 @@ main {
     color: #2d3748;
     vertical-align: middle;
 }
+
+/* Bouton pour selectionner une entreprise */
+
+.btn-selectionner-entreprise {
+    background-color: #0f2e48;
+    color: white;
+    padding: 6px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.btn-selectionner-entreprise:hover{
+    background-color: #2c4a70
+}
 /* Alternance de couleurs une ligne sur deux */
 .table-liste-entreprises tbody tr:nth-child(even) {
     background-color: #f7fafc;
@@ -211,20 +240,7 @@ main {
   margin: 24px auto;
   box-sizing: border-box;
 }
-.en-tete-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
 
-.en-tete-textes h1 {
-    margin: 0;
-}
-
-.en-tete-textes p {
-    margin: 5px 0 0 0;
-}
 .container-nouveau-ticket h1 {
   margin: 0 0 6px 0;
   font-size: 20px;
