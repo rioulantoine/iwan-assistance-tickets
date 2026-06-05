@@ -19,6 +19,23 @@ main {
 /* ======================================
           AFFICHAGE DU MODAL
    ===================================== */
+.btn-modal-liste-entreprises {
+    display: inline-flex;
+    align-items:center;
+    gap:12px;
+    padding: 12px 24px;
+    background-color: #f4f7ff;
+    border: 1px solid #0f2e48;
+    border-radius: 6px;
+    color: #0f2e48;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-modal-liste-entreprises:hover {
+    background-color: #e8eeff;
+}
 
 .modal-liste-entreprises {
     display: none; /* Caché par défaut */
@@ -194,7 +211,20 @@ main {
   margin: 24px auto;
   box-sizing: border-box;
 }
+.en-tete-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
 
+.en-tete-textes h1 {
+    margin: 0;
+}
+
+.en-tete-textes p {
+    margin: 5px 0 0 0;
+}
 .container-nouveau-ticket h1 {
   margin: 0 0 6px 0;
   font-size: 20px;
