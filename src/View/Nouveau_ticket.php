@@ -99,8 +99,7 @@
                                             <td>
                                                 <form method="POST" action="" style="margin: 0;">
                                                     <input type="hidden" name="action" value="selectionner_entreprise">
-                                                    <input type="hidden" name="id_entreprise" value="<?= htmlspecialchars($entreprise['id_client'] ?? '') ?>">
-                                                    <input type="hidden" name="nom_entreprise" value="<?= htmlspecialchars($entreprise['nom_entreprise'] ?? '') ?>">
+                                                    <input type="hidden" name="id_client" value="<?= htmlspecialchars($_POST['id_client'] ?? '') ?>"> <input type="hidden" name="nom_entreprise" value="<?= htmlspecialchars($entreprise['nom_entreprise'] ?? '') ?>">
                                                     <input type="hidden" name="nom" value="<?= htmlspecialchars($entreprise['nom'] ?? '') ?>">
                                                     <input type="hidden" name="prenom" value="<?= htmlspecialchars($entreprise['prenom'] ?? '') ?>">
                                                     <input type="hidden" name="email" value="<?= htmlspecialchars($entreprise['email'] ?? '') ?>">
@@ -160,7 +159,7 @@
                             placeholder="Entrez le nom de l'entreprise"
                             autocomplete="off"
                             required
-                            value=" <?= htmlspecialchars($_POST['nom_entreprise'] ?? '') ?>">
+                            value="<?= htmlspecialchars($_POST['nom_entreprise'] ?? '') ?>">
                         <datalist id="entreprises_suggestion">
                             <?php foreach ($liste_nom_entreprise ?? [] as $entreprise): ?>
                                 <option value="<?= htmlspecialchars($entreprise['nom_entreprise']) ?>">

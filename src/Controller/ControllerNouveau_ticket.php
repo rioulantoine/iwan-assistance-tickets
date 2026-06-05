@@ -13,13 +13,11 @@ if (!in_array('IWAN', $entreprises, true)) {
     $liste_nom_entreprise[] = ['nom_entreprise' => 'IWAN'];
 }
 
-if (!$_SESSION['is_admin'] ?? false) {
-    $id_client = $_SESSION['id_client'];
-    $infos_client = get_info_client($id_client);
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['selectionner_entreprise'])) {
+        $id_client = trim($_POST['id_client'] ?? '');
+        echo $id_client;
     }
     if (isset($_POST['nouveau-ticket'])) {
 
@@ -32,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description = trim($_POST['description'] ?? '');
 
         $erreurs = [];
-
 
         // Vérification nom
         if (empty($nom_declarant) && !($_SESSION['is_admin'] ?? false)) {
@@ -73,7 +70,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $erreurs[] = "La description est obligatoire.";
         }
 
-        $id_entreprise = $infos_client['id_client'];
+        // Si c'est un Admin, on récupère l'ID caché dans le grand formulaire
+        if ($_SESSION['is_admin'] ?? false) {
+            $nom_entreprise = trim($_POST['nom_entreprise']);
+            $id_entreprise = trouver_id_entreprise($nom_entreprise);
+            echo $nom_entreprise;
+            echo $id_entreprise;
+
+            if (empty($id_entreprise)) {
+                $erreurs[] = "Veuillez sélectionner une entreprise avant de créer le ticket.";
+            }
+        } else {
+            // Si c'est un client connecté, on prend sa session
+            $id_entreprise = $_SESSION['id_client'];
+        }
 
         // Si aucune erreur 
         $numero_ticket = null;

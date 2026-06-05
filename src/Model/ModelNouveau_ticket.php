@@ -24,14 +24,14 @@ function trouver_id_entreprise($nom_entreprise)
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT id_entreprise 
-            FROM TICKETS
+    $sql = "SELECT id_client
+            FROM CLIENT
             WHERE nom_entreprise = ? 
             LIMIT 1 ";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$nom_entreprise]);
     $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $resultat ? $resultat['id_entreprise'] : false;
+    return $resultat ? $resultat['id_client'] : false;
 }
 
 
