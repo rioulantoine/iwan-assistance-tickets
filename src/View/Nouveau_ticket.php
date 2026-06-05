@@ -96,7 +96,22 @@
                                             <td><?= htmlspecialchars($entreprise['prenom']) ?></td>
                                             <td><?= htmlspecialchars($entreprise['email']) ?></td>
                                             <td><?= htmlspecialchars($entreprise['telephone']) ?></td>
-                                            <td><button>Sélectionner</button></td>
+                                            <td>
+                                                <form method="POST" action="" style="margin: 0;">
+                                                    <input type="hidden" name="action" value="selectionner_entreprise">
+                                                    <input type="hidden" name="id_entreprise" value="<?= htmlspecialchars($entreprise['id_client'] ?? '') ?>">
+                                                    <input type="hidden" name="nom_entreprise" value="<?= htmlspecialchars($entreprise['nom_entreprise'] ?? '') ?>">
+                                                    <input type="hidden" name="nom" value="<?= htmlspecialchars($entreprise['nom'] ?? '') ?>">
+                                                    <input type="hidden" name="prenom" value="<?= htmlspecialchars($entreprise['prenom'] ?? '') ?>">
+                                                    <input type="hidden" name="email" value="<?= htmlspecialchars($entreprise['email'] ?? '') ?>">
+                                                    <input type="hidden" name="telephone" value="<?= htmlspecialchars($entreprise['telephone'] ?? '') ?>">
+
+
+
+
+                                                    <button type="submit" name="selectionner_entreprise">sélectionner</button>
+                                                </form>
+                                            </td>
 
 
                                         </tr>

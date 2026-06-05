@@ -19,6 +19,8 @@ if (!$_SESSION['is_admin'] ?? false) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['selectionner_entreprise'])) {
+    }
     if (isset($_POST['nouveau-ticket'])) {
 
         $nom_declarant = trim($_POST['nom'] ?? '');
@@ -136,17 +138,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     );
                 }
             }
-        }
 
-        // La redirection ne se fera que si le $numero_ticket a bien été généré 
-        if ($numero_ticket) {
-            if ($_SESSION['is_admin'] ?? false) {
-                header("Location: index.php?page=accueil");
-                exit();
-            } else {
+            // La redirection ne se fera que si le $numero_ticket a bien été généré 
 
-                header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
-                exit();
+            if ($numero_ticket) {
+                if ($_SESSION['is_admin'] ?? false) {
+                    header("Location: index.php?page=accueil");
+                    exit();
+                } else {
+
+                    header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
+                    exit();
+                }
             }
         }
     }
