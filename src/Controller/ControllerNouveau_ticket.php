@@ -51,6 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($telephone) && !($_SESSION['is_admin'] ?? false)) {
             $erreurs[] = "Le téléphone est obligatoire.";
         }
+        if (strlen($telephone) > 50) {
+            $erreurs[] = "Le numéro de téléphone est trop long.";
+        }
 
         // Vérification urgence
         $urgences_valides = ['1', '2', '3', '4'];

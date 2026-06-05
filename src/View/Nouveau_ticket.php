@@ -205,6 +205,7 @@
                             <label for="telephone">Numéro de téléphone</label>
                             <input
                                 type="tel"
+                                maxlength="50"
                                 id="telephone"
                                 name="telephone"
                                 placeholder="Entrez votre numéro de téléphone"
