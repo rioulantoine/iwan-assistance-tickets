@@ -405,13 +405,15 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                 <?php if (!empty($_SESSION['is_admin'])) : ?>
                     <h1>Les derniers tickets</h1>
                     <form action="#tickets" method="GET" class="filtre">
-                        <button class="<?= $id_statut ?? '' == 0 ? 'actif' : '' ?>" type="submit" name="statut" value="0">Tous</button>
 
-                        <button class="<?= $id_statut ?? '' == 1 ? 'actif' : '' ?>" type="submit" name="statut" value="1">En attente</button>
+                        <button class="<?= ($id_statut ?? 0) == 0 ? 'actif' : '' ?>" type="submit" name="statut" value="0">Tous</button>
 
-                        <button class="<?= $id_statut  ?? '' == 2 ? 'actif' : '' ?>" type="submit" name="statut" value="2">En cours</button>
+                        <button class="<?= ($id_statut ?? 0) == 1 ? 'actif' : '' ?>" type="submit" name="statut" value="1">En attente</button>
 
-                        <button class="<?= $id_statut  ?? '' == 3 ? 'actif' : '' ?>" type="submit" name="statut" value="3">Résolus</button>
+                        <button class="<?= ($id_statut ?? 0) == 2 ? 'actif' : '' ?>" type="submit" name="statut" value="2">En cours</button>
+
+                        <button class="<?= ($id_statut ?? 0) == 3 ? 'actif' : '' ?>" type="submit" name="statut" value="3">Résolus</button>
+
                     </form>
                 <?php else : ?>
                     <h1>Mes derniers tickets</h1>
@@ -512,8 +514,11 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                 <?php if ($_SESSION['is_admin'] ?? false): ?>
                                     <span class="ticket-date"><?= $date_creation ?></span>
                                 <?php else : ?>
-
-                                    <span class="ticket-date"> Mis à jour le <?= $date_maj ?> : <?= $ticket['derniere_action'] ?? "" ?></span>
+                                    <?php if ($ticket['derniere_action'] === "Ticket créé"): ?>
+                                        <span class="ticket-date"><?= htmlspecialchars($ticket['derniere_action']) ?? "" ?> le <?= htmlspecialchars($ticket['date_creation'])  ?></span>
+                                    <?php else : ?>
+                                        <span class="ticket-date"> Mis à jour le <?= $date_maj ?> : <?= $ticket['derniere_action'] ?? "" ?></span>
+                                    <?php endif ?>
                                 <?php endif ?>
                                 <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir"> Ouvrir le ticket </a>
                             </div>
