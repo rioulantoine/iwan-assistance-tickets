@@ -201,7 +201,7 @@ textarea::placeholder {
 
 .detail-ticket,
 .ajouter-fichier {
-  margin-top: 1%;
+  margin-top:1%;
   margin-bottom: 24px;
   display: flex;
   flex-direction: column;
@@ -341,6 +341,9 @@ textarea::placeholder {
     align-items: flex-start;
     margin-top: 15px;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .btn-ajouter-fichiers {
@@ -361,11 +364,103 @@ textarea::placeholder {
 
 .btn-ajouter-fichiers:hover { background-color: #f8fafc; }
 
+#liste-fichiers,
 .fichiers-preview-list {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     flex-grow: 1;
+    min-width: 0;       
+    max-width: 100%;
+}
+
+.file-item-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    border: 1.5px solid #000000;
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    
+    width: 100%;          
+    min-width: 200px;     
+    max-width: 280px;     
+    flex-shrink: 1;       
+}
+
+.file-icon-pdf {
+    background-color: #e15252;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 4px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;       
+}
+
+.file-item-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;         
+    overflow: hidden;     
+}
+
+.file-item-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #0f2e48;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-item-size {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+.file-item-error-msg {
+    font-size: 11px;
+    color: #e15252;
+    font-weight: 500;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.remove-file, 
+.remove-file-btn, 
+.retry-file-btn {
+    background: none;
+    border: none;
+    color: #e15252;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    flex-shrink: 0;      
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease;
+}
+
+.retry-file-btn {
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+.remove-file:hover, 
+.remove-file-btn:hover, 
+.retry-file-btn:hover {
+    transform: scale(1.2);
 }
 
 /* Boutons Modales d'administration */
