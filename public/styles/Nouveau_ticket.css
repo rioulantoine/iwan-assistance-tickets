@@ -1,291 +1,91 @@
+/* ==========================================================================
+   1. STRUCTURATION DU NAVIGATEUR ET DE L'EN-TÊTE FLEXIBLE
+   ========================================================================== */
+
 main {
   flex: 1;
   padding: 20px;
   box-sizing: border-box;
 }
 
+/* En-tête flexible calé à 2% des bords de l'écran */
 .nouveau-ticket {
-  max-width: 1500px;
-  margin: 20px auto 0 auto;
-}
-
-.nouveau-ticket h1 {
-  margin: 0 0 6px 0;
-  font-size: 26px;
-  font-weight: 700;
-  color: #0f2e48;
-}
-
-/* ======================================
-          AFFICHAGE DU MODAL
-   ===================================== */
-.btn-modal-liste-entreprises {
-    display: inline-flex;
-    align-items:center;
-    gap:12px;
-    padding: 12px 24px;
-    background-color: #f4f7ff;
-    border: 1px solid #0f2e48;
-    border-radius: 6px;
-    color: #0f2e48;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-.btn-modal-liste-entreprises:hover {
-    background-color: #e8eeff;
-}
-/* Placement btn ouverture modal */
-.en-tete-container {
+    width: 96% !important;
+    margin-left: 2% !important;
+    margin-right: 2% !important;
+    margin-top: 24px !important;
+    margin-bottom: 24px !important;
+    
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+    justify-content: space-between; /* Texte poussé à gauche, Switch poussé à droite */
+    align-items: center;            /* Aligne verticalement le switch avec le texte */
+    box-sizing: border-box !important;
 }
 
-.en-tete-textes h1 {
+.nouveau-ticket-textes {
+    display: flex;
+    flex-direction: column;
+}
+
+.nouveau-ticket-textes h1 {
+    margin: 0 0 6px 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: #0f2e48;
+}
+
+.nouveau-ticket-textes p {
     margin: 0;
+    font-size: 14px;
+    color: #94a3b8;
 }
 
-.en-tete-textes p {
-    margin: 5px 0 0 0;
-}
-.modal-liste-entreprises {
-    display: none; /* Caché par défaut */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 10000;
-    justify-content: center;
-    align-items: center;
-}
+/* ==========================================================================
+   2. LE COMPOSANT SWITCH D'ONGLETS
+   ========================================================================== */
 
-.modal-liste-entreprises-content {
+.switch-container {
+    display: inline-flex;
     background-color: #ffffff;
-    width: 90%;
-    max-width: 1450px;
-    height: 90%;
+    border: 1px solid #cbd5e1;
     border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    animation: apparitionModal 0.3s ease-out;
-    max-height:90vh;
-    display: flex;
-    flex-direction:column;
-}
-.modal-liste-entreprises-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding: 1.25rem 1.5rem;
-}
-
-.header-titre-groupe {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-}
-
-.header-titre-groupe svg {
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     flex-shrink: 0;
-    margin-top: 2px; /* aligne optiquement le svg avec le texte */
-}
-.header-textes {
-  margin-bottom: -8%;
-}
-.header-textes h2 {
-    margin: 0 0 4px 0;
 }
 
-.header-textes p {
-    margin: 0;
-}
-
-.header-icone svg {
-    width: 24px;
-    height: 24px;
-}
-
-/* Filtre recherche */
-.search-wrapper {
-    position: relative;
-    flex: 1;
-    min-width: 200px;
-}
-
-.search-wrapper input {
-    width: 100%;
-    height: 42px;
-    padding: 0 16px 0 42px !important;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    background-color: #ffffff;
-    color: #64748b;
-    font-size: 14px;
-    appearance: none;
-    box-sizing: border-box;
-    outline: none;
-}
-
-.search-wrapper svg {
-  position: absolute;
-  left: 14px;
-  top: 12px;
-  color: #94a3b8;
-  pointer-events: none;
-}
-
-.btn-filtre {
-  height: 42px;
-  padding: 0 24px;
-  background-color: #b2bfc8;
-  color: #0f2e48;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.btn-filtre:hover {
-  background-color: #a1b0ba;
-}
-.modal-liste-entreprises-filtre {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 1.5rem 1rem;
-}
-.modal-liste-entreprises-close {
-    flex-shrink: 0;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #6c757d;
-    padding: 0;
-    line-height: 1;
-}
-
-.modal-liste-entreprises-close:hover {
-    color: #dc3545;
-}
-
-.table-liste-entreprises {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: sans-serif;
-    text-align: left;
-    font-size: 14px;
-}
-
-.table-liste-entreprises th:last-child {
-  text-align: left;
-  padding-left: 16px
-}
-/* Voir si utilie au final */
-.table-liste-entreprises th.sortable{
-  cursor: pointer;
-  user-select:none;
-}
-
-/*Header du tableau */
-.table-liste-entreprises th {
-   background-color: #1a3352; 
-    color: #ffffff;
-    padding: 14px 16px;
-    font-weight: 500;
-    position: sticky;
-    top: 0;
-    z-index:10;
-}
-
-.modal-liste-entreprises-body {
-    padding: 0 1.5rem;
-    overflow-y: auto;
-    overflow-y: auto;
-    flex:1;
-}
-
-.table-liste-entreprises td {
-    padding: 12px 16px;
-    border-bottom: 1px solid #edf2f7;
-    color: #2d3748;
-    vertical-align: middle;
-}
-
-/* Bouton pour selectionner une entreprise */
-
-.btn-selectionner-entreprise {
-    background-color: #0f2e48;
-    color: white;
-    padding: 6px 16px;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: bold;
-}
-.btn-selectionner-entreprise:hover{
-    background-color: #2c4a70
-}
-/* Alternance de couleurs une ligne sur deux */
-.table-liste-entreprises tbody tr:nth-child(even) {
-    background-color: #f7fafc;
-}
-/* ======================================
-          PAGINATION DE LA MODALE
-   ===================================== */
-.pagination-container {
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    gap: 8px; 
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.page-link {
+.switch-btn {
     display: inline-flex;
-    justify-content: center;
     align-items: center;
-    min-width: 32px;
-    height: 32px;
-    padding: 0 10px;
-    background-color: #ffffff;
-    color: #0f2e48;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    font-size: 14px;
+    justify-content: center;
+    min-width: 120px;
+    height: 42px;
+    padding: 0 24px;
+    font-size: 15px;
     font-weight: 600;
+    color: #0f2e48;
     text-decoration: none;
-    transition: all 0.2s ease;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.15s ease;
 }
 
-
-.page-link:hover {
-    background-color: #f4f7ff;
-    border-color: #0f2e48;
+.switch-btn:not(.active):hover {
+    background-color: #f8fafc;
 }
 
-
-.page-link.active {
-    background-color: #0f2e48;
-    color: #ffffff;
-    border-color: #0f2e48;
-    pointer-events: none; 
+.switch-btn.active {
+    background-color: #1a365d !important; 
+    color: #ffffff !important;           
+    pointer-events: none;
 }
 
-/* =============================*/
-/* AFFICHAGE NOUVEAUX TICKETS */
-/* =============================*/
+/* ==========================================================================
+   3. FORMULAIRE PRINCIPAL ET SECTIONS INTERNES
+   ========================================================================== */
 
 .container-nouveau-ticket {
   width: 100%;
-  max-width: 1500px;
   background-color: #ffffff;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
@@ -295,17 +95,24 @@ main {
   box-sizing: border-box;
 }
 
-.container-nouveau-ticket h1 {
-  margin: 0 0 6px 0;
-  font-size: 20px;
-  font-weight: 600;
-  color: #0f2e48;
+.en-tete-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
-.container-nouveau-ticket p {
-  margin: 0 0 32px 0;
-  font-size: 14px;
-  color: #94a3b8;
+.en-tete-textes h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #0f2e48;
+}
+
+.en-tete-textes p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: #94a3b8;
 }
 
 .ligne-triple {
@@ -313,12 +120,13 @@ main {
   gap: 24px;
   margin-bottom: 24px;
 }
+
 .ligne-double {
   display: flex;
   gap: 24px;
   align-items: flex-start;
   margin-bottom: 1%;
-  margin-top : 1%;
+  margin-top: 1%;
 }
 
 .ligne-double .groupe-input {
@@ -354,10 +162,7 @@ textarea {
   font-family: inherit;
   box-sizing: border-box;
   outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 select {
@@ -380,27 +185,26 @@ select:focus,
 textarea:focus {
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  
 }
 
 input::placeholder,
 textarea::placeholder {
   color: #cbd5e1;
 }
+
 .detail-ticket textarea {
     min-height: 120px; 
     resize: none;      
     overflow: hidden;  
     box-sizing: border-box;
-
 }
+
 .detail-ticket,
 .ajouter-fichier {
-  margin-top:1%;
+  margin-top: 1%;
   margin-bottom: 24px;
   display: flex;
   flex-direction: column;
-
 }
 
 .btn-submit {
@@ -420,9 +224,12 @@ textarea::placeholder {
 .btn-submit:hover {
   background-color: #163c5d;
 }
-/*=============================
-          AJOUT FICHIER
-===============================*/
+
+/* ==========================================================================
+   4. COMPOSANTS : PIÈCES JOINTES, MODALES ET ALERTES
+   ========================================================================== */
+
+/* Gestion d'ajout des fichiers */
 .ajouter-fichier-container {
     display: flex;
     flex-wrap: wrap;
@@ -430,9 +237,6 @@ textarea::placeholder {
     align-items: flex-start;
     margin-top: 15px;
     width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .btn-ajouter-fichiers {
@@ -451,272 +255,115 @@ textarea::placeholder {
     transition: background-color 0.2s ease;
 }
 
-.btn-ajouter-fichiers:hover {
-    background-color: #f8fafc;
-}
+.btn-ajouter-fichiers:hover { background-color: #f8fafc; }
 
-#liste-fichiers,
 .fichiers-preview-list {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     flex-grow: 1;
-    min-width: 0;       
-    max-width: 100%;
 }
 
-.file-item-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 14px;
-    border: 1.5px solid #000000;
-    border-radius: 6px;
-    background-color: #ffffff;
-    box-sizing: border-box;
-    
-    width: 100%;          
-    min-width: 200px;     
-    max-width: 280px;     
-    flex-shrink: 1;       
-}
-
-.file-icon-pdf {
-    background-color: #e15252;
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: bold;
-    padding: 4px 6px;
-    border-radius: 4px;
-    flex-shrink: 0;       
-}
-
-.file-item-info {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    min-width: 0;         
-    overflow: hidden;     
-}
-
-.file-item-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: #0f2e48;
-    display: block;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.file-item-size {
-    font-size: 11px;
-    color: #94a3b8;
-    margin-top: 2px;
-}
-
-.file-item-error-msg {
-    font-size: 11px;
-    color: #e15252;
-    font-weight: 500;
-    margin-top: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.remove-file, 
-.remove-file-btn, 
-.retry-file-btn {
-    background: none;
-    border: none;
-    color: #e15252;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 4px;
-    flex-shrink: 0;      
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.1s ease;
-}
-
-.retry-file-btn {
-    color: #94a3b8;
-    font-size: 16px;
-}
-
-.remove-file:hover, 
-.remove-file-btn:hover, 
-.retry-file-btn:hover {
-    transform: scale(1.2);
-}
-
-/* Message d'erreur création ticket admin entreprise innexistante */
-/* Bandeau d'alerte Flash */
-.flash-alert {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    animation: slideDown 0.3s ease-out;
-}
-
-.flash-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Style Vert Succès */
-.alert-success {
-    background-color: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #166534;
-}
-.alert-success svg { color: #15803d; }
-
-/* Style Rouge Erreur */
-.alert-error {
-    background-color: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #991b1b;
-}
-.alert-error svg { color: #b91c1c; }
-
-/* Bouton fermer [X] */
-.close-flash {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: inherit;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.15s;
-}
-.close-flash:hover { opacity: 1; }
-
-
-/* Bouton help pour le niveau d'urgence */
-.btn-help-modal {
+/* Boutons Modales d'administration */
+.btn-modal-liste-entreprises {
     display: inline-flex;
-    justify-content: center;
     align-items: center;
-    width: 18px;
-    height: 18px;
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    font-size: 11px;
-    font-weight: bold;
+    gap: 12px;
+    padding: 12px 24px;
+    background-color: #f4f7ff;
+    border: 1px solid #0f2e48;
+    border-radius: 6px;
+    color: #0f2e48;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    margin-left: 5px;
-    vertical-align: middle;
 }
 
-.btn-help-modal:hover {
-    background-color: #212529;
-}
-
-/* L'arrière-plan semi-transparent qui couvre tout l'écran */
-.modal-urgence-overlay {
-    display: none; /* Caché par défaut */
+/* Modale liste des entreprises (Arrière-plan et boîte) */
+.modal-liste-entreprises {
+    display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 10000;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; align-items: center;
 }
 
-/* La boîte blanche de la fenêtre pop-up */
-.modal-urgence-content {
+.modal-liste-entreprises-content {
     background-color: #ffffff;
-    width: 90%;
-    max-width: 450px;
+    width: 90%; height: 90%; max-height: 90vh;
     border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: flex; flex-direction: column;
     animation: apparitionModal 0.3s ease-out;
 }
 
-/* En-tête de la pop-up */
-.modal-urgence-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid #e9ecef;
+.modal-liste-entreprises-header {
+    display: flex; justify-content: space-between; padding: 1.25rem 1.5rem;
 }
 
-.modal-urgence-header h2 {
-    font-size: 18px;
-    margin: 0;
-    color: #212529;
+.table-liste-entreprises {
+    width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;
 }
 
-/* Bouton de fermeture */
-.modal-urgence-close {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #6c757d;
-}
-.modal-urgence-close:hover {
-    color: #dc3545;
+.table-liste-entreprises th {
+    background-color: #1a3352; color: #ffffff; padding: 14px 16px; position: sticky; top: 0;
 }
 
-/* Corps du texte de la pop-up */
-.modal-urgence-body {
-    padding: 20px;
+.table-liste-entreprises td { padding: 12px 16px; border-bottom: 1px solid #edf2f7; }
+
+.btn-selectionner-entreprise {
+    background-color: #0f2e48; color: white; padding: 6px 16px; border-radius: 4px; font-weight: bold; border: none; cursor: pointer;
 }
 
-.modal-urgence-body ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+/* Aide Modal Urgence */
+.btn-help-modal {
+    display: inline-flex; justify-content: center; align-items: center;
+    width: 18px; height: 18px; background-color: #6c757d; color: white;
+    border: none; border-radius: 50%; font-size: 11px; font-weight: bold; cursor: pointer;
 }
 
-.modal-urgence-body li {
-    margin-bottom: 12px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #495057;
+.modal-urgence-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); z-index: 10000; justify-content: center; align-items: center;
 }
 
-/* Petite animation d'ouverture */
-@keyframes apparitionModal {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+.modal-urgence-content {
+    background-color: #ffffff; width: 90%; max-width: 450px; border-radius: 8px; padding: 20px;
 }
 
-/* Annimation d'apparition */
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Bandeau d'alerte Flash */
+.flash-alert {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 14px;
+    animation: slideDown 0.3s ease-out;
 }
+
+.alert-success { background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+.alert-error { background-color: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+
+/* Keyframes animations */
+@keyframes apparitionModal { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ==========================================================================
+   5. ADAPTATION RESPONSIVE (MOBILE / TABLETTE)
+   ========================================================================== */
 
 @media (max-width: 768px) {
-  .ligne-triple {
+  .ligne-triple, .ligne-double {
     flex-direction: column;
     gap: 24px;
   }
+  .container-nouveau-ticket { padding: 20px; }
+  .en-tete-container { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
 
-  .container-nouveau-ticket {
-    padding: 20px;
-  }
-  .ligne-double {
-    flex-direction: column;
-    gap: 24px;
-  }
+@media (max-width: 640px) {
+    .nouveau-ticket {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    .switch-container { width: 100%; }
+    .switch-btn { flex: 1; }
 }

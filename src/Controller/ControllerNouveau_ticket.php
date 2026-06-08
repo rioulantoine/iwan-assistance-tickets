@@ -2,8 +2,13 @@
 // ControllerNouveau_ticket.php
 // Fichier qui permet de gérer la page Nouveau ticket
 require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
+// On récupère l'onglet demandé dans l'URL ('ticket' par défaut)
+$tab_actif = $_GET['tab'] ?? 'ticket';
 
-// =======================================================
+// SÉCURITÉ : Si l'utilisateur N'EST PAS admin, il est verrouillé sur 'ticket'
+if (!($_SESSION['is_admin'] ?? false)) {
+    $tab_actif = 'ticket';
+} // =======================================================
 //    GESTION DE LA MODALE ET DE LA PAGINATION (Via GET)
 // =======================================================
 $recherche = trim($_GET['recherche'] ?? '');
