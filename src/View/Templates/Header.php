@@ -39,7 +39,7 @@
                 <span>Les tickets</span>
             </a>
         <?php endif; ?> <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
-            <a href="index.php?page=nouveau_client" class="link-with-icon">
+            <a href="index.php?page=les_clients" class="link-with-icon">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -53,7 +53,7 @@
                     <path
                         d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"></path>
                 </svg>
-                <span>Nouveau client</span>
+                <span>Liste des clients</span>
             </a>
         <?php endif; ?>
         <?php if (($GLOBALS['nb_ticket_client'] ?? 0) == 0): ?>
