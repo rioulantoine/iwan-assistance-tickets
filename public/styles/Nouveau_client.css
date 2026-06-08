@@ -48,8 +48,7 @@
 
 /* Affichage container */
 .container-nouveau-client {
-  width: 100%;
-  max-width: 1500px;
+  width: 96%;
   background-color: #ffffff;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
