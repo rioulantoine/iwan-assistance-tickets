@@ -206,6 +206,110 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
 }
+/* Filtre recherche */
+.search-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.search-wrapper input {
+    width: 100%;
+    height: 42px;
+    padding: 0 16px 0 42px !important;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #64748b;
+    font-size: 14px;
+    appearance: none;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.search-wrapper svg {
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.btn-filtre {
+  height: 42px;
+  padding: 0 24px;
+  background-color: #b2bfc8;
+  color: #0f2e48;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-filtre:hover {
+  background-color: #a1b0ba;
+}
+.modal-liste-entreprises-filtre {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 1.5rem 1rem;
+}
+.modal-liste-entreprises-close {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6c757d;
+    padding: 0;
+    line-height: 1;
+}
+
+.modal-liste-entreprises-close:hover {
+    color: #dc3545;
+}
+
+/* Pagination de la table */
+.pagination-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 8px; 
+    margin-top: 24px;
+}
+
+.page-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 10px;
+    background-color: #ffffff;
+    color: #0f2e48;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.page-link:hover {
+    background-color: #f4f7ff;
+    border-color: #0f2e48;
+}
+
+.page-link.active {
+    background-color: #0f2e48;
+    color: #ffffff;
+    border-color: #0f2e48;
+    pointer-events: none; 
+}
+
 
 .btn-submit {
   height: 46px;
@@ -281,26 +385,62 @@ textarea::placeholder {
 
 /* Modale liste des entreprises (Arrière-plan et boîte) */
 .modal-liste-entreprises {
-    display: none;
+    display: none; 
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 10000;
-    justify-content: center; align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-liste-entreprises-content {
     background-color: #ffffff;
-    width: 90%; height: 90%; max-height: 90vh;
+    width: 90%;
+    max-width: 1450px;
+    height: 90%;
     border-radius: 8px;
-    display: flex; flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     animation: apparitionModal 0.3s ease-out;
+    max-height:90vh;
+    display: flex;
+    flex-direction:column;
 }
 
 .modal-liste-entreprises-header {
-    display: flex; justify-content: space-between; padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 40px;
+}
+.header-titre-groupe {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+.header-titre-groupe svg {
+    flex-shrink: 0;
+    margin-top: 2px; /* aligne optiquement le svg avec le texte */
+}
+.header-textes {
+  margin-bottom: -8%;
+}
+.header-textes h2 {
+    margin: 0 0 4px 0;
 }
 
+.header-textes p {
+    margin: 0;
+}
+
+.header-icone svg {
+    width: 24px;
+    height: 24px;
+}
 .table-liste-entreprises {
     width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;
 }
@@ -321,15 +461,74 @@ textarea::placeholder {
     width: 18px; height: 18px; background-color: #6c757d; color: white;
     border: none; border-radius: 50%; font-size: 11px; font-weight: bold; cursor: pointer;
 }
-
 .modal-urgence-overlay {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); z-index: 10000; justify-content: center; align-items: center;
+    display: none; /* Caché par défaut */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
 }
 
+/* La boîte blanche de la fenêtre pop-up */
 .modal-urgence-content {
-    background-color: #ffffff; width: 90%; max-width: 450px; border-radius: 8px; padding: 20px;
+    background-color: #ffffff;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: apparitionModal 0.3s ease-out;
 }
+
+/* En-tête de la pop-up */
+.modal-urgence-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-urgence-header h2 {
+    font-size: 18px;
+    margin: 0;
+    color: #212529;
+}
+
+/* Bouton de fermeture */
+.modal-urgence-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6c757d;
+}
+.modal-urgence-close:hover {
+    color: #dc3545;
+}
+
+/* Corps du texte de la pop-up */
+.modal-urgence-body {
+    padding: 20px;
+}
+
+.modal-urgence-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-urgence-body li {
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #495057;
+}
+
 
 /* Bandeau d'alerte Flash */
 .flash-alert {

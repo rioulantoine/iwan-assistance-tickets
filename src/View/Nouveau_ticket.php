@@ -60,6 +60,10 @@
                     <?php endif; ?>
                 </div>
 
+
+                <!-- MODAL SELECTIONNER ENTREPRISE -->
+
+
                 <?php if ($_SESSION['is_admin'] ?? false) : ?>
                     <div id="modalListeEntreprises" class="modal-liste-entreprises"
                         style="<?= (isset($_GET['ouvrir_modal']) && $_GET['ouvrir_modal'] == '1') ? 'display: flex;' : '' ?>"
