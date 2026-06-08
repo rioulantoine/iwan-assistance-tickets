@@ -43,7 +43,7 @@
                 </div>
 
                 <form method="GET" action="index.php" class="section-liste-entreprises-filtre">
-                    <input type="hidden" name="page" value="nouveau_ticket">
+                    <input type="hidden" name="page" value="les_clients">
 
                     <div class="search-wrapper">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -106,20 +106,22 @@
 
                     <?php if (($total_pages ?? 0) > 1) : ?>
                         <div class="pagination-container">
+
                             <?php if (($page_entreprise ?? 0) > 1) : ?>
-                                <a href="index.php?page=nouveau_ticket&recherche=<?= urlencode($_GET['recherche'] ?? '') ?>&page_entreprise=<?= ($page_entreprise ?? 0) - 1 ?>" class="page-link">&laquo; Précédent</a>
+                                <a href="index.php?page=les_clients&recherche=<?= urlencode($_GET['recherche'] ?? '') ?>&page_entreprise=<?= ($page_entreprise ?? 0) - 1 ?>#sectionListeEntreprises" class="page-link">&laquo; Précédent</a>
                             <?php endif; ?>
 
                             <?php for ($i = 1; $i <= ($total_pages ?? 0); $i++) : ?>
-                                <a href="index.php?page=nouveau_ticket&recherche=<?= urlencode($_GET['recherche'] ?? '') ?>&page_entreprise=<?= $i ?>"
+                                <a href="index.php?page=les_clients&recherche=<?= urlencode($_GET['recherche'] ?? '') ?>&page_entreprise=<?= $i ?>#sectionListeEntreprises"
                                     class="page-link <?= ($i === ($page_entreprise ?? 0)) ? 'active' : '' ?>">
                                     <?= $i ?>
                                 </a>
                             <?php endfor; ?>
 
                             <?php if (($page_entreprise ?? 0) < ($total_pages ?? 0)) : ?>
-                                <a href="index.php?page=nouveau_ticket&recherche=<?= urlencode($_GET['recherche'] ?? '') ?>&page_entreprise=<?= ($page_entreprise ?? 0) + 1 ?>" class="page-link">Suivant &raquo;</a>
+                                <a href="index.php?page=les_clients&recherche=<?= urlencode($_GET['recherche'] ?? '') ?>&page_entreprise=<?= ($page_entreprise ?? 0) + 1 ?>#sectionListeEntreprises" class="page-link">Suivant &raquo;</a>
                             <?php endif; ?>
+
                         </div>
                     <?php endif; ?>
                 </div>

@@ -7,7 +7,7 @@ $recherche = trim($_GET['recherche'] ?? '');
 
 // On s'assure que la page est au moins à 1
 $page_entreprise = max(1, (int)($_GET['page_entreprise'] ?? 1));
-$limite = 10;
+$limite = 15; // LIMITE DU NOMBRE DE CLIENT PAR PAGE 
 $offset = ($page_entreprise - 1) * $limite;
 
 // Récupération des données pour le tableau (avec LIMIT et OFFSET)
