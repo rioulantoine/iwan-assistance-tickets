@@ -46,6 +46,9 @@ switch ($page) {
     case 'supprimer_ticket':
         require_once __DIR__ . '/src/Controller/ControllerSupprimer_ticket.php';
         break;
+    case 'supprimer_reponse':
+        require_once __DIR__ . '/src/Controller/ControllerSupprimer_reponse.php';
+        break;
 
     case 'admin_tickets':
         if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {

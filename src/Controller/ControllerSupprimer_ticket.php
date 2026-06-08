@@ -24,6 +24,6 @@ if (!empty($num_ticket)) {
     }
 }
 
-// Redirection vers la page admin (ajusté selon ton index.php)
+// Redirection vers la page admin 
 header("Location: index.php?page=admin_tickets");
 exit();

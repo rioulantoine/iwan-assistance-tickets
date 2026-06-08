@@ -162,6 +162,57 @@ function supprimer_ticket_par_numero($num_ticket)
 }
 
 /**
+ * Supprimer la réponse ainsi que les pieces jointes et id_parent
+ */
+function supprimer_reponse_par_id($id_reponse)
+{
+    $pdo = get_bdd();
+    $dossier_upload = __DIR__ . '/../../public/uploads/';
+
+    try {
+        $sqlPJReponse = "SELECT nom_stockage FROM PIECES_JOINTES WHERE id_reponse = ?";
+        $stmt1 = $pdo->prepare($sqlPJReponse);
+        $stmt1->execute([$id_reponse]);
+        $fichiersReponse = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+
+        $pdo->beginTransaction();
+
+        // On supprime les pièces jointes de la réponse en BDD
+        $sqlDeletePJReponse = "DELETE FROM PIECES_JOINTES WHERE id_reponse = ?";
+        $pdo->prepare($sqlDeletePJReponse)->execute([$id_reponse]);
+
+        // On enleve l'id parent des réponses lié
+        $sqlupdateIDparent = "UPDATE REPONSE 
+                              SET id_parent = NULL
+                              WHERE id_parent = ?";
+        $pdo->prepare($sqlupdateIDparent)->execute([$id_reponse]);
+
+        // On supprime la réponse maîtresse en BDD
+        $sqlDeleteReponse = "DELETE FROM REPONSE WHERE id_reponse = ?";
+        $pdo->prepare($sqlDeleteReponse)->execute([$id_reponse]);
+
+        //Si tout s'est bien passé en BDD, on valide la transaction
+        $pdo->commit();
+
+        foreach ($fichiersReponse as $fichier) {
+            if (!empty($fichier['nom_stockage'])) {
+                $chemin_complet = $dossier_upload . $fichier['nom_stockage'];
+                if (file_exists($chemin_complet)) {
+                    unlink($chemin_complet);
+                }
+            }
+        }
+
+        return true;
+    } catch (Exception $e) {
+        // En cas de problème, on annule tout en BDD et les fichiers restent intacts
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        return false;
+    }
+}
+/**
  * Récupère la/les réponse d'un ticket
  */
 function get_reponse_ticket($id_ticket)
