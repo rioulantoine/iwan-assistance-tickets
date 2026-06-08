@@ -193,7 +193,8 @@
                     <form action="" method="POST" enctype="multipart/form-data" auth-form>
                         <?php if ($_SESSION['is_admin'] ?? false): ?>
                             <label for="nom_entreprise">Nom entreprise</label>
-                            <input type="text" id="nom_entreprise" name="nom_entreprise" list="entreprises_suggestion" placeholder="Entrez le nom de l'entreprise" autocomplete="off" required value="<?= htmlspecialchars($_POST['nom_entreprise'] ?? '') ?>">
+                            <input type="text" id="nom_entreprise" name="nom_entreprise" list="entreprises_suggestion" placeholder="Entrez le nom de l'entreprise" autocomplete="off" required
+                                value="<?= htmlspecialchars($_POST['nom_entreprise'] ?? $_SESSION['entreprise_selectionnee']['nom_entreprise'] ?? '') ?>">
                             <datalist id="entreprises_suggestion">
                                 <?php foreach ($liste_nom_entreprise ?? [] as $entreprise): ?>
                                     <option value="<?= htmlspecialchars($entreprise['nom_entreprise']) ?>">
@@ -204,22 +205,26 @@
                         <div class="ligne-double">
                             <div class="groupe-input">
                                 <label for="nom">Nom</label>
-                                <input type="text" id="nom" name="nom" placeholder="Entrez votre nom" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?> value="<?= htmlspecialchars($_POST['nom'] ?? $infos_client['nom'] ?? '') ?>" />
+                                <input type="text" id="nom" name="nom" placeholder="Entrez votre nom" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
+                                    value="<?= htmlspecialchars($_POST['nom'] ?? $_SESSION['entreprise_selectionnee']['nom'] ?? $infos_client['nom'] ?? '') ?>" />
                             </div>
                             <div class="groupe-input">
                                 <label for="prenom">Prénom</label>
-                                <input type="text" id="prenom" name="prenom" placeholder="Entrez votre prénom" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?> value="<?= htmlspecialchars($_POST['prenom'] ?? $infos_client['prenom'] ?? '') ?>" />
+                                <input type="text" id="prenom" name="prenom" placeholder="Entrez votre prénom" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
+                                    value="<?= htmlspecialchars($_POST['prenom'] ?? $_SESSION['entreprise_selectionnee']['prenom'] ?? $infos_client['prenom'] ?? '') ?>" />
                             </div>
                         </div>
 
                         <div class="ligne-triple">
                             <div class="groupe-input">
                                 <label for="email">Email</label>
-                                <input type="email" id="email" name="email" placeholder="Entrez votre adresse e-mail" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?> value="<?= htmlspecialchars($_POST['email'] ?? $infos_client['email'] ?? '') ?>" />
+                                <input type="email" id="email" name="email" placeholder="Entrez votre adresse e-mail" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
+                                    value="<?= htmlspecialchars($_POST['email'] ?? $_SESSION['entreprise_selectionnee']['email'] ?? $infos_client['email'] ?? '') ?>" />
                             </div>
                             <div class="groupe-input">
                                 <label for="telephone">Numéro de téléphone</label>
-                                <input type="tel" maxlength="50" id="telephone" name="telephone" placeholder="Entrez votre numéro de téléphone" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?> value="<?= htmlspecialchars($_POST['telephone'] ?? $infos_client['telephone'] ?? '') ?>" />
+                                <input type="tel" maxlength="50" id="telephone" name="telephone" placeholder="Entrez votre numéro de téléphone" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
+                                    value="<?= htmlspecialchars($_POST['telephone'] ?? $_SESSION['entreprise_selectionnee']['telephone'] ?? $infos_client['telephone'] ?? '') ?>" />
                             </div>
                             <div class="groupe-input">
                                 <label for="niveau_urgence">Niveau d'urgence
