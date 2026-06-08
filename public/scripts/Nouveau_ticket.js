@@ -252,7 +252,36 @@ document.addEventListener("DOMContentLoaded", function() {
         ouvrirModalListeEntreprises();
     }
 });
+// ==========================================================================
+//          FERMETURE DES MODAL QUAND ON PRESSE ESC 
+// ==========================================================================
+//MODAL LES ENTREPRISES
+document.addEventListener('keydown', function(event) {
+    // On vérifie si la touche pressée est bien Échap
+    if (event.key === 'Escape' || event.key === 'Esc') {
+        const modal = document.getElementById('modalListeEntreprises');
+        
+        // Si la modale existe et qu'elle est actuellement visible à l'écran
+        if (modal && modal.style.display === 'flex') {
+            event.preventDefault(); // Bloque le comportement par défaut du navigateur
+            modal.style.display = 'none'; // On cache la modale
+        }
+    }
+});
 
+// MODAL URGENCE
+document.addEventListener('keydown', function(event) {
+    // On vérifie si la touche pressée est bien Échap
+    if (event.key === 'Escape' || event.key === 'Esc') {
+        const modal = document.getElementById('modalUrgence');
+        
+        // Si la modale existe et qu'elle est actuellement visible à l'écran
+        if (modal && modal.style.display === 'flex') {
+            event.preventDefault(); // Bloque le comportement par défaut du navigateur
+            modal.style.display = 'none'; // On cache la modale
+        }
+    }
+});
 // ==========================================================================
 // REMISE À ZÉRO INTELLIGENTE DES FORMULAIRES AU CHARGEMENT / RETOUR DE PAGE
 // ==========================================================================
