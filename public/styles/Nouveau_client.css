@@ -154,7 +154,9 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   
 }
-
+.observation {
+    margin-top: 20px;
+}
 input::placeholder,
 textarea::placeholder {
   color: #cbd5e1;

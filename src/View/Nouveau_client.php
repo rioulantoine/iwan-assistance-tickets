@@ -153,6 +153,23 @@
                                 value="<?= htmlspecialchars($_POST['telephone'] ?? '') ?>" />
                         </div>
                     </div>
+                    <div class="groupe-input">
+                        <label for="logiciel">Logiciel concerné</label>
+                        <select id="logiciel" name="logiciel" required>
+                            <option value="" disabled selected>Choisissez un logiciel</option>
+                            <option value="GOA" <?= ($_POST['logiciel'] ?? '') === 'GOA' ? 'selected' : '' ?>>GOA</option>
+                            <option value="IWAN_V3" <?= ($_POST['logiciel'] ?? '') === 'IWAN_V3' ? 'selected' : '' ?>>IWAN V3</option>
+                            <option value="CRM" <?= ($_POST['logiciel'] ?? '') === 'CRM' ? 'selected' : '' ?>>CRM</option>
+                            <option value="RESAVAC" <?= ($_POST['logiciel'] ?? '') === 'RESAVAC' ? 'selected' : '' ?>>RESAVAC</option>
+                            <option value="WINLORE" <?= ($_POST['logiciel'] ?? '') === 'WINLORE' ? 'selected' : '' ?>>WINLORE</option>
+                            <option value="AERORESA" <?= ($_POST['logiciel'] ?? '') === 'AERORESA' ? 'selected' : '' ?>>AERORESA</option>
+                            <option value="PLANNING" <?= ($_POST['logiciel'] ?? '') === 'PLANNING' ? 'selected' : '' ?>>PLANNING</option>
+                            <option value="MATERIEL" <?= ($_POST['logiciel'] ?? '') === 'MATERIEL' ? 'selected' : '' ?>>MATERIEL</option>
+                            <option value="ANAMAG" <?= ($_POST['logiciel'] ?? '') === 'ANAMAG' ? 'selected' : '' ?>>ANAMAG</option>
+                            <option value="IWAN_CAISSE" <?= ($_POST['logiciel'] ?? '') === 'IWAN_CAISSE' ? 'selected' : '' ?>>IWAN CAISSE</option>
+                            <option value="AUTRE" <?= ($_POST['logiciel'] ?? '') === 'AUTRE' ? 'selected' : '' ?>>AUTRE</option>
+                        </select>
+                    </div>
                     <div class="observation">
                         <label for="observation">Observations</label>
                         <textarea

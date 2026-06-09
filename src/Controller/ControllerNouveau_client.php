@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $prenom = trim($_POST['prenom'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $telephone = trim($_POST['telephone'] ?? '');
+    $logiciel = trim($_POST['logiciel']);
     $observation = trim($_POST['observation'] ?? '');
 
     $erreurs = [];
@@ -76,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $prenom,
             $email,
             $telephone,
+            $logiciel,
             $observation
         );
         header("Location: index.php?page=accueil");

@@ -13,6 +13,7 @@ function inserer_nouveau_client(
     $prenom,
     $email,
     $telephone,
+    $logiciel,
     $observation = ''
 ) {
     $pdo = get_bdd();
@@ -25,8 +26,9 @@ function inserer_nouveau_client(
             prenom,
             email,
             telephone,
+            logiciel,
             observation)
-            VALUES(?,?,?,?,?,?,?,?,?)";
+            VALUES(?,?,?,?,?,?,?,?,?,?)";
     $stmt = $pdo->prepare($sql);
     $resultat = $stmt->execute(
         [
@@ -38,6 +40,7 @@ function inserer_nouveau_client(
             $prenom,
             $email,
             $telephone,
+            $logiciel,
             $observation
         ]
     );
