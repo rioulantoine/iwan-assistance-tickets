@@ -25,13 +25,18 @@
   margin-top: 0;
 }
 .filtre-bar {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
   gap: 16px;
   margin-bottom: 24px;
   align-items: center;
-  flex-wrap: wrap;
 }
-/* Style pour la selection de dates */
+
+
+.filtre-bar .search-wrapper {
+  grid-column: span 2; 
+}
+
 .date-range-wrapper {
     display: flex;
     gap: 8px;
@@ -202,6 +207,9 @@
 
 .table-tickets td.text-non-urgent {
     color: #38a169;
+}
+.table-tickets td.suivi {
+    color: #805ad5;
 }
 .font-bold { font-weight: bold; }
 

@@ -52,6 +52,11 @@
                 <?php else : ?>
                     Aucun ticket n'a été trouvé.
                 <?php endif; ?>
+
+
+                <!-- FILTRES -->
+
+
             <form method="GET" action="" class="filtre-bar">
                 <input type="hidden" name="page" value="admin_tickets">
 
@@ -160,6 +165,17 @@
                     </svg>
                 </div>
 
+                <div class="select-wrapper">
+                    <select name="ticket_suivi">
+                        <option value="2" <?= (!isset($_GET['ticket_suivi']) || $_GET['ticket_suivi'] === '2') ? 'selected' : '' ?>>Tickets et suivis</option>
+                        <option value="0" <?= (isset($_GET['ticket_suivi']) && $_GET['ticket_suivi'] === '0') ? 'selected' : '' ?>>Tickets</option>
+                        <option value="1" <?= (isset($_GET['ticket_suivi']) && $_GET['ticket_suivi'] === '1') ? 'selected' : '' ?>>Suivis</option>
+                    </select>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+
                 <div class="search-wrapper">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -179,20 +195,25 @@
 
                 <button type="submit" class="btn-filtre">Appliquer les filtres</button>
             </form>
+
+
             <!-- Liste des tickets -->
+
+
             <table class="table-tickets">
                 <!-- Haut du tableau -->
                 <thead>
                     <tr>
-                        <th class="sortable" data-col="id_urgence"
-                            data-order="<?= (($filtres['tri_col'] ?? '') === 'id_urgence') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
-                            Urgence <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'id_urgence') ? ($filtres['tri_ordre'] ?? '' == 2 ? '▼' : '▲') : '▲' ?></span>
+                        <th class="sortable" data-col="ref"
+                            data-order="<?= (($filtres['tri_col'] ?? '') === 'ref') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
+                            Réf. <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'ref') ? ($filtres['tri_ordre'] ?? '' == 2 ? '▼' : '▲') : '▲' ?></span>
                         </th>
                         <th class="sortable" data-col="titre"
                             data-order="<?= (($filtres['tri_col'] ?? '') === 'titre') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
                             Titre <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'titre') ? ($filtres['tri_ordre'] ?? '' == 2 ? '▼' : '▲') : '▲' ?></span>
                         </th>
                         <th>Établissement</th>
+                        <th>Logiciel</th>
                         <th>Auteur</th>
                         <th class="sortable" data-col="date_creation"
                             data-order="<?= (($filtres['tri_col'] ?? '') === 'date_creation') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
@@ -224,6 +245,7 @@
                         if ($ticket['id_urgence'] == 1) $classe_urgence = 'text-bloquant';
                         if ($ticket['id_urgence'] == 2) $classe_urgence = 'text-urgent';
                         if ($ticket['id_urgence'] == 3) $classe_urgence = 'text-normal';
+                        if ($ticket['type'] == 1) $classe_urgence = 'suivi';
 
                         // Formatage des dates
                         $date_creation = (new DateTime($ticket['date_creation']))->format('d/m/y à H:i');
@@ -232,9 +254,10 @@
 
                         ?>
                         <tr>
-                            <td class="<?= $classe_urgence ?> font-bold"><?= htmlspecialchars($ticket['libelle_urgence']) ?></td>
+                            <td class="<?= $classe_urgence ?> font-bold"><?= htmlspecialchars($ticket['numero_ticket']) ?></td>
                             <td><?= htmlspecialchars($ticket['titre']) ?></td>
                             <td><?= htmlspecialchars($ticket['nom_entreprise'] ?? '') ?></td>
+                            <td><?= htmlspecialchars($ticket['logiciel'] ?? '') ?></td>
                             <td><?= htmlspecialchars($ticket['declarant_prenom'] . ' ' . $ticket['declarant_nom']) ?></td>
                             <td><?= $date_creation ?></td>
                             <td><?= $date_maj ?></td>

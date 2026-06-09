@@ -27,6 +27,7 @@ $filtres = [
     'date_fin'    => $date_fin,
     'statut'      => $_GET['statut_filtre'] ?? '',
     'urgence'     => $_GET['urgence_filtre'] ?? '',
+    'ticket-suivi' => $_GET['ticket_suivi'] ?? '',
     'recherche'   => trim($_GET['recherche'] ?? ''),
     'tri_col'     => $tri_col,
     'tri_ordre'   => $tri_ordre,

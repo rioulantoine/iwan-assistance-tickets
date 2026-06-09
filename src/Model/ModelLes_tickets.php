@@ -10,7 +10,7 @@ require_once __DIR__ . '/ModelBDD.php';
 function get_nb_tickets($filtres)
 {
     $pdo = get_bdd();
-    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE 1=1";
+    $sql = "SELECT COUNT(id_ticket) FROM TICKETS LEFT JOIN CLIENT c ON TICKETS.id_entreprise = c.id_client WHERE 1=1";
     $params = [];
 
     if (empty($filtres['date_debut']) && empty($filtres['date_fin'])) {
@@ -123,6 +123,15 @@ function get_tickets($filtres)
         $params['id_urgence'] = (int)$filtres['urgence'];
     }
 
+    // Filtre ticket suivi 
+    if (isset($filtres['ticket-suivi']) && $filtres['ticket-suivi'] !== '') {
+        if ($filtres['ticket-suivi'] === '0') {
+            $sql .= " AND t.type = 0";
+        } elseif ($filtres['ticket-suivi'] === '1') {
+            $sql .= " AND t.type = 1";
+        }
+        // Si la valeur reçue est '2', on n'ajoute pas de clause AND t.type, 
+    }
     // Filtre recherche 
     if (!empty($filtres['recherche'])) {
         $sql .= " AND (titre LIKE :recherche OR numero_ticket LIKE :recherche OR nom_entreprise LIKE :recherche OR declarant_prenom LIKE :recherche OR declarant_nom LIKE :recherche OR description LIKE :recherche)";
