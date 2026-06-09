@@ -628,7 +628,7 @@ textarea::placeholder {
    ========================================================================== */
 
 /* Style de base pour l'input date (aligné sur tes inputs text) */
-input[type="date"] {
+input[type="datetime-local"] {
     width: 100%;
     padding: 10px 14px;
     font-size: 14px;

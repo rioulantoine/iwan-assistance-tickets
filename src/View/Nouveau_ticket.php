@@ -305,6 +305,10 @@
                     <form action="index.php?page=nouveau_suivi" method="POST">
                         <input type="hidden" name="action" value="creer_suivi_appel">
                         <div class="ligne-double">
+                            <?php
+                            // On détermine le logiciel à sélectionner (soit le POST si formulaire soumis avec erreur, soit la session de l'entreprise)
+                            $logiciel_preselectionne = $_POST['logiciel'] ?? $_SESSION['entreprise_selectionnee']['logiciel'] ?? '';
+                            ?>
                             <div class="groupe-input">
                                 <label for="nom_entreprise_suivi">Nom entreprise</label>
                                 <input type="text" id="nom_entreprise_suivi" name="nom_entreprise" list="entreprises_suggestion" placeholder="Entrez le nom de l'entreprise" autocomplete="off" required
@@ -315,18 +319,6 @@
                                         <?php endforeach; ?>
                                 </datalist>
                             </div>
-                            <div class="groupe-input">
-                                <label for="date_creation">Date de création</label>
-                                <input type="date" id="date_creation" name="date_creation"
-                                    value="<?= date('Y-m-d') ?>" required>
-                            </div>
-                        </div>
-                        <div class="ligne-double">
-                            <?php
-                            // On détermine le logiciel à sélectionner (soit le POST si formulaire soumis avec erreur, soit la session de l'entreprise)
-                            $logiciel_preselectionne = $_POST['logiciel'] ?? $_SESSION['entreprise_selectionnee']['logiciel'] ?? '';
-                            ?>
-
                             <div class="groupe-input">
                                 <label for="logiciel">Logiciel concerné</label>
                                 <select id="logiciel" name="logiciel" required>
@@ -344,22 +336,7 @@
                                     <option value="AUTRE" <?= $logiciel_preselectionne === 'AUTRE' ? 'selected' : '' ?>>AUTRE</option>
                                 </select>
                             </div>
-                            <div class="groupe-input">
-                                <label for="type_suivi">Type de suivi</label>
-                                <select id="type_suivi" name="type_suivi" required>
-                                    <option value="" disabled selected>Choisissez un type de suivi</option>
-                                    <option value="DEMANDE_DE_DEV" <?= ($_POST['type_suivi'] ?? '') === 'DEMANDE_DE_DEV' ? 'selected' : '' ?>>DEMANDE DE DEV</option>
-                                    <option value="BUG" <?= ($_POST['type_suivi'] ?? '') === 'BUG' ? 'selected' : '' ?>>BUG</option>
-                                    <option value="QUESTION_D'UTILISATION" <?= ($_POST['type_suivi'] ?? '') === "QUESTION_D'UTILISATION" ? 'selected' : '' ?>>QUESTION D'UTILISATION</option>
-                                    <option value="MAJ" <?= ($_POST['type_suivi'] ?? '') === 'MAJ' ? 'selected' : '' ?>>MAJ</option>
-                                    <option value="SUPPORT" <?= ($_POST['type_suivi'] ?? '') === 'SUPPORT' ? 'selected' : '' ?>>SUPPORT</option>
-                                    <option value="DEMANDE_DE_DEVIS" <?= ($_POST['type_suivi'] ?? '') === 'DEMANDE_DE_DEVIS' ? 'selected' : '' ?>>DEMANDE DE DEVIS</option>
-                                    <option value="QUESTION_ADMINISTRATIVE" <?= ($_POST['type_suivi'] ?? '') === 'QUESTION_ADMINISTRATIVE' ? 'selected' : '' ?>>QUESTION ADMINISTRATIVE</option>
-                                    <option value="INSTALL_LOGICIEL" <?= ($_POST['type_suivi'] ?? '') === 'INSTALL_LOGICIEL' ? 'selected' : '' ?>>INSTALL LOGICIEL</option>
-                                    <option value="SUPPORT_LOGICIEL" <?= ($_POST['type_suivi'] ?? '') === 'SUPPORT_LOGICIEL' ? 'selected' : '' ?>>SUPPORT_LOGICIEL</option>
-                                    <option value="AUTRE" <?= ($_POST['type_suivi'] ?? '') === 'AUTRE' ? 'selected' : '' ?>>AUTRE</option>
-                                </select>
-                            </div>
+
                         </div>
                         <div class="ligne-double">
                             <div class="groupe-input">
@@ -383,7 +360,31 @@
                                     value="<?= htmlspecialchars($_POST['telephone'] ?? $_SESSION['entreprise_selectionnee']['telephone'] ?? $infos_client['telephone'] ?? '') ?>" />
                             </div>
                         </div>
-
+                        <div class="ligne-double">
+                            <div class="groupe-input">
+                                <label for="date_creation">Date de création</label>
+                                <input type="datetime-local"
+                                    name="date_suivi"
+                                    value="<?= date('Y-m-d\TH:i') ?>"
+                                    required>
+                            </div>
+                            <div class="groupe-input">
+                                <label for="type_suivi">Type de suivi</label>
+                                <select id="type_suivi" name="type_suivi" required>
+                                    <option value="" disabled selected>Choisissez un type de suivi</option>
+                                    <option value="DEMANDE_DE_DEV" <?= ($_POST['type_suivi'] ?? '') === 'DEMANDE_DE_DEV' ? 'selected' : '' ?>>DEMANDE DE DEV</option>
+                                    <option value="BUG" <?= ($_POST['type_suivi'] ?? '') === 'BUG' ? 'selected' : '' ?>>BUG</option>
+                                    <option value="QUESTION_D'UTILISATION" <?= ($_POST['type_suivi'] ?? '') === "QUESTION_D'UTILISATION" ? 'selected' : '' ?>>QUESTION D'UTILISATION</option>
+                                    <option value="MAJ" <?= ($_POST['type_suivi'] ?? '') === 'MAJ' ? 'selected' : '' ?>>MAJ</option>
+                                    <option value="SUPPORT" <?= ($_POST['type_suivi'] ?? '') === 'SUPPORT' ? 'selected' : '' ?>>SUPPORT</option>
+                                    <option value="DEMANDE_DE_DEVIS" <?= ($_POST['type_suivi'] ?? '') === 'DEMANDE_DE_DEVIS' ? 'selected' : '' ?>>DEMANDE DE DEVIS</option>
+                                    <option value="QUESTION_ADMINISTRATIVE" <?= ($_POST['type_suivi'] ?? '') === 'QUESTION_ADMINISTRATIVE' ? 'selected' : '' ?>>QUESTION ADMINISTRATIVE</option>
+                                    <option value="INSTALL_LOGICIEL" <?= ($_POST['type_suivi'] ?? '') === 'INSTALL_LOGICIEL' ? 'selected' : '' ?>>INSTALL LOGICIEL</option>
+                                    <option value="SUPPORT_LOGICIEL" <?= ($_POST['type_suivi'] ?? '') === 'SUPPORT_LOGICIEL' ? 'selected' : '' ?>>SUPPORT_LOGICIEL</option>
+                                    <option value="AUTRE" <?= ($_POST['type_suivi'] ?? '') === 'AUTRE' ? 'selected' : '' ?>>AUTRE</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="ligne-triple">
                             <div class="groupe-input">
                                 <label for="suivi_titre">Objet de l'appel</label>

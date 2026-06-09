@@ -11,7 +11,7 @@ if (!($_SESSION['is_admin'] ?? false)) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['nouveau-suivi'])) {
         $nom_entreprise = trim($_POST['nom_entreprise']);
-        $date = trim($_POST['date_creation']);
+        $date = str_replace('T', ' ', $_POST['date_suivi'] ?? '');
         $logiciel = trim($_POST['logiciel']);
         $type_suivi = trim($_POST['type_suivi']);
         $nom_contact = trim($_POST['nom_contact']);
