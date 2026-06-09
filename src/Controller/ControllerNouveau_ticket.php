@@ -60,7 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'nom'            => $_POST['nom'] ?? '',
             'prenom'         => $_POST['prenom'] ?? '',
             'email'          => $_POST['email'] ?? '',
-            'telephone'      => $_POST['telephone'] ?? ''
+            'telephone'      => $_POST['telephone'] ?? '',
+            'logiciel'       => $_POST['logiciel'] ?? ''
         ];
 
         // On ajoute &selection=1 pour signaler au JS qu'on vient de sélectionner l'entreprise
