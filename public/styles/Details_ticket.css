@@ -28,7 +28,15 @@ main {
   flex-shrink: 0;         
   margin-right: 3%;      
 }
+.suivi-notes-textarea:focus {
+    outline: none;
+    border-color: #805ad5 !important;
+    box-shadow: 0 0 0 3px rgba(128, 83, 213, 0.15);
+}
 
+.btn-submit-notes:hover {
+    background-color: #6b46c1 !important;
+}
 /* ==============================
    FIL DE DISCUSSION
 ================================= */

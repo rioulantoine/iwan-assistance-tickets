@@ -7,18 +7,22 @@
     <link rel="icon" type="image/png" href="img/Logo_Iwan.png" />
     <link rel="stylesheet" href="public/styles/Details_ticket.css" />
     <link rel="stylesheet" href="public/styles/Global.css" />
+    <style>
+
+    </style>
 </head>
 
 <body>
     <main>
         <div class="container-details">
-            <h1>Détails du ticket</h1>
+            <h1><?= ((int)($details_ticket['type'] ?? 0) === 1) ? "Détails du suivi" : "Détails du ticket" ?></h1>
             <p>
-                Consultez l'historique complet des échanges et l'état d'avancement de votre résolution.
+                <?= ((int)($details_ticket['type'] ?? 0) === 1)
+                    ? "Consultez et modifiez les informations relatives à cet échange téléphonique."
+                    : "Consultez l'historique complet des échanges et l'état d'avancement de votre résolution." ?>
             </p>
 
             <div class="ticket-actions-bar" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-                <!--Bouton suppression-->
                 <?php if ($_SESSION['is_admin'] ?? false) : ?>
                     <a href="index.php?page=supprimer_ticket&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>"
                         class="btn-delete-ticket"
@@ -30,56 +34,58 @@
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M43.3751 9.75H40.6251C40.4428 9.75 40.2679 9.82243 40.139 9.95136C40.01 10.0803 39.9376 10.2552 39.9376 10.4375V11.125H44.0626V10.4375C44.0626 10.2552 43.9902 10.0803 43.8612 9.95136C43.7323 9.82243 43.5574 9.75 43.3751 9.75ZM46.1251 11.125V10.4375C46.1251 9.70815 45.8354 9.00868 45.3196 8.49296C44.8039 7.97723 44.1044 7.6875 43.3751 7.6875H40.6251C39.8957 7.6875 39.1963 7.97723 38.6805 8.49296C38.1648 9.00868 37.8751 9.70815 37.8751 10.4375V11.125H34.0952C33.8217 11.125 33.5594 11.2336 33.366 11.427C33.1726 11.6204 33.064 11.8827 33.064 12.1562C33.064 12.4298 33.1726 12.6921 33.366 12.8855C33.5594 13.0789 33.8217 13.1875 34.0952 13.1875H34.5242L34.9601 23.6719C35.0044 24.7354 35.4582 25.7405 36.2264 26.4772C36.9946 27.214 38.0179 27.6252 39.0823 27.625H44.9192C45.9834 27.6249 47.0063 27.2135 47.7743 26.4768C48.5422 25.7401 48.9957 24.7351 49.0401 23.6719L49.4773 13.1875H49.9063C50.1798 13.1875 50.4421 13.0789 50.6355 12.8855C50.8289 12.6921 50.9376 12.4298 50.9376 12.1562C50.9376 11.8827 50.8289 11.6204 50.6355 11.427C50.4421 11.2336 50.1798 11.125 49.9063 11.125H46.1251ZM47.4121 13.1875H36.5881L37.0212 23.5853C37.0432 24.1171 37.27 24.6199 37.6541 24.9884C38.0383 25.3569 38.55 25.5626 39.0823 25.5625H44.9192C45.4513 25.5622 45.9627 25.3564 46.3465 24.9879C46.7304 24.6194 46.957 24.1169 46.979 23.5853L47.4121 13.1875ZM38.9063 15.9375V22.8125C38.9063 23.086 39.015 23.3483 39.2084 23.5417C39.4018 23.7351 39.6641 23.8438 39.9376 23.8438C40.2111 23.8438 40.4734 23.7351 40.6668 23.5417C40.8602 23.3483 40.9688 23.086 40.9688 22.8125V15.9375C40.9688 15.664 40.8602 15.4017 40.6668 15.2083C40.4734 15.0149 40.2111 14.9062 39.9376 14.9062C39.6641 14.9062 39.4018 15.0149 39.2084 15.2083C39.015 15.4017 38.9063 15.664 38.9063 15.9375ZM44.0626 14.9062C44.3361 14.9062 44.5984 15.0149 44.7918 15.2083C44.9852 15.4017 45.0938 15.664 45.0938 15.9375V22.8125C45.0938 23.086 44.9852 23.3483 44.7918 23.5417C44.5984 23.7351 44.3361 23.8438 44.0626 23.8438C43.7891 23.8438 43.5268 23.7351 43.3334 23.5417C43.14 23.3483 43.0313 23.086 43.0313 22.8125V15.9375C43.0313 15.664 43.14 15.4017 43.3334 15.2083C43.5268 15.0149 43.7891 14.9062 44.0626 14.9062Z" fill="white" />
                         </svg>
                     </a>
-                    <!-- Bouton modification niveau d'urgence admin -->
-                    <div class="urgence-dropdown-container" style="position : relative; display: inline-block">
-                        <button id="urgenceDropdownBtn" class="dropdown-trigger-btn" type="button" style="background : non; border: non; padding: 0; margin: 0; cursor: pointer; display:block; outline: none;">
-                            <?php if (($details_ticket['id_urgence'] ?? null) == 1): ?>
-                                <svg width="241" height="35" viewBox="0 0 241 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="241" height="35" rx="4" fill="#e53e3e" />
-                                    <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Bloquant / Très urgent</text>
-                                    <path d="M210 15 L215 20 L220 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            <?php elseif (($details_ticket['id_urgence'] ?? null) == 2): ?>
-                                <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="181" height="35" rx="4" fill="#dd6b20" />
-                                    <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Urgent</text>
-                                    <path d="M153 15 L158 20 L163 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            <?php elseif (($details_ticket['id_urgence'] ?? null) == 3): ?>
-                                <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="181" height="35" rx="4" fill="#3182ce" />
-                                    <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Normal</text>
-                                    <path d="M153 15 L158 20 L163 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            <?php else : ?>
-                                <svg width="291" height="35" viewBox="0 0 291 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="291" height="35" rx="4" fill="#38a169" />
-                                    <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Non urgent / Demande d'évolution</text>
-                                    <path d="M263 15 L268 20 L273 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            <?php endif; ?>
 
-                        </button>
-                        <div class="urgence-dropdown-menu" id="urgenceDropdownMenu" style="display: none; position: absolute; top: calc(100% + 6px); right: 0; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 10px 25px rgba(15, 46, 72, 0.12); width: 181px; z-index: 100; padding: 6px 0; box-sizing: border-box;">
-                            <div class="dropdown-title" style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; padding: 6px 14px 4px 14px; letter-spacing: 0.5px;">Changer le niveau d'urgence :</div>
+                    <?php if ((int)($details_ticket['type'] ?? 0) !== 1) : ?>
+                        <div class="urgence-dropdown-container" style="position : relative; display: inline-block">
+                            <button id="urgenceDropdownBtn" class="dropdown-trigger-btn" type="button" style="background : non; border: non; padding: 0; margin: 0; cursor: pointer; display:block; outline: none;">
+                                <?php if (($details_ticket['id_urgence'] ?? null) == 1): ?>
+                                    <svg width="241" height="35" viewBox="0 0 241 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="241" height="35" rx="4" fill="#e53e3e" />
+                                        <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Bloquant / Très urgent</text>
+                                        <path d="M210 15 L215 20 L220 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                <?php elseif (($details_ticket['id_urgence'] ?? null) == 2): ?>
+                                    <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="181" height="35" rx="4" fill="#dd6b20" />
+                                        <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Urgent</text>
+                                        <path d="M153 15 L158 20 L163 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                <?php elseif (($details_ticket['id_urgence'] ?? null) == 3): ?>
+                                    <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="181" height="35" rx="4" fill="#3182ce" />
+                                        <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Normal</text>
+                                        <path d="M153 15 L158 20 L163 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                <?php else : ?>
+                                    <svg width="291" height="35" viewBox="0 0 291 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="291" height="35" rx="4" fill="#38a169" />
+                                        <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Non urgent / Demande d'évolution</text>
+                                        <path d="M263 15 L268 20 L273 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                <?php endif; ?>
 
-                            <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=1" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
-                                <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #e53e3e;"></span> Bloquant / Très urgent
-                            </a>
-                            <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=2" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
-                                <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #dd6b20;"></span> Urgent
-                            </a>
-                            <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=3" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
-                                <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #3182ce;"></span> Normal
-                            </a>
-                            <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=4" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
-                                <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #38a169;"></span> Non urgent / Demande d'évolution
-                            </a>
+                            </button>
+                            <div class="urgence-dropdown-menu" id="urgenceDropdownMenu" style="display: none; position: absolute; top: calc(100% + 6px); right: 0; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 10px 25px rgba(15, 46, 72, 0.12); width: 181px; z-index: 100; padding: 6px 0; box-sizing: border-box;">
+                                <div class="dropdown-title" style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; padding: 6px 14px 4px 14px; letter-spacing: 0.5px;">Changer le niveau d'urgence :</div>
+
+                                <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=1" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                    <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #e53e3e;"></span> Bloquant / Très urgent
+                                </a>
+                                <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=2" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                    <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #dd6b20;"></span> Urgent
+                                </a>
+                                <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=3" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                    <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #3182ce;"></span> Normal
+                                </a>
+                                <a href="index.php?page=changer_urgence&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&urgence=4" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                    <span class="urgence-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #38a169;"></span> Non urgent / Demande d'évolution
+                                </a>
+                            </div>
+
                         </div>
-
-                    </div>
+                    <?php endif; ?>
                 <?php endif; ?>
-                <!--Dropdown pour statut ticket admin-->
+
                 <?php if ($_SESSION['is_admin'] ?? false) : ?>
                     <div class="status-dropdown-container" style="position: relative; display: inline-block;">
 
@@ -166,17 +172,22 @@
             <div class="message-card">
                 <div class="message-header">
                     <div class="header-left">
-                        <?php
-                        if (($details_ticket['id_urgence'] ?? null) == 1) {
-                            echo '<span class="status-dot red"></span>';
-                        } elseif (($details_ticket['id_urgence'] ?? null) == 2) {
-                            echo '<span class="status-dot orange"></span>';
-                        } elseif (($details_ticket['id_urgence'] ?? null) == 3) {
-                            echo '<span class="status-dot blue"></span>';
-                        } else {
-                            echo '<span class="status-dot green"></span>';
-                        }
-                        ?>
+                        <?php if ((int)($details_ticket['type'] ?? 0) !== 1) : ?>
+                            <?php
+                            if (($details_ticket['id_urgence'] ?? null) == 1) {
+                                echo '<span class="status-dot red"></span>';
+                            } elseif (($details_ticket['id_urgence'] ?? null) == 2) {
+                                echo '<span class="status-dot orange"></span>';
+                            } elseif (($details_ticket['id_urgence'] ?? null) == 3) {
+                                echo '<span class="status-dot blue"></span>';
+                            } else {
+                                echo '<span class="status-dot green"></span>';
+                            }
+                            ?>
+                        <?php else: ?>
+                            <span class="status-dot" style="background-color: #805ad5;"></span>
+                        <?php endif; ?>
+
                         <span class="meta-title"><?= htmlspecialchars($num_ticket ?? 'Numéro de ticket non spécifié') ?></span>
                     </div>
                     <div class="header-right">
@@ -187,17 +198,12 @@
                                 <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
                                 <rect x="6" y="14" width="12" height="8"></rect>
                             </svg>
-                            <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="9 17 4 12 9 7"></polyline>
-                                <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
-                            </svg>
                         </div>
                     </div>
                 </div>
                 <div class="message-body">
                     <h3><?= htmlspecialchars($details_ticket['titre'] ?? 'Titre non spécifié') ?></h3>
                     <div class="info-client">
-                        <!-- Déclarant -->
                         <p>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="12" cy="7" r="4" />
@@ -209,7 +215,6 @@
                             </span>
                         </p>
 
-                        <!-- Entreprise -->
                         <p>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
@@ -222,8 +227,19 @@
                                 <?= htmlspecialchars($details_ticket['nom_entreprise'] ?? 'Entreprise non spécifiée') ?>
                             </span>
                         </p>
+                        <p>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                            </svg>
+                            <strong>Logiciel :</strong>
+                            <span class="info-valeur">
+                                <?= htmlspecialchars($details_ticket['logiciel'] ?? 'Non spécifié') ?>
+                            </span>
+                        </p>
 
-                        <!-- Email -->
                         <p>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -235,7 +251,6 @@
                             </span>
                         </p>
 
-                        <!-- Téléphone -->
                         <p>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
@@ -246,11 +261,27 @@
                             </span>
                         </p>
                     </div>
-                    <p class="message-text"><?= htmlspecialchars($details_ticket['description'] ?? 'Description non spécifiée') ?></p>
 
-                    <!-- Affichage pieces jointes -->
+                    <?php if ((int)($details_ticket['type'] ?? 0) === 1) : ?>
+                        <form method="POST" action="">
+                            <input type="hidden" name="action" value="modifier_notes">
+                            <label for="desc_suivi" style="display:block; margin-top:20px; margin-bottom:8px; font-weight:600; color:#0f2e48; font-size: 16px;">Notes du suivi :</label>
+                            <textarea id="desc_suivi" name="description" class="suivi-notes-textarea" style="width: 100%; min-height: 150px; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit; font-size: 14px; resize: vertical; box-sizing: border-box;"><?= htmlspecialchars($details_ticket['description'] ?? '') ?></textarea>
+                            <button type="submit" class="btn-submit-notes" style="margin-top: 12px; background: #805ad5; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; display:inline-flex; align-items:center; gap:8px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                    <polyline points="7 3 7 8 15 8"></polyline>
+                                </svg>
+                                Enregistrer les modifications
+                            </button>
+                        </form>
+                    <?php else : ?>
+                        <p class="message-text"><?= nl2br(htmlspecialchars($details_ticket['description'] ?? 'Description non spécifiée')) ?></p>
+                    <?php endif; ?>
+
                     <?php if (!empty($pieces_jointes)): ?>
-                        <div class="attachments-list">
+                        <div class="attachments-list" style="margin-top: 20px;">
                             <?php foreach ($pieces_jointes as $pj) :
                                 $taille_kb = round($pj['taille_octets'] / 1024);
                             ?>
@@ -265,7 +296,6 @@
                                         <span class="file-size"><?= $taille_kb ?> KB</span>
                                     </div>
 
-                                    <!-- bouton télécharger -->
                                     <a href="public/uploads/<?= htmlspecialchars($pj['nom_stockage']) ?>"
                                         download="<?= htmlspecialchars($pj['nom_origine']) ?>"
                                         class="download-btn"
@@ -283,187 +313,184 @@
 
                     <?php endif; ?>
                 </div>
-                <!-- Affichage de la / les réponses-->
-                <?php foreach (($reponses ?? []) as $reponse): ?>
-                    <?php
-                    // On vérifie si c'est un admin (1) ou un client (0)
-                    // On stocke le nom de la classe CSS correspondante dans une variable
-                    $classe_fond = (isset($reponse['est_admin']) && $reponse['est_admin'] == 1) ? 'bg-admin' : 'bg-client';
-                    ?>
 
-                    <div class="message-card <?= $classe_fond ?>" id="reponse-<?= $reponse['id_reponse'] ?? 'unknown' ?>">
-                        <div class="message-header">
+                <?php if ((int)($details_ticket['type'] ?? 0) !== 1) : ?>
+                    <?php foreach (($reponses ?? []) as $reponse): ?>
+                        <?php
+                        // On vérifie si c'est un admin (1) ou un client (0)
+                        // On stocke le nom de la classe CSS correspondante dans une variable
+                        $classe_fond = (isset($reponse['est_admin']) && $reponse['est_admin'] == 1) ? 'bg-admin' : 'bg-client';
+                        ?>
 
-                            <div class="header-left">
-                                <span class="meta-title"><?= htmlspecialchars($reponse['titre'] ?? 'Sans titre') ?></span>
-                                <?php if ($reponse['est_admin']): ?>
-                                    <div class="nom-IWAN">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+                        <div class="message-card <?= $classe_fond ?>" id="reponse-<?= $reponse['id_reponse'] ?? 'unknown' ?>">
+                            <div class="message-header">
 
-                                            <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+                                <div class="header-left">
+                                    <span class="meta-title"><?= htmlspecialchars($reponse['titre'] ?? 'Sans titre') ?></span>
+                                    <?php if ($reponse['est_admin']): ?>
+                                        <div class="nom-IWAN">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
 
-                                            <path d="M6 7h2M6 11h2M6 15h2" />
+                                                <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
 
-                                            <path d="M15 14h2M15 18h2" />
-                                        </svg>
-                                        <p>IWAN</p>
+                                                <path d="M6 7h2M6 11h2M6 15h2" />
 
-                                    </div>
-                                    <!-- Suppression de la réponse admin -->
-                                    <?php if ($_SESSION['is_admin'] ?? false) : ?>
-                                        <a href="index.php?page=supprimer_reponse&reponse=<?= urlencode($reponse['id_reponse'] ?? '') ?>&num_ticket=<?= urlencode($num_ticket ?? '') ?>"
-                                            class="suppression-reponse"
-                                            style="display: block; text-decoration: none; border: none; background: none; padding: 0; cursor: pointer;">
-                                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.6253 3.25H11.3753C11.1598 3.25 10.9532 3.3356 10.8008 3.48798C10.6484 3.64035 10.5628 3.84701 10.5628 4.0625V4.875H15.4378V4.0625C15.4378 3.84701 15.3522 3.64035 15.1999 3.48798C15.0475 3.3356 14.8408 3.25 14.6253 3.25ZM17.8753 4.875V4.0625C17.8753 3.20055 17.5329 2.3739 16.9234 1.7644C16.3139 1.15491 15.4873 0.8125 14.6253 0.8125H11.3753C10.5134 0.8125 9.68672 1.15491 9.07723 1.7644C8.46774 2.3739 8.12533 3.20055 8.12533 4.0625V4.875H3.6582C3.33497 4.875 3.02498 5.0034 2.79642 5.23196C2.56786 5.46052 2.43945 5.77052 2.43945 6.09375C2.43945 6.41698 2.56786 6.72698 2.79642 6.95554C3.02498 7.1841 3.33497 7.3125 3.6582 7.3125H4.1652L4.68033 19.7031C4.73274 20.96 5.26896 22.1479 6.17688 23.0186C7.08481 23.8892 8.29415 24.3753 9.55208 24.375H16.4502C17.7079 24.3748 18.9168 23.8886 19.8244 23.018C20.7319 22.1474 21.2679 20.9597 21.3203 19.7031L21.8371 7.3125H22.3441C22.6673 7.3125 22.9773 7.1841 23.2059 6.95554C23.4344 6.72698 23.5628 6.41698 23.5628 6.09375C23.5628 5.77052 23.4344 5.46052 23.2059 5.23196C22.9773 5.0034 22.6673 4.875 22.3441 4.875H17.8753ZM19.3963 7.3125H6.60433L7.1162 19.6007C7.14221 20.2293 7.41023 20.8235 7.86421 21.259C8.31819 21.6945 8.92298 21.9376 9.55208 21.9375H16.4502C17.079 21.9372 17.6834 21.6939 18.137 21.2584C18.5907 20.823 18.8585 20.229 18.8845 19.6007L19.3963 7.3125ZM9.34408 10.5625V18.6875C9.34408 19.0107 9.47248 19.3207 9.70104 19.5493C9.9296 19.7778 10.2396 19.9062 10.5628 19.9062C10.8861 19.9062 11.1961 19.7778 11.4246 19.5493C11.6532 19.3207 11.7816 19.0107 11.7816 18.6875V10.5625C11.7816 10.2393 11.6532 9.92927 11.4246 9.70071C11.1961 9.47215 10.8861 9.34375 10.5628 9.34375C10.2396 9.34375 9.9296 9.47215 9.70104 9.70071C9.47248 9.92927 9.34408 10.2393 9.34408 10.5625ZM15.4378 9.34375C15.7611 9.34375 16.0711 9.47215 16.2996 9.70071C16.5282 9.92927 16.6566 10.2393 16.6566 10.5625V18.6875C16.6566 19.0107 16.5282 19.3207 16.2996 19.5493C16.0711 19.7778 15.7611 19.9062 15.4378 19.9062C15.1146 19.9062 14.8046 19.7778 14.576 19.5493C14.3475 19.3207 14.2191 19.0107 14.2191 18.6875V10.5625C14.2191 10.2393 14.3475 9.92927 14.576 9.70071C14.8046 9.47215 15.1146 9.34375 15.4378 9.34375Z" fill="#FF0000" />
+                                                <path d="M15 14h2M15 18h2" />
                                             </svg>
-                                        </a>
-                                    <?php endif; ?>
-                                <?php else : ?>
-                                    <div class="nom-entreprise">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
-                                            <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
-                                            <path d="M6 7h2M6 11h2M6 15h2" />
-                                            <path d="M15 14h2M15 18h2" />
-                                        </svg>
-                                        <p> <?= htmlspecialchars($details_ticket['nom_entreprise'] ?? []) ?></p>
-                                    </div>
-                                    <!-- Suppression de la réponse use -->
-                                    <?php if ($_SESSION['is_admin'] ?? false): ?>
-                                        <a href="index.php?page=supprimer_reponse&reponse=<?= urlencode($reponse['id_reponse'] ?? '') ?>&num_ticket=<?= urlencode($num_ticket ?? '') ?>"
-                                            class="suppression-reponse"
-                                            class=" suppression-reponse"
-                                            style="display: block; text-decoration: none; border: none; background: none; padding: 0; cursor: pointer;">
-                                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.6253 3.25H11.3753C11.1598 3.25 10.9532 3.3356 10.8008 3.48798C10.6484 3.64035 10.5628 3.84701 10.5628 4.0625V4.875H15.4378V4.0625C15.4378 3.84701 15.3522 3.64035 15.1999 3.48798C15.0475 3.3356 14.8408 3.25 14.6253 3.25ZM17.8753 4.875V4.0625C17.8753 3.20055 17.5329 2.3739 16.9234 1.7644C16.3139 1.15491 15.4873 0.8125 14.6253 0.8125H11.3753C10.5134 0.8125 9.68672 1.15491 9.07723 1.7644C8.46774 2.3739 8.12533 3.20055 8.12533 4.0625V4.875H3.6582C3.33497 4.875 3.02498 5.0034 2.79642 5.23196C2.56786 5.46052 2.43945 5.77052 2.43945 6.09375C2.43945 6.41698 2.56786 6.72698 2.79642 6.95554C3.02498 7.1841 3.33497 7.3125 3.6582 7.3125H4.1652L4.68033 19.7031C4.73274 20.96 5.26896 22.1479 6.17688 23.0186C7.08481 23.8892 8.29415 24.3753 9.55208 24.375H16.4502C17.7079 24.3748 18.9168 23.8886 19.8244 23.018C20.7319 22.1474 21.2679 20.9597 21.3203 19.7031L21.8371 7.3125H22.3441C22.6673 7.3125 22.9773 7.1841 23.2059 6.95554C23.4344 6.72698 23.5628 6.41698 23.5628 6.09375C23.5628 5.77052 23.4344 5.46052 23.2059 5.23196C22.9773 5.0034 22.6673 4.875 22.3441 4.875H17.8753ZM19.3963 7.3125H6.60433L7.1162 19.6007C7.14221 20.2293 7.41023 20.8235 7.86421 21.259C8.31819 21.6945 8.92298 21.9376 9.55208 21.9375H16.4502C17.079 21.9372 17.6834 21.6939 18.137 21.2584C18.5907 20.823 18.8585 20.229 18.8845 19.6007L19.3963 7.3125ZM9.34408 10.5625V18.6875C9.34408 19.0107 9.47248 19.3207 9.70104 19.5493C9.9296 19.7778 10.2396 19.9062 10.5628 19.9062C10.8861 19.9062 11.1961 19.7778 11.4246 19.5493C11.6532 19.3207 11.7816 19.0107 11.7816 18.6875V10.5625C11.7816 10.2393 11.6532 9.92927 11.4246 9.70071C11.1961 9.47215 10.8861 9.34375 10.5628 9.34375C10.2396 9.34375 9.9296 9.47215 9.70104 9.70071C9.47248 9.92927 9.34408 10.2393 9.34408 10.5625ZM15.4378 9.34375C15.7611 9.34375 16.0711 9.47215 16.2996 9.70071C16.5282 9.92927 16.6566 10.2393 16.6566 10.5625V18.6875C16.6566 19.0107 16.5282 19.3207 16.2996 19.5493C16.0711 19.7778 15.7611 19.9062 15.4378 19.9062C15.1146 19.9062 14.8046 19.7778 14.576 19.5493C14.3475 19.3207 14.2191 19.0107 14.2191 18.6875V10.5625C14.2191 10.2393 14.3475 9.92927 14.576 9.70071C14.8046 9.47215 15.1146 9.34375 15.4378 9.34375Z" fill="#FF0000" />
+                                            <p>IWAN</p>
+
+                                        </div>
+                                        <?php if ($_SESSION['is_admin'] ?? false) : ?>
+                                            <a href="index.php?page=supprimer_reponse&reponse=<?= urlencode($reponse['id_reponse'] ?? '') ?>&num_ticket=<?= urlencode($num_ticket ?? '') ?>"
+                                                class="suppression-reponse"
+                                                style="display: block; text-decoration: none; border: none; background: none; padding: 0; cursor: pointer;">
+                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.6253 3.25H11.3753C11.1598 3.25 10.9532 3.3356 10.8008 3.48798C10.6484 3.64035 10.5628 3.84701 10.5628 4.0625V4.875H15.4378V4.0625C15.4378 3.84701 15.3522 3.64035 15.1999 3.48798C15.0475 3.3356 14.8408 3.25 14.6253 3.25ZM17.8753 4.875V4.0625C17.8753 3.20055 17.5329 2.3739 16.9234 1.7644C16.3139 1.15491 15.4873 0.8125 14.6253 0.8125H11.3753C10.5134 0.8125 9.68672 1.15491 9.07723 1.7644C8.46774 2.3739 8.12533 3.20055 8.12533 4.0625V4.875H3.6582C3.33497 4.875 3.02498 5.0034 2.79642 5.23196C2.56786 5.46052 2.43945 5.77052 2.43945 6.09375C2.43945 6.41698 2.56786 6.72698 2.79642 6.95554C3.02498 7.1841 3.33497 7.3125 3.6582 7.3125H4.1652L4.68033 19.7031C4.73274 20.96 5.26896 22.1479 6.17688 23.0186C7.08481 23.8892 8.29415 24.3753 9.55208 24.375H16.4502C17.7079 24.3748 18.9168 23.8886 19.8244 23.018C20.7319 22.1474 21.2679 20.9597 21.3203 19.7031L21.8371 7.3125H22.3441C22.6673 7.3125 22.9773 7.1841 23.2059 6.95554C23.4344 6.72698 23.5628 6.41698 23.5628 6.09375C23.5628 5.77052 23.4344 5.46052 23.2059 5.23196C22.9773 5.0034 22.6673 4.875 22.3441 4.875H17.8753ZM19.3963 7.3125H6.60433L7.1162 19.6007C7.14221 20.2293 7.41023 20.8235 7.86421 21.259C8.31819 21.6945 8.92298 21.9376 9.55208 21.9375H16.4502C17.079 21.9372 17.6834 21.6939 18.137 21.2584C18.5907 20.823 18.8585 20.229 18.8845 19.6007L19.3963 7.3125ZM9.34408 10.5625V18.6875C9.34408 19.0107 9.47248 19.3207 9.70104 19.5493C9.9296 19.7778 10.2396 19.9062 10.5628 19.9062C10.8861 19.9062 11.1961 19.7778 11.4246 19.5493C11.6532 19.3207 11.7816 19.0107 11.7816 18.6875V10.5625C11.7816 10.2393 11.6532 9.92927 11.4246 9.70071C11.1961 9.47215 10.8861 9.34375 10.5628 9.34375C10.2396 9.34375 9.9296 9.47215 9.70104 9.70071C9.47248 9.92927 9.34408 10.2393 9.34408 10.5625ZM15.4378 9.34375C15.7611 9.34375 16.0711 9.47215 16.2996 9.70071C16.5282 9.92927 16.6566 10.2393 16.6566 10.5625V18.6875C16.6566 19.0107 16.5282 19.3207 16.2996 19.5493C16.0711 19.7778 15.7611 19.9062 15.4378 19.9062C15.1146 19.9062 14.8046 19.7778 14.576 19.5493C14.3475 19.3207 14.2191 19.0107 14.2191 18.6875V10.5625C14.2191 10.2393 14.3475 9.92927 14.576 9.70071C14.8046 9.47215 15.1146 9.34375 15.4378 9.34375Z" fill="#FF0000" />
+                                                </svg>
+                                            </a>
+                                        <?php endif; ?>
+                                    <?php else : ?>
+                                        <div class="nom-entreprise">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+                                                <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+                                                <path d="M6 7h2M6 11h2M6 15h2" />
+                                                <path d="M15 14h2M15 18h2" />
                                             </svg>
-                                        </a>
-                                    <?php endif; ?>
-                                <?php endif ?>
-                            </div>
-                            <div class="header-right">
-                                <span class="message-time">
-                                    <?= isset($reponse['date_envoi']) ? date('d/m/Y H:i', strtotime($reponse['date_envoi'])) : 'Date non spécifiée' ?>
-                                </span>
-                                <div class="action-icons">
-                                    <svg class="icon-btn btn-reply-to"
-                                        data-id="<?= $reponse['id_reponse'] ?>"
-                                        data-titre="<?= htmlspecialchars($reponse['titre'] ?? 'Sans titre') ?>"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="9 17 4 12 9 7"></polyline>
-                                        <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
-                                    </svg>
+                                            <p> <?= htmlspecialchars($details_ticket['nom_entreprise'] ?? []) ?></p>
+                                        </div>
+                                        <?php if ($_SESSION['is_admin'] ?? false): ?>
+                                            <a href="index.php?page=supprimer_reponse&reponse=<?= urlencode($reponse['id_reponse'] ?? '') ?>&num_ticket=<?= urlencode($num_ticket ?? '') ?>"
+                                                class=" suppression-reponse"
+                                                style="display: block; text-decoration: none; border: none; background: none; padding: 0; cursor: pointer;">
+                                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.6253 3.25H11.3753C11.1598 3.25 10.9532 3.3356 10.8008 3.48798C10.6484 3.64035 10.5628 3.84701 10.5628 4.0625V4.875H15.4378V4.0625C15.4378 3.84701 15.3522 3.64035 15.1999 3.48798C15.0475 3.3356 14.8408 3.25 14.6253 3.25ZM17.8753 4.875V4.0625C17.8753 3.20055 17.5329 2.3739 16.9234 1.7644C16.3139 1.15491 15.4873 0.8125 14.6253 0.8125H11.3753C10.5134 0.8125 9.68672 1.15491 9.07723 1.7644C8.46774 2.3739 8.12533 3.20055 8.12533 4.0625V4.875H3.6582C3.33497 4.875 3.02498 5.0034 2.79642 5.23196C2.56786 5.46052 2.43945 5.77052 2.43945 6.09375C2.43945 6.41698 2.56786 6.72698 2.79642 6.95554C3.02498 7.1841 3.33497 7.3125 3.6582 7.3125H4.1652L4.68033 19.7031C4.73274 20.96 5.26896 22.1479 6.17688 23.0186C7.08481 23.8892 8.29415 24.3753 9.55208 24.375H16.4502C17.7079 24.3748 18.9168 23.8886 19.8244 23.018C20.7319 22.1474 21.2679 20.9597 21.3203 19.7031L21.8371 7.3125H22.3441C22.6673 7.3125 22.9773 7.1841 23.2059 6.95554C23.4344 6.72698 23.5628 6.41698 23.5628 6.09375C23.5628 5.77052 23.4344 5.46052 23.2059 5.23196C22.9773 5.0034 22.6673 4.875 22.3441 4.875H17.8753ZM19.3963 7.3125H6.60433L7.1162 19.6007C7.14221 20.2293 7.41023 20.8235 7.86421 21.259C8.31819 21.6945 8.92298 21.9376 9.55208 21.9375H16.4502C17.079 21.9372 17.6834 21.6939 18.137 21.2584C18.5907 20.823 18.8585 20.229 18.8845 19.6007L19.3963 7.3125ZM9.34408 10.5625V18.6875C9.34408 19.0107 9.47248 19.3207 9.70104 19.5493C9.9296 19.7778 10.2396 19.9062 10.5628 19.9062C10.8861 19.9062 11.1961 19.7778 11.4246 19.5493C11.6532 19.3207 11.7816 19.0107 11.7816 18.6875V10.5625C11.7816 10.2393 11.6532 9.92927 11.4246 9.70071C11.1961 9.47215 10.8861 9.34375 10.5628 9.34375C10.2396 9.34375 9.9296 9.47215 9.70104 9.70071C9.47248 9.92927 9.34408 10.2393 9.34408 10.5625ZM15.4378 9.34375C15.7611 9.34375 16.0711 9.47215 16.2996 9.70071C16.5282 9.92927 16.6566 10.2393 16.6566 10.5625V18.6875C16.6566 19.0107 16.5282 19.3207 16.2996 19.5493C16.0711 19.7778 15.7611 19.9062 15.4378 19.9062C15.1146 19.9062 14.8046 19.7778 14.576 19.5493C14.3475 19.3207 14.2191 19.0107 14.2191 18.6875V10.5625C14.2191 10.2393 14.3475 9.92927 14.576 9.70071C14.8046 9.47215 15.1146 9.34375 15.4378 9.34375Z" fill="#FF0000" />
+                                                </svg>
+                                            </a>
+                                        <?php endif; ?>
+                                    <?php endif ?>
                                 </div>
+                                <div class="header-right">
+                                    <span class="message-time">
+                                        <?= isset($reponse['date_envoi']) ? date('d/m/Y H:i', strtotime($reponse['date_envoi'])) : 'Date non spécifiée' ?>
+                                    </span>
+                                    <div class="action-icons">
+                                        <svg class="icon-btn btn-reply-to"
+                                            data-id="<?= $reponse['id_reponse'] ?>"
+                                            data-titre="<?= htmlspecialchars($reponse['titre'] ?? 'Sans titre') ?>"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="9 17 4 12 9 7"></polyline>
+                                            <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+
                             </div>
 
-                        </div>
+                            <div class="message-body">
+                                <?php if (!empty($reponse['titre_parent'])): ?>
+                                    <p class="reply-indicator">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;">
+                                            <polyline points="9 17 4 12 9 7"></polyline>
+                                            <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+                                        </svg>
+                                        Réponse à "<?= htmlspecialchars($reponse['titre_parent']) ?>"
+                                    </p>
+                                <?php endif; ?>
 
-                        <div class="message-body">
-                            <?php if (!empty($reponse['titre_parent'])): ?>
-                                <p class="reply-indicator">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;">
-                                        <polyline points="9 17 4 12 9 7"></polyline>
-                                        <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
-                                    </svg>
-                                    Réponse à "<?= htmlspecialchars($reponse['titre_parent']) ?>"
+                                <p class="message-text">
+                                    <?= nl2br(htmlspecialchars($reponse['contenu'] ?? 'Message vide')) ?>
                                 </p>
-                            <?php endif; ?>
-
-                            <p class="message-text">
-                                <?= nl2br(htmlspecialchars($reponse['contenu'] ?? 'Message vide')) ?>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Affichage pieces jointes -->
-                    <?php if (!empty($reponse['pieces_jointes'])): ?>
-                        <div class="attachments-list">
-                            <?php foreach ($reponse['pieces_jointes'] as $pj) :
-                                $taille_kb = round($pj['taille_octets'] / 1024);
-                            ?>
-                                <div class="attachment-card">
-
-                                    <div class="file-icon-wrapper existing-file-icon" data-filename="<?= htmlspecialchars($pj['nom_origine']) ?>"></div>
-
-                                    <div class="file-info">
-                                        <span class="file-title" title="<?= htmlspecialchars($pj['nom_origine']) ?>">
-                                            <?= htmlspecialchars($pj['nom_origine']) ?>
-                                        </span>
-                                        <span class="file-size"><?= $taille_kb ?> KB</span>
-                                    </div>
-
-                                    <!-- bouton télécharger -->
-                                    <a href="public/uploads/<?= htmlspecialchars($pj['nom_stockage']) ?>"
-                                        download="<?= htmlspecialchars($pj['nom_origine']) ?>"
-                                        class="download-btn"
-                                        title="Télécharger">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
-                                            <polyline points="7 10 12 15 17 10"></polyline>
-                                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                                        </svg>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <div class="separation"></div>
-
-                    <?php endif; ?>
-                    <div class="separation"></div>
-                <?php endforeach; ?>
-                <!-- Partie pour répondre -->
-                <div class="reply-section" id="formulaire-reponse">
-                    <div class="reply-header" id="reply-context" style="display: none;">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
-                            <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
-                        </svg>
-
-                        <h3 id="reply-context-text">En réponse à "..."</h3>
-                        <button type="button" id="cancel-reply" style="background:none; border:none; color:red; cursor:pointer; margin-left:10px">✖ Annuler</button>
-                    </div>
-
-                    <form action="" method="POST" class="reply-form" enctype="multipart/form-data">
-                        <input type="hidden" name="id_parent" id="id_parent_input" value="">
-                        <input type="hidden" name="id_ticket" value="<?= $details_ticket['id_ticket'] ?? '' ?> ">
-                        <div class=" input-group">
-                            <label for="reply-title">Titre</label>
-                            <input type="text" id="reply-title" name="titre" placeholder="Entrez le titre de votre réponse" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>>
-                        </div>
-
-                        <div class="textarea-wrapper">
-                            <textarea name="contenu" placeholder="Entrez votre réponse..." required></textarea>
-
-                            <div class="textarea-actions">
-
-                                <div class="ajouter-fichier-container">
-                                    <input type="file" id="fichier" name="fichier[]" multiple style="display: none;">
-                                    <label for="fichier" class="btn-ajouter-fichiers">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
-                                        </svg>
-                                        Ajouter un/des fichier(s)
-                                    </label>
-
-                                    <div id="liste-fichiers" class="fichiers-preview-list"></div>
-                                </div>
-
-                                <button type="submit" class="btn-submit" aria-label="Envoyer">
-                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                                    </svg>
-                                </button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <?php if (!empty($reponse['pieces_jointes'])): ?>
+                            <div class="attachments-list">
+                                <?php foreach ($reponse['pieces_jointes'] as $pj) :
+                                    $taille_kb = round($pj['taille_octets'] / 1024);
+                                ?>
+                                    <div class="attachment-card">
+
+                                        <div class="file-icon-wrapper existing-file-icon" data-filename="<?= htmlspecialchars($pj['nom_origine']) ?>"></div>
+
+                                        <div class="file-info">
+                                            <span class="file-title" title="<?= htmlspecialchars($pj['nom_origine']) ?>">
+                                                <?= htmlspecialchars($pj['nom_origine']) ?>
+                                            </span>
+                                            <span class="file-size"><?= $taille_kb ?> KB</span>
+                                        </div>
+
+                                        <a href="public/uploads/<?= htmlspecialchars($pj['nom_stockage']) ?>"
+                                            download="<?= htmlspecialchars($pj['nom_origine']) ?>"
+                                            class="download-btn"
+                                            title="Télécharger">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="separation"></div>
+
+                        <?php endif; ?>
+                        <div class="separation"></div>
+                    <?php endforeach; ?>
+
+                    <div class="reply-section" id="formulaire-reponse">
+                        <div class="reply-header" id="reply-context" style="display: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
+                                <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
+                            </svg>
+
+                            <h3 id="reply-context-text">En réponse à "..."</h3>
+                            <button type="button" id="cancel-reply" style="background:none; border:none; color:red; cursor:pointer; margin-left:10px">✖ Annuler</button>
+                        </div>
+
+                        <form action="" method="POST" class="reply-form" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="ajouter_reponse">
+                            <input type="hidden" name="id_parent" id="id_parent_input" value="">
+                            <input type="hidden" name="id_ticket" value="<?= $details_ticket['id_ticket'] ?? '' ?> ">
+                            <div class=" input-group">
+                                <label for="reply-title">Titre</label>
+                                <input type="text" id="reply-title" name="titre" placeholder="Entrez le titre de votre réponse" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>>
+                            </div>
+
+                            <div class="textarea-wrapper">
+                                <textarea name="contenu" placeholder="Entrez votre réponse..." required></textarea>
+
+                                <div class="textarea-actions">
+
+                                    <div class="ajouter-fichier-container">
+                                        <input type="file" id="fichier" name="fichier[]" multiple style="display: none;">
+                                        <label for="fichier" class="btn-ajouter-fichiers">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                                            </svg>
+                                            Ajouter un/des fichier(s)
+                                        </label>
+
+                                        <div id="liste-fichiers" class="fichiers-preview-list"></div>
+                                    </div>
+
+                                    <button type="submit" class="btn-submit" aria-label="Envoyer">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                <?php endif; ?>
 
             </div>
-            <!-- POP UP Suprpession ticket -->
             <div class="modal-overlay">
                 <div class="modal">
-                    <h3>Supprimer le ticket ?</h3>
+                    <h3>Supprimer le <?= ((int)($details_ticket['type'] ?? 0) === 1) ? "suivi" : "ticket" ?> ?</h3>
                     <p>Cette action est irréversible.</p>
 
                     <div class="modal-actions">

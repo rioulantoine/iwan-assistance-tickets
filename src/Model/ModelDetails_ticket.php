@@ -8,7 +8,8 @@ require_once __DIR__ . '/ModelBDD.php';
 function get_ticket_par_numero($num_ticket)
 {
     $pdo = get_bdd();
-    $sql = "SELECT t.*, s.libelle_statut, u.libelle_urgence, c.nom_entreprise
+
+    $sql = "SELECT t.*, s.libelle_statut, u.libelle_urgence, c.nom_entreprise, t.logiciel
             FROM TICKETS t
             LEFT JOIN STATUT s ON t.id_statut = s.id_statut
             LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
@@ -64,7 +65,6 @@ function modifier_statut_ticket($num_ticket, $id_statut)
               AND id_statut != ?";
     }
 
-
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id_statut, $num_ticket, $id_statut]);
 }
@@ -116,7 +116,6 @@ function supprimer_ticket_par_numero($num_ticket)
 
         $tousLesFichiers = array_merge($fichiersTicket, $fichiersReponse);
 
-
         // On supprime les fichiers sur le serveur 
         foreach ($tousLesFichiers as $fichier) {
             if (!empty($fichier['nom_stockage'])) {
@@ -129,11 +128,12 @@ function supprimer_ticket_par_numero($num_ticket)
 
         // SUPPRESSION BDD
         $pdo->beginTransaction(); // Tout se passe ou rien 
-        // On supprime les pieces jointes des réponses
 
+        // On supprime les pieces jointes des réponses
         $sqlDeletePJReponse = "DELETE FROM PIECES_JOINTES
             WHERE id_reponse IN (SELECT id_reponse FROM REPONSE WHERE id_ticket = ?)";
         $pdo->prepare($sqlDeletePJReponse)->execute([$id_ticket]);
+
         // On supprime les pieces jointes du ticket
         $sqlDeletePJTicket = "DELETE FROM PIECES_JOINTES
             WHERE id_ticket = ?";
@@ -148,7 +148,6 @@ function supprimer_ticket_par_numero($num_ticket)
         $sqlDeleteTicket = "DELETE FROM TICKETS
             WHERE id_ticket = ? ";
         $pdo->prepare($sqlDeleteTicket)->execute([$id_ticket]);
-
 
         $pdo->commit(); // On valide l'execution
         return true;
@@ -212,6 +211,7 @@ function supprimer_reponse_par_id($id_reponse)
         return false;
     }
 }
+
 /**
  * Récupère la/les réponse d'un ticket
  */
@@ -283,9 +283,8 @@ function get_pieces_jointes_par_reponse($id_reponse)
 }
 
 /**
- * Function pour insérer le ticket dans la bdd
+ * Function pour insérer une piece jointe dans la bdd
  */
-
 function inserer_piece_jointe(
     $nom_origine,
     $nom_stockage,
@@ -335,4 +334,17 @@ function maj($id_ticket = null, $num_ticket = null, $derniere_action = "Ticket c
             WHERE id_ticket = ? OR numero_ticket = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$derniere_action, $id_ticket, $num_ticket]);
+}
+
+/**
+ * Met à jour uniquement la description (les notes) d'un ticket/suivi
+ */
+function modifier_description_ticket($num_ticket, $nouvelle_description)
+{
+    $pdo = get_bdd();
+    $sql = "UPDATE TICKETS 
+            SET description = ? 
+            WHERE numero_ticket = ?";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([$nouvelle_description, $num_ticket]);
 }
