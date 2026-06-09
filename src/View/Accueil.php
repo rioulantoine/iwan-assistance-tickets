@@ -417,7 +417,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                 <?php endif; ?>
                             </h4>
 
-                            <a href=" /iwan-assistance-tickets/index.php?page=admin_tickets" class="btn-action-dark">Voir tous les tickets</a>
+                            <a href="/iwan-assistance-tickets/index.php?page=admin_tickets&date_debut=<?= date('Y-m-d') ?>&date_fin=<?= date('Y-m-d') ?>&ticket_suivi=0" class="btn-action-dark">Voir les tickets du jour</a>
                         </div>
 
                         <div class="panel-sidebar">
