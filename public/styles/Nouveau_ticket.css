@@ -623,7 +623,47 @@ textarea::placeholder {
     line-height: 1.5;
     color: #495057;
 }
+/* ==========================================================================
+   STYLE DU CHAMP DATE
+   ========================================================================== */
 
+/* Style de base pour l'input date (aligné sur tes inputs text) */
+input[type="date"] {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #333333;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+/* Effet au survol et au focus */
+input[type="date"]:hover {
+    border-color: #b0b0b0;
+}
+
+input[type="date"]:focus {
+    border-color: #0056b3; /* Remplace par la couleur principale de ton thème */
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
+    outline: none;
+}
+
+/* Personnalisation de l'icône de calendrier native du navigateur */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: transparent;
+    cursor: pointer;
+    padding: 2px;
+    filter: invert(30%) sepia(5%) saturate(10%) letter-spacing(0); /* Aligne la couleur de l'icône */
+    transition: transform 0.2s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    transform: scale(1.1); /* Léger effet de zoom au survol de l'icône */
+}
 
 /* Bandeau d'alerte Flash */
 .flash-alert {

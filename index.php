@@ -29,6 +29,9 @@ switch ($page) {
     case 'nouveau_ticket':
         require __DIR__ . '/src/Controller/ControllerNouveau_ticket.php';
         break;
+    case 'nouveau_suivi':
+        require __DIR__ . '/src/Controller/ControllerNouveau_suivi.php';
+        break;
 
     case 'premier_ticket':
         require __DIR__ . '/src/Controller/ControllerPremier_ticket.php';

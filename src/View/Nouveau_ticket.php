@@ -299,18 +299,25 @@
                 </div>
 
                 <div class="formulaire-nouveau-suivi">
-                    <form action="" method="POST">
+                    <form action="index.php?page=nouveau_suivi" method="POST">
                         <input type="hidden" name="action" value="creer_suivi_appel">
-
-                        <label for="nom_entreprise_suivi">Nom entreprise</label>
-                        <input type="text" id="nom_entreprise_suivi" name="nom_entreprise" list="entreprises_suggestion" placeholder="Entrez le nom de l'entreprise" autocomplete="off" required
-                            value="<?= htmlspecialchars($_POST['nom_entreprise'] ?? $_SESSION['entreprise_selectionnee']['nom_entreprise'] ?? '') ?>">
-                        <datalist id="entreprises_suggestion">
-                            <?php foreach ($liste_nom_entreprise ?? [] as $entreprise): ?>
-                                <option value="<?= htmlspecialchars($entreprise['nom_entreprise']) ?>">
-                                <?php endforeach; ?>
-                        </datalist>
-
+                        <div class="ligne-double">
+                            <div class="groupe-input">
+                                <label for="nom_entreprise_suivi">Nom entreprise</label>
+                                <input type="text" id="nom_entreprise_suivi" name="nom_entreprise" list="entreprises_suggestion" placeholder="Entrez le nom de l'entreprise" autocomplete="off" required
+                                    value="<?= htmlspecialchars($_POST['nom_entreprise'] ?? $_SESSION['entreprise_selectionnee']['nom_entreprise'] ?? '') ?>">
+                                <datalist id="entreprises_suggestion">
+                                    <?php foreach ($liste_nom_entreprise ?? [] as $entreprise): ?>
+                                        <option value="<?= htmlspecialchars($entreprise['nom_entreprise']) ?>">
+                                        <?php endforeach; ?>
+                                </datalist>
+                            </div>
+                            <div class="groupe-input">
+                                <label for="date_creation">Date de création</label>
+                                <input type="date" id="date_creation" name="date_creation"
+                                    value="<?= date('Y-m-d') ?>" required>
+                            </div>
+                        </div>
                         <div class="ligne-double">
                             <div class="groupe-input">
                                 <label for="logiciel">Logiciel concerné</label>
@@ -378,9 +385,10 @@
                             <div class="groupe-input">
                                 <label for="suivi_statut">Statut du suivi</label>
                                 <select id="suivi_statut" name="code_statut" required>
-                                    <option value="en_cours" selected>En cours de traitement</option>
-                                    <option value="resolu">Résolu immédiatement au téléphone</option>
-                                    <option value="attente">En attente d'éléments du client</option>
+                                    <option value="1" selected>En attente</option>
+                                    <option value="2">En cours</option>
+                                    <option value="3">Résolu</option>
+                                    <option value="4">Archivé</option>
                                 </select>
                             </div>
                         </div>
