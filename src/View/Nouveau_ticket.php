@@ -356,6 +356,18 @@
                                 <input type="text" id="suivi_prenom" name="prenom_contact" placeholder="Prénom de la personne au téléphone" required value="<?= htmlspecialchars($_SESSION['entreprise_selectionnee']['prenom'] ?? '') ?>" />
                             </div>
                         </div>
+                        <div class="ligne-double">
+                            <div class="groupe-input">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="Entrez votre adresse e-mail" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
+                                    value="<?= htmlspecialchars($_POST['email'] ?? $_SESSION['entreprise_selectionnee']['email'] ?? $infos_client['email'] ?? '') ?>" />
+                            </div>
+                            <div class="groupe-input">
+                                <label for="telephone">Numéro de téléphone</label>
+                                <input type="tel" maxlength="50" id="telephone" name="telephone" placeholder="Entrez votre numéro de téléphone" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
+                                    value="<?= htmlspecialchars($_POST['telephone'] ?? $_SESSION['entreprise_selectionnee']['telephone'] ?? $infos_client['telephone'] ?? '') ?>" />
+                            </div>
+                        </div>
 
                         <div class="ligne-triple">
                             <div class="groupe-input">
