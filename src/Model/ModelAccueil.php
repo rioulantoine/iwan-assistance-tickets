@@ -77,6 +77,49 @@ function count_tickets($id_cible = 0, $statut = null, $id_urgence = null)
 
     return (int)$stmt->fetchColumn();
 }
+
+/**
+ * Compte les suivis ce mois-ci
+ */
+function count_suivis()
+{
+    $pdo = get_bdd();
+
+    $sql = "SELECT COUNT(id_ticket)
+        FROM TICKETS
+        WHERE type = 1
+        AND date_creation >= DATE_FORMAT(NOW(), '%Y-%m-01 00:00:00')
+        AND date_creation <= LAST_DAY(NOW()); ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    return (int)$stmt->fetchColumn();
+}
+
+/**
+ * Compte les suivis le mois dernier
+ */
+function count_suivis_mois_dernier()
+{
+    $pdo = get_bdd();
+
+    $date_debut = date('Y-m-01 00:00:00', strtotime('first day of last month'));
+    $date_fin   = date('Y-m-t 23:59:59', strtotime('last day of last month'));
+
+    $sql = "SELECT COUNT(id_ticket) 
+            FROM TICKETS 
+            WHERE type = 1 
+              AND date_creation >= :date_debut 
+              AND date_creation <= :date_fin";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        'date_debut' => $date_debut,
+        'date_fin'   => $date_fin
+    ]);
+
+    return (int)$stmt->fetchColumn();
+}
+
 /**
  * Compte de tickets par période mensuelle 
  * @param string $periode 'courante' ou 'derniere'
@@ -219,6 +262,7 @@ function get_tickets_resolus_semaine_en_cours()
             FROM TICKETS 
             WHERE id_statut IN (3,4)
             AND DATE(date_resolution) BETWEEN :debut AND :fin 
+            AND type = 0
             GROUP BY DATE(date_resolution)";
 
     $stmt = $pdo->prepare($sql);

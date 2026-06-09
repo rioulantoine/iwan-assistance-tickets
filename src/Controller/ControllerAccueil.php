@@ -25,6 +25,7 @@ try {
     $nb_tickets_actif  = count_tickets($id_cible, [1, 2]);
     $nb_tickets_resolu = count_tickets($id_cible, 3);
     $nb_tickets_urgent = count_tickets($id_cible, null, [1, 2]);
+    $nb_suivis = count_suivis();
 
     // Écarts mensuels - Tickets ACTIFS
     $actifs_ce_mois = count_tickets_mensuels('courante', $id_cible, [1, 2]);
@@ -41,6 +42,34 @@ try {
     $urgents_mois_dernier = count_tickets_mensuels('derniere', $id_cible, null, [1, 2]);
     $ecart_urgents = ($urgents_mois_dernier > 0) ? round((($urgents_ce_mois - $urgents_mois_dernier) / $urgents_mois_dernier) * 100, 1) : 0;
 
+    // Écats mensuels - SUIVIS
+    // ==========================================================================
+    // CALCULS DES STATISTIQUES POUR LA BOX DES SUIVIS D'APPELS
+    // ==========================================================================
+
+    // 1. Récupération des compteurs depuis le modèle
+    $suivis_ce_mois       = count_suivis();
+    $suivis_mois_dernier  = count_suivis_mois_dernier();
+
+    // 2. Initialisation de la variable d'écart demandé
+    $ecart_suivi = 0;
+
+    if ($suivis_mois_dernier > 0) {
+        // Calcul classique du pourcentage d'écart s'il y a des données le mois dernier
+        $calcul_brut = (($suivis_ce_mois - $suivis_mois_dernier) / $suivis_mois_dernier) * 100;
+
+        // Arrondi propre à 1 chiffre après la virgule (ex: 14.5%)
+        $ecart_suivi = round($calcul_brut, 1);
+    } else {
+        // Si le mois d'avant était à 0
+        if ($suivis_ce_mois > 0) {
+            // Activité qui reprend ce mois-ci (valeur repère pour la vue HTML)
+            $ecart_suivi = 999;
+        } else {
+            // Stable à 0
+            $ecart_suivi = 0;
+        }
+    }
     // Statistiques globales d'activité
     $total_crees_ce_mois = $actifs_ce_mois + $resolus_ce_mois;
 
