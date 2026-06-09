@@ -81,9 +81,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             drawBorder: false    
                         },
                         ticks: {
-                            stepSize: 25,        
-                            color: '#64748b',
-                            font: { family: "'Segoe UI', sans-serif" }
+                                precision: 0,       // Force des nombres entiers uniquement (pas de virgule)
+                                stepSize: 1,        // Force un écart de 1 entre chaque graduation (0, 1, 2, 3...)
+                                color: '#64748b',
+                                font: { family: "'Segoe UI', sans-serif" }
                         }
                     },
                     x: {
