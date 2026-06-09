@@ -1,6 +1,4 @@
 let allFiles = [];
-const fileInput = document.getElementById("fichier");
-const listConteneur = document.getElementById("liste-fichiers");
 
 // Définition de la taille maximale par fichier (5 Mo = 5 * 1024 * 1024 octets)
 const MAX_FILE_SIZE = 5 * 1024 * 1024; 
@@ -77,23 +75,45 @@ function obtenirSvgParExtension(nomFichier) {
     </svg>`;
 }
 
-// Écouteur pour gérer l'ajout de fichiers
-fileInput.addEventListener("change", function(e) {
-    const newFiles = Array.from(e.target.files);
-    
-    newFiles.forEach(file => {
-        if (file.size > MAX_FILE_SIZE) {
-            alert(`Le fichier "${file.name}" est trop gros ! La taille maximale autorisée est de 5 Mo.`);
-        } else {
-            allFiles.push(file);
-        }
-    });
+// ==========================================================================
+// GESTION DYNAMIQUE DES FICHIERS JOINTS
+// ==========================================================================
+document.addEventListener("DOMContentLoaded", function() {
+    const fileInput = document.getElementById("fichier");
+    if (fileInput) {
+        fileInput.addEventListener("change", function(e) {
+            const newFiles = Array.from(e.target.files);
+            
+            newFiles.forEach(file => {
+                if (file.size > MAX_FILE_SIZE) {
+                    alert(`Le fichier "${file.name}" est trop gros ! La taille maximale autorisée est de 5 Mo.`);
+                } else {
+                    allFiles.push(file);
+                }
+            });
 
-    syncInputAndRender();
+            syncInputAndRender();
+        });
+    }
+
+    const listConteneur = document.getElementById("liste-fichiers");
+    if (listConteneur) {
+        listConteneur.addEventListener("click", function(e) {
+            const removeBtn = e.target.closest(".remove-file");
+            if (removeBtn) {
+                const indexToRemove = parseInt(removeBtn.getAttribute("data-index"));
+                allFiles.splice(indexToRemove, 1);
+                syncInputAndRender();
+            }
+        });
+    }
 });
 
-// Fonction pour synchroniser le tableau allFiles avec l'input et mettre à jour l'affichage
 function syncInputAndRender() {
+    const listConteneur = document.getElementById("liste-fichiers");
+    const fileInput = document.getElementById("fichier");
+    if (!listConteneur || !fileInput) return;
+
     const dataTransfer = new DataTransfer();
     allFiles.forEach((file) => dataTransfer.items.add(file));
     fileInput.files = dataTransfer.files;
@@ -106,7 +126,6 @@ function syncInputAndRender() {
 
         const fileSizeKB = Math.round(file.size / 1024);
 
-        // Intégration du module obtenirSvgParExtension à la place du texte statique PDF
         item.innerHTML = `
             <div class="file-icon-wrapper">
                 ${obtenirSvgParExtension(file.name)}
@@ -117,75 +136,38 @@ function syncInputAndRender() {
             </div>
             <button type="button" class="remove-file" data-index="${index}" aria-label="Supprimer le fichier">✕</button>
         `;
-
         listConteneur.appendChild(item);
     });
 }
 
-// Écouteur pour gérer la suppression d'un fichier
-listConteneur.addEventListener("click", function(e) {
-    const removeBtn = e.target.closest(".remove-file");
-    
-    if (removeBtn) {
-        const indexToRemove = parseInt(removeBtn.getAttribute("data-index"));
-        
-        allFiles.splice(indexToRemove, 1);
-        
-        syncInputAndRender();
-    }
-});
-
-   // Fonction pour ouvrir la fenêtre pop-up information niveau d'urgence
+// ==========================================================================
+// GESTION DE LA MODALE URGENCE
+// ==========================================================================
 function ouvrirModalUrgence() {
     const modal = document.getElementById('modalUrgence');
-    modal.style.display = 'flex';
+    if (modal) modal.style.display = 'flex';
 }
 
-// Fonction pour fermer la fenêtre si on clique à l'extérieur de la boîte blanche
 function fermerModalUrgence(event) {
     const modal = document.getElementById('modalUrgence');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
+    if (modal && event.target === modal) {
+        modal.style.display = 'none';
+    }
 }
 
-// Fonction pour ouvrir la fenêtre pop-up liste des entreprises
+// ==========================================================================
+// GESTION DE LA MODALE LISTE DES ENTREPRISES
+// ==========================================================================
 function ouvrirModalListeEntreprises(){
     const modal = document.getElementById('modalListeEntreprises');
-            modal.style.display = 'flex';
-}
-
-// Fonction pour fermer la fenêtre si on clique à l'extérieur de la boite blanche
-function fermerModalListeEntreprises(event){
-    const modal = document.getElementById('modalListeEntreprises');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-}
-
-
-
-// resize automatique des textarea
-const textareas = document.querySelectorAll('.textarea-wrapper textarea, #description');
-
-textareas.forEach(textarea => {
-    const resizeTextarea = function() {
-        this.style.height = 'auto'; 
-        this.style.height = (this.scrollHeight + 20) + 'px'; 
-    };
-    textarea.addEventListener('input', resizeTextarea);
-        resizeTextarea.call(textarea);
-    });
-
-function ouvrirModalListeEntreprises(){
-    const modal = document.getElementById('modalListeEntreprises');
+    if (!modal) return;
+    
     modal.style.display = 'flex';
 
     const inputRecherche = modal.querySelector('.search-wrapper input[name="recherche"]');
     if (inputRecherche) {
         setTimeout(() => {
             inputRecherche.focus();
-            // Petite astuce pour mettre le curseur tout à la fin du texte après le rechargement PHP
             const valeur = inputRecherche.value;
             inputRecherche.value = '';
             inputRecherche.value = valeur;
@@ -195,7 +177,9 @@ function ouvrirModalListeEntreprises(){
 
 function fermerModalListeEntreprises(event){
     const modal = document.getElementById('modalListeEntreprises');
-    if (event.target === modal) modal.style.display = 'none';
+    if (modal && event.target === modal) {
+        modal.style.display = 'none';
+    }
 }
 
 // ==========================================================================
@@ -235,12 +219,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     const btnSelectionner = lignes[0].querySelector('.btn-selectionner-entreprise');
                     
                     if (btnSelectionner) {
-                        event.preventDefault(); // Bloque la recherche GET
-                        
-                        // FORCE LA FERMETURE VISUELLE IMMÉDIATE
+                        event.preventDefault(); 
                         modal.style.display = 'none'; 
-                        
-                        btnSelectionner.click(); // Envoie le formulaire POST à PHP
+                        btnSelectionner.click(); 
                     }
                 }
             }
@@ -252,56 +233,40 @@ document.addEventListener("DOMContentLoaded", function() {
         ouvrirModalListeEntreprises();
     }
 });
+
 // ==========================================================================
-//          FERMETURE DES MODAL QUAND ON PRESSE ESC 
+//          FERMETURE DES MODALS QUAND ON PRESSE ESC (ESCAPE)
 // ==========================================================================
-//MODAL LES ENTREPRISES
 document.addEventListener('keydown', function(event) {
-    // On vérifie si la touche pressée est bien Échap
     if (event.key === 'Escape' || event.key === 'Esc') {
-        const modal = document.getElementById('modalListeEntreprises');
+        const modalEntreprises = document.getElementById('modalListeEntreprises');
+        const modalUrgence = document.getElementById('modalUrgence');
         
-        // Si la modale existe et qu'elle est actuellement visible à l'écran
-        if (modal && modal.style.display === 'flex') {
-            event.preventDefault(); // Bloque le comportement par défaut du navigateur
-            modal.style.display = 'none'; // On cache la modale
+        if (modalEntreprises && modalEntreprises.style.display === 'flex') {
+            event.preventDefault();
+            modalEntreprises.style.display = 'none';
+        }
+        
+        if (modalUrgence && modalUrgence.style.display === 'flex') {
+            event.preventDefault();
+            modalUrgence.style.display = 'none';
         }
     }
 });
 
-// MODAL URGENCE
-document.addEventListener('keydown', function(event) {
-    // On vérifie si la touche pressée est bien Échap
-    if (event.key === 'Escape' || event.key === 'Esc') {
-        const modal = document.getElementById('modalUrgence');
-        
-        // Si la modale existe et qu'elle est actuellement visible à l'écran
-        if (modal && modal.style.display === 'flex') {
-            event.preventDefault(); // Bloque le comportement par défaut du navigateur
-            modal.style.display = 'none'; // On cache la modale
-        }
-    }
-});
 // ==========================================================================
-// REMISE À ZÉRO INTELLIGENTE DES FORMULAIRES AU CHARGEMENT / RETOUR DE PAGE
+// REMISE À ZÉRO STRATÉGIQUE DES FORMULAIRES AU CHARGEMENT / RETOUR DE PAGE
 // ==========================================================================
 window.addEventListener('pageshow', function(event) {
     const formTicket = document.querySelector('.formulaire-nouveau-ticket form');
     const formSuivi = document.querySelector('.formulaire-nouveau-suivi form');
-
-    // On récupère les paramètres de l'URL
     const urlParams = new URLSearchParams(window.location.search);
-    
-    // ÉTAPE CRUCIALE : On vérifie si l'input "nom_entreprise" possède déjà une valeur 
-    // injectée par PHP. Si c'est le cas, ça veut dire qu'on vient de la sélectionner !
-    const inputNomEntreprise = document.getElementById('nom_entreprise');
-    const entrepriseDejaSelectionnee = inputNomEntreprise && inputNomEntreprise.value.trim() !== '';
 
-    // On ne vide les formulaires QUE si :
-    // 1. La modale n'est pas ouverte au même moment (?ouvrir_modal=1)
-    // 2. Et qu'on n'a PAS de données d'entreprise fraîchement injectées par PHP
-    if (!urlParams.get('ouvrir_modal') && !entrepriseDejaSelectionnee) {
-        if (formTicket) formTicket.reset();
-        if (formSuivi) formSuivi.reset();
+    // Si on a l'indicateur selection=1 ou ouvrir_modal=1 dans l'URL, on ne vide rien
+    if (urlParams.get('selection') === '1' || urlParams.get('ouvrir_modal') === '1') {
+        return;
     }
+
+    if (formTicket) formTicket.reset();
+    if (formSuivi) formSuivi.reset();
 });
