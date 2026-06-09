@@ -269,7 +269,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                 <path d="M15 14.5h.01" stroke-width="2.5" />
                             </svg>
                         </div>
-                        <h3>Taux de résolution global</h3>
+                        <h3>Taux de résolution global des tickets</h3>
                     </div>
 
                     <p class="box-desc">
