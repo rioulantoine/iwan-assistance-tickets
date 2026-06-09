@@ -41,7 +41,7 @@ function count_tickets($id_cible = 0, $statut = null, $id_urgence = null)
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE 1=1"; //Le WHERE 1=1 permet d'ajouter des AND dynamiquement
+    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE 1=1 AND type = 0"; //Le WHERE 1=1 permet d'ajouter des AND dynamiquement
     $params = [];
     // Filtre utilisateur
     if ($id_cible > 0) {
@@ -136,7 +136,8 @@ function count_tickets_mensuels($periode = 'courante', $id_cible = 0, $statut = 
     // Base de la requête avec filtre de date mensuel
     $sql = "SELECT COUNT(id_ticket) FROM TICKETS 
             WHERE YEAR(date_creation) = YEAR(NOW() $intervalle)
-            AND MONTH(date_creation) = MONTH(NOW() $intervalle)";
+            AND MONTH(date_creation) = MONTH(NOW() $intervalle)
+            AND type = 0";
     $params = [];
 
     // Filtre utilisateur
@@ -189,7 +190,8 @@ function get_taux_resolution_mensuel($periode = 'courante', $id_cible = 0)
     // Combien de tickets créer ce mois 
     $sqlTotal = "SELECT COUNT(id_ticket) FROM TICKETS 
                  WHERE YEAR(date_creation) = YEAR(NOW() $intervalle)
-                 AND MONTH(date_creation) = MONTH(NOW() $intervalle)";
+                 AND MONTH(date_creation) = MONTH(NOW() $intervalle)
+                 AND type = 0";
 
     // Combien de tickets résolu (id_statut = 3)
     $sqlResolus = $sqlTotal . " AND id_statut = 3";
@@ -232,7 +234,8 @@ function count_tickets_non_archives_par_urgence($id_cible, $id_urgence)
 
     $sql = "SELECT COUNT(*) FROM TICKETS 
             WHERE id_urgence = :urgence 
-            AND id_statut != :statut_archive";
+            AND id_statut != :statut_archive
+            AND type = 0";
 
     $params = [
         ':urgence' => $id_urgence,
@@ -291,7 +294,7 @@ function get_nb_tickets_du_jour()
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE DATE(date_creation) = CURDATE() AND id_statut != 3";
+    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE DATE(date_creation) = CURDATE() AND id_statut != 3 AND type = 0";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
@@ -311,6 +314,7 @@ function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 2)
                 LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
                 LEFT JOIN CLIENT c ON t.id_entreprise = c.id_client
                 WHERE id_statut IN (1,2,3)
+                AND type = 0
                 ORDER BY date_creation DESC
                 LIMIT 10";
             $stmt = $pdo->prepare($sql);
@@ -321,6 +325,7 @@ function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 2)
                 LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
                 LEFT JOIN CLIENT c ON t.id_entreprise = c.id_client
                 WHERE id_statut = ?
+                AND type = 0
                 ORDER BY date_creation DESC
                 LIMIT 10";
             $stmt = $pdo->prepare($sql);
@@ -332,6 +337,7 @@ function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 2)
                 LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
                 LEFT JOIN CLIENT c ON t.id_entreprise = c.id_client
                 WHERE t.id_entreprise = ?
+                AND type = 0
                 ORDER BY date_maj DESC
                 LIMIT 10";
         $stmt = $pdo->prepare($sql);

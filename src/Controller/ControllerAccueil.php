@@ -47,11 +47,11 @@ try {
     // CALCULS DES STATISTIQUES POUR LA BOX DES SUIVIS D'APPELS
     // ==========================================================================
 
-    // 1. Récupération des compteurs depuis le modèle
+    // Récupération des compteurs depuis le modèle
     $suivis_ce_mois       = count_suivis();
     $suivis_mois_dernier  = count_suivis_mois_dernier();
 
-    // 2. Initialisation de la variable d'écart demandé
+    // Initialisation de la variable d'écart demandé
     $ecart_suivi = 0;
 
     if ($suivis_mois_dernier > 0) {
