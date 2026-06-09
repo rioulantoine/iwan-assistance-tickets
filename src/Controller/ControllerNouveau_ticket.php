@@ -1,6 +1,6 @@
 <?php
 // ControllerNouveau_ticket.php
-// Fichier qui permet de gérer la page Nouveau ticket
+// Gere la création de ticket et l'affichage des entreprises
 require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
 
 // On récupère l'onglet demandé dans l'URL ('ticket' par défaut)

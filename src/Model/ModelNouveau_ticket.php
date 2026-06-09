@@ -150,6 +150,7 @@ function inserer_nouveau_ticket(
 ) {
     $pdo = get_bdd();
     $sql = "INSERT INTO TICKETS (
+    type,
     numero_ticket,
     declarant_nom,
     declarant_prenom,
@@ -161,9 +162,10 @@ function inserer_nouveau_ticket(
     id_entreprise,
     id_urgence,
     id_statut)
-    VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+    VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
     $stmt = $pdo->prepare($sql);
     $resultat = $stmt->execute([
+        0,
         $numero_ticket,
         $nom_declarant,
         $prenom_declarant,
