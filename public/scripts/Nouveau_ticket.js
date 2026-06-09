@@ -253,7 +253,6 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
-
 // ==========================================================================
 // REMISE À ZÉRO STRATÉGIQUE DES FORMULAIRES AU CHARGEMENT / RETOUR DE PAGE
 // ==========================================================================
@@ -264,7 +263,26 @@ window.addEventListener('pageshow', function(event) {
 
     // Si on a l'indicateur selection=1 ou ouvrir_modal=1 dans l'URL, on ne vide rien
     if (urlParams.get('selection') === '1' || urlParams.get('ouvrir_modal') === '1') {
-        return;
+        
+        // 🌟 CORRECTION : Utilisation de scrollIntoView sur le bouton ou le formulaire
+        if (urlParams.get('selection') === '1' && urlParams.get('tab') === 'suivi') {
+            setTimeout(() => {
+                // On cherche le bouton de soumission du suivi ou le bas du formulaire
+                const btnSubmitSuivi = document.querySelector('.formulaire-nouveau-suivi .btn-submit');
+                
+                if (btnSubmitSuivi) {
+                    btnSubmitSuivi.scrollIntoView({
+                        behavior: 'smooth', // Défilement fluide
+                        block: 'end'        // Aligne le bas de l'élément avec le bas de l'écran
+                    });
+                } else if (formSuivi) {
+                    // Repli de secours sur le formulaire entier si le bouton n'est pas trouvé
+                    formSuivi.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }
+            }, 50); // Léger délai (50ms) pour laisser le temps au CSS/DOM de s'installer
+        }
+        
+        return; // Bloque la remise à zéro des formulaires
     }
 
     if (formTicket) formTicket.reset();
