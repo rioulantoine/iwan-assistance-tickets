@@ -21,18 +21,19 @@ $nb_entreprises    = count($liste_entreprises);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'modifier_entreprise') {
 
 
-    $id_client      = trim($_POST['id_client'] ?? '');
+    $id_client = trim($_POST['id_client'] ?? '');
     $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
-    $nom            = trim($_POST['nom'] ?? '');
-    $prenom         = trim($_POST['prenom'] ?? '');
-    $cp             = trim($_POST['cp'] ?? '');
-    $ville          = trim($_POST['ville'] ?? '');
-    $email          = trim($_POST['email'] ?? '');
-    $telephone      = trim($_POST['telephone'] ?? '');
-    $observation    = trim($_POST['observation'] ?? '');
+    $nom = trim($_POST['nom'] ?? '');
+    $prenom = trim($_POST['prenom'] ?? '');
+    $logiciel = trim($_POST['logiciel'] ?? '');
+    $cp = trim($_POST['cp'] ?? '');
+    $ville = trim($_POST['ville'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $telephone = trim($_POST['telephone'] ?? '');
+    $observation = trim($_POST['observation'] ?? '');
 
     if (!empty($id_client) && !empty($nom_entreprise)) {
-        $succes = modifier_entreprise_par_id($id_client, $nom_entreprise, $nom, $prenom, $cp, $ville, $email, $telephone, $observation);
+        $succes = modifier_entreprise_par_id($id_client, $nom_entreprise, $logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation);
 
         if ($succes) {
             $_SESSION['flash_message'] = "Les modifications ont été enregistrées avec succès.";

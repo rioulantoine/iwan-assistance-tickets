@@ -62,6 +62,7 @@
                                 <th class="sortable" data-col="nom_entreprise">Nom entreprise</th>
                                 <th class="sortable" data-col="nom">Nom</th>
                                 <th class="sortable" data-col="prenom">Prénom</th>
+                                <th class="sortable" data-col="logiciel">Logiciel</th>
                                 <th class="sortable" data-col="email">Email</th>
                                 <th class="sortable" data-col="telephone">Téléphone</th>
                                 <th class="sortable" data-col="ville">Ville</th>
@@ -80,6 +81,7 @@
                                     <td><?= htmlspecialchars($entreprise['nom_entreprise']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['nom']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['prenom']) ?></td>
+                                    <td><?= htmlspecialchars($entreprise['logiciel']) ?>
                                     <td><?= htmlspecialchars($entreprise['email']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['telephone']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['ville']) ?></td>
@@ -90,7 +92,8 @@
                                             data-entreprise="<?= htmlspecialchars($entreprise['nom_entreprise'] ?? '') ?>"
                                             data-nom="<?= htmlspecialchars($entreprise['nom'] ?? '') ?>"
                                             data-prenom="<?= htmlspecialchars($entreprise['prenom'] ?? '') ?>"
-                                            data-email="<?= htmlspecialchars($entreprise['email'] ?? '') ?>"
+                                            data-logiciel="<?= htmlspecialchars($entreprise['logiciel'] ?? '') ?>"
+                                            data-email=" <?= htmlspecialchars($entreprise['email'] ?? '') ?>"
                                             data-telephone="<?= htmlspecialchars($entreprise['telephone'] ?? '') ?>"
                                             data-cp="<?= htmlspecialchars($entreprise['cp'] ?? '') ?>"
                                             data-ville="<?= htmlspecialchars($entreprise['ville'] ?? '') ?>"
@@ -179,6 +182,23 @@
                             <input type="text" id="edit_prenom" name="prenom" required>
                         </div>
                         <div class="groupe-input">
+                            <label for="edit_logiciel">Logiciel <span class="required">*</span></label>
+                            <select id="edit_logiciel" name="logiciel" required>
+                                <option value="" disabled selected>Choisissez un logiciel</option>
+                                <option value="GOA">GOA</option>
+                                <option value="IWAN_V3">IWAN V3</option>
+                                <option value="CRM">CRM</option>
+                                <option value="RESAVAC">RESAVAC</option>
+                                <option value="WINLORE">WINLORE</option>
+                                <option value="AERORESA">AERORESA</option>
+                                <option value="PLANNING">PLANNING</option>
+                                <option value="MATERIEL">MATERIEL</option>
+                                <option value="ANAMAG">ANAMAG</option>
+                                <option value="IWAN_CAISSE">IWAN CAISSE</option>
+                                <option value="AUTRE">AUTRE</option>
+                            </select>
+                        </div>
+                        <div class="groupe-input">
                             <label for="edit_cp">Code postal <span class="required">*</span></label>
                             <input type="text" id="edit_cp" name="cp" required>
                         </div>
@@ -241,39 +261,8 @@
         <?php endif; ?>
     </main>
 
-    <script>
-        function ouvrirModalEdition(bouton) {
-            const modal = document.getElementById('modalEditionEntreprise');
-            const nomEntreprise = bouton.getAttribute('data-entreprise');
+    <script src="public/scripts/Les_clients.js"></script>
 
-            document.getElementById('badge_nom_entreprise').innerText = nomEntreprise;
-
-            // C'est cette ligne qui donne la valeur au formulaire !
-            document.getElementById('edit_id_client').value = bouton.getAttribute('data-id');
-
-            document.getElementById('edit_nom_entreprise').value = nomEntreprise;
-            document.getElementById('edit_nom').value = bouton.getAttribute('data-nom');
-            document.getElementById('edit_prenom').value = bouton.getAttribute('data-prenom');
-            document.getElementById('edit_cp').value = bouton.getAttribute('data-cp');
-            document.getElementById('edit_ville').value = bouton.getAttribute('data-ville');
-            document.getElementById('edit_email').value = bouton.getAttribute('data-email');
-            document.getElementById('edit_telephone').value = bouton.getAttribute('data-telephone');
-            document.getElementById('edit_observation').value = bouton.getAttribute('data-observation');
-
-            modal.style.display = 'flex';
-        }
-
-        function fermerModalEditionForce() {
-            document.getElementById('modalEditionEntreprise').style.display = 'none';
-        }
-
-        function fermerModalEdition(event) {
-            const modal = document.getElementById('modalEditionEntreprise');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
 </body>
 
 </html>

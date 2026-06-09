@@ -11,7 +11,7 @@ function obtenir_entreprises_filtres_pagine($recherche, $limite, $offset)
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT DISTINCT id_client,nom_entreprise,cp,ville, nom, prenom, email, telephone,observation
+    $sql = "SELECT DISTINCT id_client,nom_entreprise,cp,ville, nom, prenom, email, telephone,logiciel,observation
             FROM CLIENT
             WHERE nom_entreprise LIKE :recherche 
             OR nom LIKE :recherche 
@@ -53,7 +53,7 @@ function compter_entreprises_filtres($recherche)
 /**
  * Modifier les informations d'une entreprise
  */
-function modifier_entreprise_par_id($id_client, $nom_entreprise, $nom, $prenom, $cp, $ville, $email, $telephone, $observation)
+function modifier_entreprise_par_id($id_client, $nom_entreprise, $logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation)
 {
     $pdo = get_bdd();
 
@@ -65,6 +65,7 @@ function modifier_entreprise_par_id($id_client, $nom_entreprise, $nom, $prenom, 
                 ville = ?, 
                 email = ?, 
                 telephone = ?, 
+                logiciel = ?, 
                 observation = ? 
             WHERE id_client = ?";
 
@@ -78,6 +79,7 @@ function modifier_entreprise_par_id($id_client, $nom_entreprise, $nom, $prenom, 
             $ville,
             $email,
             $telephone,
+            $logiciel,
             $observation,
             $id_client
         ]);
