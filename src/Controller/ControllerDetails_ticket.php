@@ -54,11 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (modifier_description_ticket($num_ticket, $nouvelle_desc)) {
             maj($details_ticket['id_ticket'], $num_ticket, "Modification des notes de suivi");
-            $_SESSION['flash_message'] = "Les notes du suivi ont été mises à jour avec succès.";
-            $_SESSION['flash_type'] = "success";
-        } else {
-            $_SESSION['flash_message'] = "Erreur lors de la mise à jour des notes.";
-            $_SESSION['flash_type'] = "error";
         }
 
         header("Location: index.php?page=detail_ticket&ticket=" . urlencode($num_ticket));

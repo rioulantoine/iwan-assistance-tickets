@@ -201,6 +201,32 @@
                         </div>
                     </div>
                 </div>
+                <?php if (isset($_SESSION['flash_message'])) : ?>
+                    <div class="flash-alert alert-<?= $_SESSION['flash_type'] ?>" id="flashAlert">
+                        <div class="flash-content">
+                            <?php if ($_SESSION['flash_type'] === 'success') : ?>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            <?php else : ?>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                            <?php endif; ?>
+
+                            <span><?= $_SESSION['flash_message'] ?></span>
+                        </div>
+                        <button class="close-flash" onclick="document.getElementById('flashAlert').style.display='none'">&times;</button>
+                    </div>
+
+                    <?php
+                    // On vide le message pour qu'il ne se re affiche pas 
+                    unset($_SESSION['flash_message']);
+                    unset($_SESSION['flash_type']);
+                    ?>
+                <?php endif; ?>
                 <div class="message-body">
                     <h3><?= htmlspecialchars($details_ticket['titre'] ?? 'Titre non spécifié') ?></h3>
                     <div class="info-client">

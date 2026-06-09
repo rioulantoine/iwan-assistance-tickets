@@ -16,7 +16,7 @@ if (!empty($id_reponse)) {
     if ($succes) {
         //Enregistrement du message de confirmation en session
         $_SESSION['flash_message'] = "La réponse a bien été supprimé.";
-        $_SESSION['flash_type'] = "succes";
+        $_SESSION['flash_type'] = "success";
     } else {
         $_SESSION['flash_message'] = "Une erreur estsurvenue lors de la suppression du ticket.";
         $_SESSION['flash_type'] = "error";
