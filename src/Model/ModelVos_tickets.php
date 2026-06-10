@@ -11,7 +11,7 @@ function get_ticket($filtres)
                    u.libelle_urgence
             FROM TICKETS t
             LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
-            WHERE id_entreprise = :id_client AND 1=1";
+            WHERE id_entreprise = :id_client AND type=0 AND 1=1";
     $params = [];
     $params['id_client'] = $filtres['id_client'];
     // Filtre date

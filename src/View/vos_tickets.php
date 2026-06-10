@@ -14,7 +14,7 @@
     <main>
         <div class="tableau-de-bord">
             <div class="header-text">
-                <h1>Tableau de bord</h1>
+                <h1>Mes tickets</h1>
                 <p>
                     Retrouvez ici l'historique et l'état d'avancement de toutes vos
                     sollicitations.
