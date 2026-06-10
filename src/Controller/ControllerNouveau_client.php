@@ -7,6 +7,8 @@ if (!isset($_SESSION['is_admin']) && !isset($_SESSION['id_client'])) {
 }
 
 require_once __DIR__ . '/../Model/ModelNouveau_Client.php';
+$liste_logiciels = get_liste_logiciels();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_client = trim($_POST['id_client'] ?? '');
     $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
@@ -16,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $prenom = trim($_POST['prenom'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $telephone = trim($_POST['telephone'] ?? '');
-    $logiciel = trim($_POST['logiciel']);
+    $logiciel = trim($_POST['id_logiciel']);
     $observation = trim($_POST['observation'] ?? '');
 
     $erreurs = [];

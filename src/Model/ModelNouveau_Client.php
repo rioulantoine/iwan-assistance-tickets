@@ -26,7 +26,7 @@ function inserer_nouveau_client(
             prenom,
             email,
             telephone,
-            logiciel,
+            id_logiciel,
             observation)
             VALUES(?,?,?,?,?,?,?,?,?,?)";
     $stmt = $pdo->prepare($sql);
@@ -64,4 +64,17 @@ function verifier_id($id_client)
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id_client]);
     return $stmt->fetchColumn();
+}
+
+
+/**
+ * Obtenir la liste de tous les logiciels
+ */
+function get_liste_logiciels()
+{
+    $pdo = get_bdd();
+    $sql = "SELECT id_logiciel, logiciel FROM LOGICIEL ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
