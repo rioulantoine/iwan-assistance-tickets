@@ -11,7 +11,7 @@ function obtenir_entreprises_filtres_pagine($recherche, $limite, $offset)
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT DISTINCT id_client,nom_entreprise,cp,ville, nom, prenom, email, telephone,logiciel,observation
+    $sql = "SELECT DISTINCT id_client,nom_entreprise,cp,ville, nom, prenom, email, telephone,id_logiciel,observation
             FROM CLIENT
             WHERE nom_entreprise LIKE :recherche 
             OR nom LIKE :recherche 
