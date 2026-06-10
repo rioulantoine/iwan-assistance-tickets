@@ -2,6 +2,13 @@
 // ControllerNouveau_ticket.php
 require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
 
+
+
+
+$logiciel_couleur = '#64748b';
+
+
+
 $tab_actif = $_GET['tab'] ?? 'ticket';
 
 if (!($_SESSION['is_admin'] ?? false)) {

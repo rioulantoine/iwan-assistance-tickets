@@ -288,3 +288,48 @@ window.addEventListener('pageshow', function(event) {
     if (formTicket) formTicket.reset();
     if (formSuivi) formSuivi.reset();
 });
+
+
+
+
+
+function toggleUrgenceDropdown() {
+    document.getElementById('urgenceMenu').classList.toggle('open');
+}
+
+function selectUrgence(valeur, label, couleur, labelBouton) {
+    document.getElementById('niveau_urgence').value = valeur;
+    document.getElementById('urgenceLabel').textContent = labelBouton;
+    document.querySelector('.urgence-dropdown-btn').style.backgroundColor = couleur;
+    document.getElementById('urgenceMenu').classList.remove('open');
+}
+
+// Fermer le dropdown si on clique ailleurs
+document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('urgenceDropdown');
+    if (dropdown && !dropdown.contains(e.target)) {
+        document.getElementById('urgenceMenu').classList.remove('open');
+    }
+});
+
+
+
+
+function toggleLogicielDropdown() {
+    document.getElementById('logicielMenu').classList.toggle('open');
+}
+
+function selectLogiciel(id, label) {
+    document.getElementById('id_logiciel').value = id;
+    document.getElementById('logicielLabel').textContent = label;
+    document.getElementById('logicielMenu').classList.remove('open');
+}
+
+// Fermer aussi le dropdown logiciel si clic ailleurs
+document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('logicielDropdown');
+    if (dropdown && !dropdown.contains(e.target)) {
+        const menu = document.getElementById('logicielMenu');
+        if (menu) menu.classList.remove('open');
+    }
+});

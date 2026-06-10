@@ -68,20 +68,20 @@ function trouver_id_entreprise($nom_entreprise)
 }
 
 /**
- * Récupérer les informations du client avec son logiciel
+ * Récupérer les informations du client connecté avec son id_logiciel
  */
 function get_info_client($id_client)
 {
     $pdo = get_bdd();
-    $sql = "SELECT c.id_client, c.nom, c.prenom, c.email, c.id_logiciel, l.logiciel, c.telephone 
+    $sql = "SELECT id_client, nom, prenom, email, logiciel, telephone 
             FROM CLIENT c
             LEFT JOIN LOGICIEL l ON c.id_logiciel = l.id_logiciel
             WHERE c.id_client = ?";
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id_client]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
-
 /**
  * Récupère tous les logiciels pour le select de la vue
  */
