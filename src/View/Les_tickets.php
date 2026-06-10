@@ -74,7 +74,6 @@
                         <option value="4" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '4') ? 'selected' : '' ?>>Dernier trimestre</option>
                         <option value="5" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '5') ? 'selected' : '' ?>>Cette année</option>
                     </select>
-
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
@@ -96,7 +95,6 @@
                             <button type="button" class="btn-clear-date" onclick="viderChampDate('date_debut'); this.form.submit();">&times;</button>
                         </div>
                     </div>
-
                     <div class="date-field">
                         <label>Au</label>
                         <div class="input-clearable-wrapper">
@@ -151,29 +149,39 @@
                     </svg>
                 </div>
 
-                <div class="search-wrapper" onchange="this.form.submit()">
+                <div class="select-wrapper">
+                    <select name="groupe" onchange="this.form.submit()">
+                        <option value="" <?= (!isset($_GET['groupe']) || $_GET['groupe'] === '') ? 'selected' : '' ?>>Filtres groupés...</option>
+                        <option value="1" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '1') ? 'selected' : '' ?>>Suivi / Cette semaine / En cours</option>
+                        <option value="2" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '2') ? 'selected' : '' ?>>Suivi / Cette semaine / Urgent / En cours</option>
+                        <option value="3" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '3') ? 'selected' : '' ?>>Ticket / Cette semaine / En cours</option>
+                        <option value="4" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '4') ? 'selected' : '' ?>>Ticket / Cette semaine / Urgent / En cours</option>
+                    </select>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+
+                <div class="search-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="text" name="recherche" placeholder="Rechercher un ticket" value="<?= trim(htmlspecialchars($_GET['recherche'] ?? '')) ?>" />
+                    <input type="text" name="recherche" placeholder="Rechercher un ticket..." value="<?= trim(htmlspecialchars($_GET['recherche'] ?? '')) ?>" onchange="this.form.submit()" />
                 </div>
+
                 <a href="/iwan-assistance-tickets/index.php?page=admin_tickets" class="btn-refresh" title="Réinitialiser et recharger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-refresh">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-refresh">
                         <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
                     </svg>
-                    <span>Voir tous les tickets</span>
+                    <span>Tous les tickets</span>
                 </a>
-                <!-- <button type="submit" class="btn-filtre">Appliquer les filtres</button>-->
             </form>
 
             <table class="table-tickets">
                 <thead>
                     <tr>
                         <th class="sortable" data-col="ref" data-order="<?= (($filtres['tri_col'] ?? '') === 'ref') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
-                            Réf. <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'ref') ? (($filtres['tri_ordre'] ?? 0) == 2 ? '▼' : '▲') : '▲' ?></span>
-                        </th>
-                        <th class="sortable" data-col="titre" data-order="<?= (($filtres['tri_col'] ?? '') === 'titre') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
                             Titre <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'titre') ? (($filtres['tri_ordre'] ?? 0) == 2 ? '▼' : '▲') : '▲' ?></span>
                         </th>
                         <th>Établissement</th>
@@ -213,8 +221,7 @@
                             $date_maj = !empty($ticket['date_maj']) ? (new DateTime($ticket['date_maj']))->format('d/m/y à H:i') : '---';
                             ?>
                             <tr>
-                                <td class="<?= $classe_urgence ?> font-bold"><?= htmlspecialchars($ticket['numero_ticket']) ?></td>
-                                <td><?= htmlspecialchars($ticket['titre']) ?></td>
+                                <td class="<?= $classe_urgence ?> font-bold"><?= htmlspecialchars($ticket['titre']) ?></td>
                                 <td><?= htmlspecialchars($ticket['nom_entreprise'] ?? '') ?></td>
                                 <td><?= htmlspecialchars($ticket['logiciel'] ?? '') ?></td>
                                 <td><?= htmlspecialchars($ticket['declarant_prenom'] . ' ' . $ticket['declarant_nom']) ?></td>

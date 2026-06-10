@@ -30,31 +30,34 @@
   gap: 16px;
   margin-bottom: 24px;
   align-items: center;
+  width: 100%;
 }
 
 
 .filtre-bar .search-wrapper {
-  grid-column: span 2; 
+  grid-column: span 1; 
+  width: 100%;
 }
 
 .date-range-wrapper {
     display: flex;
     gap: 8px;
     align-items: center;
+    width: 100%;
 }
 
 .date-field {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     background: #fff;
     border: 1px solid #e2e8f0;
     border-radius: 6px;
-    padding: 0 12px;
+    padding: 0 8px;
     height: 42px;
-    min-width: 180px; 
+    flex: 1; 
+    min-width: 0; 
 }
-
 .date-field label {
     font-size: 13px;
     color: #64748b;
@@ -442,18 +445,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    background-color: #0f2e48; /* Ton bleu marine */
+    gap: 8px;
+    background-color: #0f2e48;
     color: #ffffff !important;
     text-decoration: none;
-    padding: 10px 20px;
+    height: 42px; 
+    padding: 0 16px;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    border: none;
-    cursor: pointer;
+    box-sizing: border-box;
+    white-space: nowrap;
+    width: 100%; 
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 .btn-nouveau-ticket {
   display: flex;
@@ -496,6 +500,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transform: scale(0.98);
 }
 
+@media (max-width: 1024px) {
+    .filtre-bar {
+        grid-template-columns: repeat(2, 1fr); /* Grille 2x4 sur petits écrans */
+    }
+}
+@media (max-width: 640px) {
+    .filtre-bar {
+        grid-template-columns: 1fr; /* 1 seule colonne sur smartphone */
+    }
+}
 
 /* Cache le picker natif uniquement sur Safari*/
 @media not all and (min-resolution:.001dpcm) { @supports (-webkit-appearance:none) {

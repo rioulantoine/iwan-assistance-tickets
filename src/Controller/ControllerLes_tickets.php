@@ -8,7 +8,36 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
     header('Location: index.php?page=accueil');
     exit();
 }
+// Filtres par groupe
+if (isset($_GET['groupe']) && $_GET['groupe'] !== '') {
+    $groupe = (int)$_GET['groupe'];
 
+    // Dans tous les cas (1, 2, 3, 4), la date est forcée sur "Cette semaine" (1) et le statut sur "En cours" (2)
+    $_GET['date_filtre'] = '1';
+    $_GET['statut_filtre'] = '2';
+
+    switch ($groupe) {
+        case 1:
+            $_GET['ticket_suivi'] = '1';   // Suivis uniquement
+            $_GET['urgence_filtre'] = '';  // Toutes les urgences
+            break;
+
+        case 2:
+            $_GET['ticket_suivi'] = '1';   // Suivis uniquement
+            $_GET['urgence_filtre'] = '2';  // Urgent (ou '1' si tu considères Urgent comme Bloquant)
+            break;
+
+        case 3:
+            $_GET['ticket_suivi'] = '0';   // Tickets uniquement
+            $_GET['urgence_filtre'] = '';  // Toutes les urgences
+            break;
+
+        case 4:
+            $_GET['ticket_suivi'] = '0';   // Tickets uniquement
+            $_GET['urgence_filtre'] = '2';  // Urgent
+            break;
+    }
+}
 $tri_col    = $_GET['tri_col']   ?? 'date_creation';
 $tri_ordre  = (int)($_GET['tri_ordre'] ?? 2);
 $date_debut = $_GET['date_debut'] ?? '';
