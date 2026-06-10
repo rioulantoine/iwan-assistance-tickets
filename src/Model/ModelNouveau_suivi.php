@@ -1,6 +1,6 @@
 <?php
 // ModelNouveau_suivi.php
-//Execute les requetes sql pour créé un suivi
+// Execute les requetes sql pour créé un suivi
 require_once __DIR__ . '/ModelBDD.php';
 
 /**
@@ -19,7 +19,6 @@ function trouver_id_entreprise($nom_entreprise)
     $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
     return $resultat ? $resultat['id_client'] : false;
 }
-
 
 /**
  * Génere un numero de ticket unique 
@@ -54,14 +53,14 @@ function generer_numero_suivi()
     return $nouveau_numero;
 }
 
-
-
-
+/**
+ * Insère un nouveau suivi dans la table TICKETS 
+ */
 function inserer_nouveau_suivi(
     $numero_suivi,
     $id_entreprise,
     $date,
-    $logiciel,
+    $id_logiciel,
     $type_suivi,
     $nom_contact,
     $prenom_contact,
@@ -80,7 +79,7 @@ function inserer_nouveau_suivi(
         declarant_telephone,
         declarant_email,
         type_suivi,
-        logiciel,
+        id_logiciel, 
         titre,
         description,
         date_creation,
@@ -96,7 +95,7 @@ function inserer_nouveau_suivi(
         $telephone,
         $email,
         $type_suivi,
-        $logiciel,
+        $id_logiciel,
         $titre,
         $notes,
         $date,

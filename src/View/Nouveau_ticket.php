@@ -104,14 +104,14 @@
                                         <td>
                                             <form method="POST" action="" style="margin: 0;">
                                                 <input type="hidden" name="action" value="selectionner_entreprise">
-                                                <input type="hidden" name="id_client" value="<?= htmlspecialchars($_POST['id_client'] ?? '') ?>">
+                                                <input type="hidden" name="id_client" value="<?= htmlspecialchars($entreprise['id_client'] ?? '') ?>">
                                                 <input type="hidden" name="nom_entreprise" value="<?= htmlspecialchars($entreprise['nom_entreprise'] ?? '') ?>">
                                                 <input type="hidden" name="nom" value="<?= htmlspecialchars($entreprise['nom'] ?? '') ?>">
                                                 <input type="hidden" name="prenom" value="<?= htmlspecialchars($entreprise['prenom'] ?? '') ?>">
                                                 <input type="hidden" name="email" value="<?= htmlspecialchars($entreprise['email'] ?? '') ?>">
                                                 <input type="hidden" name="telephone" value="<?= htmlspecialchars($entreprise['telephone'] ?? '') ?>">
 
-                                                <input type="hidden" name="logiciel" value="<?= htmlspecialchars($entreprise['logiciel'] ?? '') ?>">
+                                                <input type="hidden" name="id_logiciel" value="<?= htmlspecialchars($entreprise['id_logiciel'] ?? '') ?>">
 
                                                 <button type="submit" name="selectionner_entreprise" class="btn-selectionner-entreprise">sélectionner</button>
                                             </form>
@@ -321,19 +321,17 @@
                             </div>
                             <div class="groupe-input">
                                 <label for="logiciel">Logiciel concerné</label>
-                                <select id="logiciel" name="logiciel" required>
-                                    <option value="" disabled <?= empty($logiciel_preselectionne) ? 'selected' : '' ?>>Choisissez un logiciel</option>
-                                    <option value="GOA" <?= $logiciel_preselectionne === 'GOA' ? 'selected' : '' ?>>GOA</option>
-                                    <option value="IWAN_V3" <?= $logiciel_preselectionne === 'IWAN_V3' ? 'selected' : '' ?>>IWAN V3</option>
-                                    <option value="CRM" <?= $logiciel_preselectionne === 'CRM' ? 'selected' : '' ?>>CRM</option>
-                                    <option value="RESAVAC" <?= $logiciel_preselectionne === 'RESAVAC' ? 'selected' : '' ?>>RESAVAC</option>
-                                    <option value="WINLORE" <?= $logiciel_preselectionne === 'WINLORE' ? 'selected' : '' ?>>WINLORE</option>
-                                    <option value="AERORESA" <?= $logiciel_preselectionne === 'AERORESA' ? 'selected' : '' ?>>AERORESA</option>
-                                    <option value="PLANNING" <?= $logiciel_preselectionne === 'PLANNING' ? 'selected' : '' ?>>PLANNING</option>
-                                    <option value="MATERIEL" <?= $logiciel_preselectionne === 'MATERIEL' ? 'selected' : '' ?>>MATERIEL</option>
-                                    <option value="ANAMAG" <?= $logiciel_preselectionne === 'ANAMAG' ? 'selected' : '' ?>>ANAMAG</option>
-                                    <option value="IWAN_CAISSE" <?= $logiciel_preselectionne === 'IWAN_CAISSE' ? 'selected' : '' ?>>IWAN CAISSE</option>
-                                    <option value="AUTRE" <?= $logiciel_preselectionne === 'AUTRE' ? 'selected' : '' ?>>AUTRE</option>
+                                <select id="logiciel" name="id_logiciel" required>
+                                    <?php
+                                    $id_logiciel_preselectionne = (int)($_POST['id_logiciel'] ?? $_SESSION['entreprise_selectionnee']['id_logiciel'] ?? 0);
+                                    ?>
+                                    <option value="" disabled <?= $id_logiciel_preselectionne === 0 ? 'selected' : '' ?>>Choisissez un logiciel</option>
+
+                                    <?php foreach (($liste_logiciels ?? []) as $log) : ?>
+                                        <option value="<?= $log['id_logiciel'] ?>" <?= $id_logiciel_preselectionne === (int)$log['id_logiciel'] ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($log['logiciel']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
