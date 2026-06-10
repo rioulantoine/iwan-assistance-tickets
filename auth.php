@@ -19,6 +19,7 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
 
         $nom_url = $_GET['NOM'] ?? 'Client';
         $_SESSION['is_admin'] = false;
+        $_SESSION['id_admin'] = "";
         $_SESSION['id_client'] = htmlspecialchars($id_url);
         $_SESSION['name'] = strtoupper(trim(htmlspecialchars($nom_url)));
     }
