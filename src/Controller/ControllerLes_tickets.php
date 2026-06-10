@@ -64,6 +64,7 @@ $filtres = [
     'tri_col'      => $tri_col,
     'tri_ordre'    => $tri_ordre,
     'type'         => $ticket_suivi_value,
+
 ];
 
 // Gestion propre du comptage selon le filtre sélectionné
@@ -87,5 +88,33 @@ if ($type_selectionne === 0) {
 }
 
 $liste_tickets = get_tickets($filtres);
+
+foreach ($liste_tickets as &$ticket) {
+    // Initialisation des objets de date
+    $date_creation_obj = new DateTime($ticket['date_creation']);
+    $est_resolu = ((int)$ticket['id_statut'] === 3 || !empty($ticket['date_resolution']));
+
+    if ($est_resolu) {
+        $date_fin_calcul = new DateTime($ticket['date_resolution']);
+    } else {
+        $date_fin_calcul = new DateTime();
+    }
+
+    // Calcul de la différence
+    $interval = $date_creation_obj->diff($date_fin_calcul);
+
+    // Formatage de la chaîne de texte pour la durée
+    if ($interval->days > 0) {
+        $duree_texte = $interval->format('%aj %hh');
+    } elseif ($interval->h > 0) {
+        $duree_texte = $interval->format('%hh %imin');
+    } else {
+        $duree_texte = $interval->format('%imin');
+    }
+
+    // On injecte les nouvelles données directement dans le ticket
+    $ticket['duree_traitement'] = $duree_texte;
+}
+unset($ticket);
 
 require_once __DIR__ . '/../View/Les_tickets.php';

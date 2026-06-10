@@ -196,6 +196,9 @@
                         <th class="sortable" data-col="date_resolution" data-order="<?= (($filtres['tri_col'] ?? '') === 'date_resolution') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
                             Résolu le <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'date_resolution') ? (($filtres['tri_ordre'] ?? 0) == 2 ? '▼' : '▲') : '▲' ?></span>
                         </th>
+                        <th class="sortable" data-col="duree_traitement" data-order="<?= (($filtres['tri_col'] ?? '') === 'duree_traitement') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
+                            Durée de traitement <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'duree_traitement') ? (($filtres['tri_ordre'] ?? 0) == 2 ? '▼' : '▲') : '▲' ?></span>
+                        </th>
                         <th class="sortable" data-col="id_statut" data-order="<?= (($filtres['tri_col'] ?? '') === 'id_statut') ? $filtres['tri_ordre'] ?? '' : 0 ?>">
                             Statut <span class="sort-icon"><?= (($filtres['tri_col'] ?? '') === 'id_statut') ? (($filtres['tri_ordre'] ?? 0) == 2 ? '▼' : '▲') : '▲' ?></span>
                         </th>
@@ -228,6 +231,7 @@
                                 <td><?= $date_creation ?></td>
                                 <td><?= $date_maj ?></td>
                                 <td><?= $date_resolution ?></td>
+                                <td><?= htmlspecialchars($ticket['duree_traitement'] ?? '') ?></td>
                                 <td class="font-bold"><?= htmlspecialchars($ticket['libelle_statut']) ?></td>
                                 <td>
                                     <div class="actions-cell">
