@@ -105,7 +105,7 @@
                                     <td><?= htmlspecialchars($entreprise['nom_entreprise']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['nom']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['prenom']) ?></td>
-                                    <td><?= htmlspecialchars($entreprise['logiciel']) ?>
+                                    <td><?= htmlspecialchars($entreprise['logiciel']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['email']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['telephone']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['ville']) ?></td>
@@ -116,8 +116,7 @@
                                             data-entreprise="<?= htmlspecialchars($entreprise['nom_entreprise'] ?? '') ?>"
                                             data-nom="<?= htmlspecialchars($entreprise['nom'] ?? '') ?>"
                                             data-prenom="<?= htmlspecialchars($entreprise['prenom'] ?? '') ?>"
-                                            data-logiciel="<?= htmlspecialchars($entreprise['logiciel'] ?? '') ?>"
-                                            data-email=" <?= htmlspecialchars($entreprise['email'] ?? '') ?>"
+                                            data-id-logiciel="<?= htmlspecialchars($entreprise['id_logiciel'] ?? '') ?>" data-email="<?= htmlspecialchars($entreprise['email'] ?? '') ?>"
                                             data-telephone="<?= htmlspecialchars($entreprise['telephone'] ?? '') ?>"
                                             data-cp="<?= htmlspecialchars($entreprise['cp'] ?? '') ?>"
                                             data-ville="<?= htmlspecialchars($entreprise['ville'] ?? '') ?>"
@@ -154,7 +153,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- MODAL MODIFICATION DONNÉES CLIENT-->
         <div id="modalEditionEntreprise" class="modal-edition" onclick="fermerModalEdition(event)">
             <div class="modal-edition-content">
 
@@ -207,19 +206,15 @@
                         </div>
                         <div class="groupe-input">
                             <label for="edit_logiciel">Logiciel <span class="required">*</span></label>
-                            <select id="edit_logiciel" name="logiciel" required>
-                                <option value="" disabled selected>Choisissez un logiciel</option>
-                                <option value="GOA">GOA</option>
-                                <option value="IWAN_V3">IWAN V3</option>
-                                <option value="CRM">CRM</option>
-                                <option value="RESAVAC">RESAVAC</option>
-                                <option value="WINLORE">WINLORE</option>
-                                <option value="AERORESA">AERORESA</option>
-                                <option value="PLANNING">PLANNING</option>
-                                <option value="MATERIEL">MATERIEL</option>
-                                <option value="ANAMAG">ANAMAG</option>
-                                <option value="IWAN_CAISSE">IWAN CAISSE</option>
-                                <option value="AUTRE">AUTRE</option>
+                            <select id="edit_logiciel" name="id_logiciel" required>
+                                <option value="" disabled>Choisissez un logiciel</option>
+
+                                <?php foreach (($liste_logiciels ?? []) as $log) : ?>
+                                    <option value="<?= $log['id_logiciel'] ?>"
+                                        <?= (isset($client_actuel['id_logiciel']) && (int)$client_actuel['id_logiciel'] === (int)$log['id_logiciel']) ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($log['logiciel']) ?>
+                                    </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="groupe-input">

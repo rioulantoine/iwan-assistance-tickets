@@ -11,15 +11,16 @@ function obtenir_entreprises_filtres_pagine($recherche, $limite, $offset)
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT DISTINCT id_client,nom_entreprise,cp,ville, nom, prenom, email, telephone,id_logiciel,observation
-            FROM CLIENT
-            WHERE nom_entreprise LIKE :recherche 
-            OR nom LIKE :recherche 
-            OR prenom LIKE :recherche
-            OR email LIKE :recherche 
-            OR telephone LIKE :recherche 
-            OR ville LIKE :recherche
-            ORDER BY nom_entreprise ASC
+    $sql = "SELECT DISTINCT c.id_client, c.nom_entreprise, c.cp, c.ville, c.nom, c.prenom, c.email, c.telephone, c.id_logiciel, l.logiciel, c.observation
+        FROM CLIENT c
+        LEFT JOIN LOGICIEL l ON c.id_logiciel = l.id_logiciel
+            WHERE c.nom_entreprise LIKE :recherche 
+            OR c.nom LIKE :recherche 
+            OR c.prenom LIKE :recherche
+            OR c.email LIKE :recherche 
+            OR c.telephone LIKE :recherche 
+            OR c.ville LIKE :recherche
+            ORDER BY c.nom_entreprise ASC
             LIMIT :limite OFFSET :offset";
 
     $stmt = $pdo->prepare($sql);
@@ -31,7 +32,6 @@ function obtenir_entreprises_filtres_pagine($recherche, $limite, $offset)
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
 
 
 /**
@@ -53,7 +53,7 @@ function compter_entreprises_filtres($recherche)
 /**
  * Modifier les informations d'une entreprise
  */
-function modifier_entreprise_par_id($id_client, $nom_entreprise, $logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation)
+function modifier_entreprise_par_id($id_client, $nom_entreprise, $id_logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation)
 {
     $pdo = get_bdd();
 
@@ -65,7 +65,7 @@ function modifier_entreprise_par_id($id_client, $nom_entreprise, $logiciel, $nom
                 ville = ?, 
                 email = ?, 
                 telephone = ?, 
-                logiciel = ?, 
+                id_logiciel = ?, -- CORRECTION : le nom de ta colonne SQL est id_logiciel
                 observation = ? 
             WHERE id_client = ?";
 
@@ -79,12 +79,23 @@ function modifier_entreprise_par_id($id_client, $nom_entreprise, $logiciel, $nom
             $ville,
             $email,
             $telephone,
-            $logiciel,
+            $id_logiciel, // ID numérique transmis ici
             $observation,
             $id_client
         ]);
     } catch (PDOException $e) {
-        // En cas de debug : error_log($e->getMessage());
         return false;
     }
+}
+
+/**
+ * Obtenir la liste de tous les logiciels
+ */
+function get_liste_logiciels()
+{
+    $pdo = get_bdd();
+    $sql = "SELECT id_logiciel, logiciel FROM LOGICIEL ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

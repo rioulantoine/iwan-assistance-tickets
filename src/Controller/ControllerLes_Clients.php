@@ -1,7 +1,7 @@
 <?php
 // ControllerLes_clients.php
 require_once __DIR__ . '/../Model/ModelLes_Clients.php';
-
+$liste_logiciels = get_liste_logiciels();
 // Logique de gestion de la section des entreprises et de sa pagination
 $recherche = trim($_GET['recherche'] ?? '');
 
@@ -17,15 +17,14 @@ $total_pages       = ceil($total_entreprises / $limite);
 $nb_entreprises    = count($liste_entreprises);
 
 
-// Traitement du formulaire pour modifier le client
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'modifier_entreprise') {
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'modifier_entreprise') {
 
     $id_client = trim($_POST['id_client'] ?? '');
     $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
     $nom = trim($_POST['nom'] ?? '');
     $prenom = trim($_POST['prenom'] ?? '');
-    $logiciel = trim($_POST['logiciel'] ?? '');
+    $id_logiciel = trim($_POST['id_logiciel'] ?? ''); // CORRECTION : On récupère l'ID envoyé par le select
     $cp = trim($_POST['cp'] ?? '');
     $ville = trim($_POST['ville'] ?? '');
     $email = trim($_POST['email'] ?? '');
@@ -33,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $observation = trim($_POST['observation'] ?? '');
 
     if (!empty($id_client) && !empty($nom_entreprise)) {
-        $succes = modifier_entreprise_par_id($id_client, $nom_entreprise, $logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation);
+        // Envoi de $id_logiciel à la fonction
+        $succes = modifier_entreprise_par_id($id_client, $nom_entreprise, $id_logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation);
 
         if ($succes) {
             $_SESSION['flash_message'] = "Les modifications ont été enregistrées avec succès.";
@@ -47,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $_SESSION['flash_type']    = "error";
     }
 
-    // Rechargement propre de la page
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit();
 }
