@@ -2,13 +2,7 @@
 // ControllerNouveau_ticket.php
 require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
 
-
-
-
-
 $logiciel_couleur = '#64748b';
-
-
 
 $tab_actif = $_GET['tab'] ?? 'ticket';
 
@@ -57,7 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'prenom'         => $_POST['prenom'] ?? '',
             'email'          => $_POST['email'] ?? '',
             'telephone'      => $_POST['telephone'] ?? '',
-            'id_logiciel'    => $_POST['id_logiciel'] ?? '' // Stockage de l'ID à la place du texte
+            'id_logiciel' => $_POST['id_logiciel'] ?? '',
+            'logiciel'    => $_POST['logiciel'] ?? '' // Stockage de l'ID à la place du texte
         ];
 
         header("Location: index.php?page=nouveau_ticket&tab=" . $tab_actif . "&selection=1");
@@ -70,10 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $prenom_declarant = trim($_POST['prenom'] ?? '');
         $email = trim($_POST['email'] ?? '');
         $telephone = trim($_POST['telephone'] ?? '');
+        $id_logiciel = trim($_POST['id_logiciel']);
         $niveau_urgence = trim($_POST['niveau_urgence'] ?? '');
         $titre = trim($_POST['titre'] ?? '');
         $description = trim($_POST['description'] ?? '');
-
         $erreurs = [];
 
         if (empty($nom_declarant) && !($_SESSION['is_admin'] ?? false)) $erreurs[] = "Le nom est obligatoire.";
@@ -116,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $prenom_declarant,
                 $telephone,
                 $email,
+                $id_logiciel,
                 $titre,
                 $description,
                 $date_creation,
@@ -155,5 +151,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
 require_once __DIR__ . '/../View/Nouveau_ticket.php';

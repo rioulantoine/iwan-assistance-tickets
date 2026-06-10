@@ -110,8 +110,8 @@
                                                 <input type="hidden" name="prenom" value="<?= htmlspecialchars($entreprise['prenom'] ?? '') ?>">
                                                 <input type="hidden" name="email" value="<?= htmlspecialchars($entreprise['email'] ?? '') ?>">
                                                 <input type="hidden" name="telephone" value="<?= htmlspecialchars($entreprise['telephone'] ?? '') ?>">
-
                                                 <input type="hidden" name="id_logiciel" value="<?= htmlspecialchars($entreprise['id_logiciel'] ?? '') ?>">
+                                                <input type="hidden" name="logiciel" value="<?= htmlspecialchars($entreprise['logiciel'] ?? '') ?>">
 
                                                 <button type="submit" name="selectionner_entreprise" class="btn-selectionner-entreprise">sélectionner</button>
                                             </form>
@@ -231,7 +231,12 @@
                                         <rect x="2" y="3" width="20" height="14" rx="2" />
                                         <path d="M8 21h8M12 17v4" />
                                     </svg>
-                                    <span id="logicielLabel"><?= ($infos_client['logiciel'] ?? 'logiciel non renseigné') ?></span>
+                                    <?php if ($_SESSION['is_admin'] ?? false): ?>
+                                        <span id="logicielLabel"><?= ($_SESSION['entreprise_selectionnee']['logiciel'] ?? 'logiciel non renseigné') ?></span>
+
+                                    <?php else : ?>
+                                        <span id="logicielLabel"><?= ($infos_client['logiciel'] ?? 'logiciel non renseigné') ?></span>
+                                    <?php endif; ?>
                                 </div>
                                 <?php if ($_SESSION['is_admin'] ?? false) : ?>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -297,6 +302,8 @@
                     <form action="" method="POST" enctype="multipart/form-data" auth-form>
                         <input type="hidden" name="niveau_urgence" id="niveau_urgence"
                             value="<?= htmlspecialchars($_POST['niveau_urgence'] ?? '') ?>">
+                        <input type="hidden" name="id_logiciel" id="id_logiciel_form"
+                            value="<?= htmlspecialchars($_POST['id_logiciel'] ?? $_SESSION['entreprise_selectionnee']['id_logiciel'] ?? '') ?>">
                         <?php if ($_SESSION['is_admin'] ?? false): ?>
                             <label for="nom_entreprise">Nom entreprise</label>
                             <input type="text" id="nom_entreprise" name="nom_entreprise" list="entreprises_suggestion" placeholder="Entrez le nom de l'entreprise" autocomplete="off" required

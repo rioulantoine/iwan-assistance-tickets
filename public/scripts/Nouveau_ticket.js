@@ -321,6 +321,7 @@ function toggleLogicielDropdown() {
 
 function selectLogiciel(id, label) {
     document.getElementById('id_logiciel').value = id;
+    document.getElementById('id_logiciel_form').value = id; 
     document.getElementById('logicielLabel').textContent = label;
     document.getElementById('logicielMenu').classList.remove('open');
 }

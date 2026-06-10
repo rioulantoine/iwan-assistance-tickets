@@ -94,6 +94,21 @@ function get_liste_logiciels()
 }
 
 /**
+ * Récupérer logicielle avec id
+ */
+function get_logiciel_by_id($id_logiciel)
+{
+    $pdo = get_bdd();
+
+    $sql = "SELECT logiciel
+          FROM LOGICIEL 
+          WHERE id_logiciel = ? ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_logiciel]);
+
+    return $stmt->fetchColumn();
+}
+/**
  * Génère un numéro de ticket unique 
  */
 function generer_numero_ticket()
@@ -127,6 +142,7 @@ function inserer_nouveau_ticket(
     $prenom_declarant,
     $telephone,
     $email,
+    $id_logiciel,
     $titre,
     $description,
     $date_creation,
@@ -137,9 +153,9 @@ function inserer_nouveau_ticket(
     $pdo = get_bdd();
     $sql = "INSERT INTO TICKETS (
                 type, numero_ticket, declarant_nom, declarant_prenom, 
-                declarant_telephone, declarant_email, titre, description, 
+                declarant_telephone, declarant_email,id_logiciel, titre, description, 
                 date_creation, id_entreprise, id_urgence, id_statut
-            ) VALUES (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            ) VALUES (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql);
     $resultat = $stmt->execute([
         $numero_ticket,
@@ -147,6 +163,7 @@ function inserer_nouveau_ticket(
         $prenom_declarant,
         $telephone,
         $email,
+        $id_logiciel,
         $titre,
         $description,
         $date_creation,
