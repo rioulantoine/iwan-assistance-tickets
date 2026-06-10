@@ -319,13 +319,12 @@ function toggleLogicielDropdown() {
     document.getElementById('logicielMenu').classList.toggle('open');
 }
 
-function selectLogiciel(id, label) {
-    document.getElementById('id_logiciel').value = id;
-    document.getElementById('id_logiciel_form').value = id; 
-    document.getElementById('logicielLabel').textContent = label;
-    document.getElementById('logicielMenu').classList.remove('open');
-}
+function selectLogiciel(id, nom) {
+    document.getElementById('id_logiciel_form').value = id;
+    document.getElementById('logiciel_form').value = nom;
 
+    document.getElementById('logicielLabel').innerText = nom;
+}
 // Fermer aussi le dropdown logiciel si clic ailleurs
 document.addEventListener('click', function(e) {
     const dropdown = document.getElementById('logicielDropdown');

@@ -206,7 +206,10 @@
                                         <span>Non urgent / Demande d'évolution</span>
                                     </li>
                                 </ul>
+
                             </div>
+                            <button type="button" class="btn-help-modal" onclick="ouvrirModalUrgence()">?</button>
+
                         </div>
                         <?php
                         $id_logiciel_preselectionne = (int)($_POST['id_logiciel'] ?? $_SESSION['entreprise_selectionnee']['id_logiciel'] ?? 0);
@@ -231,18 +234,21 @@
                                         <rect x="2" y="3" width="20" height="14" rx="2" />
                                         <path d="M8 21h8M12 17v4" />
                                     </svg>
-                                    <?php if ($_SESSION['is_admin'] ?? false): ?>
-                                        <span id="logicielLabel"><?= ($_SESSION['entreprise_selectionnee']['logiciel'] ?? 'logiciel non renseigné') ?></span>
+                                    <?php if (isset($_POST['logiciel']) && $_POST['logiciel'] !== ''): ?>
+                                        <span id="logicielLabel"><?= htmlspecialchars($_POST['logiciel']) ?></span>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <polyline points="6 9 12 15 18 9" />
+                                        </svg>
+                                    <?php elseif ($_SESSION['is_admin'] ?? false): ?>
+                                        <span id="logicielLabel"><?= htmlspecialchars($_SESSION['entreprise_selectionnee']['logiciel'] ?? 'logiciel non renseigné') ?></span>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <polyline points="6 9 12 15 18 9" />
+                                        </svg>
+                                    <?php else: ?>
+                                        <span id="logicielLabel"><?= htmlspecialchars($infos_client['logiciel'] ?? 'logiciel non renseigné') ?></span>
 
-                                    <?php else : ?>
-                                        <span id="logicielLabel"><?= ($infos_client['logiciel'] ?? 'logiciel non renseigné') ?></span>
                                     <?php endif; ?>
-                                </div>
-                                <?php if ($_SESSION['is_admin'] ?? false) : ?>
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                        <polyline points="6 9 12 15 18 9" />
-                                    </svg>
-                                <?php endif; ?>
+
                             </button>
 
                             <input type="hidden" name="id_logiciel" id="id_logiciel"
@@ -267,7 +273,7 @@
                             <?php endif; ?>
                         </div>
 
-                        <!-- Modal urgence (inchangé) -->
+                        <!-- Modal urgence -->
                         <div id="modalUrgence" class="modal-urgence-overlay" onclick="fermerModalUrgence(event)">
                             <div class="modal-urgence-content">
                                 <div class="modal-urgence-header">
@@ -304,6 +310,8 @@
                             value="<?= htmlspecialchars($_POST['niveau_urgence'] ?? '') ?>">
                         <input type="hidden" name="id_logiciel" id="id_logiciel_form"
                             value="<?= htmlspecialchars($_POST['id_logiciel'] ?? $_SESSION['entreprise_selectionnee']['id_logiciel'] ?? '') ?>">
+                        <input type="hidden" name="logiciel" id="logiciel_form"
+                            value="<?= htmlspecialchars($_POST['logiciel'] ?? $_SESSION['entreprise_selectionnee']['logiciel'] ?? '') ?>">
                         <?php if ($_SESSION['is_admin'] ?? false): ?>
                             <label for="nom_entreprise">Nom entreprise</label>
                             <input type="text" id="nom_entreprise" name="nom_entreprise" list="entreprises_suggestion" placeholder="Entrez le nom de l'entreprise" autocomplete="off" required
@@ -391,7 +399,7 @@
                         <div class="ligne-double">
                             <?php
                             // On détermine le logiciel à sélectionner (soit le POST si formulaire soumis avec erreur, soit la session de l'entreprise)
-                            $logiciel_preselectionne = $_POST['logiciel'] ?? $_SESSION['entreprise_selectionnee']['logiciel'] ?? '';
+                            $logiciel_preselectionne = $_POST['logiciel'];
                             ?>
                             <div class="groupe-input">
                                 <label for="nom_entreprise_suivi">Nom entreprise</label>

@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = trim($_POST['email'] ?? '');
         $telephone = trim($_POST['telephone'] ?? '');
         $id_logiciel = trim($_POST['id_logiciel']);
+        $logiciel = trim($_POST['logiciel']);
         $niveau_urgence = trim($_POST['niveau_urgence'] ?? '');
         $titre = trim($_POST['titre'] ?? '');
         $description = trim($_POST['description'] ?? '');
