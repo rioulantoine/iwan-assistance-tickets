@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Tableau de bord</title>
+    <title>Les tickets</title>
     <link rel="icon" type="image/png" href="img/Logo_Iwan.png" />
     <link rel="stylesheet" href="public/styles/Les_tickets.css" />
     <link rel="stylesheet" href="public/styles/Global.css" />
@@ -58,7 +58,7 @@
                 <input type="hidden" name="page" value="admin_tickets">
 
                 <div class="select-wrapper">
-                    <select name="date_filtre">
+                    <select name="date_filtre" onchange="this.form.submit()">
                         <option value="" <?= (!isset($_GET['date_filtre']) || $_GET['date_filtre'] === '') ? 'selected' : '' ?>>Tout le temps</option>
                         <option value="1" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '1') ? 'selected' : '' ?>>Cette semaine</option>
                         <option value="2" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '2') ? 'selected' : '' ?>>14 derniers jours</option>
@@ -66,6 +66,7 @@
                         <option value="4" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '4') ? 'selected' : '' ?>>Dernier trimestre</option>
                         <option value="5" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '5') ? 'selected' : '' ?>>Cette année</option>
                     </select>
+
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
@@ -75,7 +76,7 @@
                     <div class="date-field">
                         <label>Du</label>
                         <div class="input-clearable-wrapper">
-                            <input type="date" id="date_debut" name="date_debut" value="<?= htmlspecialchars($_GET['date_debut'] ?? '') ?>">
+                            <input type="date" id="date_debut" name="date_debut" value="<?= htmlspecialchars($_GET['date_debut'] ?? '') ?>" onchange="this.form.submit()">
                             <label for="date_debut" class="btn-calendar-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -84,14 +85,14 @@
                                     <line x1="3" y1="10" x2="21" y2="10"></line>
                                 </svg>
                             </label>
-                            <button type="button" class="btn-clear-date" onclick="viderChampDate('date_debut')">&times;</button>
+                            <button type="button" class="btn-clear-date" onclick="viderChampDate('date_debut'); this.form.submit();">&times;</button>
                         </div>
                     </div>
 
                     <div class="date-field">
                         <label>Au</label>
                         <div class="input-clearable-wrapper">
-                            <input type="date" id="date_fin" name="date_fin" value="<?= htmlspecialchars($_GET['date_fin'] ?? '') ?>">
+                            <input type="date" id="date_fin" name="date_fin" value="<?= htmlspecialchars($_GET['date_fin'] ?? '') ?>" onchange="this.form.submit()">
                             <label for="date_fin" class="btn-calendar-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -100,13 +101,13 @@
                                     <line x1="3" y1="10" x2="21" y2="10"></line>
                                 </svg>
                             </label>
-                            <button type="button" class="btn-clear-date" onclick="viderChampDate('date_fin')">&times;</button>
+                            <button type="button" class="btn-clear-date" onclick="viderChampDate('date_fin'); this.form.submit();">&times;</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="select-wrapper">
-                    <select name="statut_filtre">
+                    <select name="statut_filtre" onchange="this.form.submit()">
                         <option value="" <?= (!isset($_GET['statut_filtre']) || $_GET['statut_filtre'] === '') ? 'selected' : '' ?>>Tous les statuts</option>
                         <option value="1" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '1') ? 'selected' : '' ?>>En attente</option>
                         <option value="2" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '2') ? 'selected' : '' ?>>En cours</option>
@@ -119,7 +120,7 @@
                 </div>
 
                 <div class="select-wrapper">
-                    <select name="urgence_filtre">
+                    <select name="urgence_filtre" onchange="this.form.submit()">
                         <option value="" <?= (!isset($_GET['urgence_filtre']) || $_GET['urgence_filtre'] === '') ? 'selected' : '' ?>>Toutes les urgences</option>
                         <option value="1" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '1') ? 'selected' : '' ?>>Bloquant / Très urgent</option>
                         <option value="2" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '2') ? 'selected' : '' ?>>Urgent</option>
@@ -132,7 +133,7 @@
                 </div>
 
                 <div class="select-wrapper">
-                    <select name="ticket_suivi">
+                    <select name="ticket_suivi" onchange="this.form.submit()">
                         <option value="2" <?= (isset($filtres['type']) && $filtres['type'] === '2') ? 'selected' : '' ?>>Tickets et suivis</option>
                         <option value="0" <?= (isset($filtres['type']) && $filtres['type'] === '0') ? 'selected' : '' ?>>Tickets</option>
                         <option value="1" <?= (isset($filtres['type']) && $filtres['type'] === '1') ? 'selected' : '' ?>>Suivis</option>
@@ -142,15 +143,20 @@
                     </svg>
                 </div>
 
-                <div class="search-wrapper">
+                <div class="search-wrapper" onchange="this.form.submit()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                     <input type="text" name="recherche" placeholder="Rechercher un ticket" value="<?= trim(htmlspecialchars($_GET['recherche'] ?? '')) ?>" />
                 </div>
-
-                <button type="submit" class="btn-filtre">Appliquer les filtres</button>
+                <a href="/iwan-assistance-tickets/index.php?page=admin_tickets" class="btn-refresh" title="Réinitialiser et recharger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-refresh">
+                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                    </svg>
+                    <span>Voir tous les tickets</span>
+                </a>
+                <!-- <button type="submit" class="btn-filtre">Appliquer les filtres</button>-->
             </form>
 
             <table class="table-tickets">

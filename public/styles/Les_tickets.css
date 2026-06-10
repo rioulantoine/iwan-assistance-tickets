@@ -437,6 +437,48 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding-right: 50px;
 }
 
+/* Style du bouton de rechargement */
+.btn-refresh {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #0f2e48; /* Ton bleu marine */
+    color: #ffffff !important;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Changement de couleur au survol */
+.btn-refresh:hover {
+    background-color: #163c5d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Gestion de l'icône flèche */
+.icon-refresh {
+    flex-shrink: 0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Transition fluide pour la rotation */
+}
+
+/* Animation de rotation complète (360°) de la flèche au survol du bouton */
+.btn-refresh:hover .icon-refresh {
+    transform: rotate(360deg);
+}
+
+/* Optionnel : Effet actif lors du clic */
+.btn-refresh:active {
+    transform: scale(0.98);
+}
+
+
 /* Cache le picker natif uniquement sur Safari*/
 @media not all and (min-resolution:.001dpcm) { @supports (-webkit-appearance:none) {
     input[type="date"]::-webkit-calendar-picker-indicator {
