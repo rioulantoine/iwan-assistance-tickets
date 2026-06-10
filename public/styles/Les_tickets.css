@@ -455,7 +455,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+.btn-nouveau-ticket {
+  display: flex;
+  padding: 10px 6%;
+  background-color: #0e2235;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 18px;
+  margin-right: 5%;
+  margin-left: auto;
+  gap: 10px;
+  width: fit-content;
+  margin-top: 20px;
 
+}
+.btn-nouveau-ticket:hover {
+  background-color: #0e2235;
+  color: #ffffff;
+}
 /* Changement de couleur au survol */
 .btn-refresh:hover {
     background-color: #163c5d;
