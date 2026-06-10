@@ -73,10 +73,10 @@ function trouver_id_entreprise($nom_entreprise)
 function get_info_client($id_client)
 {
     $pdo = get_bdd();
-    $sql = "SELECT id_client, nom, prenom, email, logiciel, telephone 
-            FROM CLIENT c
-            LEFT JOIN LOGICIEL l ON c.id_logiciel = l.id_logiciel
-            WHERE c.id_client = ?";
+    $sql = "SELECT c.id_client, c.nom, c.prenom, c.email, c.telephone, c.id_logiciel, l.logiciel
+        FROM CLIENT c
+        LEFT JOIN LOGICIEL l ON c.id_logiciel = l.id_logiciel
+        WHERE c.id_client = ?";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id_client]);
@@ -108,6 +108,8 @@ function get_logiciel_by_id($id_logiciel)
 
     return $stmt->fetchColumn();
 }
+
+function get_id_logiciel($logiciel) {}
 /**
  * Génère un numéro de ticket unique 
  */

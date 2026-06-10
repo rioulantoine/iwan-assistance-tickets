@@ -309,7 +309,12 @@
                         <input type="hidden" name="niveau_urgence" id="niveau_urgence"
                             value="<?= htmlspecialchars($_POST['niveau_urgence'] ?? '') ?>">
                         <input type="hidden" name="id_logiciel" id="id_logiciel_form"
-                            value="<?= htmlspecialchars($_POST['id_logiciel'] ?? $_SESSION['entreprise_selectionnee']['id_logiciel'] ?? '') ?>">
+                            value="<?= htmlspecialchars(
+                                        $_POST['id_logiciel']
+                                            ?? $_SESSION['entreprise_selectionnee']['id_logiciel']
+                                            ?? $infos_client['id_logiciel']
+                                            ?? ''
+                                    ) ?>">
                         <input type="hidden" name="logiciel" id="logiciel_form"
                             value="<?= htmlspecialchars($_POST['logiciel'] ?? $_SESSION['entreprise_selectionnee']['logiciel'] ?? '') ?>">
                         <?php if ($_SESSION['is_admin'] ?? false): ?>
@@ -399,7 +404,6 @@
                         <div class="ligne-double">
                             <?php
                             // On détermine le logiciel à sélectionner (soit le POST si formulaire soumis avec erreur, soit la session de l'entreprise)
-                            $logiciel_preselectionne = $_POST['logiciel'];
                             ?>
                             <div class="groupe-input">
                                 <label for="nom_entreprise_suivi">Nom entreprise</label>

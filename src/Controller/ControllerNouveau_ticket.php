@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description = trim($_POST['description'] ?? '');
         $erreurs = [];
 
+
         if (empty($nom_declarant) && !($_SESSION['is_admin'] ?? false)) $erreurs[] = "Le nom est obligatoire.";
         if (empty($prenom_declarant) && !($_SESSION['is_admin'] ?? false)) $erreurs[] = "Le prénom est obligatoire.";
         if (empty($email) && !($_SESSION['is_admin'] ?? false)) {
