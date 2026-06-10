@@ -5,6 +5,7 @@ require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
 
 
 
+
 $logiciel_couleur = '#64748b';
 
 

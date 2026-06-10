@@ -543,46 +543,101 @@ textarea::placeholder {
 .btn-selectionner-entreprise {
     background-color: #0f2e48; color: white; padding: 6px 16px; border-radius: 4px; font-weight: bold; border: none; cursor: pointer;
 }
+
+
+
 /* =============================================================
-                CARTE URGENCE
-========================================================
-/* ==========================================================================
-   DROPDOWN URGENCE CUSTOM
-   ========================================================================== */
+   ZONE ACTIONS EN HAUT À DROITE
+============================================================= */
+
+.en-tete-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.actions-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* =============================================================
+   DROPDOWN URGENCE & LOGICIEL
+============================================================= */
 
 .urgence-dropdown {
     position: relative;
-    min-width: 220px;
+    width: auto;
+    min-width: unset;
+    flex-shrink: 0;
 }
 
 .urgence-dropdown-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    width: 100%;
+
+    width: auto;
+    min-width: fit-content;
+
     padding: 10px 16px;
-    background-color: #f97316; /* orange par défaut */
-    color: #ffffff;
+
     border: none;
     border-radius: 8px;
+
+    color: #ffffff;
     font-size: 15px;
     font-weight: 700;
+
     cursor: pointer;
+    white-space: nowrap;
+
     transition: background-color 0.2s ease;
 }
+
+/* Bouton urgence */
+#urgenceDropdown .urgence-dropdown-btn {
+    background-color: #f97316;
+}
+
+/* Bouton logiciel */
+.logiciel-btn {
+    background-color: #1a365d !important;
+    width: auto !important;
+    min-width: fit-content;
+}
+
+.logiciel-btn:not([disabled]):hover {
+    background-color: #163c5d !important;
+}
+
+/* =============================================================
+   MENUS
+============================================================= */
 
 .urgence-dropdown-menu {
     display: none;
     position: absolute;
     top: calc(100% + 6px);
     left: 0;
-    min-width: 240px;
+
+    width: max-content;
+    min-width: 100%;
+
     background: #ffffff;
     border-radius: 12px;
+
     box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+
     z-index: 1000;
+
     padding: 16px 0 8px;
+
     animation: apparitionModal 0.15s ease-out;
 }
 
@@ -610,10 +665,13 @@ textarea::placeholder {
     align-items: center;
     gap: 14px;
     padding: 10px 20px;
+
     font-size: 14px;
     font-weight: 600;
     color: #0f2e48;
+
     cursor: pointer;
+
     transition: background-color 0.15s ease;
 }
 
@@ -628,18 +686,62 @@ textarea::placeholder {
     flex-shrink: 0;
 }
 
-.logiciel-btn {
-    background-color: #1a365d !important;
-        width: auto;
+/* =============================================================
+   BOUTON LISTE ENTREPRISES
+============================================================= */
 
+.btn-modal-liste-entreprises {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 24px;
+
+    background-color: #f4f7ff;
+    border: 1px solid #0f2e48;
+    border-radius: 6px;
+
+    color: #0f2e48;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
 }
 
-.logiciel-btn:not([disabled]):hover {
-    background-color: #163c5d !important;
+/* =============================================================
+   RESPONSIVE
+============================================================= */
+
+@media (max-width: 1200px) {
+
+    .en-tete-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .actions-header {
+        justify-content: flex-start;
+    }
 }
 
+@media (max-width: 768px) {
 
+    .actions-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
 
+    .urgence-dropdown,
+    .btn-modal-liste-entreprises {
+        width: 100%;
+    }
+
+    .urgence-dropdown-btn {
+        width: 100%;
+    }
+}
 
 
 

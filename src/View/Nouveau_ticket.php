@@ -176,124 +176,127 @@
                         <h2>Créez votre ticket rapidement !</h2>
                         <p>Rédiger et traiter les nouvelles demandes et les nouveaux problèmes.</p>
                     </div>
-                    <!-- Dropdown urgence custom -->
-                    <div class="urgence-dropdown" id="urgenceDropdown">
-                        <button type="button" class="urgence-dropdown-btn" onclick="toggleUrgenceDropdown()">
-                            <span id="urgenceLabel">Choisissez un niveau</span>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <polyline points="6 9 12 15 18 9" />
-                            </svg>
-                        </button>
-                        <input type="hidden" name="niveau_urgence" id="niveau_urgence" required value="<?= htmlspecialchars($_POST['niveau_urgence'] ?? '') ?>">
-
-                        <div class="urgence-dropdown-menu" id="urgenceMenu">
-                            <p class="urgence-dropdown-titre">CHANGER LE NIVEAU D'URGENCE :</p>
-                            <ul>
-                                <li onclick="selectUrgence('1', 'Bloquant / Très urgent', '#ef4444', 'Bloquant / Très urgent')">
-                                    <span class="urgence-dot" style="background:#ef4444;"></span>
-                                    <span>Bloquant / Très urgent</span>
-                                </li>
-                                <li onclick="selectUrgence('2', 'Urgent', '#f97316', 'Urgent')">
-                                    <span class="urgence-dot" style="background:#f97316;"></span>
-                                    <span>Urgent</span>
-                                </li>
-                                <li onclick="selectUrgence('3', 'Normal', '#3b82f6', 'Normal')">
-                                    <span class="urgence-dot" style="background:#3b82f6;"></span>
-                                    <span>Normal</span>
-                                </li>
-                                <li onclick="selectUrgence('4', 'Non urgent / Demande d\'évolution', '#22c55e', 'Non urgent / Demande d\'évolution')">
-                                    <span class="urgence-dot" style="background:#22c55e;"></span>
-                                    <span>Non urgent / Demande d'évolution</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <?php
-                    $id_logiciel_preselectionne = (int)($_POST['id_logiciel'] ?? $_SESSION['entreprise_selectionnee']['id_logiciel'] ?? 0);
-                    $logiciel_label = 'Choisissez un logiciel';
-                    $logiciel_couleur = '#64748b';
-
-                    foreach (($liste_logiciels ?? []) as $log) {
-                        if ((int)$log['id_logiciel'] === $id_logiciel_preselectionne) {
-                            $logiciel_label = htmlspecialchars($log['logiciel']);
-                            break;
-                        }
-                    }
-                    ?>
-
-                    <div class="urgence-dropdown" id="logicielDropdown">
-                        <button type="button"
-                            class="urgence-dropdown-btn logiciel-btn"
-                            <?= !($_SESSION['is_admin'] ?? false) ? 'disabled' : 'onclick="toggleLogicielDropdown()"' ?>
-                            style="background-color: #1a365d; <?= !($_SESSION['is_admin'] ?? false) ? 'opacity:0.75; cursor:not-allowed;' : '' ?>">
-                            <div style="display:flex; align-items:center; gap:10px;">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="2" y="3" width="20" height="14" rx="2" />
-                                    <path d="M8 21h8M12 17v4" />
-                                </svg>
-                                <span id="logicielLabel"><?= ($infos_client['logiciel'] ?? 'logiciel non renseigné') ?></span>
-                            </div>
-                            <?php if ($_SESSION['is_admin'] ?? false) : ?>
+                    <div class="actions-header">
+                        <!-- Dropdown urgence custom -->
+                        <div class="urgence-dropdown" id="urgenceDropdown">
+                            <button type="button" class="urgence-dropdown-btn" onclick="toggleUrgenceDropdown()">
+                                <span id="urgenceLabel">Choisissez un niveau</span>
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                     <polyline points="6 9 12 15 18 9" />
                                 </svg>
-                            <?php endif; ?>
-                        </button>
+                            </button>
 
-                        <input type="hidden" name="id_logiciel" id="id_logiciel"
-                            value="<?= $id_logiciel_preselectionne ?>"
-                            <?= !($_SESSION['is_admin'] ?? false) ? '' : 'required' ?>>
-
-                        <?php if ($_SESSION['is_admin'] ?? false) : ?>
-                            <div class="urgence-dropdown-menu" id="logicielMenu">
-                                <p class="urgence-dropdown-titre">CHOISIR LE LOGICIEL :</p>
+                            <div class="urgence-dropdown-menu" id="urgenceMenu">
+                                <p class="urgence-dropdown-titre">CHANGER LE NIVEAU D'URGENCE :</p>
                                 <ul>
-                                    <?php foreach (($liste_logiciels ?? []) as $log) : ?>
-                                        <li onclick="selectLogiciel(<?= $log['id_logiciel'] ?>, '<?= addslashes(htmlspecialchars($log['logiciel'])) ?>')">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2">
-                                                <rect x="2" y="3" width="20" height="14" rx="2" />
-                                                <path d="M8 21h8M12 17v4" />
-                                            </svg>
-                                            <span><?= htmlspecialchars($log['logiciel']) ?></span>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-
-                    <!-- Modal urgence (inchangé) -->
-                    <div id="modalUrgence" class="modal-urgence-overlay" onclick="fermerModalUrgence(event)">
-                        <div class="modal-urgence-content">
-                            <div class="modal-urgence-header">
-                                <h2>Détails des niveaux d'urgence</h2>
-                                <button type="button" class="modal-urgence-close" onclick="document.getElementById('modalUrgence').style.display='none'">&times;</button>
-                            </div>
-                            <div class="modal-urgence-body">
-                                <ul>
-                                    <li><strong>Bloquant / Très urgent :</strong> Je ne peux plus travailler : logiciel inaccessible...</li>
-                                    <li><strong>Urgent :</strong> Je peux encore travailler, mais un point important me bloque...</li>
-                                    <li><strong>Normal :</strong> Problème gênant mais contournable...</li>
-                                    <li><strong>Non urgent :</strong> Idée d'amélioration, modification souhaitée...</li>
+                                    <li onclick="selectUrgence('1', 'Bloquant / Très urgent', '#ef4444', 'Bloquant / Très urgent')">
+                                        <span class="urgence-dot" style="background:#ef4444;"></span>
+                                        <span>Bloquant / Très urgent</span>
+                                    </li>
+                                    <li onclick="selectUrgence('2', 'Urgent', '#f97316', 'Urgent')">
+                                        <span class="urgence-dot" style="background:#f97316;"></span>
+                                        <span>Urgent</span>
+                                    </li>
+                                    <li onclick="selectUrgence('3', 'Normal', '#3b82f6', 'Normal')">
+                                        <span class="urgence-dot" style="background:#3b82f6;"></span>
+                                        <span>Normal</span>
+                                    </li>
+                                    <li onclick="selectUrgence('4', 'Non urgent / Demande d\'évolution', '#22c55e', 'Non urgent / Demande d\'évolution')">
+                                        <span class="urgence-dot" style="background:#22c55e;"></span>
+                                        <span>Non urgent / Demande d'évolution</span>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                        <?php
+                        $id_logiciel_preselectionne = (int)($_POST['id_logiciel'] ?? $_SESSION['entreprise_selectionnee']['id_logiciel'] ?? 0);
+                        $logiciel_label = 'Choisissez un logiciel';
+                        $logiciel_couleur = '#64748b';
 
-                    <?php if ($_SESSION['is_admin'] ?? false) : ?>
-                        <button type="button" class="btn-modal-liste-entreprises" onclick="ouvrirModalListeEntreprises()">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
-                                <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
-                                <path d="M6 7h2M6 11h2M6 15h2" />
-                                <path d="M15 14h2M15 18h2" />
-                            </svg>Liste des entreprises
-                        </button>
-                    <?php endif; ?>
+                        foreach (($liste_logiciels ?? []) as $log) {
+                            if ((int)$log['id_logiciel'] === $id_logiciel_preselectionne) {
+                                $logiciel_label = htmlspecialchars($log['logiciel']);
+                                break;
+                            }
+                        }
+                        ?>
+
+                        <div class="urgence-dropdown" id="logicielDropdown">
+                            <button type="button"
+                                class="urgence-dropdown-btn logiciel-btn"
+                                <?= !($_SESSION['is_admin'] ?? false) ? 'disabled' : 'onclick="toggleLogicielDropdown()"' ?>
+                                style="background-color: #1a365d; <?= !($_SESSION['is_admin'] ?? false) ? 'opacity:0.75; cursor:not-allowed;' : '' ?>">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="3" width="20" height="14" rx="2" />
+                                        <path d="M8 21h8M12 17v4" />
+                                    </svg>
+                                    <span id="logicielLabel"><?= ($infos_client['logiciel'] ?? 'logiciel non renseigné') ?></span>
+                                </div>
+                                <?php if ($_SESSION['is_admin'] ?? false) : ?>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <polyline points="6 9 12 15 18 9" />
+                                    </svg>
+                                <?php endif; ?>
+                            </button>
+
+                            <input type="hidden" name="id_logiciel" id="id_logiciel"
+                                value="<?= $id_logiciel_preselectionne ?>"
+                                <?= !($_SESSION['is_admin'] ?? false) ? '' : 'required' ?>>
+
+                            <?php if ($_SESSION['is_admin'] ?? false) : ?>
+                                <div class="urgence-dropdown-menu" id="logicielMenu">
+                                    <p class="urgence-dropdown-titre">CHOISIR LE LOGICIEL :</p>
+                                    <ul>
+                                        <?php foreach (($liste_logiciels ?? []) as $log) : ?>
+                                            <li onclick="selectLogiciel(<?= $log['id_logiciel'] ?>, '<?= addslashes(htmlspecialchars($log['logiciel'])) ?>')">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2">
+                                                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                                                    <path d="M8 21h8M12 17v4" />
+                                                </svg>
+                                                <span><?= htmlspecialchars($log['logiciel']) ?></span>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Modal urgence (inchangé) -->
+                        <div id="modalUrgence" class="modal-urgence-overlay" onclick="fermerModalUrgence(event)">
+                            <div class="modal-urgence-content">
+                                <div class="modal-urgence-header">
+                                    <h2>Détails des niveaux d'urgence</h2>
+                                    <button type="button" class="modal-urgence-close" onclick="document.getElementById('modalUrgence').style.display='none'">&times;</button>
+                                </div>
+                                <div class="modal-urgence-body">
+                                    <ul>
+                                        <li><strong>Bloquant / Très urgent :</strong> Je ne peux plus travailler : logiciel inaccessible...</li>
+                                        <li><strong>Urgent :</strong> Je peux encore travailler, mais un point important me bloque...</li>
+                                        <li><strong>Normal :</strong> Problème gênant mais contournable...</li>
+                                        <li><strong>Non urgent :</strong> Idée d'amélioration, modification souhaitée...</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php if ($_SESSION['is_admin'] ?? false) : ?>
+                            <button type="button" class="btn-modal-liste-entreprises" onclick="ouvrirModalListeEntreprises()">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+                                    <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+                                    <path d="M6 7h2M6 11h2M6 15h2" />
+                                    <path d="M15 14h2M15 18h2" />
+                                </svg>Liste des entreprises
+                            </button>
+                        <?php endif; ?>
+                    </div>
                 </div>
 
                 <div class="formulaire-nouveau-ticket">
                     <form action="" method="POST" enctype="multipart/form-data" auth-form>
+                        <input type="hidden" name="niveau_urgence" id="niveau_urgence"
+                            value="<?= htmlspecialchars($_POST['niveau_urgence'] ?? '') ?>">
                         <?php if ($_SESSION['is_admin'] ?? false): ?>
                             <label for="nom_entreprise">Nom entreprise</label>
                             <input type="text" id="nom_entreprise" name="nom_entreprise" list="entreprises_suggestion" placeholder="Entrez le nom de l'entreprise" autocomplete="off" required

@@ -300,7 +300,7 @@ function toggleUrgenceDropdown() {
 function selectUrgence(valeur, label, couleur, labelBouton) {
     document.getElementById('niveau_urgence').value = valeur;
     document.getElementById('urgenceLabel').textContent = labelBouton;
-    document.querySelector('.urgence-dropdown-btn').style.backgroundColor = couleur;
+    document.querySelector('#urgenceDropdown .urgence-dropdown-btn').style.backgroundColor = couleur;
     document.getElementById('urgenceMenu').classList.remove('open');
 }
 
@@ -333,3 +333,4 @@ document.addEventListener('click', function(e) {
         if (menu) menu.classList.remove('open');
     }
 });
+
