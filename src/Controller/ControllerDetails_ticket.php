@@ -177,5 +177,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// 5. Chargement de la vue
+// Chargement de la vue
 require_once __DIR__ . '/../View/Details_ticket.php';

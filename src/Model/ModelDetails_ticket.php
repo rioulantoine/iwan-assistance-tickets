@@ -9,11 +9,12 @@ function get_ticket_par_numero($num_ticket)
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT t.*, s.libelle_statut, u.libelle_urgence, c.nom_entreprise, t.logiciel
+    $sql = "SELECT t.*, s.libelle_statut, u.libelle_urgence, c.nom_entreprise, l.logiciel
             FROM TICKETS t
             LEFT JOIN STATUT s ON t.id_statut = s.id_statut
             LEFT JOIN NIVEAU_URGENCE u ON t.id_urgence = u.id_urgence
             LEFT JOIN CLIENT c ON t.id_entreprise = c.id_client
+            LEFT JOIN LOGICIEL l ON t.id_logiciel = l.id_logiciel
             WHERE t.numero_ticket = ?";
 
     $stmt = $pdo->prepare($sql);
