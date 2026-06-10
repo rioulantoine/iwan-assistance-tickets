@@ -1,6 +1,6 @@
 <?php
 // ControllerLes_clients.php
-require_once __DIR__ . '/../Model/ModelLes_clients.php';
+require_once __DIR__ . '/../Model/ModelLes_Clients.php';
 
 // Logique de gestion de la section des entreprises et de sa pagination
 $recherche = trim($_GET['recherche'] ?? '');

@@ -65,7 +65,7 @@ switch ($page) {
             require __DIR__ . '/src/View/Templates/erreur.php'; // On lui montre une page d'erreur
             exit();
         }
-        require __DIR__ . '/src/Controller/ControllerLes_Cients.php';
+        require __DIR__ . '/src/Controller/ControllerLes_Clients.php';
         break;
 
     case 'nouveau_client':
