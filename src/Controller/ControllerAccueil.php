@@ -25,7 +25,12 @@ try {
     $nb_tickets_actif  = count_tickets($id_cible, [1, 2]);
     $nb_tickets_resolu = count_tickets($id_cible, 3);
     $nb_tickets_urgent = count_tickets($id_cible, null, [1, 2]);
-    $nb_suivis = count_suivis();
+
+    $suivis_urgences = get_nb_suivis_par_urgence_du_mois();
+    extract($suivis_urgences, EXTR_PREFIX_ALL, 'suivis');
+
+    // Optionnel : Si tu veux aussi le total global sans refaire de requête SQL
+    $nb_suivis_total = $suivis_bloquant + $suivis_urgent + $suivis_normal + $suivis_non_urgent;
 
     // Écarts mensuels - Tickets ACTIFS
     $actifs_ce_mois = count_tickets_mensuels('courante', $id_cible, [1, 2]);
@@ -48,7 +53,7 @@ try {
     // ==========================================================================
 
     // Récupération des compteurs depuis le modèle
-    $suivis_ce_mois       = count_suivis();
+    $suivis_ce_mois       = $nb_suivis_total;
     $suivis_mois_dernier  = count_suivis_mois_dernier();
 
     // Initialisation de la variable d'écart demandé

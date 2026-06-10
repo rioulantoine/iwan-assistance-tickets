@@ -161,6 +161,57 @@ main {
 }
 
 
+
+
+
+.suivis-liste-container h3 {
+    font-size: 12px;
+    font-weight: 800;
+    color: #0f2e48;
+    letter-spacing: 0.5px;
+    margin: 0 0 16px 0;
+}
+
+/* Ligne d'un élément */
+.suivi-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.suivi-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Pastilles de couleur */
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.dot-bloquant { background-color: #ef4444; }
+.dot-urgent   { background-color: #f97316; }
+.dot-normal   { background-color: #3b82f6; }
+.dot-demande  { background-color: #10b981; }
+
+.suivi-row .label {
+    color: #5c6f84;
+    margin-right: 6px;
+}
+
+.suivi-row .count {
+    color: #0f2e48;
+    font-weight: 700;
+}
+
+
+
+
 /* ==============================
             DASHBOARD TICKET
 ================================= */

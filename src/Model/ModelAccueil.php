@@ -81,18 +81,31 @@ function count_tickets($id_cible = 0, $statut = null, $id_urgence = null)
 /**
  * Compte les suivis ce mois-ci
  */
-function count_suivis()
+function get_nb_suivis_par_urgence_du_mois()
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT COUNT(id_ticket)
-        FROM TICKETS
-        WHERE type = 1
-        AND date_creation >= DATE_FORMAT(NOW(), '%Y-%m-01 00:00:00')
-        AND date_creation <= LAST_DAY(NOW()); ";
+    $sql = "SELECT 
+                SUM(CASE WHEN id_urgence = 1 THEN 1 ELSE 0 END) as bloquant,
+                SUM(CASE WHEN id_urgence = 2 THEN 1 ELSE 0 END) as urgent,
+                SUM(CASE WHEN id_urgence = 3 THEN 1 ELSE 0 END) as normal,
+                SUM(CASE WHEN id_urgence = 4 THEN 1 ELSE 0 END) as non_urgent
+            FROM TICKETS
+            WHERE type = 1
+            AND date_creation >= DATE_FORMAT(NOW(), '%Y-%m-01 00:00:00')
+            AND date_creation <= LAST_DAY(NOW())";
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
-    return (int)$stmt->fetchColumn();
+
+    $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return [
+        'bloquant'   => (int)($resultat['bloquant'] ?? 0),
+        'urgent'     => (int)($resultat['urgent'] ?? 0),
+        'normal'     => (int)($resultat['normal'] ?? 0),
+        'non_urgent' => (int)($resultat['non_urgent'] ?? 0)
+    ];
 }
 
 /**

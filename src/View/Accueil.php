@@ -222,42 +222,70 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                     </svg>
                 </div>
             </div>
-            <!-- Box Suivis tel -->
-            <div class="box">
-                <div class="box-header">
-                    <div class="box-badge">
+            <?php if ($_SESSION['is_admin'] ?? false): ?>
+                <!-- Box Suivis tel -->
+                <div class="box">
+                    <div class="box-header">
+                        <div class="box-badge">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                        </div>
+                        <h3>Suivis d'appels</h3>
+                    </div>
+                    <p class="box-desc">
+                        <?php if (($suivis_mois_dernier ?? 0) == 0 && $ecart_suivi == 0): ?>
+                            <span class="text-muted">Aucun échange enregistré récemment</span>
+
+                        <?php elseif ($ecart_suivi === 999): ?>
+                            <span class="text-primary">Reprise des contacts clients ce mois-ci</span>
+
+                        <?php elseif ($ecart_suivi > 0): ?>
+                            <span class="text-primary"><strong>+<?= htmlspecialchars($ecart_suivi) ?>%</strong> de contacts par rapport au mois dernier</span>
+
+                        <?php elseif ($ecart_suivi < 0): ?>
+                            <span class="text-warning">Baisse de <strong><?= htmlspecialchars(abs($ecart_suivi)) ?>%</strong> d'activité téléphonique</span>
+
+                        <?php else: ?>
+                            <span class="text-muted">Volume d'appels stable par rapport au mois dernier</span>
+                        <?php endif ?>
+                    </p>
+                    <div class="suivis-liste-container">
+                        <h3>SUIVIS DU MOIS :</h3>
+
+                        <div class="suivi-row">
+                            <span class="dot dot-bloquant"></span>
+                            <span class="label">Bloquants :</span>
+                            <span class="count"><?= ($suivis_bloquant ?? 0) ?></span>
+                        </div>
+
+                        <div class="suivi-row">
+                            <span class="dot dot-urgent"></span>
+                            <span class="label">Urgents :</span>
+                            <span class="count"><?= ($suivis_urgent ?? 0) ?></span>
+                        </div>
+
+                        <div class="suivi-row">
+                            <span class="dot dot-normal"></span>
+                            <span class="label">Normaux :</span>
+                            <span class="count"><?= ($suivis_normal ?? 0) ?></span>
+                        </div>
+
+                        <div class="suivi-row">
+                            <span class="dot dot-demande"></span>
+                            <span class="label">Demandes :</span>
+                            <span class="count"><?= ($suivis_non_urgent ?? 0) ?></span>
+                        </div>
+                    </div>
+                    <div
+                        class="box-watermark"
+                        style="transform: rotate(-15deg); right: -10px; bottom: -20px">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                         </svg>
                     </div>
-                    <h3>Suivis d'appels</h3>
                 </div>
-                <p class="box-desc">
-                    <?php if (($suivis_mois_dernier ?? 0) == 0 && $ecart_suivi == 0): ?>
-                        <span class="text-muted">Aucun échange enregistré récemment</span>
-
-                    <?php elseif ($ecart_suivi === 999): ?>
-                        <span class="text-primary">Reprise des contacts clients ce mois-ci</span>
-
-                    <?php elseif ($ecart_suivi > 0): ?>
-                        <span class="text-primary"><strong>+<?= htmlspecialchars($ecart_suivi) ?>%</strong> de contacts par rapport au mois dernier</span>
-
-                    <?php elseif ($ecart_suivi < 0): ?>
-                        <span class="text-warning">Baisse de <strong><?= htmlspecialchars(abs($ecart_suivi)) ?>%</strong> d'activité téléphonique</span>
-
-                    <?php else: ?>
-                        <span class="text-muted">Volume d'appels stable par rapport au mois dernier</span>
-                    <?php endif ?>
-                </p>
-                <div class="box-value"><?= htmlspecialchars($nb_suivis ?? 0) ?></div>
-                <div
-                    class="box-watermark"
-                    style="transform: rotate(-15deg); right: -10px; bottom: -20px">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                    </svg>
-                </div>
-            </div>
+            <?php endif; ?>
             <?php if ($montrer_taux ?? false): ?>
                 <div class="box">
                     <div class="box-header">
