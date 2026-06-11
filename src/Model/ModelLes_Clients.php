@@ -99,3 +99,31 @@ function get_liste_logiciels()
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+/**
+ * Supprimer un client en vérifiant qu'il n'a pas de ticket dans la bdd
+ */
+function supprimer_client_sans_ticket($id_client)
+{
+    $pdo = get_bdd();
+
+    // Requête SQL sécurisée : On ne supprime que SI l'id_client n'est pas présent dans la table TICKETS
+    $sql = "DELETE FROM CLIENT 
+            WHERE id_client = :id_client 
+            AND NOT EXISTS (
+                SELECT 1 FROM TICKETS WHERE id_entreprise = :id_client
+            )";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id_client', $id_client, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
+    } catch (PDOException $e) {
+
+        error_log("Erreur lors de la suppression du client : " . $e->getMessage());
+        return false;
+    }
+}

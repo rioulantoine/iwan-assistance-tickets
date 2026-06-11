@@ -17,7 +17,6 @@ $total_pages       = ceil($total_entreprises / $limite);
 $nb_entreprises    = count($liste_entreprises);
 
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'modifier_entreprise') {
 
     $id_client = trim($_POST['id_client'] ?? '');

@@ -11,7 +11,6 @@ function ouvrirModalEdition(bouton) {
     document.getElementById('edit_nom').value = bouton.getAttribute('data-nom');
     document.getElementById('edit_prenom').value = bouton.getAttribute('data-prenom');
     
-    // 🛠️ MISE À JOUR : On cible l'ID numérique pour pré-sélectionner l'option du <select>
     document.getElementById('edit_logiciel').value = bouton.getAttribute('data-id-logiciel');
     
     document.getElementById('edit_cp').value = bouton.getAttribute('data-cp');
@@ -20,6 +19,12 @@ function ouvrirModalEdition(bouton) {
     document.getElementById('edit_telephone').value = bouton.getAttribute('data-telephone');
     document.getElementById('edit_observation').value = bouton.getAttribute('data-observation');
     
+    // 🛠️ CORRECTION : On place la logique du lien ICI, à l'intérieur de la fonction
+    const id = bouton.getAttribute('data-id');
+    const lienSuppression = document.getElementById('lien_supprimer_client');
+    if (lienSuppression) {
+        lienSuppression.href = "index.php?page=supprimer_client&client=" + id;
+    }
 
     modal.style.display = 'flex';
 }
@@ -34,3 +39,4 @@ function fermerModalEdition(event) {
         modal.style.display = 'none';
     }
 }
+
