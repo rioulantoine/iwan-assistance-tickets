@@ -283,6 +283,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  padding-top:1px;
 }
 
 .ticket-header {
@@ -290,22 +291,55 @@ main {
     justify-content: space-between;
     align-items: flex-start;
     gap: 16px;
+    flex-wrap: nowrap;
 }
 
-.ticket-title-block {
-    display: flex;
-    align-items: flex-start; 
-    gap: 8px;
-}
 
 .ticket-title-text {
     display: flex;
-    flex-direction: column; 
     gap: 5px;
 }
 
-.ticket-title-text h3 {
-    margin: 0;
+/* ==========================================
+        AFFICHAGE NIVEAU D'URGENCE TICEKTS
+==============================================*/
+.badge-urgence {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; 
+    padding: 6px 14px; 
+    border-radius: 8px;
+    width: fit-content; 
+    font-size: 14px; 
+    font-weight: 700;
+}
+
+/* Urgence 1 : Bloquant / Très urgent */
+.urgence-1 {
+    background-color: #fee2e2; 
+    color: #dc2626;            
+    border: 1px solid #fca5a5;
+}
+
+/* Urgence 2 : Urgent */
+.urgence-2 {
+    background-color: #ffedd5; 
+    color: #ea580c;            
+    border: 1px solid #fed7aa;
+}
+
+/* Urgence 3 : Normal */
+.urgence-3 {
+    background-color: #e0f2fe; 
+    color: #0284c7;            
+    border: 1px solid #bae6fd;
+}
+
+/* Urgence 4 : Non urgent / Évolution */
+.urgence-4 {
+    background-color: #f0fdf4;
+    color: #4a5d78;            
+    border: 1px solid #e2e8f0;
 }
 
 .ticket-title-text h4 {
@@ -316,15 +350,15 @@ main {
 
 .ticket-header-right {
     display: flex;
-    flex-direction: column;  
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 8px;
+    flex-shrink: 0;
 }
-
 .ticket-author {
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-bottom:2%;
 }
 .ticket-footer {
   display: flex;
@@ -337,29 +371,92 @@ main {
   align-items: flex-start;
   gap: 10px;
 }
+.ticket-body {
+    display: flex;
+    align-items: flex-start;
+    margin-top: -1.5%;
+}
+.ticket-ligne-principale {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
 
-.status-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-top: 3px;
+.ticket-badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     flex-shrink: 0;
-    
 }
 
-.status-dot.red { 
-    background-color: #e53e3e; 
-}
-.status-dot.orange { 
-    background-color: #dd6b20; 
-}
-.status-dot.blue {
-    background-color:#3182ce;
-}
-.status-dot.green { 
-    background-color: #38a169;
+.ticket-titre {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f2e48;
+    white-space: nowrap;
 }
 
+.ticket-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.badge-statut-1 {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    background-color: #fff7ed;
+    color: #d97706;
+    border: 1px solid #fed7aa;
+}
+
+.badge-statut-2 {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    background-color: #eff6ff;
+    color: #3b82f6;
+    border: 1px solid #bfdbfe;
+}
+
+.badge-statut-3 {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    background-color: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+.badge-statut-archive {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    background-color: #f8fafc;
+    color: #718096;
+    border: 1px solid #e2e8f0;
+}
 .ticket-title-block h3 {
   margin: 0;
   font-size: 16px;
@@ -403,18 +500,33 @@ main {
     white-space: nowrap; 
 }
 
-.ticket-body h4 {
-  margin: 0 0 6px 0;
-  font-size: 15px;
-  font-weight: 600;
-  color: #0f2e48;
-}
+
 
 .ticket-body p {
   margin: 0;
   font-size: 13px;
   color: #94a3b8;
   line-height: 1.5;
+  overflow-wrap : break-word;
+  word-break:break-word;
+}
+.statut-et-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.ticket-date {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.btn-ouvrir {
+    /* gardez votre style existant, ajoutez si besoin : */
+    align-self: flex-end;
 }
 
 .ticket-footer {
@@ -423,10 +535,6 @@ main {
   margin-top: 4px;
 }
 
-.ticket-date {
-  font-size: 13px;
-  color: #94a3b8;
-}
 
 .ticket-link {
   font-size: 14px;

@@ -15,8 +15,11 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
     <main>
         <div class="tableau-de-bord">
             <div class="header-text">
-                <h1>Tableau de bord</h1>
-
+                <?php if ($_SESSION['is_admin'] ?? false) : ?>
+                    <h1>Tableau de bord</h1>
+                <?php else: ?>
+                    <h1>Tableau de bord de <strong><?= htmlspecialchars($nom_client ?? '') ?></strong></h1>
+                <?php endif; ?>
                 <?php if (isset($_SESSION['id_client'])): ?>
                     <p>
                         <?php if (($nb_tickets_actif ?? 0) > 15): ?>
@@ -327,14 +330,6 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
             <?php endif; ?>
         </div>
         <div class="container-tickets">
-            <?php if (isset($_SESSION['id_client'])): ?>
-                <p>
-                    Espace client :&nbsp;<strong><?= htmlspecialchars($nom_client ?? '') ?></strong> </p>
-
-            <?php endif ?>
-
-
-
             <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
                 <div class="dashboard-layout">
 
@@ -487,109 +482,94 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
 
                     <div class="ticket-list">
                         <div class="ticket-card">
-                            <div class="ticket-header">
-                                <div class="ticket-title-block">
-                                    <?php
-                                    if (($ticket['id_urgence'] ?? null) == 1) {
-                                        echo '<span class="status-dot red"></span>';
-                                    } elseif (($ticket['id_urgence'] ?? null) == 2) {
-                                        echo '<span class="status-dot orange"></span>';
-                                    } elseif (($ticket['id_urgence'] ?? null) == 3) {
-                                        echo '<span class="status-dot blue"></span>';
-                                    } else {
-                                        echo '<span class="status-dot green"></span>';
-                                    }
-                                    ?>
-                                    <div class="ticket-title-text">
-                                        <h3><?= htmlspecialchars($ticket['libelle_urgence']) . " #" . htmlspecialchars($ticket['numero_ticket']) ?></h3>
-                                        <h4><?= htmlspecialchars($ticket['titre']) ?></h4>
-                                        <div class="nom-entreprise">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
 
-                                                <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+                            <div class="ticket-ligne-principale">
 
-                                                <path d="M6 7h2M6 11h2M6 15h2" />
+                                <div class="ticket-badges">
+                                    <h4 class="ticket-titre"><?= htmlspecialchars($ticket['titre']) ?></h4>
 
-                                                <path d="M15 14h2M15 18h2" />
-                                            </svg>
-                                            <p> <?= htmlspecialchars($ticket['nom_entreprise']) ?></p>
+                                    <h3 class="badge-urgence urgence-<?= (int)($ticket['id_urgence'] ?? 3) ?>">
+                                        <?= htmlspecialchars($ticket['libelle_urgence']) ?>
+                                    </h3>
 
-                                        </div>
+                                    <div class="nom-entreprise">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+                                            <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+                                            <path d="M6 7h2M6 11h2M6 15h2" />
+                                            <path d="M15 14h2M15 18h2" />
+                                        </svg>
+                                        <p><?= htmlspecialchars($ticket['nom_entreprise']) ?></p>
                                     </div>
-                                </div>
 
-                                <div class="ticket-header-right">
-                                    <div class="ticket-author">
-                                        <div class="avatar-placeholder">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#64748b" xmlns="http://www.w3.org/2000/svg">
+                                    <?php if ($ticket['declarant_nom']): ?>
+                                        <div class="nom-entreprise">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#4a5d78">
                                                 <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5Z" />
                                                 <path d="M12 14c-4.42 0-8 2.58-8 6v2h16v-2c0-3.42-3.58-6-8-6Z" />
                                             </svg>
+                                            <p><?= htmlspecialchars($ticket['declarant_nom']) . " " . htmlspecialchars($ticket['declarant_prenom']) ?></p>
                                         </div>
-                                        <span><?= htmlspecialchars($ticket['declarant_nom']) . " " . htmlspecialchars($ticket['declarant_prenom']) ?></span>
-                                    </div>
-                                    <div class="statut-badge">
-                                        <?php if (($ticket['id_statut'] ?? null) == 1) : ?>
-                                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="181" height="35" rx="4" fill="#d97706" />
-                                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">En attente</text>
-                                            </svg>
-                                        <?php elseif (($ticket['id_statut'] ?? null) == 2) : ?>
-                                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="181" height="35" rx="4" fill="#7FAAD4" />
-                                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">En cours</text>
-                                            </svg>
-                                        <?php elseif (($ticket['id_statut'] ?? null) == 3) : ?>
-                                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="181" height="35" rx="4" fill="#38a169" />
-                                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Résolu</text>
-                                            </svg>
+                                    <?php endif; ?>
+
+                                    <?php
+                                    $statut_id = $ticket['id_statut'] ?? null;
+                                    $statut_labels = [1 => 'En attente', 2 => 'En cours', 3 => 'Résolu'];
+                                    $label = $statut_labels[$statut_id] ?? 'Archivé';
+                                    $statut_class = match ($statut_id) {
+                                        1 => 'badge-statut-1',
+                                        2 => 'badge-statut-2',
+                                        3 => 'badge-statut-3',
+                                        default => 'badge-statut-archive'
+                                    };
+                                    ?>
+                                    <span class="<?= $statut_class ?>"><?= $label ?></span>
+                                </div>
+
+                                <div class="ticket-actions">
+                                    <?php
+                                    $date_creation = (new DateTime($ticket['date_creation']))->format('d/m/y à H:i');
+                                    $date_maj = !empty($ticket['date_maj']) ? (new DateTime($ticket['date_maj']))->format('d/m/Y à H:i') : null;
+                                    ?>
+                                    <?php if ($_SESSION['is_admin'] ?? false): ?>
+                                        <span class="ticket-date"><?= $date_creation ?></span>
+                                    <?php else : ?>
+                                        <?php if ($ticket['derniere_action'] === "Ticket créé"): ?>
+                                            <span class="ticket-date"><?= htmlspecialchars($ticket['derniere_action']) ?> le <?= htmlspecialchars($ticket['date_creation']) ?></span>
                                         <?php else : ?>
-                                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="181" height="35" rx="4" fill="#718096" />
-                                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Archivé</text>
-                                            </svg>
-                                        <?php endif; ?>
-                                    </div>
+                                            <span class="ticket-date">Mis à jour le <?= $date_maj ?> : <?= $ticket['derniere_action'] ?? "" ?></span>
+                                        <?php endif ?>
+                                    <?php endif ?>
+
+                                    <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir">Ouvrir le ticket</a>
                                 </div>
                             </div>
 
                             <div class="ticket-body">
-
-                                <p>
-                                    <?= htmlspecialchars(
-                                        mb_strlen($ticket['description'], 'UTF-8') > 600
-
-                                            ? mb_substr($ticket['description'], 0, 600, 'UTF-8') . '...'
-
-                                            : $ticket['description']
-
-                                    ) ?>
+                                <p dir="ltr">
+                                    <?php
+                                    $texte = $ticket['description'];
+                                    if (mb_strlen($texte, 'UTF-8') > 300) {
+                                        $coupe = mb_substr($texte, 0, 300, 'UTF-8');
+                                        $pos = mb_strrpos($coupe, ' ', 0, 'UTF-8');
+                                        if ($pos !== false && $pos > 0) {
+                                            $coupe = mb_substr($coupe, 0, $pos, 'UTF-8');
+                                        }
+                                        echo htmlspecialchars($coupe) . '...';
+                                    } else {
+                                        echo htmlspecialchars($texte);
+                                    }
+                                    ?>
                                 </p>
                             </div>
-                            <?php $date_creation = (new DateTime($ticket['date_creation']))->format('d/m/y à H:i'); ?>
-                            <?php
-                            $date_maj = !empty($ticket['date_maj'])
-                                ? (new DateTime($ticket['date_maj']))->format('d/m/Y à H:i')
-                                : null;
-                            ?>
-                            <div class="ticket-footer">
-                                <?php if ($_SESSION['is_admin'] ?? false): ?>
-                                    <span class="ticket-date"><?= $date_creation ?></span>
-                                <?php else : ?>
-                                    <?php if ($ticket['derniere_action'] === "Ticket créé"): ?>
-                                        <span class="ticket-date"><?= htmlspecialchars($ticket['derniere_action']) ?? "" ?> le <?= htmlspecialchars($ticket['date_creation'])  ?></span>
-                                    <?php else : ?>
-                                        <span class="ticket-date"> Mis à jour le <?= $date_maj ?> : <?= $ticket['derniere_action'] ?? "" ?></span>
-                                    <?php endif ?>
-                                <?php endif ?>
-                                <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir"> Ouvrir le ticket </a>
-                            </div>
+
                         </div>
+                    <?php endforeach ?>
                     </div>
-                <?php endforeach ?>
             </div>
+        </div>
+
+        </div>
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

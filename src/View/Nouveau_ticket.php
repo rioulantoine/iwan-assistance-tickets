@@ -450,7 +450,7 @@
                             </div>
                             <div class="groupe-input">
                                 <label for="telephone">Numéro de téléphone</label>
-                                <input type="tel" maxlength="50" id="telephone" name="telephone" placeholder="Entrez votre numéro de téléphone" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
+                                <input type="tel" maxlength="40" id="telephone" name="telephone" placeholder="Entrez votre numéro de téléphone" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
                                     value="<?= htmlspecialchars($_POST['telephone'] ?? $_SESSION['entreprise_selectionnee']['telephone'] ?? $infos_client['telephone'] ?? '') ?>" />
                             </div>
                         </div>
