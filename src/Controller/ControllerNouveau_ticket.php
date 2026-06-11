@@ -65,14 +65,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $prenom_declarant = trim($_POST['prenom'] ?? '');
         $email = trim($_POST['email'] ?? '');
         $telephone = trim($_POST['telephone'] ?? '');
-        $id_logiciel = trim($_POST['id_logiciel']);
+        $id_logiciel = $_POST['id_logiciel'];
         $logiciel = trim($_POST['logiciel']);
         $niveau_urgence = trim($_POST['niveau_urgence'] ?? '');
         $titre = trim($_POST['titre'] ?? '');
         $description = trim($_POST['description'] ?? '');
         $erreurs = [];
 
-
+        if ($id_logiciel === '') {
+            $id_logiciel = null;
+        }
         if (empty($nom_declarant) && !($_SESSION['is_admin'] ?? false)) $erreurs[] = "Le nom est obligatoire.";
         if (empty($prenom_declarant) && !($_SESSION['is_admin'] ?? false)) $erreurs[] = "Le prénom est obligatoire.";
         if (empty($email) && !($_SESSION['is_admin'] ?? false)) {
