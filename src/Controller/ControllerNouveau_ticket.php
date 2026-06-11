@@ -6,7 +6,7 @@ require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
 // 1. INTERCEPTION DE LA CRÉATION RAPIDE (AJAX MODALE) - PRIORITÉ HAUTE
 // ==========================================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_creation_rapide'])) {
-    require_once __DIR__ . '/../Model/ModelNouveau_client.php';
+    require_once __DIR__ . '/../Model/ModelNouveau_Client.php';
 
     $id_client      = trim($_POST['id_client'] ?? '');
     $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
