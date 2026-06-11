@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telephone      = trim($_POST['telephone'] ?? '');
     $observation    = trim($_POST['observation'] ?? '');
 
-    // 🛠️ FIX LIGNE 21 : Évite le Warning "Undefined array key" si aucun logiciel n'est sélectionné
-    $logiciel       = !empty($_POST['id_logiciel']) ? $_POST['id_logiciel'] : null;
+    // Évite le Warning "Undefined array key" si aucun logiciel n'est sélectionné
+    $logiciel = !empty($_POST['id_logiciel']) ? $_POST['id_logiciel'] : null;
 
     $erreurs = [];
 
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreurs[] = "L'email n'est pas valide.";
     }
 
-    // 🛠️ FIX LOGIQUE : On ne vérifie l'unicité de l'ID en BDD QUE si l'utilisateur a bien saisi quelque chose
+    // On ne vérifie l'unicité de l'ID en BDD QUE si l'utilisateur a bien saisi quelque chose
     if (!empty($id_client)) {
         $id_existant = verifier_id($id_client);
         if ($id_existant) {
@@ -72,10 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $logiciel,
             $observation
         );
-
-        $_SESSION['flash_message'] = "Le nouveau client a été créé avec succès.";
-        $_SESSION['flash_type']    = "success";
-
         header("Location: index.php?page=accueil");
         exit();
     }
