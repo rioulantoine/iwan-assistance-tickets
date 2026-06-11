@@ -7,7 +7,7 @@
         </div>
         <div class="footer-col">
             <h4>Nous contacter</h4>
-            <p>support@iwan.fr</p>
+            <p>contact@iwan.fr</p>
             <p>02.40.28.86.38</p>
         </div>
     </div>
