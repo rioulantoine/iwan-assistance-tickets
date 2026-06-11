@@ -111,15 +111,15 @@
                                                 class="btn-selectionner-entreprise"
                                                 onclick="attribuerEntrepriseAuTicket({
                                                         id_client: '<?= htmlspecialchars($entreprise['id_client'] ?? '') ?>',
-                                                        nom_entreprise: '<?= htmlspecialchars($entreprise['nom_entreprise'] ?? '', ENT_QUOTES) ?>',
-                                                        nom: '<?= htmlspecialchars($entreprise['nom'] ?? '', ENT_QUOTES) ?>',
-                                                        prenom: '<?= htmlspecialchars($entreprise['prenom'] ?? '', ENT_QUOTES) ?>',
-                                                        email: '<?= htmlspecialchars($entreprise['email'] ?? '', ENT_QUOTES) ?>',
-                                                        telephone: '<?= htmlspecialchars($entreprise['telephone'] ?? '', ENT_QUOTES) ?>',
-                                                        ville: '<?= htmlspecialchars($entreprise['ville'] ?? '', ENT_QUOTES) ?>',
+                                                        nom_entreprise: '<?= htmlspecialchars(addslashes($entreprise['nom_entreprise'] ?? '')) ?>',
+                                                        nom: '<?= htmlspecialchars(addslashes($entreprise['nom'] ?? '')) ?>',
+                                                        prenom: '<?= htmlspecialchars(addslashes($entreprise['prenom'] ?? '')) ?>',                                        
+                                                        email: '<?= htmlspecialchars($entreprise['email'] ?? '') ?>',
+                                                        telephone: '<?= htmlspecialchars($entreprise['telephone'] ?? '') ?>',
+                                                        ville: '<?= htmlspecialchars(addslashes($entreprise['ville'] ?? '')) ?>',
                                                         code_postal: '<?= htmlspecialchars($entreprise['cp'] ?? '') ?>',
                                                         id_logiciel: '<?= htmlspecialchars($entreprise['id_logiciel'] ?? '') ?>',
-                                                        logiciel: '<?= htmlspecialchars($entreprise['logiciel'] ?? '', ENT_QUOTES) ?>'
+                                                        logiciel: '<?= htmlspecialchars(addslashes($entreprise['logiciel'] ?? '')) ?>'
                                                     })">
                                                 Sélectionner
                                             </button>
