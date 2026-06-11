@@ -22,6 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_statut      = trim($_POST['code_statut'] ?? '');
         $notes          = trim($_POST['description'] ?? '');
 
+        if ($id_logiciel === '') {
+            $id_logiciel = null;
+        }
         $erreurs = [];
 
         // ---- Vérifications des champs (Correction de $erreur en $erreurs) ----
@@ -38,43 +41,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $erreurs[] = "La date du suivi est obligatoire.";
         }
 
-        if (empty($id_logiciel)) {
-            $erreurs[] = "Le logiciel est obligatoire.";
-        }
-
         if (empty($type_suivi)) {
             $erreurs[] = "Le type de suivi est obligatoire.";
         }
 
-        if (empty($nom_contact)) {
-            $erreurs[] = "Le nom du contact est obligatoire.";
-        }
-
-        if (empty($prenom_contact)) {
-            $erreurs[] = "Le prénom du contact est obligatoire.";
-        }
-
-        if (empty($email)) {
-            $erreurs[] = "L'email est obligatoire.";
-        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $erreurs[] = "L'email n'est pas valide.";
         }
-
-        if (empty($telephone)) {
-            $erreurs[] = "Le téléphone est obligatoire.";
-        } elseif (strlen($telephone) > 50) {
+        if (strlen($telephone) > 50) {
             $erreurs[] = "Le numéro de téléphone est trop long.";
         }
 
-        if (empty($titre)) {
-            $erreurs[] = "Le titre est obligatoire.";
-        } elseif (strlen($titre) > 255) {
+        if (strlen($titre) > 255) {
             $erreurs[] = "Le titre est trop long.";
         }
 
-        if (empty($notes)) {
-            $erreurs[] = "La description est obligatoire.";
-        }
 
         // ---- Insertion ou affichage des erreurs ----
         if (!empty($erreurs)) {

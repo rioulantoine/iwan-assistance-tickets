@@ -417,7 +417,7 @@
                             </div>
                             <div class="groupe-input">
                                 <label for="logiciel">Logiciel concerné</label>
-                                <select id="logiciel" name="id_logiciel" required>
+                                <select id="logiciel" name="id_logiciel">
                                     <?php
                                     $id_logiciel_preselectionne = (int)($_POST['id_logiciel'] ?? $_SESSION['entreprise_selectionnee']['id_logiciel'] ?? 0);
                                     ?>
@@ -435,11 +435,11 @@
                         <div class="ligne-double">
                             <div class="groupe-input">
                                 <label for="suivi_nom">Nom de l'interlocuteur</label>
-                                <input type="text" id="suivi_nom" name="nom_contact" placeholder="Nom de la personne au téléphone" required value="<?= htmlspecialchars($_SESSION['entreprise_selectionnee']['nom'] ?? '') ?>" />
+                                <input type="text" id="suivi_nom" name="nom_contact" placeholder="Nom de la personne au téléphone" value="<?= htmlspecialchars($_SESSION['entreprise_selectionnee']['nom'] ?? '') ?>" />
                             </div>
                             <div class="groupe-input">
                                 <label for="suivi_prenom">Prénom de l'interlocuteur</label>
-                                <input type="text" id="suivi_prenom" name="prenom_contact" placeholder="Prénom de la personne au téléphone" required value="<?= htmlspecialchars($_SESSION['entreprise_selectionnee']['prenom'] ?? '') ?>" />
+                                <input type="text" id="suivi_prenom" name="prenom_contact" placeholder="Prénom de la personne au téléphone" value="<?= htmlspecialchars($_SESSION['entreprise_selectionnee']['prenom'] ?? '') ?>" />
                             </div>
                         </div>
                         <div class="ligne-double">
@@ -498,7 +498,7 @@
 
                         <div class="detail-ticket">
                             <label for="suivi_description">Notes</label>
-                            <textarea id="suivi_description" name="description" placeholder="Saisissez ici le résumé complet de la conversation, les consignes laissées ou les actions à mener..." required></textarea>
+                            <textarea id="suivi_description" name="description" placeholder="Saisissez ici le résumé complet de la conversation, les consignes laissées ou les actions à mener..."></textarea>
                         </div>
 
                         <button type="submit" class="btn-submit" name="nouveau-suivi">Enregistrer le suivi d'appel</button>
