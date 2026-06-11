@@ -10,45 +10,56 @@ require_once __DIR__ . '/../Model/ModelNouveau_Client.php';
 $liste_logiciels = get_liste_logiciels_nouveau_client();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_client = trim($_POST['id_client'] ?? '');
+    // Récupération et nettoyage des données POST
+    $id_client      = trim($_POST['id_client'] ?? '');
     $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
-    $code_postal = trim($_POST['cp'] ?? '');
-    $ville = trim($_POST['ville'] ?? '');
-    $nom = trim($_POST['nom'] ?? '');
-    $prenom = trim($_POST['prenom'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $telephone = trim($_POST['telephone'] ?? '');
-    $logiciel = $_POST['id_logiciel'];
-    $observation = trim($_POST['observation'] ?? '');
+    $code_postal    = trim($_POST['cp'] ?? '');
+    $ville          = trim($_POST['ville'] ?? '');
+    $nom            = trim($_POST['nom'] ?? '');
+    $prenom         = trim($_POST['prenom'] ?? '');
+    $email          = trim($_POST['email'] ?? '');
+    $telephone      = trim($_POST['telephone'] ?? '');
+    $observation    = trim($_POST['observation'] ?? '');
+
+    // 🛠️ FIX LIGNE 21 : Évite le Warning "Undefined array key" si aucun logiciel n'est sélectionné
+    $logiciel       = !empty($_POST['id_logiciel']) ? $_POST['id_logiciel'] : null;
 
     $erreurs = [];
 
-    // Vérification id client
+    // Vérification de l'ID client
     if (empty($id_client)) {
-        $erreurs[] = "L'id client est obligatoire";
+        $erreurs[] = "L'id client est obligatoire.";
     }
-    // Vérification nom entreprise
+
+    // Vérification du nom de l'entreprise
     if (empty($nom_entreprise)) {
         $erreurs[] = "Le nom de l'entreprise est obligatoire.";
     }
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)  && !($_SESSION['is_admin'] ?? false)) {
+    // Validation du format d'email
+    if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL) && !($_SESSION['is_admin'] ?? false)) {
         $erreurs[] = "L'email n'est pas valide.";
     }
 
-
-    if (!empty($erreurs)) {
-        $_SESSION['flash_message'] = implode('<br>', $erreurs);
-        $_SESSION['flash_type'] = 'error';
+    // 🛠️ FIX LOGIQUE : On ne vérifie l'unicité de l'ID en BDD QUE si l'utilisateur a bien saisi quelque chose
+    if (!empty($id_client)) {
+        $id_existant = verifier_id($id_client);
+        if ($id_existant) {
+            $erreurs[] = "L'id client existe déjà pour l'entreprise : " . htmlspecialchars($id_existant);
+        }
     }
-    $id_existant = verifier_id($id_client);
-    if ($id_existant) {
-        $_SESSION['flash_message'] = "L'id client existe déjà pour l'entreprise : $id_existant";
-        $_SESSION['flash_type'] = 'error';
+
+    // ---- Traitement des erreurs ou Insertion ----
+    if (!empty($erreurs)) {
+        // Centralisation de toutes les erreurs dans un seul message Flash
+        $_SESSION['flash_message'] = implode('<br>', $erreurs);
+        $_SESSION['flash_type']    = 'error';
+
+        // Redirection vers le formulaire pour afficher les erreurs proprement
         header("Location: index.php?page=nouveau_client");
         exit();
-    }
-    if (empty($erreurs)) {
+    } else {
+        // Si aucune erreur, on insère en base de données
         inserer_nouveau_client(
             $id_client,
             $nom_entreprise,
@@ -61,19 +72,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $logiciel,
             $observation
         );
+
+        $_SESSION['flash_message'] = "Le nouveau client a été créé avec succès.";
+        $_SESSION['flash_type']    = "success";
+
         header("Location: index.php?page=accueil");
         exit();
     }
 }
 
-
-
-
-
-
-
-
-
-
-
+// Chargement de la vue
 require_once __DIR__ . '/../View/Nouveau_client.php';
