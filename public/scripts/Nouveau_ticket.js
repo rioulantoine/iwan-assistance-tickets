@@ -1,17 +1,24 @@
+/**
+ * ==========================================================================
+ * IWAN ASSISTANCE TICKETS - CONFIGURATION & VARIABLES GLOBALES
+ * ==========================================================================
+ */
+
+// Tableau stockant temporairement les instances d'objets File téléversés
 let allFiles = [];
 
-// Définition de la taille maximale par fichier (5 Mo = 5 * 1024 * 1024 octets)
+// Taille maximale par fichier (5 Mo = 5 * 1024 * 1024 octets)
 const MAX_FILE_SIZE = 5 * 1024 * 1024; 
 
 /**
- * Génère un SVG épuré adapté au type de fichier
- * @param {string} nomFichier - Le nom complet du fichier
- * @return {string} Le code HTML du SVG
+ * Génère un bloc SVG vectoriel coloré adapté selon l'extension du fichier joint.
+ * @param {string} nomFichier - Nom complet du fichier (ex: document.pdf)
+ * @return {string} Chaîne de caractères contenant le balisage HTML du SVG
  */
 function obtenirSvgParExtension(nomFichier) {
     const extension = nomFichier.split('.').pop().toLowerCase();
 
-    // Palette de couleurs 
+    // Palette de couleurs unifiée pour l'identité visuelle des types de documents
     const couleurs = {
         pdf: '#E44D26',    
         image: '#2AA9E0',  
@@ -21,7 +28,7 @@ function obtenirSvgParExtension(nomFichier) {
         default: '#7F8C8D'  
     };
 
-    // PDF
+    // Format PDF
     if (extension === 'pdf') {
         return `
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,8 +37,8 @@ function obtenirSvgParExtension(nomFichier) {
         </svg>`;
     }
 
-    // IMAGES
-    if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp','heic'].includes(extension)) {
+    // Formats Images standards
+    if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'heic'].includes(extension)) {
         return `
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="32" height="32" rx="6" fill="${couleurs.image}"/>
@@ -40,7 +47,7 @@ function obtenirSvgParExtension(nomFichier) {
         </svg>`;
     }
 
-    // DOCUMENTS WORD
+    // Traitements de texte (Microsoft Word)
     if (['doc', 'docx'].includes(extension)) {
         return `
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +56,7 @@ function obtenirSvgParExtension(nomFichier) {
         </svg>`;
     }
 
-    // FEUILLES EXCEL / SPREADSHEETS
+    // Tableurs (Microsoft Excel / Données CSV)
     if (['xls', 'xlsx', 'csv'].includes(extension)) {
         return `
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -58,7 +65,7 @@ function obtenirSvgParExtension(nomFichier) {
         </svg>`;
     }
 
-    // ARCHIVES COMPRESSÉES
+    // Archives et paquets compressés
     if (['zip', 'rar', '7z'].includes(extension)) {
         return `
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -67,7 +74,7 @@ function obtenirSvgParExtension(nomFichier) {
         </svg>`;
     }
 
-    // SQUELETTE PAR DÉFAUT
+    // Icône générique de secours
     return `
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="32" height="32" rx="6" fill="${couleurs.default}"/>
@@ -75,9 +82,12 @@ function obtenirSvgParExtension(nomFichier) {
     </svg>`;
 }
 
-// ==========================================================================
-// GESTION DYNAMIQUE DES FICHIERS JOINTS
-// ==========================================================================
+/**
+ * ==========================================================================
+ * GESTION DYNAMIQUE DES FICHIERS JOINTS (UPLOAD DRAG/DROP & INPUT)
+ * ==========================================================================
+ */
+
 document.addEventListener("DOMContentLoaded", function() {
     const fileInput = document.getElementById("fichier");
     if (fileInput) {
@@ -85,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const newFiles = Array.from(e.target.files);
             
             newFiles.forEach(file => {
+                // Validation de sécurité sur la taille maximale par fichier
                 if (file.size > MAX_FILE_SIZE) {
                     alert(`Le fichier "${file.name}" est trop gros ! La taille maximale autorisée est de 5 Mo.`);
                 } else {
@@ -96,30 +107,37 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // Délégation d'événement pour le bouton de suppression adaptatif des aperçus
     const listConteneur = document.getElementById("liste-fichiers");
     if (listConteneur) {
         listConteneur.addEventListener("click", function(e) {
             const removeBtn = e.target.closest(".remove-file");
             if (removeBtn) {
                 const indexToRemove = parseInt(removeBtn.getAttribute("data-index"));
-                allFiles.splice(indexToRemove, 1);
+                allFiles.splice(indexToRemove, 1); // Retrait de l'élément du tableau global
                 syncInputAndRender();
             }
         });
     }
 });
 
+/**
+ * Synchronise l'état du tableau JS vers l'élément natif input de type file 
+ * et génère dynamiquement les composants visuels d'aperçus.
+ */
 function syncInputAndRender() {
     const listConteneur = document.getElementById("liste-fichiers");
     const fileInput = document.getElementById("fichier");
     if (!listConteneur || !fileInput) return;
 
+    // Utilisation de l'API DataTransfer pour réinjecter la collection de fichiers filtrée
     const dataTransfer = new DataTransfer();
     allFiles.forEach((file) => dataTransfer.items.add(file));
     fileInput.files = dataTransfer.files;
 
     listConteneur.innerHTML = "";
 
+    // Injection dynamique des cartes de prévisualisation dans le DOM
     allFiles.forEach((file, index) => {
         const item = document.createElement("div");
         item.className = "file-item-card";
@@ -140,9 +158,13 @@ function syncInputAndRender() {
     });
 }
 
-// ==========================================================================
-// GESTION DE LA MODALE URGENCE
-// ==========================================================================
+/**
+ * ==========================================================================
+ * GESTION DES AFFICHAGES DES FENÊTRES MODALES (INTERFACE ADMINISTRATEUR)
+ * ==========================================================================
+ */
+
+/* --- Modale Légendes / Niveaux d'urgence --- */
 function ouvrirModalUrgence() {
     const modal = document.getElementById('modalUrgence');
     if (modal) modal.style.display = 'flex';
@@ -155,15 +177,14 @@ function fermerModalUrgence(event) {
     }
 }
 
-// ==========================================================================
-// GESTION DE LA MODALE LISTE DES ENTREPRISES
-// ==========================================================================
+/* --- Modale Liste globale des Entreprises enregistrées --- */
 function ouvrirModalListeEntreprises(){
     const modal = document.getElementById('modalListeEntreprises');
     if (!modal) return;
     
     modal.style.display = 'flex';
 
+    // Focus automatique adaptatif sur la recherche avec positionnement du curseur à la fin
     const inputRecherche = modal.querySelector('.search-wrapper input[name="recherche"]');
     if (inputRecherche) {
         setTimeout(() => {
@@ -182,147 +203,7 @@ function fermerModalListeEntreprises(event){
     }
 }
 
-// ==========================================================================
-// REDIMENSIONNEMENT DES TEXTAREAS (TICKET & SUIVI)
-// ==========================================================================
-function ajusterHauteurTextarea(el) {
-    el.style.height = 'auto';
-    el.style.height = el.scrollHeight + 'px';
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    const zonesTexte = document.querySelectorAll('textarea');
-
-    zonesTexte.forEach(textarea => {
-        textarea.addEventListener('input', function() {
-            ajusterHauteurTextarea(this);
-        });
-        ajusterHauteurTextarea(textarea);
-    });
-});
-
-// ==========================================================================
-// LE DOUBLE ENTRÉE MAGIQUE : FILTRE PUIS SÉLECTIONNE IMMÉDIATEMENT
-// ==========================================================================
-document.addEventListener("DOMContentLoaded", function() {
-    const modal = document.getElementById('modalListeEntreprises');
-    if (!modal) return;
-
-    const inputRecherche = modal.querySelector('.search-wrapper input[name="recherche"]');
-    
-    if (inputRecherche) {
-        inputRecherche.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                const lignes = modal.querySelectorAll('.table-liste-entreprises tbody tr');
-                
-                if (lignes.length === 1 && !lignes[0].querySelector('.pas-entreprise')) {
-                    const btnSelectionner = lignes[0].querySelector('.btn-selectionner-entreprise');
-                    
-                    if (btnSelectionner) {
-                        event.preventDefault(); 
-                        modal.style.display = 'none'; 
-                        btnSelectionner.click(); 
-                    }
-                }
-            }
-        });
-    }
-    
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('ouvrir_modal') === '1') {
-        ouvrirModalListeEntreprises();
-    }
-});
-
-
-// ==========================================================================
-// REMISE À ZÉRO STRATÉGIQUE DES FORMULAIRES AU CHARGEMENT / RETOUR DE PAGE
-// ==========================================================================
-window.addEventListener('pageshow', function(event) {
-    const formTicket = document.querySelector('.formulaire-nouveau-ticket form');
-    const formSuivi = document.querySelector('.formulaire-nouveau-suivi form');
-    const urlParams = new URLSearchParams(window.location.search);
-
-    // Si on a l'indicateur selection=1 ou ouvrir_modal=1 dans l'URL, on ne vide rien
-    if (urlParams.get('selection') === '1' || urlParams.get('ouvrir_modal') === '1') {
-        
-        // 🌟 CORRECTION : Utilisation de scrollIntoView sur le bouton ou le formulaire
-        if (urlParams.get('selection') === '1' && urlParams.get('tab') === 'suivi') {
-            setTimeout(() => {
-                // On cherche le bouton de soumission du suivi ou le bas du formulaire
-                const btnSubmitSuivi = document.querySelector('.formulaire-nouveau-suivi .btn-submit');
-                
-                if (btnSubmitSuivi) {
-                    btnSubmitSuivi.scrollIntoView({
-                        behavior: 'smooth', // Défilement fluide
-                        block: 'end'        // Aligne le bas de l'élément avec le bas de l'écran
-                    });
-                } else if (formSuivi) {
-                    // Repli de secours sur le formulaire entier si le bouton n'est pas trouvé
-                    formSuivi.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                }
-            }, 50); // Léger délai (50ms) pour laisser le temps au CSS/DOM de s'installer
-        }
-        
-        return; // Bloque la remise à zéro des formulaires
-    }
-
-    if (formTicket) formTicket.reset();
-    if (formSuivi) formSuivi.reset();
-});
-
-
-
-
-
-function toggleUrgenceDropdown() {
-    document.getElementById('urgenceMenu').classList.toggle('open');
-}
-
-function selectUrgence(valeur, label, couleur, labelBouton) {
-    document.getElementById('niveau_urgence').value = valeur;
-    document.getElementById('urgenceLabel').textContent = labelBouton;
-    document.querySelector('#urgenceDropdown .urgence-dropdown-btn').style.backgroundColor = couleur;
-    document.getElementById('urgenceMenu').classList.remove('open');
-}
-
-// Fermer le dropdown si on clique ailleurs
-document.addEventListener('click', function(e) {
-    const dropdown = document.getElementById('urgenceDropdown');
-    if (dropdown && !dropdown.contains(e.target)) {
-        document.getElementById('urgenceMenu').classList.remove('open');
-    }
-});
-
-
-
-
-function toggleLogicielDropdown() {
-    document.getElementById('logicielMenu').classList.toggle('open');
-}
-
-function selectLogiciel(id, nom) {
-    document.getElementById('id_logiciel_form').value = id;
-    document.getElementById('logiciel_form').value = nom;
-
-    document.getElementById('logicielLabel').innerText = nom;
-}
-// Fermer aussi le dropdown logiciel si clic ailleurs
-document.addEventListener('click', function(e) {
-    const dropdown = document.getElementById('logicielDropdown');
-    if (dropdown && !dropdown.contains(e.target)) {
-        const menu = document.getElementById('logicielMenu');
-        if (menu) menu.classList.remove('open');
-    }
-});
-
-
-
-
-/** ============================================================
- *                CREATION NOUVEAU CLIENT 
- *  ============================================================
- */
+/* --- Modale Création rapide d'une nouvelle entreprise --- */
 function ouvrirModalCreation() {
     const modal = document.getElementById('modalNouveauClient');
     if (modal) modal.style.display = 'flex';
@@ -338,14 +219,72 @@ function fermerModalCreation(event) {
     if (event.target === modal) modal.style.display = 'none';
 }
 
+/**
+ * ==========================================================================
+ * INTERACTIONS AVANCÉES DE RECHERCHE ET AUTO-COMPLÉTION SANS RECHARGEMENT
+ * ==========================================================================
+ */
+
+/**
+ * Distribue l'intégralité des attributs d'une entreprise sélectionnée vers les 
+ * différents inputs correspondants du formulaire principal (Ticket ou Suivi)
+ * afin d'éviter les rechargements de pages et les pertes de données utilisateur.
+ * @param {Object} entreprise - Instance contenant les attributs de la ligne SQL
+ */
+function attribuerEntrepriseAuTicket(entreprise) {
+    // Matrice de mappage [ID du champ HTML : Valeur de l'objet entreprise injectée]
+    const correspondances = {
+        'id_client': entreprise.id_client,
+        'nom_entreprise': entreprise.nom_entreprise,
+        'nom_entreprise_suivi': entreprise.nom_entreprise,
+        'nom': entreprise.nom,
+        'suivi_nom': entreprise.nom,
+        'prenom': entreprise.prenom,
+        'suivi_prenom': entreprise.prenom,
+        'email': entreprise.email,
+        'telephone': entreprise.telephone,
+        'ville': entreprise.ville,
+        'cp': entreprise.code_postal
+    };
+
+    // Parcours de la structure et hydratation dynamique des inputs
+    Object.keys(correspondances).forEach(idInput => {
+        const input = document.getElementById(idInput);
+        if (input) {
+            input.value = correspondances[idInput] || '';
+            // Déclenchement manuel de l'événement 'input' pour alerter les scripts tiers (redimensionnements, etc.)
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+    });
+
+    // Liaison automatique avec le dropdown logiciel custom si configuré
+    if (entreprise.id_logiciel && typeof selectLogiciel === "function") {
+        selectLogiciel(entreprise.id_logiciel, entreprise.logiciel);
+    }
+
+    // Sélection standard par <select> classique du formulaire de Suivi des appels
+    const selectLogicielStandard = document.getElementById('logiciel');
+    if (selectLogicielStandard && entreprise.id_logiciel) {
+        selectLogicielStandard.value = entreprise.id_logiciel;
+    }
+
+    // Fermeture de sécurité de la modale de sélection de premier plan
+    const modalEntreprises = document.getElementById('modalListeEntreprises');
+    if (modalEntreprises) {
+        modalEntreprises.style.display = 'none';
+    }
+}
+
+/**
+ * Traitement intercepté de validation asynchrone (AJAX) pour la création d'entreprise.
+ * Crée la ligne en BDD, ferme la modale rapide et applique immédiatement le filtre.
+ */
 function soumettreCreationClient(event) {
-    // 1. On empêche le rechargement brut de la page
     event.preventDefault();
 
     const formCreation = document.getElementById('formNouveauClientRapide');
     const formData = new FormData(formCreation);
 
-    // 2. Envoi des données en AJAX vers le contrôleur
     fetch('index.php?page=nouveau_ticket', {
         method: 'POST',
         body: formData
@@ -353,22 +292,16 @@ function soumettreCreationClient(event) {
     .then(response => response.text())
     .then(result => {
         if (result.trim() === "success") {
-            // 3. On ferme UNIQUEMENT la modale de création
             fermerModalCreationForce();
 
-            // 4. On récupère le formulaire de recherche de la modale de liste
             const formFiltre = document.getElementById('formFiltreEntreprises');
             if (formFiltre) {
-                // On met automatiquement le nom de la nouvelle entreprise dans le champ de recherche 
-                // pour que le technicien la voie directement en haut du tableau !
                 const inputRecherche = formFiltre.querySelector('input[name="recherche"]');
                 const nomEntrepriseCreee = formData.get('nom_entreprise');
                 if (inputRecherche && nomEntrepriseCreee) {
                     inputRecherche.value = nomEntrepriseCreee;
                 }
-
-                // 5. On valide automatiquement le filtre, ce qui rafraîchit le tableau !
-                formFiltre.submit();
+                formFiltre.submit(); // Soumission automatique pour mise à jour instantanée du tableau
             }
         } else {
             alert("Une erreur est survenue lors de la création en base de données.");
@@ -376,28 +309,71 @@ function soumettreCreationClient(event) {
     })
     .catch(error => {
         console.error("Erreur AJAX :", error);
-        alert("Impossible de joindre le serveur.");
     });
 }
 
+/**
+ * Écouteur d'événement sur la touche Entrée.
+ * Si le filtre de recherche n'affiche qu'un seul résultat unique, la touche Entrée valide
+ * et attribue le client automatiquement.
+ */
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById('modalListeEntreprises');
+    if (!modal) return;
 
-// ==========================================================================
-//          FERMETURE DES MODALS QUAND ON PRESSE ESC (ESCAPE)
-// ==========================================================================
+    const inputRecherche = modal.querySelector('.search-wrapper input[name="recherche"]');
+    
+    if (inputRecherche) {
+        inputRecherche.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const lignes = modal.querySelectorAll('.table-liste-entreprises tbody tr');
+                
+                // Vérifie s'il y a une unique correspondance réelle de ligne dans le tableau
+                if (lignes.length === 1 && !lignes[0].querySelector('.pas-entreprise')) {
+                    const btnSelectionner = lignes[0].querySelector('.btn-selectionner-entreprise');
+                    
+                    if (btnSelectionner) {
+                        event.preventDefault(); 
+                        modal.style.display = 'none'; 
+                        btnSelectionner.click(); // Simulation du clic d'attribution
+                    }
+                }
+            }
+        });
+    }
+    
+    // Réouverture automatique de la modale si l'indicateur de pagination GET est transmis
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('ouvrir_modal') === '1') {
+        ouvrirModalListeEntreprises();
+    }
+});
+
+/**
+ * ==========================================================================
+ * ACCESSIBILITÉ CLAVIER & COMPORTEMENTS ERGONOMIQUES DE L'INTERFACE
+ * ==========================================================================
+ */
+
+/**
+ * Intercepteur global sur la touche Échap (Escape).
+ * Gère une fermeture en cascade : ferme la modale de création si elle est active,
+ * sinon ferme les modales de listes de second plan.
+ */
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape' || event.key === 'Esc') {
         const modalNouveauClient = document.getElementById('modalNouveauClient');
         const modalEntreprises = document.getElementById('modalListeEntreprises');
         const modalUrgence = document.getElementById('modalUrgence');
         
-        // 1. Si la modale de création de client est ouverte, on ne ferme QU'ELLE
+        // Priorité 1 : Fermer uniquement le formulaire de création s'il est au-dessus
         if (modalNouveauClient && modalNouveauClient.style.display === 'flex') {
             event.preventDefault();
             modalNouveauClient.style.display = 'none';
-            return; // On stoppe l'exécution ici pour laisser la modale de liste ouverte en dessous
+            return; 
         }
         
-        // 2. Si la modale de création est fermée, on traite les autres modales normalement
+        // Priorité 2 : Traitement des autres fenêtres modales
         if (modalEntreprises && modalEntreprises.style.display === 'flex') {
             event.preventDefault();
             modalEntreprises.style.display = 'none';
@@ -407,5 +383,107 @@ document.addEventListener('keydown', function(event) {
             event.preventDefault();
             modalUrgence.style.display = 'none';
         }
+    }
+});
+
+/**
+ * Redimensionnement automatique dynamique de la hauteur des zones d'édition de texte (Textareas).
+ * Calcule l'espace occupé au fur et à mesure de la saisie (évite les ascenseurs verticaux).
+ */
+function ajusterHauteurTextarea(el) {
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const zonesTexte = document.querySelectorAll('textarea');
+
+    zonesTexte.forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            ajusterHauteurTextarea(this);
+        });
+        ajusterHauteurTextarea(textarea); // Initialisation à froid au chargement du DOM
+    });
+});
+
+/**
+ * Gestion de la réinitialisation intelligente des formulaires ou du repositionnement 
+ * de la vue lors d'un retour ou changement d'onglet (Ticket ou Suivi).
+ */
+window.addEventListener('pageshow', function(event) {
+    const formTicket = document.querySelector('.formulaire-nouveau-ticket form');
+    const formSuivi = document.querySelector('.formulaire-nouveau-suivi form');
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Blocage de la remise à zéro si on conserve le contexte d'une sélection en cours
+    if (urlParams.get('selection') === '1' || urlParams.get('ouvrir_modal') === '1') {
+        
+        if (urlParams.get('selection') === '1' && urlParams.get('tab') === 'suivi') {
+            setTimeout(() => {
+                const btnSubmitSuivi = document.querySelector('.formulaire-nouveau-suivi .btn-submit');
+                
+                if (btnSubmitSuivi) {
+                    btnSubmitSuivi.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                } else if (formSuivi) {
+                    formSuivi.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }
+            }, 50); 
+        }
+        return; 
+    }
+
+    // Remise à zéro saine par défaut si l'utilisateur accède à la page pour la première fois
+    if (formTicket) formTicket.reset();
+    if (formSuivi) formSuivi.reset();
+});
+
+/**
+ * ==========================================================================
+ * GESTION DES MENUS DÉROULANTS GRAPHIQUES CUSTOMISÉS (DROPDOWNS)
+ * ==========================================================================
+ */
+
+/* --- Dropdown sélecteur de Niveau d'urgence --- */
+function toggleUrgenceDropdown() {
+    document.getElementById('urgenceMenu').classList.toggle('open');
+}
+
+function selectUrgence(valeur, label, couleur, labelBouton) {
+    document.getElementById('niveau_urgence').value = valeur;
+    document.getElementById('urgenceLabel').textContent = labelBouton;
+    document.querySelector('#urgenceDropdown .urgence-dropdown-btn').style.backgroundColor = couleur;
+    document.getElementById('urgenceMenu').classList.remove('open');
+}
+
+/* --- Dropdown sélecteur de Logiciel --- */
+function toggleLogicielDropdown() {
+    document.getElementById('logicielMenu').classList.toggle('open');
+}
+
+function selectLogiciel(id, nom) {
+    const inputFormId = document.getElementById('id_logiciel_form');
+    const inputFormName = document.getElementById('logiciel_form');
+    
+    if (inputFormId) inputFormId.value = id;
+    if (inputFormName) inputFormName.value = nom;
+
+    const label = document.getElementById('logicielLabel');
+    if (label) label.innerText = nom;
+    
+    const menu = document.getElementById('logicielMenu');
+    if (menu) menu.classList.remove('open');
+}
+
+// Fermeture globale automatique de tous les dropdowns actifs lors d'un clic en zone neutre
+document.addEventListener('click', function(e) {
+    const urgenceDropdown = document.getElementById('urgenceDropdown');
+    if (urgenceDropdown && !urgenceDropdown.contains(e.target)) {
+        document.getElementById('urgenceMenu').classList.remove('open');
+    }
+
+    const logicielDropdown = document.getElementById('logicielDropdown');
+    if (logicielDropdown && !logicielDropdown.contains(e.target)) {
+        const menu = document.getElementById('logicielMenu');
+        if (menu) menu.classList.remove('open');
     }
 });

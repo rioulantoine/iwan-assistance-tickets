@@ -107,19 +107,22 @@
                                         <td><?= htmlspecialchars($entreprise['telephone']) ?></td>
                                         <td><?= htmlspecialchars($entreprise['ville']) ?></td>
                                         <td>
-                                            <form method="POST" action="" style="margin: 0;">
-                                                <input type="hidden" name="action" value="selectionner_entreprise">
-                                                <input type="hidden" name="id_client" value="<?= htmlspecialchars($entreprise['id_client'] ?? '') ?>">
-                                                <input type="hidden" name="nom_entreprise" value="<?= htmlspecialchars($entreprise['nom_entreprise'] ?? '') ?>">
-                                                <input type="hidden" name="nom" value="<?= htmlspecialchars($entreprise['nom'] ?? '') ?>">
-                                                <input type="hidden" name="prenom" value="<?= htmlspecialchars($entreprise['prenom'] ?? '') ?>">
-                                                <input type="hidden" name="email" value="<?= htmlspecialchars($entreprise['email'] ?? '') ?>">
-                                                <input type="hidden" name="telephone" value="<?= htmlspecialchars($entreprise['telephone'] ?? '') ?>">
-                                                <input type="hidden" name="id_logiciel" value="<?= htmlspecialchars($entreprise['id_logiciel'] ?? '') ?>">
-                                                <input type="hidden" name="logiciel" value="<?= htmlspecialchars($entreprise['logiciel'] ?? '') ?>">
-
-                                                <button type="submit" name="selectionner_entreprise" class="btn-selectionner-entreprise">sélectionner</button>
-                                            </form>
+                                            <button type="button"
+                                                class="btn-selectionner-entreprise"
+                                                onclick="attribuerEntrepriseAuTicket({
+                                                        id_client: '<?= htmlspecialchars($entreprise['id_client'] ?? '') ?>',
+                                                        nom_entreprise: '<?= htmlspecialchars($entreprise['nom_entreprise'] ?? '', ENT_QUOTES) ?>',
+                                                        nom: '<?= htmlspecialchars($entreprise['nom'] ?? '', ENT_QUOTES) ?>',
+                                                        prenom: '<?= htmlspecialchars($entreprise['prenom'] ?? '', ENT_QUOTES) ?>',
+                                                        email: '<?= htmlspecialchars($entreprise['email'] ?? '', ENT_QUOTES) ?>',
+                                                        telephone: '<?= htmlspecialchars($entreprise['telephone'] ?? '', ENT_QUOTES) ?>',
+                                                        ville: '<?= htmlspecialchars($entreprise['ville'] ?? '', ENT_QUOTES) ?>',
+                                                        code_postal: '<?= htmlspecialchars($entreprise['cp'] ?? '') ?>',
+                                                        id_logiciel: '<?= htmlspecialchars($entreprise['id_logiciel'] ?? '') ?>',
+                                                        logiciel: '<?= htmlspecialchars($entreprise['logiciel'] ?? '', ENT_QUOTES) ?>'
+                                                    })">
+                                                Sélectionner
+                                            </button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
