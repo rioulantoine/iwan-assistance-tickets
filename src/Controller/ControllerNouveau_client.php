@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $prenom = trim($_POST['prenom'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $telephone = trim($_POST['telephone'] ?? '');
-    $logiciel = trim($_POST['id_logiciel']);
+    $logiciel = $_POST['id_logiciel'];
     $observation = trim($_POST['observation'] ?? '');
 
     $erreurs = [];
@@ -31,32 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($nom_entreprise)) {
         $erreurs[] = "Le nom de l'entreprise est obligatoire.";
     }
-    // Vérification code postal
-    if (empty($code_postal)) {
-        $erreurs[] = "Le code postal est obligatoire.";
-    }
-    // Vérification ville
-    if (empty($ville)) {
-        $erreurs[] = "La ville est obligatoire.";
-    }
-    // Vérification nom
-    if (empty($nom)) {
-        $erreurs[] = "Le nom est obligatoire.";
-    }
-    // Vérification prénom
-    if (empty($prenom)) {
-        $erreurs[] = "Le prénom est obligatoire.";
-    }
-    // Vérification email
-    if (empty($email)) {
-        $erreurs[] = "L'email est obligatoire.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)  && !($_SESSION['is_admin'] ?? false)) {
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)  && !($_SESSION['is_admin'] ?? false)) {
         $erreurs[] = "L'email n'est pas valide.";
     }
-    // Vérification téléphone
-    if (empty($telephone)) {
-        $erreurs[] = "Le telephone est obligatoire.";
-    }
+
 
     if (!empty($erreurs)) {
         $_SESSION['flash_message'] = implode('<br>', $erreurs);

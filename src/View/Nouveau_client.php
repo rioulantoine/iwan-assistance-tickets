@@ -95,7 +95,6 @@
                                 id="cp"
                                 name="cp"
                                 placeholder="Ex : 44110"
-                                required
                                 value="<?= htmlspecialchars($_POST['cp'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">
@@ -105,7 +104,6 @@
                                 id="ville"
                                 name="ville"
                                 placeholder="Ex: Paris"
-                                required
                                 value="<?= htmlspecialchars($_POST['ville'] ?? '') ?>" />
                         </div>
                     </div>
@@ -117,7 +115,6 @@
                                 id="nom"
                                 name="nom"
                                 placeholder="Entrez votre nom"
-                                required
                                 value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">
@@ -127,7 +124,6 @@
                                 id="prenom"
                                 name="prenom"
                                 placeholder="Entrez votre prénom"
-                                <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>
                                 value="<?= htmlspecialchars($_POST['prenom'] ?? '') ?>" />
                         </div>
                     </div>
@@ -139,7 +135,6 @@
                                 id="email"
                                 name="email"
                                 placeholder="Ex : jean.dupont@exemple.com"
-                                required
                                 value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" />
                         </div>
                         <div class="groupe-input">
@@ -149,13 +144,12 @@
                                 id="telephone"
                                 name="telephone"
                                 placeholder="Ex: 06 01 01 01 01"
-                                required
                                 value="<?= htmlspecialchars($_POST['telephone'] ?? '') ?>" />
                         </div>
                     </div>
                     <div class="groupe-input">
                         <label for="logiciel">Logiciel concerné</label>
-                        <select id="logiciel" name="id_logiciel" required>
+                        <select id="logiciel" name="id_logiciel">
                             <option value="" disabled <?= !isset($_POST['id_logiciel']) ? 'selected' : '' ?>>Choisissez un logiciel</option>
 
                             <?php foreach (($liste_logiciels ?? []) as $log) : ?>
