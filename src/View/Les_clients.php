@@ -204,16 +204,16 @@
                             <input type="text" id="edit_nom_entreprise" name="nom_entreprise" required>
                         </div>
                         <div class="groupe-input">
-                            <label for="edit_nom">Nom <span class="required">*</span></label>
-                            <input type="text" id="edit_nom" name="nom" required>
+                            <label for="edit_nom">Nom <span class="required"></span></label>
+                            <input type="text" id="edit_nom" name="nom">
                         </div>
                         <div class="groupe-input">
-                            <label for="edit_prenom">Prénom <span class="required">*</span></label>
-                            <input type="text" id="edit_prenom" name="prenom" required>
+                            <label for="edit_prenom">Prénom <span class="required"></span></label>
+                            <input type="text" id="edit_prenom" name="prenom">
                         </div>
                         <div class="groupe-input">
-                            <label for="edit_logiciel">Logiciel <span class="required">*</span></label>
-                            <select id="edit_logiciel" name="id_logiciel" required>
+                            <label for="edit_logiciel">Logiciel <span class="required"></span></label>
+                            <select id="edit_logiciel" name="id_logiciel">
                                 <option value="" disabled>Choisissez un logiciel</option>
 
                                 <?php foreach (($liste_logiciels ?? []) as $log) : ?>
@@ -225,20 +225,20 @@
                             </select>
                         </div>
                         <div class="groupe-input">
-                            <label for="edit_cp">Code postal <span class="required">*</span></label>
-                            <input type="text" id="edit_cp" name="cp" required>
+                            <label for="edit_cp">Code postal <span class="required"></span></label>
+                            <input type="text" id="edit_cp" name="cp">
                         </div>
                         <div class="groupe-input">
-                            <label for="edit_ville">Ville <span class="required">*</span></label>
-                            <input type="text" id="edit_ville" name="ville" required>
+                            <label for="edit_ville">Ville <span class="required"></span></label>
+                            <input type="text" id="edit_ville" name="ville">
                         </div>
                         <div class="groupe-input">
-                            <label for="edit_email">Email <span class="required">*</span></label>
-                            <input type="email" id="edit_email" name="email" required>
+                            <label for="edit_email">Email <span class="required"></span></label>
+                            <input type="email" id="edit_email" name="email">
                         </div>
                         <div class="groupe-input">
-                            <label for="edit_telephone">Téléphone <span class="required">*</span></label>
-                            <input type="tel" id="edit_telephone" name="telephone" required>
+                            <label for="edit_telephone">Téléphone <span class="required"></span></label>
+                            <input type="tel" id="edit_telephone" name="telephone">
                         </div>
 
                         <div class="groupe-input full-width">
