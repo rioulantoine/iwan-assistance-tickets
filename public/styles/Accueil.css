@@ -214,6 +214,11 @@ main {
 /* ==============================
             DASHBOARD TICKET
 ================================= */
+
+.dashboard-content.panel-gauche-admin {
+    max-width: 100%; /* Annule les 1400px pour se caler sur la colonne de gauche */
+    width: 100%;     /* Occupe tout l'espace restant à gauche */
+}
 .dashboard-content {
   width: 100%;
   max-width: 1400px;
@@ -379,7 +384,7 @@ main {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 }
 
 .ticket-badges {

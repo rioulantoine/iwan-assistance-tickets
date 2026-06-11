@@ -74,16 +74,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
             <div class="box">
                 <div class="box-header">
                     <div class="box-badge">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="4" width="18" height="16" rx="2" />
                             <polyline points="8 12 12 16 16 12" />
                             <line x1="12" y1="8" x2="12" y2="16" />
@@ -104,14 +95,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
                 </p>
                 <div class="box-value"><?= htmlspecialchars($nb_tickets_actif ?? 0) ?></div>
                 <div class="box-watermark" style="transform: rotate(-15deg); right: -10px; bottom: -20px">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="4" width="18" height="16" rx="2" />
                         <polyline points="8 12 12 16 16 12" />
                         <line x1="12" y1="8" x2="12" y2="16" />
@@ -122,16 +106,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
             <div class="box active">
                 <div class="box-header">
                     <div class="box-badge">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>
                     </div>
@@ -150,14 +125,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
                 </p>
                 <div class="box-value"><?= htmlspecialchars($nb_tickets_resolu ?? 0) ?></div>
                 <div class="box-watermark" style="right: -15px; bottom: -25px">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                 </div>
@@ -166,21 +134,9 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
             <div class="box urgent">
                 <div class="box-header">
                     <div class="box-badge">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                             <circle cx="12" cy="12" r="10" />
-                            <line
-                                x1="12"
-                                y1="8"
-                                x2="12"
-                                y2="12"
-                                stroke="#ffffff"
-                                stroke-width="2"
-                                stroke-linecap="round" />
+                            <line x1="12" y1="8" x2="12" y2="12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
                             <circle cx="12" cy="16" r="1" fill="#ffffff" />
                         </svg>
                     </div>
@@ -198,28 +154,10 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
                     <?php endif ?>
                 </p>
                 <div class="box-value"><?= htmlspecialchars($nb_tickets_urgent ?? 0) ?></div>
-                <div
-                    class="box-watermark"
-                    style="
-              transform: rotate(28deg);
-              right: -30px;
-              bottom: -40px;
-              color: rgba(225, 82, 82, 0.18);
-              opacity: 1;
-            ">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor">
+                <div class="box-watermark" style="transform: rotate(28deg); right: -30px; bottom: -40px; color: rgba(225, 82, 82, 0.18); opacity: 1;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <circle cx="12" cy="12" r="11" />
-                        <line
-                            x1="12"
-                            y1="6"
-                            x2="12"
-                            y2="13"
-                            stroke="#ffffff"
-                            stroke-width="2.5"
-                            stroke-linecap="round" />
+                        <line x1="12" y1="6" x2="12" y2="13" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
                         <circle cx="12" cy="17" r="1.5" fill="#ffffff" />
                     </svg>
                 </div>
@@ -251,34 +189,28 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
 
                     <div class="suivis-liste-container">
                         <h3>SUIVIS DU MOIS :</h3>
-
                         <div class="suivi-row">
                             <span class="dot dot-bloquant"></span>
                             <span class="label">Bloquants :</span>
                             <span class="count"><?= ($suivis_bloquant ?? 0) ?></span>
                         </div>
-
                         <div class="suivi-row">
                             <span class="dot dot-urgent"></span>
                             <span class="label">Urgents :</span>
                             <span class="count"><?= ($suivis_urgent ?? 0) ?></span>
                         </div>
-
                         <div class="suivi-row">
                             <span class="dot dot-normal"></span>
                             <span class="label">Normaux :</span>
                             <span class="count"><?= ($suivis_normal ?? 0) ?></span>
                         </div>
-
                         <div class="suivi-row">
                             <span class="dot dot-demande"></span>
                             <span class="label">Demandes :</span>
                             <span class="count"><?= ($suivis_non_urgent ?? 0) ?></span>
                         </div>
                     </div>
-                    <div
-                        class="box-watermark"
-                        style="transform: rotate(-15deg); right: -10px; bottom: -20px">
+                    <div class="box-watermark" style="transform: rotate(-15deg); right: -10px; bottom: -20px">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                         </svg>
@@ -299,7 +231,6 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
                         </div>
                         <h3>Taux de résolution global des tickets</h3>
                     </div>
-
                     <p class="box-desc">
                         <?php if (($ecart_taux ?? 0) > 0): ?>
                             <span class="text-muted">Efficacité en hausse de <strong style="color: green;">+<?= htmlspecialchars($ecart_taux ?? 0) ?> points</strong> par rapport au mois dernier</span>
@@ -324,42 +255,81 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
 
         <div class="container-tickets">
             <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
+
                 <div class="dashboard-layout">
 
                     <div class="colonne-principale">
-                        <div class="row-graphiques">
+                        <div class="dashboard-content panel-gauche-admin" id="tickets" style="margin: 0; padding: 24px;">
+                            <h1>Les derniers tickets</h1>
 
-                            <div class="panel-graphique">
-                                <div class="panel-header">
-                                    <div class="panel-titre-bloc">
-                                        <h3>Répartition des tickets</h3>
-                                        <p>Volume des demandes enregistrées ce mois-ci selon leur niveau de criticité.</p>
+
+                            <form action="#tickets" method="GET" class="filtre">
+                                <button class="<?= ($id_statut ?? 0) == 0 ? 'actif' : '' ?>" type="submit" name="statut" value="0">Tous</button>
+                                <button class="<?= ($id_statut ?? 0) == 1 ? 'actif' : '' ?>" type="submit" name="statut" value="1">En attente</button>
+                                <button class="<?= ($id_statut ?? 0) == 2 ? 'actif' : '' ?>" type="submit" name="statut" value="2">En cours</button>
+                                <button class="<?= ($id_statut ?? 0) == 3 ? 'actif' : '' ?>" type="submit" name="statut" value="3">Résolus</button>
+                            </form>
+
+                            <?php foreach ($ticket_maj_user ?? [] as $ticket): ?>
+                                <div class="ticket-list">
+                                    <div class="ticket-card">
+                                        <div class="ticket-ligne-principale">
+                                            <div class="ticket-badges">
+                                                <h4 class="ticket-titre"><?= htmlspecialchars($ticket['titre']) ?></h4>
+                                                <h3 class="badge-urgence urgence-<?= (int)($ticket['id_urgence'] ?? 3) ?>">
+                                                    <?= htmlspecialchars($ticket['libelle_urgence']) ?>
+                                                </h3>
+                                                <div class="nom-entreprise">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+                                                        <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+                                                        <path d="M6 7h2M6 11h2M6 15h2" />
+                                                        <path d="M15 14h2M15 18h2" />
+                                                    </svg>
+                                                    <p><?= htmlspecialchars($ticket['nom_entreprise']) ?></p>
+                                                </div>
+                                                <?php
+                                                $statut_id = $ticket['id_statut'] ?? null;
+                                                $statut_labels = [1 => 'En attente', 2 => 'En cours', 3 => 'Résolu'];
+                                                $label = $statut_labels[$statut_id] ?? 'Archivé';
+                                                $statut_class = match ($statut_id) {
+                                                    1 => 'badge-statut-1',
+                                                    2 => 'badge-statut-2',
+                                                    3 => 'badge-statut-3',
+                                                    default => 'badge-statut-archive'
+                                                };
+                                                ?>
+                                                <span class="<?= $statut_class ?>"><?= $label ?></span>
+                                            </div>
+
+                                            <div class="ticket-actions">
+                                                <span class="ticket-date"><?= (new DateTime($ticket['date_creation']))->format('d/m/y à H:i') ?></span>
+                                                <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir">Ouvrir</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="ticket-body">
+                                            <p dir="ltr">
+                                                <?php
+                                                $texte = $ticket['description'];
+                                                if (mb_strlen($texte, 'UTF-8') > 300) {
+                                                    $coupe = mb_substr($texte, 0, 300, 'UTF-8');
+                                                    $pos = mb_strrpos($coupe, ' ', 0, 'UTF-8');
+                                                    if ($pos !== false && $pos > 0) $coupe = mb_substr($coupe, 0, $pos, 'UTF-8');
+                                                    echo htmlspecialchars($coupe) . '...';
+                                                } else {
+                                                    echo htmlspecialchars($texte);
+                                                }
+                                                ?>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="chart-container">
-                                    <canvas id="radarChart"></canvas>
-                                </div>
-                            </div>
-
-                            <div class="panel-graphique">
-                                <div class="panel-header">
-                                    <div class="panel-titre-bloc">
-                                        <h3>Tickets par semaine</h3>
-                                        <p>Les tickets résolus sur la période du <?= $date_debut_semaine ?? '00/00/00' ?> - <?= $date_fin_semaine ?? '00/00/00' ?></p>
-                                    </div>
-                                </div>
-
-                                <div class="chart-container">
-                                    <canvas id="barChart"></canvas>
-                                </div>
-                            </div>
-
+                            <?php endforeach ?>
                         </div>
                     </div>
 
                     <div class="colonne-laterale">
-
                         <div class="panel-sidebar">
                             <svg class="illustration-box" viewBox="0 0 485 461" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M20.9066 211.165C23.6142 211.165 25.8092 208.971 25.8092 206.263C25.8092 203.555 23.6142 201.36 20.9066 201.36C18.1991 201.36 16.0041 203.555 16.0041 206.263C16.0041 208.971 18.1991 211.165 20.9066 211.165Z" stroke="#2563EB" stroke-width="2.21515" />
@@ -403,6 +373,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
                                 <path d="M304.666 84.0848C300.518 98.981 298.443 100.301 292.409 106.9C292.409 100.378 291.289 89.4306 291.289 84.8721C271.532 84.8721 254.858 76.807 248.991 72.7744C249.201 86.45 236.381 95.3918 236.381 95.3918C236.381 95.3918 238.22 100.915 239.271 113.275C240.111 123.164 237.694 121.253 236.381 119.061C232.597 106.858 226.397 110.119 223.77 113.275C191.531 60.8921 241.109 50.7706 250.567 51.7349C257.713 45.6335 267.679 40.852 274.685 40.1507C299.952 37.6214 311.392 59.9313 304.666 84.0848Z" fill="black" />
                                 <path d="M236.822 128.384C240.216 149.104 262.997 164.004 279.436 147.219C295.876 130.434 292.586 99.7091 290.83 85.3718" stroke="black" stroke-width="2.21515" stroke-linecap="round" />
                                 <path d="M223.397 111.992C221.323 117.083 223.269 128.364 236.822 128.364" stroke="black" stroke-width="2.21515" stroke-linecap="round" />
+                                <path d="M223.397 111.992C221.323 117.083 223.269 128.364 236.822 128.364" stroke="black" stroke-width="2.21515" stroke-linecap="round" />
                                 <path d="M229.375 114.789C229.075 115.878 229.315 118.459 232.674 120.068" stroke="black" stroke-width="2.21515" stroke-linecap="round" />
                                 <path d="M290.373 125.724C294.797 123.88 297.915 117.05 296.715 106.114" stroke="black" stroke-width="2.21515" stroke-linecap="round" />
                                 <path d="M265.483 138.169C269.82 139.301 269.546 136.187 272.837 133.455" stroke="black" stroke-width="2.21515" stroke-linecap="round" />
@@ -420,7 +391,6 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
 
                             <h4 class="titre-box-action">
                                 <?php $nb = $nb_tickets_du_jour ?? 0; ?>
-
                                 <?php if ($nb === 0): ?>
                                     Vous n'avez <span>aucun</span> nouveau ticket aujourd'hui
                                 <?php elseif ($nb === 1): ?>
@@ -435,7 +405,6 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
 
                         <div class="panel-sidebar">
                             <h4 class="titre-box-action">Un ticket manquant ?</h4>
-
                             <a href="/iwan-assistance-tickets/index.php?page=nouveau_ticket" class="btn-action-dark">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -448,120 +417,104 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
                     </div>
 
                 </div>
-            <?php endif ?>
 
-            <div class="dashboard-content" id="tickets">
-                <?php if (!empty($_SESSION['is_admin'])) : ?>
-                    <h1>Les derniers tickets</h1>
-                    <form action="#tickets" method="GET" class="filtre">
+                <div class="row-graphiques" style="padding: 0 30px; margin-top: 30px;">
+                    <div class="panel-graphique">
+                        <div class="panel-header">
+                            <div class="panel-titre-bloc">
+                                <h3>Répartition des tickets</h3>
+                                <p>Volume des demandes enregistrées ce mois-ci selon leur niveau de criticité.</p>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                    </div>
 
-                        <button class="<?= ($id_statut ?? 0) == 0 ? 'actif' : '' ?>" type="submit" name="statut" value="0">Tous</button>
+                    <div class="panel-graphique">
+                        <div class="panel-header">
+                            <div class="panel-titre-bloc">
+                                <h3>Tickets par semaine</h3>
+                                <p>Les tickets résolus sur la période du <?= $date_debut_semaine ?? '00/00/00' ?> - <?= $date_fin_semaine ?? '00/00/00' ?></p>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
 
-                        <button class="<?= ($id_statut ?? 0) == 1 ? 'actif' : '' ?>" type="submit" name="statut" value="1">En attente</button>
+            <?php else: ?>
 
-                        <button class="<?= ($id_statut ?? 0) == 2 ? 'actif' : '' ?>" type="submit" name="statut" value="2">En cours</button>
-
-                        <button class="<?= ($id_statut ?? 0) == 3 ? 'actif' : '' ?>" type="submit" name="statut" value="3">Résolus</button>
-
-                    </form>
-                <?php else : ?>
+                <div class="dashboard-content" id="tickets">
                     <h1>Mes derniers tickets</h1>
-                <?php endif; ?>
 
-                <?php foreach ($ticket_maj_user ?? [] as $ticket): ?>
+                    <?php foreach ($ticket_maj_user ?? [] as $ticket): ?>
+                        <div class="ticket-list">
+                            <div class="ticket-card">
+                                <div class="ticket-ligne-principale">
+                                    <div class="ticket-badges">
+                                        <h4 class="ticket-titre"><?= htmlspecialchars($ticket['titre']) ?></h4>
+                                        <h3 class="badge-urgence urgence-<?= (int)($ticket['id_urgence'] ?? 3) ?>">
+                                            <?= htmlspecialchars($ticket['libelle_urgence']) ?>
+                                        </h3>
+                                        <?php if ($ticket['declarant_nom'] && !($_SESSION['is_admin'] ?? false)): ?>
+                                            <div class="nom-entreprise">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#4a5d78">
+                                                    <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5Z" />
+                                                    <path d="M12 14c-4.42 0-8 2.58-8 6v2h16v-2c0-3.42-3.58-6-8-6Z" />
+                                                </svg>
+                                                <p><?= htmlspecialchars($ticket['declarant_nom']) . " " . htmlspecialchars($ticket['declarant_prenom']) ?></p>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php
+                                        $statut_id = $ticket['id_statut'] ?? null;
+                                        $statut_labels = [1 => 'En attente', 2 => 'En cours', 3 => 'Résolu'];
+                                        $label = $statut_labels[$statut_id] ?? 'Archivé';
+                                        $statut_class = match ($statut_id) {
+                                            1 => 'badge-statut-1',
+                                            2 => 'badge-statut-2',
+                                            3 => 'badge-statut-3',
+                                            default => 'badge-statut-archive'
+                                        };
+                                        ?>
+                                        <span class="<?= $statut_class ?>"><?= $label ?></span>
+                                    </div>
 
-                    <div class="ticket-list">
-                        <div class="ticket-card">
-
-                            <div class="ticket-ligne-principale">
-
-                                <div class="ticket-badges">
-                                    <h4 class="ticket-titre"><?= htmlspecialchars($ticket['titre']) ?></h4>
-
-                                    <h3 class="badge-urgence urgence-<?= (int)($ticket['id_urgence'] ?? 3) ?>">
-                                        <?= htmlspecialchars($ticket['libelle_urgence']) ?>
-                                    </h3>
-
-                                    <?php if (($_SESSION['is_admin'] ?? false)) : ?>
-                                        <div class="nom-entreprise">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
-                                                <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
-                                                <path d="M6 7h2M6 11h2M6 15h2" />
-                                                <path d="M15 14h2M15 18h2" />
-                                            </svg>
-                                            <p><?= htmlspecialchars($ticket['nom_entreprise']) ?></p>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <?php if ($ticket['declarant_nom'] && !($_SESSION['is_admin'] ?? false)): ?>
-                                        <div class="nom-entreprise">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#4a5d78">
-                                                <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5Z" />
-                                                <path d="M12 14c-4.42 0-8 2.58-8 6v2h16v-2c0-3.42-3.58-6-8-6Z" />
-                                            </svg>
-                                            <p><?= htmlspecialchars($ticket['declarant_nom']) . " " . htmlspecialchars($ticket['declarant_prenom']) ?></p>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <?php
-                                    $statut_id = $ticket['id_statut'] ?? null;
-                                    $statut_labels = [1 => 'En attente', 2 => 'En cours', 3 => 'Résolu'];
-                                    $label = $statut_labels[$statut_id] ?? 'Archivé';
-                                    $statut_class = match ($statut_id) {
-                                        1 => 'badge-statut-1',
-                                        2 => 'badge-statut-2',
-                                        3 => 'badge-statut-3',
-                                        default => 'badge-statut-archive'
-                                    };
-                                    ?>
-                                    <span class="<?= $statut_class ?>"><?= $label ?></span>
-                                </div>
-
-                                <div class="ticket-actions">
-                                    <?php
-                                    $date_creation = (new DateTime($ticket['date_creation']))->format('d/m/y à H:i');
-                                    $date_maj = !empty($ticket['date_maj']) ? (new DateTime($ticket['date_maj']))->format('d/m/Y à H:i') : null;
-                                    ?>
-                                    <?php if ($_SESSION['is_admin'] ?? false): ?>
-                                        <span class="ticket-date"><?= $date_creation ?></span>
-                                    <?php else : ?>
+                                    <div class="ticket-actions">
+                                        <?php
+                                        $date_creation = (new DateTime($ticket['date_creation']))->format('d/m/y à H:i');
+                                        $date_maj = !empty($ticket['date_maj']) ? (new DateTime($ticket['date_maj']))->format('d/m/Y à H:i') : null;
+                                        ?>
                                         <?php if ($ticket['derniere_action'] === "Ticket créé"): ?>
                                             <span class="ticket-date"><?= htmlspecialchars($ticket['derniere_action']) ?> le <?= htmlspecialchars($ticket['date_creation']) ?></span>
                                         <?php else : ?>
                                             <span class="ticket-date">Mis à jour le <?= $date_maj ?> : <?= $ticket['derniere_action'] ?? "" ?></span>
                                         <?php endif ?>
-                                    <?php endif ?>
+                                        <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir">Ouvrir</a>
+                                    </div>
+                                </div>
 
-                                    <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir">Ouvrir</a>
+                                <div class="ticket-body">
+                                    <p dir="ltr">
+                                        <?php
+                                        $texte = $ticket['description'];
+                                        if (mb_strlen($texte, 'UTF-8') > 300) {
+                                            $coupe = mb_substr($texte, 0, 300, 'UTF-8');
+                                            $pos = mb_strrpos($coupe, ' ', 0, 'UTF-8');
+                                            if ($pos !== false && $pos > 0) $coupe = mb_substr($coupe, 0, $pos, 'UTF-8');
+                                            echo htmlspecialchars($coupe) . '...';
+                                        } else {
+                                            echo htmlspecialchars($texte);
+                                        }
+                                        ?>
+                                    </p>
                                 </div>
                             </div>
-
-                            <div class="ticket-body">
-                                <p dir="ltr">
-                                    <?php
-                                    $texte = $ticket['description'];
-                                    if (mb_strlen($texte, 'UTF-8') > 300) {
-                                        $coupe = mb_substr($texte, 0, 300, 'UTF-8');
-                                        $pos = mb_strrpos($coupe, ' ', 0, 'UTF-8');
-                                        if ($pos !== false && $pos > 0) {
-                                            $coupe = mb_substr($coupe, 0, $pos, 'UTF-8');
-                                        }
-                                        echo htmlspecialchars($coupe) . '...';
-                                    } else {
-                                        echo htmlspecialchars($texte);
-                                    }
-                                    ?>
-                                </p>
-                            </div>
-
                         </div>
                     <?php endforeach ?>
-                    </div>
-            </div>
-        </div>
-
-        </div>
+                </div>
+            <?php endif ?>
         </div>
     </main>
 
