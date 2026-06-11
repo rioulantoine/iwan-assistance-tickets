@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
     $nom = trim($_POST['nom'] ?? '');
     $prenom = trim($_POST['prenom'] ?? '');
-    $id_logiciel = trim($_POST['id_logiciel'] ?? ''); // CORRECTION : On récupère l'ID envoyé par le select
+    $id_logiciel = trim($_POST['id_logiciel'] ?? '');
     $cp = trim($_POST['cp'] ?? '');
     $ville = trim($_POST['ville'] ?? '');
     $email = trim($_POST['email'] ?? '');

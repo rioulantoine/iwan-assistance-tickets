@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../Model/ModelLes_Clients.php';
 
-$id_client_a_supprimer = (int)($_GET['client'] ?? 0);
+$id_client_a_supprimer = ($_GET['client'] ?? 0);
 
-if ($id_client_a_supprimer > 0) {
+if ($id_client_a_supprimer) {
     if (supprimer_client_sans_ticket($id_client_a_supprimer)) {
         $_SESSION['flash_message'] = "Le client a été supprimé avec succès.";
         $_SESSION['flash_type']    = "success";
