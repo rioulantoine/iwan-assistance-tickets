@@ -2,22 +2,48 @@
 // ControllerNouveau_ticket.php
 require_once __DIR__ . '/../Model/ModelNouveau_ticket.php';
 
-$logiciel_couleur = '#64748b';
+// ==========================================================================
+// 1. INTERCEPTION DE LA CRÉATION RAPIDE (AJAX MODALE) - PRIORITÉ HAUTE
+// ==========================================================================
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_creation_rapide'])) {
+    require_once __DIR__ . '/../Model/ModelNouveau_client.php';
 
+    $id_client      = trim($_POST['id_client'] ?? '');
+    $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
+    $cp             = trim($_POST['cp'] ?? '');
+    $ville          = trim($_POST['ville'] ?? '');
+    $nom            = trim($_POST['nom'] ?? '');
+    $prenom         = trim($_POST['prenom'] ?? '');
+    $email          = trim($_POST['email'] ?? '');
+    $telephone      = trim($_POST['telephone'] ?? '');
+    $id_logiciel    = !empty($_POST['id_logiciel']) ? (int)$_POST['id_logiciel'] : null;
+    $observation    = "";
+
+    $succes = inserer_nouveau_client($id_client, $nom_entreprise, $cp, $ville, $nom, $prenom, $email, $telephone, $id_logiciel, $observation);
+
+    echo $succes ? "success" : "error";
+    exit(); // Stoppe net pour ne pas corrompre la réponse AJAX avec le HTML de la vue
+}
+
+// ==========================================================================
+// 2. INITIALISATION ET PARAMÉTRAGE DES ONGLETS / RECHERCHES
+// ==========================================================================
+$logiciel_couleur = '#64748b';
 $tab_actif = $_GET['tab'] ?? 'ticket';
 
 if (!($_SESSION['is_admin'] ?? false)) {
     $tab_actif = 'ticket';
 }
 
-// Récupération de la liste des logiciels pour la vue
-$liste_logiciels = get_liste_logiciels();
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST' && !isset($_GET['ouvrir_modal']) && !isset($_GET['selection'])) {
-    unset($_SESSION['entreprise_selectionnee']);
+// Nettoyage de sécurité basique si premier accès à froid
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' && !isset($_GET['ouvrir_modal'])) {
     $_POST = [];
 }
 
+// Données nécessaires à la vue (Liste des logiciels)
+$liste_logiciels = get_liste_logiciels();
+
+// Pagination et filtres pour la modale liste des entreprises (Admins uniquement)
 $recherche = trim($_GET['recherche'] ?? '');
 $page_entreprise = max(1, (int)($_GET['page_entreprise'] ?? 1));
 $limite = 10;
@@ -28,12 +54,14 @@ $total_entreprises = compter_entreprises_filtres($recherche);
 $total_pages = ceil($total_entreprises / $limite);
 $nb_entreprises = count($liste_entreprises);
 
+// Autocomplétion de la datalist pour la saisie manuelle de secours
 $liste_nom_entreprise = obtenir_liste_entreprise();
 $entreprises_noms = array_column($liste_nom_entreprise, 'nom_entreprise');
 if (!in_array('IWAN', $entreprises_noms, true)) {
     $liste_nom_entreprise[] = ['nom_entreprise' => 'IWAN'];
 }
 
+// Contexte Client standard
 if (!($_SESSION['is_admin'] ?? false)) {
     $id_client = $_SESSION['id_client'] ?? null;
     $infos_client = get_info_client($id_client);
@@ -41,40 +69,28 @@ if (!($_SESSION['is_admin'] ?? false)) {
     $infos_client = [];
 }
 
+// ==========================================================================
+// 3. TRAITEMENT DE LA SOUMISSION TRADITIONNELLE DU TICKET
+// ==========================================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Action A : Sélection de l'entreprise depuis la modale
-    if (isset($_POST['selectionner_entreprise'])) {
-        $_SESSION['entreprise_selectionnee'] = [
-            'nom_entreprise' => $_POST['nom_entreprise'] ?? '',
-            'nom'            => $_POST['nom'] ?? '',
-            'prenom'         => $_POST['prenom'] ?? '',
-            'email'          => $_POST['email'] ?? '',
-            'telephone'      => $_POST['telephone'] ?? '',
-            'id_logiciel' => $_POST['id_logiciel'] ?? '',
-            'logiciel'    => $_POST['logiciel'] ?? '' // Stockage de l'ID à la place du texte
-        ];
+    // L'Action A ("selectionner_entreprise") a été retirée d'ici (gérée à 100% en JS)
 
-        header("Location: index.php?page=nouveau_ticket&tab=" . $tab_actif . "&selection=1");
-        exit();
-    }
-
-    // Action B : Soumission du ticket
+    // Action B : Enregistrement du ticket final
     if (isset($_POST['nouveau-ticket'])) {
         $nom_declarant = trim($_POST['nom'] ?? '');
         $prenom_declarant = trim($_POST['prenom'] ?? '');
         $email = trim($_POST['email'] ?? '');
         $telephone = trim($_POST['telephone'] ?? '');
-        $id_logiciel = $_POST['id_logiciel'];
-        $logiciel = trim($_POST['logiciel']);
-        $niveau_urgence = trim($_POST['niveau_urgence'] ?? '');
+        $id_logiciel = $_POST['id_logiciel'] ?? null;
+        $niveau_urgence = trim($_POST['niveau_urgence'] ?? '3');
         $titre = trim($_POST['titre'] ?? '');
         $description = trim($_POST['description'] ?? '');
         $erreurs = [];
 
-        if ($id_logiciel === '') {
-            $id_logiciel = null;
-        }
+        if ($id_logiciel === '') $id_logiciel = null;
+
+        // Validations spécifiques pour les clients (les admins ont le droit de modifier ces infos)
         if (empty($nom_declarant) && !($_SESSION['is_admin'] ?? false)) $erreurs[] = "Le nom est obligatoire.";
         if (empty($prenom_declarant) && !($_SESSION['is_admin'] ?? false)) $erreurs[] = "Le prénom est obligatoire.";
         if (empty($email) && !($_SESSION['is_admin'] ?? false)) {
@@ -82,15 +98,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) && !($_SESSION['is_admin'] ?? false)) {
             $erreurs[] = "L'email n'est pas valide.";
         }
-        if (empty($telephone) && !($_SESSION['is_admin'] ?? false)) {
-            $erreurs[] = "Le téléphone est obligatoire.";
-        }
+        if (empty($telephone) && !($_SESSION['is_admin'] ?? false)) $erreurs[] = "Le téléphone est obligatoire.";
 
         $urgences_valides = ['1', '2', '3', '4'];
         if (!in_array($niveau_urgence, $urgences_valides)) $erreurs[] = "Le niveau d'urgence est invalide.";
         if (empty($titre)) $erreurs[] = "Le titre est obligatoire.";
         if (empty($description)) $erreurs[] = "La description est obligatoire.";
 
+        // Résolution de l'ID entreprise cible
         if ($_SESSION['is_admin'] ?? false) {
             $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
             $id_entreprise = trouver_id_entreprise($nom_entreprise);
@@ -107,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $numero_ticket = generer_numero_ticket();
             $date_creation = date('Y-m-d H:i:s');
-            $id_statut = 1;
+            $id_statut = 1; // En attente par défaut
 
             $id_ticket = inserer_nouveau_ticket(
                 $numero_ticket,
@@ -124,6 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $id_statut
             );
 
+            // Gestion optionnelle des fichiers téléversés
             $fichiers = $_FILES['fichier'] ?? null;
             if (!empty($fichiers['name'][0]) && $id_ticket) {
                 $dossier = __DIR__ . '/../../public/uploads/';
@@ -143,8 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            if ($numero_ticket && empty($erreurs)) {
-                unset($_SESSION['entreprise_selectionnee']);
+            if ($id_ticket) {
                 if ($_SESSION['is_admin'] ?? false) {
                     header("Location: index.php?page=accueil");
                 } else {
@@ -155,29 +170,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_creation_rapide'])) {
 
-    require_once __DIR__ . '/../Model/ModelNouveau_client.php';
-
-    $id_client      = trim($_POST['id_client'] ?? '');
-    $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
-    $cp             = trim($_POST['cp'] ?? '');
-    $ville          = trim($_POST['ville'] ?? '');
-    $nom            = trim($_POST['nom'] ?? '');
-    $prenom         = trim($_POST['prenom'] ?? '');
-    $email          = trim($_POST['email'] ?? '');
-    $telephone      = trim($_POST['telephone'] ?? '');
-    $id_logiciel    = !empty($_POST['id_logiciel']) ? (int)$_POST['id_logiciel'] : null;
-    $observation    = "";
-
-    $succes = inserer_nouveau_client($id_client, $nom_entreprise, $cp, $ville, $nom, $prenom, $email, $telephone, $id_logiciel, $observation);
-
-    // 🛠️ CORRECTION : Au lieu de faire un header("Location:..."), on répond simplement en texte pour JavaScript
-    if ($succes) {
-        echo "success";
-    } else {
-        echo "error";
-    }
-    exit(); // 🛑 On arrête le script ici pour ne pas renvoyer le HTML du reste de la page !
-}
+// Appel final de la vue unifiée
 require_once __DIR__ . '/../View/Nouveau_ticket.php';
