@@ -7,9 +7,6 @@ if (!($_SESSION['is_admin'] ?? false)) {
 }
 $id_reponse = (int)($_GET['reponse'] ?? '');
 $num_ticket = $_GET['num_ticket'] ?? '';
-var_dump($id_reponse);
-var_dump($num_ticket);
-
 if (!empty($id_reponse)) {
     $succes = supprimer_reponse_par_id($id_reponse);
 
