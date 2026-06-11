@@ -1,6 +1,14 @@
 <?php
 
-require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
+/**
+ * Vue : Tableau de bord (Accueil)
+ * Description : Gère l'affichage dynamique de l'interface principale selon le rôle (Administrateur ou Client).
+ * Affiche des indicateurs clés (KPI), des graphiques de répartition et la liste des derniers tickets.
+ */
+
+// Chargement obligatoire du contrôleur gérant l'entête et l'état de la session
+require_once __DIR__ . '/../Controller/ControllerHeader.php';
+?>
 <html lang="fr">
 
 <head>
@@ -20,6 +28,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                 <?php else: ?>
                     <h1>Tableau de bord de <strong><?= htmlspecialchars($nom_client ?? '') ?></strong></h1>
                 <?php endif; ?>
+
                 <?php if (isset($_SESSION['id_client'])): ?>
                     <p>
                         <?php if (($nb_tickets_actif ?? 0) > 15): ?>
@@ -59,7 +68,9 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                 </a>
             <?php endif; ?>
         </div>
+
         <div class="container-boxes">
+
             <div class="box">
                 <div class="box-header">
                     <div class="box-badge">
@@ -83,20 +94,16 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                 <p class="box-desc">
                     <?php if (($ecart_actifs ?? 0) > 0): ?>
                         <span class="text-danger">Augmentation de <strong><?= htmlspecialchars($ecart_actifs ?? 0) ?>% </strong>par rapport au mois dernier</span>
-
                     <?php elseif (($ecart_actifs ?? 0) < 0): ?>
                         <span class="text-success">Baisse de <strong><?= htmlspecialchars(abs($ecart_actifs ?? 0)) ?>% </strong>par rapport au mois dernier</span>
                     <?php elseif (($actifs_mois_dernier ?? 0) == 0): ?>
                         <span class="text-success">Il n'y a plus aucun ticket actif du mois dernier.</span>
                     <?php else: ?>
                         <span class="text-muted">Stable par rapport au mois dernier</span>
-
                     <?php endif ?>
                 </p>
                 <div class="box-value"><?= htmlspecialchars($nb_tickets_actif ?? 0) ?></div>
-                <div
-                    class="box-watermark"
-                    style="transform: rotate(-15deg); right: -10px; bottom: -20px">
+                <div class="box-watermark" style="transform: rotate(-15deg); right: -10px; bottom: -20px">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -130,19 +137,15 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                     </div>
                     <h3>Tickets résolus</h3>
                 </div>
-
                 <p class="box-desc">
                     <?php if (($ecart_resolus ?? 0) > 0): ?>
                         <span class="text-danger">Augmentation de <strong><?= htmlspecialchars($ecart_resolus ?? 0) ?>% </strong> de tickets résolus par rapport au mois dernier</span>
-
                     <?php elseif (($ecart_resolus ?? 0) < 0): ?>
                         <span class="text-success">Baisse de <strong><?= htmlspecialchars(abs($ecart_resolus ?? 0)) ?>% </strong>par rapport au mois dernier</span>
                     <?php elseif (($resolus_mois_dernier ?? 0) == 0): ?>
                         <span class="text-success">Il n’y a eu aucun ticket résolu le mois dernier.</span>
-
                     <?php else: ?>
                         <span class="text-muted">Stable par rapport au mois dernier</span>
-
                     <?php endif ?>
                 </p>
                 <div class="box-value"><?= htmlspecialchars($nb_tickets_resolu ?? 0) ?></div>
@@ -183,19 +186,15 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                     </div>
                     <h3>Tickets urgents</h3>
                 </div>
-
                 <p class="box-desc">
                     <?php if (($ecart_urgents ?? 0) > 0): ?>
                         <span class="text-danger">Augmentation de <strong style="color: #C71500;"><?= htmlspecialchars($ecart_urgents ?? 0) ?>% </strong> du nombre de tickets urgents par rapport au mois dernier</span>
-
                     <?php elseif (($ecart_urgents ?? 0) < 0): ?>
                         <span class="text-success">Baisse de <strong><?= htmlspecialchars(abs($ecart_urgents ?? 0)) ?>% </strong> du nombre de tickets urgents par rapport au mois dernier</span>
                     <?php elseif (($urgents_mois_dernier ?? 0) == 0): ?>
                         <span class="text-success">Il n'y a eu aucun ticket urgent le mois dernier.</span>
-
                     <?php else: ?>
                         <span class="text-muted">Stable par rapport au mois dernier</span>
-
                     <?php endif ?>
                 </p>
                 <div class="box-value"><?= htmlspecialchars($nb_tickets_urgent ?? 0) ?></div>
@@ -225,8 +224,8 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                     </svg>
                 </div>
             </div>
+
             <?php if ($_SESSION['is_admin'] ?? false): ?>
-                <!-- Box Suivis tel -->
                 <div class="box">
                     <div class="box-header">
                         <div class="box-badge">
@@ -239,20 +238,17 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                     <p class="box-desc">
                         <?php if (($suivis_mois_dernier ?? 0) == 0 && $ecart_suivi == 0): ?>
                             <span class="text-muted">Aucun échange enregistré récemment</span>
-
                         <?php elseif ($ecart_suivi === 999): ?>
                             <span class="text-primary">Reprise des contacts clients ce mois-ci</span>
-
                         <?php elseif ($ecart_suivi > 0): ?>
                             <span class="text-primary"><strong>+<?= htmlspecialchars($ecart_suivi) ?>%</strong> de contacts par rapport au mois dernier</span>
-
                         <?php elseif ($ecart_suivi < 0): ?>
                             <span class="text-warning">Baisse de <strong><?= htmlspecialchars(abs($ecart_suivi)) ?>%</strong> d'activité téléphonique</span>
-
                         <?php else: ?>
                             <span class="text-muted">Volume d'appels stable par rapport au mois dernier</span>
                         <?php endif ?>
                     </p>
+
                     <div class="suivis-liste-container">
                         <h3>SUIVIS DU MOIS :</h3>
 
@@ -289,6 +285,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                     </div>
                 </div>
             <?php endif; ?>
+
             <?php if ($montrer_taux ?? false): ?>
                 <div class="box">
                     <div class="box-header">
@@ -304,18 +301,13 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                     </div>
 
                     <p class="box-desc">
-                    <p class="box-desc">
                         <?php if (($ecart_taux ?? 0) > 0): ?>
                             <span class="text-muted">Efficacité en hausse de <strong style="color: green;">+<?= htmlspecialchars($ecart_taux ?? 0) ?> points</strong> par rapport au mois dernier</span>
-
                         <?php elseif (($ecart_taux ?? 0) < 0): ?>
                             <span class="text-muted">Efficacité en baisse de <strong style="color: red;"><?= htmlspecialchars($ecart_taux ?? 0) ?> points</strong> par rapport au mois dernier</span>
-
                         <?php else: ?>
                             <span class="text-muted">Le taux de résolution est stable par rapport au mois dernier</span>
-
                         <?php endif ?>
-                    </p>
                     </p>
                     <div class="box-value"><?= htmlspecialchars($taux_resolution ?? 0) ?>%</div>
                     <div class="box-watermark" style="right: -15px; bottom: -20px">
@@ -329,6 +321,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                 </div>
             <?php endif; ?>
         </div>
+
         <div class="container-tickets">
             <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
                 <div class="dashboard-layout">
@@ -391,7 +384,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                 <path d="M222.957 353.111C214.987 354.103 196.33 357.763 192.244 365.205C191.017 367.438 189.595 372.871 193.715 376.741C197.835 380.612 205.363 379.594 208.612 378.602L227.555 370.973" stroke="black" stroke-width="2.21515" stroke-linecap="round" />
                                 <path d="M328.903 298.14C314.032 298.618 248.353 330.415 217.372 346.254C214.734 363.707 225.867 376.239 231.763 380.322C262.644 371.357 326.024 353.188 332.5 352.231C338.977 351.275 345.392 346.653 347.791 344.461C364.58 324.857 352.188 308.201 343.893 302.324C337.988 298.14 332.891 298.011 328.903 298.14Z" fill="black" />
                                 <path d="M190.961 293.106C201.497 293.808 247.46 311.622 269.238 320.958L219.432 345.846C197.142 352.383 183.449 350.229 179.268 348.82C155.13 337.191 164.587 308.501 174.177 297.873C180.358 292.612 187.185 292.854 190.961 293.106Z" fill="black" />
-                                <path d="M310.73 357.111C317.315 360.276 320.876 364.422 322.681 367.822C326.55 376.676 319.603 381.999 311.672 379.496C307.289 378.113 306.256 377.186 303.935 375.261C302.757 374.284 297.255 369.172 290.974 363.135" stroke="black" stroke-width="2.21515" stroke-linecap="round" />
+                                <path d="M328.903 357.111C317.315 360.276 320.876 364.422 322.681 367.822C326.55 376.676 319.603 381.999 311.672 379.496C307.289 378.113 306.256 377.186 303.935 375.261C302.757 374.284 297.255 369.172 290.974 363.135" stroke="black" stroke-width="2.21515" stroke-linecap="round" />
                                 <path d="M182.193 213.61L186.451 290.985C186.774 296.857 191.629 301.452 197.51 301.452H324.346C330.463 301.452 335.422 296.493 335.422 290.376V211.234C335.422 205.058 330.372 200.076 324.197 200.159L193.103 201.926C186.806 202.011 181.847 207.322 182.193 213.61Z" fill="black" />
                                 <rect x="186.084" y="302.773" width="149.338" height="7.16522" rx="3.58261" fill="black" />
                                 <path d="M278.478 160.223C291.614 160.034 320.526 170.028 332.028 201.517" stroke="black" stroke-width="2.21515" stroke-linecap="round" />
@@ -430,13 +423,10 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
 
                                 <?php if ($nb === 0): ?>
                                     Vous n'avez <span>aucun</span> nouveau ticket aujourd'hui
-
                                 <?php elseif ($nb === 1): ?>
                                     Vous avez <span>1</span> nouveau ticket aujourd'hui
-
                                 <?php else: ?>
                                     Vous avez <span><?= htmlspecialchars($nb) ?></span> nouveaux tickets aujourd'hui
-
                                 <?php endif; ?>
                             </h4>
 
@@ -459,7 +449,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
 
                 </div>
             <?php endif ?>
-            <!-- Affichage des tickets client -->
+
             <div class="dashboard-content" id="tickets">
                 <?php if (!empty($_SESSION['is_admin'])) : ?>
                     <h1>Les derniers tickets</h1>
@@ -491,6 +481,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                     <h3 class="badge-urgence urgence-<?= (int)($ticket['id_urgence'] ?? 3) ?>">
                                         <?= htmlspecialchars($ticket['libelle_urgence']) ?>
                                     </h3>
+
                                     <?php if (($_SESSION['is_admin'] ?? false)) : ?>
                                         <div class="nom-entreprise">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -573,6 +564,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
         </div>
         </div>
     </main>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
@@ -589,4 +581,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
 </body>
 
 </html>
-<?php require_once __DIR__ . '/Templates/Footer.php'; ?>
+<?php
+// Chargement du template de bas de page (Footer)
+require_once __DIR__ . '/Templates/Footer.php';
+?>
