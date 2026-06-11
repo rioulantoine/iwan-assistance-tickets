@@ -3,7 +3,6 @@
 // Fichier qui permet d'insérer le nouveau client dans la base de données
 
 require_once __DIR__ . '/ModelBDD.php';
-
 function inserer_nouveau_client(
     $id_client,
     $nom_entreprise,
@@ -49,6 +48,8 @@ function inserer_nouveau_client(
         print_r($stmt->errorInfo());
         return false;
     }
+
+    return true;
 }
 
 /**
@@ -70,7 +71,7 @@ function verifier_id($id_client)
 /**
  * Obtenir la liste de tous les logiciels
  */
-function get_liste_logiciels()
+function get_liste_logiciels_nouveau_client()
 {
     $pdo = get_bdd();
     $sql = "SELECT id_logiciel, logiciel FROM LOGICIEL ";

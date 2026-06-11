@@ -155,4 +155,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_creation_rapide'])) {
+
+    require_once __DIR__ . '/../Model/ModelNouveau_client.php';
+
+    $id_client      = trim($_POST['id_client'] ?? '');
+    $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
+    $cp             = trim($_POST['cp'] ?? '');
+    $ville          = trim($_POST['ville'] ?? '');
+    $nom            = trim($_POST['nom'] ?? '');
+    $prenom         = trim($_POST['prenom'] ?? '');
+    $email          = trim($_POST['email'] ?? '');
+    $telephone      = trim($_POST['telephone'] ?? '');
+    $id_logiciel    = !empty($_POST['id_logiciel']) ? (int)$_POST['id_logiciel'] : null;
+    $observation    = "";
+
+    $succes = inserer_nouveau_client($id_client, $nom_entreprise, $cp, $ville, $nom, $prenom, $email, $telephone, $id_logiciel, $observation);
+
+    // 🛠️ CORRECTION : Au lieu de faire un header("Location:..."), on répond simplement en texte pour JavaScript
+    if ($succes) {
+        echo "success";
+    } else {
+        echo "error";
+    }
+    exit(); // 🛑 On arrête le script ici pour ne pas renvoyer le HTML du reste de la page !
+}
 require_once __DIR__ . '/../View/Nouveau_ticket.php';

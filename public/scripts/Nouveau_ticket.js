@@ -234,25 +234,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-// ==========================================================================
-//          FERMETURE DES MODALS QUAND ON PRESSE ESC (ESCAPE)
-// ==========================================================================
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape' || event.key === 'Esc') {
-        const modalEntreprises = document.getElementById('modalListeEntreprises');
-        const modalUrgence = document.getElementById('modalUrgence');
-        
-        if (modalEntreprises && modalEntreprises.style.display === 'flex') {
-            event.preventDefault();
-            modalEntreprises.style.display = 'none';
-        }
-        
-        if (modalUrgence && modalUrgence.style.display === 'flex') {
-            event.preventDefault();
-            modalUrgence.style.display = 'none';
-        }
-    }
-});
+
 // ==========================================================================
 // REMISE À ZÉRO STRATÉGIQUE DES FORMULAIRES AU CHARGEMENT / RETOUR DE PAGE
 // ==========================================================================
@@ -334,3 +316,96 @@ document.addEventListener('click', function(e) {
     }
 });
 
+
+
+
+/** ============================================================
+ *                CREATION NOUVEAU CLIENT 
+ *  ============================================================
+ */
+function ouvrirModalCreation() {
+    const modal = document.getElementById('modalNouveauClient');
+    if (modal) modal.style.display = 'flex';
+}
+
+function fermerModalCreationForce() {
+    const modal = document.getElementById('modalNouveauClient');
+    if (modal) modal.style.display = 'none';
+}
+
+function fermerModalCreation(event) {
+    const modal = document.getElementById('modalNouveauClient');
+    if (event.target === modal) modal.style.display = 'none';
+}
+
+function soumettreCreationClient(event) {
+    // 1. On empêche le rechargement brut de la page
+    event.preventDefault();
+
+    const formCreation = document.getElementById('formNouveauClientRapide');
+    const formData = new FormData(formCreation);
+
+    // 2. Envoi des données en AJAX vers le contrôleur
+    fetch('index.php?page=nouveau_ticket', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(result => {
+        if (result.trim() === "success") {
+            // 3. On ferme UNIQUEMENT la modale de création
+            fermerModalCreationForce();
+
+            // 4. On récupère le formulaire de recherche de la modale de liste
+            const formFiltre = document.getElementById('formFiltreEntreprises');
+            if (formFiltre) {
+                // On met automatiquement le nom de la nouvelle entreprise dans le champ de recherche 
+                // pour que le technicien la voie directement en haut du tableau !
+                const inputRecherche = formFiltre.querySelector('input[name="recherche"]');
+                const nomEntrepriseCreee = formData.get('nom_entreprise');
+                if (inputRecherche && nomEntrepriseCreee) {
+                    inputRecherche.value = nomEntrepriseCreee;
+                }
+
+                // 5. On valide automatiquement le filtre, ce qui rafraîchit le tableau !
+                formFiltre.submit();
+            }
+        } else {
+            alert("Une erreur est survenue lors de la création en base de données.");
+        }
+    })
+    .catch(error => {
+        console.error("Erreur AJAX :", error);
+        alert("Impossible de joindre le serveur.");
+    });
+}
+
+
+// ==========================================================================
+//          FERMETURE DES MODALS QUAND ON PRESSE ESC (ESCAPE)
+// ==========================================================================
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' || event.key === 'Esc') {
+        const modalNouveauClient = document.getElementById('modalNouveauClient');
+        const modalEntreprises = document.getElementById('modalListeEntreprises');
+        const modalUrgence = document.getElementById('modalUrgence');
+        
+        // 1. Si la modale de création de client est ouverte, on ne ferme QU'ELLE
+        if (modalNouveauClient && modalNouveauClient.style.display === 'flex') {
+            event.preventDefault();
+            modalNouveauClient.style.display = 'none';
+            return; // On stoppe l'exécution ici pour laisser la modale de liste ouverte en dessous
+        }
+        
+        // 2. Si la modale de création est fermée, on traite les autres modales normalement
+        if (modalEntreprises && modalEntreprises.style.display === 'flex') {
+            event.preventDefault();
+            modalEntreprises.style.display = 'none';
+        }
+        
+        if (modalUrgence && modalUrgence.style.display === 'flex') {
+            event.preventDefault();
+            modalUrgence.style.display = 'none';
+        }
+    }
+});

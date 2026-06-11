@@ -59,19 +59,24 @@
                         <button type="button" class="modal-liste-entreprises-close" onclick="document.getElementById('modalListeEntreprises').style.display='none'">&times;</button>
                     </div>
 
-                    <form method="GET" action="index.php" class="modal-liste-entreprises-filtre">
+                    <form method="GET" action="index.php" id="formFiltreEntreprises" class="modal-liste-entreprises-filtre" style="display: flex; gap: 10px; align-items: center;">
                         <input type="hidden" name="page" value="nouveau_ticket">
                         <input type="hidden" name="ouvrir_modal" value="1">
                         <input type="hidden" name="tab" value="<?= htmlspecialchars($tab_actif ?? '') ?>">
 
-                        <div class="search-wrapper">
+                        <div class="search-wrapper" style="flex: 1;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                             <input type="text" name="recherche" placeholder="Rechercher une entreprise..." value="<?= htmlspecialchars($_GET['recherche'] ?? '') ?>" />
                         </div>
+
                         <button type="submit" class="btn-filtre">Appliquer le filtre</button>
+
+                        <button type="button" onclick="ouvrirModalCreation()" style="height: 42px; padding: 0 15px; background-color: #0f2e48; color: white; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; flex-shrink: 0;" title="Créer un nouveau client">
+                            +
+                        </button>
                     </form>
 
                     <div class="modal-liste-entreprises-body">
@@ -140,6 +145,83 @@
                             </div>
                         <?php endif; ?>
                     </div>
+                </div>
+            </div>
+            <div id="modalNouveauClient" class="modal-edition" onclick="fermerModalCreation(event)" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 46, 72, 0.5); z-index: 9999; justify-content: center; align-items: center;">
+                <div class="modal-edition-content" style="max-width: 700px; background: white; padding: 30px; border-radius: 8px; width: 90%; box-shadow: 0 4px 24px rgba(0,0,0,0.15);">
+
+                    <div class="modal-edition-top-bar" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 20px;">
+                        <div class="client-badge-groupe" style="display: flex; align-items: center; gap: 16px;">
+                            <div style="background-color: #F0F4FF; padding: 6px; border-radius: 8px; display: flex;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28">
+                                    <g fill="none" stroke="#0f2e48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                        <circle cx="9" cy="7" r="4" />
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                    </g>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 style="margin: 0; font-size: 18px; color: #0f2e48;">Créer un nouveau client rapide</h2>
+                                <p style="margin: 0; font-size: 13px; color: #64748b;">Ajouter l'entreprise avant de générer le ticket</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="fermerModalCreationForce()" style="background: none; border: none; font-size: 24px; color: #64748b; cursor: pointer;">&times;</button>
+                    </div>
+
+                    <form id="formNouveauClientRapide" onsubmit="soumettreCreationClient(event)">
+                        <input type="hidden" name="action_creation_rapide" value="creer_entreprise_depuis_ticket">
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="groupe-input">
+                                <label>Nom entreprise <span style="color: #EF1A1A;">*</span></label>
+                                <input type="text" name="nom_entreprise" placeholder="Ex : Les Établissements Briandis" required>
+                            </div>
+                            <div class="groupe-input">
+                                <label>ID Client <span style="color: #EF1A1A;">*</span></label>
+                                <input type="text" name="id_client" placeholder="Ex : 44110" required>
+                            </div>
+                            <div class="groupe-input">
+                                <label>Code postal</label>
+                                <input type="text" name="cp" placeholder="Ex : 44110">
+                            </div>
+                            <div class="groupe-input">
+                                <label>Ville</label>
+                                <input type="text" name="ville" placeholder="Ex : Châteaubriant">
+                            </div>
+                            <div class="groupe-input">
+                                <label>Nom du contact</label>
+                                <input type="text" name="nom" placeholder="Ex : Dupont">
+                            </div>
+                            <div class="groupe-input">
+                                <label>Prénom du contact</label>
+                                <input type="text" name="prenom" placeholder="Ex : Jean">
+                            </div>
+                            <div class="groupe-input">
+                                <label>Email</label>
+                                <input type="email" name="email" placeholder="Ex : contact@entreprise.com">
+                            </div>
+                            <div class="groupe-input">
+                                <label>Téléphone</label>
+                                <input type="tel" name="telephone" placeholder="Ex : 02 40 00 00 00">
+                            </div>
+                            <div class="groupe-input" style="grid-column: span 2;">
+                                <label>Logiciel concerné</label>
+                                <select name="id_logiciel">
+                                    <option value="" disabled selected>Choisissez un logiciel</option>
+                                    <?php foreach (($liste_logiciels ?? []) as $log) : ?>
+                                        <option value="<?= $log['id_logiciel'] ?>"><?= htmlspecialchars($log['logiciel']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
+                            <button type="button" class="btn-annuler" onclick="fermerModalCreationForce()" style="padding: 10px 20px; background: #e2e8f0; border: none; border-radius: 6px; cursor: pointer; color: #475569; font-weight: 600;">Annuler</button>
+                            <button type="submit" style="padding: 10px 20px; background: #0f2e48; border: none; border-radius: 6px; cursor: pointer; color: white; font-weight: 600;">Enregistrer</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         <?php endif; ?>
@@ -298,7 +380,7 @@
                                     <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
                                     <path d="M6 7h2M6 11h2M6 15h2" />
                                     <path d="M15 14h2M15 18h2" />
-                                </svg>Liste des entreprises
+                                </svg>Liste des clients
                             </button>
                         <?php endif; ?>
                     </div>

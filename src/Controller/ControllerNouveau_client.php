@@ -7,7 +7,7 @@ if (!isset($_SESSION['is_admin']) && !isset($_SESSION['id_client'])) {
 }
 
 require_once __DIR__ . '/../Model/ModelNouveau_Client.php';
-$liste_logiciels = get_liste_logiciels();
+$liste_logiciels = get_liste_logiciels_nouveau_client();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_client = trim($_POST['id_client'] ?? '');
