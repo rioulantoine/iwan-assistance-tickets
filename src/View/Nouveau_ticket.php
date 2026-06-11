@@ -355,7 +355,7 @@
 
                         <div class="groupe-input">
                             <label for="titre">Titre</label>
-                            <input type="text" id="titre" name="titre" placeholder="Entrez le titre du ticket" required value="<?= htmlspecialchars($_POST['titre'] ?? '') ?>" />
+                            <input type="text" id="titre" name="titre" placeholder="Entrez le titre du ticket" maxlength="50" required value="<?= htmlspecialchars($_POST['titre'] ?? '') ?>" />
                         </div>
 
                         <div class="detail-ticket">
