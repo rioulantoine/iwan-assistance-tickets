@@ -491,18 +491,19 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                     <h3 class="badge-urgence urgence-<?= (int)($ticket['id_urgence'] ?? 3) ?>">
                                         <?= htmlspecialchars($ticket['libelle_urgence']) ?>
                                     </h3>
+                                    <?php if (($_SESSION['is_admin'] ?? false)) : ?>
+                                        <div class="nom-entreprise">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
+                                                <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
+                                                <path d="M6 7h2M6 11h2M6 15h2" />
+                                                <path d="M15 14h2M15 18h2" />
+                                            </svg>
+                                            <p><?= htmlspecialchars($ticket['nom_entreprise']) ?></p>
+                                        </div>
+                                    <?php endif; ?>
 
-                                    <div class="nom-entreprise">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M3 21h8V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v16Z" />
-                                            <path d="M11 21h10v-9a1 1 0 0 0-1-1h-8v10Z" />
-                                            <path d="M6 7h2M6 11h2M6 15h2" />
-                                            <path d="M15 14h2M15 18h2" />
-                                        </svg>
-                                        <p><?= htmlspecialchars($ticket['nom_entreprise']) ?></p>
-                                    </div>
-
-                                    <?php if ($ticket['declarant_nom']): ?>
+                                    <?php if ($ticket['declarant_nom'] && !($_SESSION['is_admin'] ?? false)): ?>
                                         <div class="nom-entreprise">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="#4a5d78">
                                                 <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5Z" />
@@ -541,7 +542,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php'; ?>
                                         <?php endif ?>
                                     <?php endif ?>
 
-                                    <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir">Ouvrir le ticket</a>
+                                    <a href="index.php?page=detail_ticket&ticket=<?= urlencode($ticket['numero_ticket']) ?>" class="btn-ouvrir">Ouvrir</a>
                                 </div>
                             </div>
 
