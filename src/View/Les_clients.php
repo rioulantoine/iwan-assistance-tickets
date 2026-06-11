@@ -105,7 +105,7 @@
                                     <td><?= htmlspecialchars($entreprise['nom_entreprise']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['nom']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['prenom']) ?></td>
-                                    <td><?= htmlspecialchars($entreprise['logiciel']) ?></td>
+                                    <td><?= htmlspecialchars($entreprise['logiciel'] ?? '') ?></td>
                                     <td><?= htmlspecialchars($entreprise['email']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['telephone']) ?></td>
                                     <td><?= htmlspecialchars($entreprise['ville']) ?></td>
