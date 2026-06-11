@@ -179,8 +179,8 @@
                     <div class="actions-header">
                         <!-- Dropdown urgence custom -->
                         <div class="urgence-dropdown" id="urgenceDropdown">
-                            <button type="button" class="urgence-dropdown-btn" onclick="toggleUrgenceDropdown()">
-                                <span id="urgenceLabel">Choisissez un niveau</span>
+                            <button type="button" class="urgence-dropdown-btn" onclick="toggleUrgenceDropdown()" style="background:#3b82f6;">
+                                <span id="urgenceLabel"><?= htmlspecialchars($_POST['niveau_urgence_label'] ?? 'Normal') ?></span>
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                     <polyline points="6 9 12 15 18 9" />
                                 </svg>
@@ -307,7 +307,7 @@
                 <div class="formulaire-nouveau-ticket">
                     <form action="" method="POST" enctype="multipart/form-data" auth-form>
                         <input type="hidden" name="niveau_urgence" id="niveau_urgence"
-                            value="<?= htmlspecialchars($_POST['niveau_urgence'] ?? '') ?>">
+                            value="<?= htmlspecialchars($_POST['niveau_urgence'] ?? '3') ?>">
                         <input type="hidden" name="id_logiciel" id="id_logiciel_form"
                             value="<?= htmlspecialchars(
                                         $_POST['id_logiciel']
