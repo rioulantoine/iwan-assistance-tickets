@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <title>Historique de mes tickets</title>
     <link rel="icon" type="image/png" href="../img/Logo_Iwan.png" />
-    <link rel="stylesheet" href="public/styles/Vos_tickets.css" />
+    <link rel="stylesheet" href="public/styles/vos_tickets.css" />
     <link rel="stylesheet" href="public/styles/Global.css" />
 </head>
 
