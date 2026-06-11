@@ -263,7 +263,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
                             <h1>Les derniers tickets</h1>
 
 
-                            <form action="#tickets" method="GET" class="filtre">
+                            <form action="#" method="GET" class="filtre">
                                 <button class="<?= ($id_statut ?? 0) == 0 ? 'actif' : '' ?>" type="submit" name="statut" value="0">Tous</button>
                                 <button class="<?= ($id_statut ?? 0) == 1 ? 'actif' : '' ?>" type="submit" name="statut" value="1">En attente</button>
                                 <button class="<?= ($id_statut ?? 0) == 2 ? 'actif' : '' ?>" type="submit" name="statut" value="2">En cours</button>
