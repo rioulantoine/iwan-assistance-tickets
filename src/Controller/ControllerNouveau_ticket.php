@@ -138,6 +138,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $niveau_urgence,
                 $id_statut
             );
+            if ($id_ticket) {
+                require_once __DIR__ . '/../Mail/Mail.php';
+                $email_admin = get_email_admin();
+
+                $urgences = ['1' => 'Bloquant / Très urgent', '2' => 'Urgent', '3' => 'Normal', '4' => 'Non urgent'];
+                $libelle_urgence = $urgences[$niveau_urgence] ?? 'Normal';
+                $date_formatee = (new DateTime($date_creation))->format('d/m/Y à H:i');
+
+                $sujet = "Nouveau ticket créé : {$titre}";
+                $corps = template_nouveau_ticket(
+                    $numero_ticket,
+                    $prenom_declarant,
+                    $nom_declarant,
+                    $email,
+                    $titre,
+                    $description,
+                    $libelle_urgence,
+                    $date_formatee
+                );
+
+                envoyer_mail($email_admin, $sujet, $corps);
+
+                if ($_SESSION['is_admin'] ?? false) {
+                    header("Location: index.php?page=accueil");
+                } else {
+                    header("Location: index.php?page=detail_ticket&ticket=" . $numero_ticket);
+                }
+                exit();
+            }
 
             // Gestion optionnelle des fichiers téléversés
             $fichiers = $_FILES['fichier'] ?? null;

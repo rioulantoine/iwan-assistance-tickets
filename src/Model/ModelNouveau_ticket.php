@@ -189,3 +189,20 @@ function inserer_piece_jointe($nom_original, $nom_stockage, $type, $taille_octet
     $stmt = $pdo->prepare($sql);
     return $stmt->execute([$nom_original, $nom_stockage, $type, $taille_octets, $date_upload, $id_ticket]);
 }
+
+
+
+
+
+
+/**
+ * FONCTION POUR ENVOYER MAIL
+ */
+
+function get_email_admin()
+{
+    $pdo = get_bdd();
+    $stmt = $pdo->prepare("SELECT email FROM CLIENT WHERE id_client = 1");
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
