@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $date_formatee = (new DateTime($date_creation))->format('d/m/Y à H:i');
 
                 $sujet = "Nouveau ticket créé : {$titre}";
-                $corps = template_nouveau_ticket(
+                $corps = template_nouveau_ticket_admin(
                     $numero_ticket,
                     $prenom_declarant,
                     $nom_declarant,

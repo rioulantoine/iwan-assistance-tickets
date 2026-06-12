@@ -149,6 +149,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     inserer_piece_jointe($nom_original, $nom_stockage, $type, $taille, date('Y-m-d H:i:s'), $id_reponse);
                 }
             }
+            // Envoi mail à l'admin si c'est un client qui répond
+            if ($est_admin === 0) {
+                require_once __DIR__ . '/../Mail/Mail.php';
+                require_once __DIR__ . '/../Model/ModelMail.php';
+                $email_admin = get_email_admin();
+
+                $nom_entreprise = get_nom_client_par_id((int)$_SESSION['id_client']);
+                $date_formatee = (new DateTime($date_envoi))->format('d/m/Y à H:i');
+
+                $sujet = "Nouvelle réponse sur le ticket #{$details_ticket['numero_ticket']}";
+                $corps = template_reponse_ticket(
+                    $details_ticket['numero_ticket'],
+                    $details_ticket['titre'],
+                    $nom_entreprise,
+                    $titre,
+                    $contenu,
+                    $date_formatee
+                );
+
+                envoyer_mail($email_admin, $sujet, $corps);
+            }
             header("Location: index.php?page=detail_ticket&ticket=" . urlencode($details_ticket['numero_ticket']) . "#reponse-" . $id_reponse);
             exit;
         }
