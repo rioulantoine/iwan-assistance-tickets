@@ -22,8 +22,8 @@ try {
     // Calcul des statistiques
     // =========================================================================
 
-    $nb_tickets_actif  = count_tickets($id_cible, [1, 2]);
-    $nb_tickets_resolu = count_tickets($id_cible, 3);
+    $nb_tickets_actif  = count_tickets($id_cible, [1]);
+    $nb_tickets_resolu = count_tickets($id_cible, 2);
     $nb_tickets_urgent = count_tickets($id_cible, null, [1, 2]);
 
     $suivis_urgences = get_nb_suivis_par_urgence_du_mois();
@@ -130,7 +130,7 @@ $nb_tickets_du_jour = get_nb_tickets_du_jour();
 //===========================================
 // Affichage des tickets de l'utilisateur
 //===========================================
-$id_statut = $_GET['statut'] ?? 2; // 2 = En cours par défaut
+$id_statut = $_GET['statut'] ?? 1; // 1 = En attente par défaut
 if ($id_statut == 0) {
     $id_statut = null; // Affiche tous les statuts
 }

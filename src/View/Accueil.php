@@ -266,8 +266,8 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
                             <form action="#" method="GET" class="filtre">
                                 <button class="<?= ($id_statut ?? 0) == 0 ? 'actif' : '' ?>" type="submit" name="statut" value="0">Tous</button>
                                 <button class="<?= ($id_statut ?? 0) == 1 ? 'actif' : '' ?>" type="submit" name="statut" value="1">En attente</button>
-                                <button class="<?= ($id_statut ?? 0) == 2 ? 'actif' : '' ?>" type="submit" name="statut" value="2">En cours</button>
-                                <button class="<?= ($id_statut ?? 0) == 3 ? 'actif' : '' ?>" type="submit" name="statut" value="3">Résolus</button>
+                                <button class="<?= ($id_statut ?? 0) == 2 ? 'actif' : '' ?>" type="submit" name="statut" value="2">Fait</button>
+                                <button class="<?= ($id_statut ?? 0) == 3 ? 'actif' : '' ?>" type="submit" name="statut" value="3">À revoir</button>
                             </form>
 
                             <?php foreach ($ticket_maj_user ?? [] as $ticket): ?>
@@ -290,7 +290,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
                                                 </div>
                                                 <?php
                                                 $statut_id = $ticket['id_statut'] ?? null;
-                                                $statut_labels = [1 => 'En attente', 2 => 'En cours', 3 => 'Résolu'];
+                                                $statut_labels = [1 => 'En attente', 2 => 'Fait', 3 => 'À revoir'];
                                                 $label = $statut_labels[$statut_id] ?? 'Archivé';
                                                 $statut_class = match ($statut_id) {
                                                     1 => 'badge-statut-1',
@@ -469,7 +469,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
                                         <?php endif; ?>
                                         <?php
                                         $statut_id = $ticket['id_statut'] ?? null;
-                                        $statut_labels = [1 => 'En attente', 2 => 'En cours', 3 => 'Résolu'];
+                                        $statut_labels = [1 => 'En attente', 2 => 'Fait', 3 => 'À revoir'];
                                         $label = $statut_labels[$statut_id] ?? 'Archivé';
                                         $statut_class = match ($statut_id) {
                                             1 => 'badge-statut-1',

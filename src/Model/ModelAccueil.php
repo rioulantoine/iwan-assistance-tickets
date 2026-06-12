@@ -41,17 +41,18 @@ function count_tickets($id_cible = 0, $statut = null, $id_urgence = null)
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE 1=1 AND type = 0"; //Le WHERE 1=1 permet d'ajouter des AND dynamiquement
+    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE 1=1 AND type = 0";
     $params = [];
-    // Filtre utilisateur
-    if ($id_cible > 0) {
+
+    $id_cible_clean = trim((string)$id_cible);
+    if ($id_cible_clean !== '' && $id_cible_clean !== '0') {
         $sql .= " AND id_entreprise = ?";
-        $params[] = $id_cible;
+        $params[] = $id_cible_clean;
     }
-    // Filte statut(s)
+
+    // Filtre statut(s)
     if ($statut !== null) {
         if (is_array($statut)) {
-
             $les_statuts = implode(',', array_fill(0, count($statut), '?'));
             $sql .= " AND id_statut IN ($les_statuts)";
             $params = array_merge($params, $statut);
@@ -60,18 +61,19 @@ function count_tickets($id_cible = 0, $statut = null, $id_urgence = null)
             $params[] = $statut;
         }
     }
-    // Filtre urgence
-    // Filtre urgence (gère désormais un ID seul OU un tableau d'IDs)
+
+    // Filtre urgence (gère un ID seul OU un tableau d'IDs)
     if ($id_urgence !== null) {
         if (is_array($id_urgence)) {
             $les_urgences = implode(',', array_fill(0, count($id_urgence), '?'));
-            $sql .= " AND id_urgence IN ($les_urgences) AND id_statut != 3";
+            $sql .= " AND id_urgence IN ($les_urgences) AND id_statut != 2";
             $params = array_merge($params, $id_urgence);
         } else {
-            $sql .= " AND id_urgence = ? AND id_statut != 3";
+            $sql .= " AND id_urgence = ? AND id_statut != 2";
             $params[] = $id_urgence;
         }
     }
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
 
@@ -206,8 +208,8 @@ function get_taux_resolution_mensuel($periode = 'courante', $id_cible = 0)
                  AND MONTH(date_creation) = MONTH(NOW() $intervalle)
                  AND type = 0";
 
-    // Combien de tickets résolu (id_statut = 3)
-    $sqlResolus = $sqlTotal . " AND id_statut = 3";
+    // Combien de tickets résolu (id_statut = 2)
+    $sqlResolus = $sqlTotal . " AND id_statut = 2";
 
     $params = [];
     if ($id_cible > 0) {
@@ -276,7 +278,7 @@ function get_tickets_resolus_semaine_en_cours()
 
     $sql = "SELECT DATE(date_resolution) as jour, COUNT(*) as total 
             FROM TICKETS 
-            WHERE id_statut IN (3,4)
+            WHERE id_statut IN (2,4)
             AND DATE(date_resolution) BETWEEN :debut AND :fin 
             AND type = 0
             GROUP BY DATE(date_resolution)";
@@ -307,7 +309,7 @@ function get_nb_tickets_du_jour()
 {
     $pdo = get_bdd();
 
-    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE DATE(date_creation) = CURDATE() AND id_statut != 3 AND type = 0";
+    $sql = "SELECT COUNT(id_ticket) FROM TICKETS WHERE DATE(date_creation) = CURDATE() AND id_statut != 2 AND id_statut != 4 AND type = 0";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
@@ -316,7 +318,7 @@ function get_nb_tickets_du_jour()
 /**
  * Retourne les 3 derniers tickets mis a jour pour un utilisateur donné ou pour tous les utilisateurs si en mode admin
  */
-function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 2)
+function get_ticket_maj($id_client = null, $is_admin = false, $id_statut = 1)
 {
     $pdo = get_bdd();
 
