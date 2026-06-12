@@ -1,50 +1,48 @@
 <?php
-// Mail/Mail.php
+// src/Mail/Mail.php
 require_once __DIR__ . '/../Config/Config.php';
 
-// On charge l'autoloader de Composer (ajuste le chemin si ton dossier vendor est ailleurs)
-require_once __DIR__ . '/../../vendor/autoload.php';
+// Chargement sécurisé de l
+$racine_projet = dirname(__DIR__, 2);
+require_once $racine_projet . '/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 function envoyer_mail(string $destinataire, string $sujet, string $corps_html): bool
 {
-    // Nettoyage anti-injection de l'adresse de destination
     $destinataire = filter_var(trim($destinataire), FILTER_VALIDATE_EMAIL);
     if (!$destinataire) return false;
 
-    // Création de l'instance PHPMailer
     $mail = new PHPMailer(true);
 
     try {
-        // ⚙️ CONNEXION AU SERVEUR SMTP
+        // CONNEXION SMTP IONOS
         $mail->isSMTP();
-        $mail->Host       = SMTP_HOST;              // Récupéré depuis Config.php
-        $mail->SMTPAuth   = true;                   // Authentification activée
-        $mail->Username   = MAIL_FROM;              // Ton adresse e-mail de connexion
-        $mail->Password   = SMTP_PASSWORD;          // 🔒 Ton mot de passe récupéré depuis Config.php
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Sécurité TLS requise
-        $mail->Port       = SMTP_PORT;              // Port 587
+        $mail->Host       = SMTP_HOST;
+        $mail->SMTPAuth   = true;
+        $mail->Username   = MAIL_FROM;
+        $mail->Password   = SMTP_PASSWORD;
 
-        // 🔤 ENCODAGE (Indispensable pour éviter les bugs sur les accents)
+        // On utilise ENCRYPTION_SMTPS pour le SSL/TLS pur
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port       = SMTP_PORT;
+
         $mail->CharSet    = 'UTF-8';
 
-        // 👥 EXPÉDITEUR ET DESTINATAIRE
+        // EXPÉDITEUR ET DESTINATAIRE
         $mail->setFrom(MAIL_FROM, MAIL_FROM_NAME);
-        $mail->addAddress($destinataire);           // L'adresse de l'admin (timeo.dupe@gmail.com)
+        $mail->addAddress($destinataire);
 
-        // 📄 CONTENU DU MAIL
-        $mail->isHTML(true);                        // On dit à PHPMailer qu'on envoie du HTML
+        // CONTENU
+        $mail->isHTML(true);
         $mail->Subject = $sujet;
-        $mail->Body    = $corps_html;               // Ton template HTML d'assistance
+        $mail->Body    = $corps_html;
 
-        // Envoi final
         $mail->send();
         return true;
     } catch (Exception $e) {
-        // Si ça échoue, la raison exacte s'écrira en arrière-plan dans les logs de ton serveur
-        error_log("Échec de l'envoi de la notification de ticket. Erreur SMTP : " . $mail->ErrorInfo);
+        error_log("Échec SMTP Iwan Assistance : " . $mail->ErrorInfo);
         return false;
     }
 }
@@ -71,7 +69,7 @@ function template_nouveau_ticket_admin(
     $nom_entreprise = htmlspecialchars($nom_entreprise, ENT_QUOTES, 'UTF-8');
 
     return "
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang='fr'>
     <head>
         <meta charset='UTF-8'>
@@ -83,7 +81,6 @@ function template_nouveau_ticket_admin(
                 <td align='center'>
                     <table width='600' cellpadding='0' cellspacing='0' style='background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08);'>
 
-                        <!-- HEADER -->
                         <tr>
                             <td style='background-color:#0f2e48; padding: 32px 40px; text-align:center;'>
                                 <h1 style='margin:0; color:#ffffff; font-size:22px; font-weight:600; letter-spacing:0.5px;'>
@@ -95,24 +92,10 @@ function template_nouveau_ticket_admin(
                             </td>
                         </tr>
 
-                        <!-- BODY -->
                         <tr>
                             <td style='padding: 36px 40px;'>
-                                <p style='margin:0 0 24px; color:#333333; font-size:15px;'>
-                                    Un nouveau ticket a été soumis et est en attente de traitement.
-                                </p>
-
-                                <!-- Numéro ticket -->
-                                <div style='background-color:#f0f4f8; border-left:4px solid #0f2e48; border-radius:4px; padding:14px 18px; margin-bottom:24px;'>
-                                    <p style='margin:0; color:#0f2e48; font-size:14px; font-weight:bold; letter-spacing:0.5px;'>
-                                        #{$numero_ticket}
-                                    </p>
-                                    <p style='margin:4px 0 0; color:#555555; font-size:15px;'>{$titre}</p>
-                                </div>
-
-                                <!-- Détails -->
-                                <table width='100%' cellpadding='0' cellspacing='0'>
-                                 <tr>
+                                <table width='100%' cellpadding='0' cellspacing='0' style='margin-bottom: 28px;'>
+                                    <tr>
                                         <td style='padding:8px 0; border-bottom:1px solid #eeeeee;'>
                                             <span style='color:#888888; font-size:13px;'>Entreprise</span>
                                         </td>
@@ -145,16 +128,19 @@ function template_nouveau_ticket_admin(
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style='padding: 8px 0;'>
+                                        <td style='padding: 8px 0; border-bottom:1px solid #eeeeee;'>
                                             <span style='color:#888888; font-size:13px;'>Date</span>
                                         </td>
-                                        <td style='padding: 8px 0; text-align:right;'>
+                                        <td style='padding: 8px 0; border-bottom:1px solid #eeeeee; text-align:right;'>
                                             <span style='color:#333333; font-size:13px;'>{$date_creation}</span>
                                         </td>
                                     </tr>
                                 </table>
 
-                                <!-- Description -->
+                                <div style='background-color:#f0f4f8; border-left:4px solid #0f2e48; border-radius:4px; padding:14px 18px; margin-bottom:24px;'>
+                                    <p style='margin:4px 0 0; color:#555555; font-size:15px;'>{$titre}</p>
+                                </div>
+
                                 <div style='margin-top:24px;'>
                                     <p style='margin:0 0 8px; color:#888888; font-size:13px;'>Description</p>
                                     <p style='margin:0; color:#333333; font-size:14px; line-height:1.6; background-color:#f9fafb; border-radius:4px; padding:14px;'>
@@ -163,16 +149,16 @@ function template_nouveau_ticket_admin(
                                 </div>
                             </td>
                         </tr>
-                    <!-- BOUTON -->
-                    <tr>
-                        <td style='padding: 0 40px 36px;' align='center'>
-                            <a href='http://localhost/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID=1'
-                            style='display:inline-block; background-color:#0f2e48; color:#ffffff; text-decoration:none; font-size:14px; font-weight:600; padding:14px 32px; border-radius:6px; letter-spacing:0.5px;'>
-                            Voir le ticket
-                            </a>
-                        </td>
-                    </tr>
-                        <!-- FOOTER -->
+                        
+                        <tr>
+                            <td style='padding: 0 40px 36px;' align='center'>
+                                <a href='https://iwan.fr/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID=1'
+                                style='display:inline-block; background-color:#0f2e48; color:#ffffff; text-decoration:none; font-size:14px; font-weight:600; padding:14px 32px; border-radius:6px; letter-spacing:0.5px;'>
+                                Voir le ticket
+                                </a>
+                            </td>
+                        </tr>
+                        
                         <tr>
                             <td style='background-color:#f0f4f8; padding:20px 40px; text-align:center;'>
                                 <p style='margin:0; color:#aaaaaa; font-size:12px;'>
@@ -187,8 +173,7 @@ function template_nouveau_ticket_admin(
         </table>
 
     </body>
-    </html>
-    ";
+    </html>";
 }
 
 function template_reponse_ticket(

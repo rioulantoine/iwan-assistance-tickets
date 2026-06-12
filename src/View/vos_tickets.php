@@ -15,10 +15,7 @@
         <div class="tableau-de-bord">
             <div class="header-text">
                 <h1>Mes tickets</h1>
-                <p>
-                    Retrouvez ici l'historique et l'état d'avancement de toutes vos
-                    sollicitations.
-                </p>
+                <p>Retrouvez ici l'historique et l'état d'avancement de toutes vos sollicitations.</p>
             </div>
 
             <?php if (isset($_SESSION['id_client'])): ?>
@@ -33,11 +30,10 @@
                 </a>
             <?php endif; ?>
         </div>
+
         <div class="container-tickets">
-
-
             <div class="dashboard-content">
-                <!-- Filtre des tickets -->
+
                 <div class="filtre-ticket">
                     <form method="GET" action="" class="filtre-bar">
                         <input type="hidden" name="page" value="tickets">
@@ -51,30 +47,18 @@
                                 <option value="4" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '4') ? 'selected' : '' ?>>Dernier trimestre</option>
                                 <option value="5" <?= (isset($_GET['date_filtre']) && $_GET['date_filtre'] === '5') ? 'selected' : '' ?>>Cette année</option>
                             </select>
-                            <!--iconne de la fleche vers le bas -->
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </div>
+
                         <div class="date-range-wrapper">
                             <div class="date-field">
                                 <label>Du</label>
                                 <div class="input-clearable-wrapper">
                                     <input type="date" id="date_debut" name="date_debut" value="<?= htmlspecialchars($_GET['date_debut'] ?? '') ?>">
-                                    <!-- Icône calendrier cliquable -->
                                     <label for="date_debut" class="btn-calendar-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                                            fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                             <line x1="16" y1="2" x2="16" y2="6"></line>
                                             <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -90,9 +74,7 @@
                                 <div class="input-clearable-wrapper">
                                     <input type="date" id="date_fin" name="date_fin" value="<?= htmlspecialchars($_GET['date_fin'] ?? '') ?>">
                                     <label for="date_fin" class="btn-calendar-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                                            fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                             <line x1="16" y1="2" x2="16" y2="6"></line>
                                             <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -103,6 +85,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="select-wrapper">
                             <select name="statut_filtre">
                                 <option value="" <?= (!isset($_GET['statut_filtre']) || $_GET['statut_filtre'] === '') ? 'selected' : '' ?>>Tous les statuts</option>
@@ -111,16 +94,7 @@
                                 <option value="3" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '3') ? 'selected' : '' ?>>Résolu</option>
                                 <option value="4" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '4') ? 'selected' : '' ?>>Archivé</option>
                             </select>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </div>
@@ -133,31 +107,13 @@
                                 <option value="3" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '3') ? 'selected' : '' ?>>Normal</option>
                                 <option value="4" <?= (isset($_GET['urgence_filtre']) && $_GET['urgence_filtre'] === '4') ? 'selected' : '' ?>>Non urgent / Demande d'évolution</option>
                             </select>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </div>
 
                         <div class="search-wrapper">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
@@ -167,13 +123,12 @@
                         <button type="submit" class="btn-filtre">Appliquer les filtres</button>
                     </form>
                 </div>
-                <!-- Affichage de la liste des tickets -->
-                <?php foreach ($lst_tickets  ?? [] as $ticket) : ?>
-                    <div class="ticket-list">
+
+                <div class="ticket-list">
+                    <?php foreach ($lst_tickets ?? [] as $ticket) : ?>
+
                         <div class="ticket-card">
-
                             <div class="ticket-ligne-principale">
-
                                 <div class="ticket-badges">
                                     <h4 class="ticket-titre"><?= htmlspecialchars($ticket['titre']) ?></h4>
 
@@ -240,19 +195,19 @@
                                     ?>
                                 </p>
                             </div>
-
                         </div>
+
                     <?php endforeach ?>
+                </div>
+                <div class="pagination">
+                    <button class="page-nav disabled">Précédent</button>
+                    <button class="page-num active">1</button>
+                    <button class="page-num">2</button>
+                    <button class="page-nav">Suivant</button>
+                </div>
 
-
-                    <div class="pagination">
-                        <button class="page-nav disabled">Précédent</button>
-                        <button class="page-num active">1</button>
-                        <button class="page-num">2</button>
-                        <button class="page-nav">Suivant</button>
-                    </div>
-                    </div>
             </div>
+        </div>
     </main>
     <script src="public/scripts/Vos_tickets.js"></script>
 </body>
