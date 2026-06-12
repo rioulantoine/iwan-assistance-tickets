@@ -1,21 +1,56 @@
 <?php
-require_once __DIR__ . '/../Config/config.php';
+// Mail/Mail.php
+require_once __DIR__ . '/../Config/Config.php';
+
+// On charge l'autoloader de Composer (ajuste le chemin si ton dossier vendor est ailleurs)
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 function envoyer_mail(string $destinataire, string $sujet, string $corps_html): bool
 {
-    // Nettoyage anti-injection
-    $destinataire = filter_var($destinataire, FILTER_VALIDATE_EMAIL);
-    $sujet = str_replace(["\r", "\n"], '', $sujet);
-
+    // Nettoyage anti-injection de l'adresse de destination
+    $destinataire = filter_var(trim($destinataire), FILTER_VALIDATE_EMAIL);
     if (!$destinataire) return false;
 
-    $headers  = "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $headers .= "From: " . MAIL_FROM_NAME . " <" . MAIL_FROM . ">\r\n";
+    // Création de l'instance PHPMailer
+    $mail = new PHPMailer(true);
 
-    return mail($destinataire, $sujet, $corps_html, $headers);
+    try {
+        // ⚙️ CONNEXION AU SERVEUR SMTP
+        $mail->isSMTP();
+        $mail->Host       = SMTP_HOST;              // Récupéré depuis Config.php
+        $mail->SMTPAuth   = true;                   // Authentification activée
+        $mail->Username   = MAIL_FROM;              // Ton adresse e-mail de connexion
+        $mail->Password   = SMTP_PASSWORD;          // 🔒 Ton mot de passe récupéré depuis Config.php
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Sécurité TLS requise
+        $mail->Port       = SMTP_PORT;              // Port 587
+
+        // 🔤 ENCODAGE (Indispensable pour éviter les bugs sur les accents)
+        $mail->CharSet    = 'UTF-8';
+
+        // 👥 EXPÉDITEUR ET DESTINATAIRE
+        $mail->setFrom(MAIL_FROM, MAIL_FROM_NAME);
+        $mail->addAddress($destinataire);           // L'adresse de l'admin (timeo.dupe@gmail.com)
+
+        // 📄 CONTENU DU MAIL
+        $mail->isHTML(true);                        // On dit à PHPMailer qu'on envoie du HTML
+        $mail->Subject = $sujet;
+        $mail->Body    = $corps_html;               // Ton template HTML d'assistance
+
+        // Envoi final
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        // Si ça échoue, la raison exacte s'écrira en arrière-plan dans les logs de ton serveur
+        error_log("Échec de l'envoi de la notification de ticket. Erreur SMTP : " . $mail->ErrorInfo);
+        return false;
+    }
 }
 
+// ... Tes fonctions de templates "template_nouveau_ticket_admin" restent en dessous sans changement
+// ... Tes fonctions de templates (template_nouveau_ticket_admin, etc.) restent en dessous sans changement
 function template_nouveau_ticket_admin(
     string $numero_ticket,
     string $nom_entreprise,

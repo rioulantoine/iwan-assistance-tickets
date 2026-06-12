@@ -160,7 +160,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $date_formatee
                 );
 
-                envoyer_mail($email_admin, $sujet, $corps);
+                $mail_envoye = envoyer_mail($email_admin, $sujet, $corps);
+
+                if ($mail_envoye) {
+                    $_SESSION['flash_message'] = "Le ticket <strong>{$numero_ticket}</strong> a été créé et notifié.";
+                    $_SESSION['flash_type']    = "success";
+                } else {
+                    // 🔍 On récupère l'erreur brute que le serveur a renvoyée
+                    $raison_serveur = $_SESSION['serveur_mail_erreur'] ?? "Le serveur IONOS a refusé la commande mail().";
+                    unset($_SESSION['serveur_mail_erreur']); // On nettoie la session
+
+                    $_SESSION['flash_message'] = "Ticket créé, mais échec du mail.<br><small style='color:#ffcccc;'>Rapport serveur : " . htmlspecialchars($raison_serveur) . "</small>";
+                    $_SESSION['flash_type']    = "error";
+                }
 
                 if ($_SESSION['is_admin'] ?? false) {
                     header("Location: index.php?page=accueil");
