@@ -574,8 +574,8 @@
                                 <label for="suivi_statut">Statut du suivi</label>
                                 <select id="suivi_statut" name="code_statut" required>
                                     <option value="1" selected>En attente</option>
-                                    <option value="2">En cours</option>
-                                    <option value="3">Résolu</option>
+                                    <option value="2">Fait</option>
+                                    <option value="3">À revoir</option>
                                     <option value="4">Archivé</option>
                                 </select>
                             </div>
