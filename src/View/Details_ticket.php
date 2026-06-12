@@ -87,7 +87,7 @@
                 <?php endif; ?>
 
                 <?php if ($_SESSION['is_admin'] ?? false) : ?>
-                    <div class="status-dropdown-container" style="position: relative; display: inline-block;">
+                    <d<div class="status-dropdown-container" style="position: relative; display: inline-block;">
 
                         <button id="statusDropdownBtn" class="dropdown-trigger-btn" type="button" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; display: block; outline: none;">
 
@@ -122,50 +122,64 @@
                         <div class="status-dropdown-menu" id="statusDropdownMenu" style="display: none; position: absolute; top: calc(100% + 6px); right: 0; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 10px 25px rgba(15, 46, 72, 0.12); width: 181px; z-index: 100; padding: 6px 0; box-sizing: border-box;">
                             <div class="dropdown-title" style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; padding: 6px 14px 4px 14px; letter-spacing: 0.5px;">Changer le statut :</div>
 
-                            <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=1" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
-                                <span class="status-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #d97706;"></span> En attente
-                            </a>
-                            <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=2" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
-                                <span class="status-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #7faad4;"></span> Fait
-                            </a>
-                            <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=3" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
-                                <span class="status-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #38a169;"></span> À revoir
-                            </a>
-
-                            <div class="dropdown-divider" style="height: 1px; background-color: #e2e8f0; margin: 6px 0;"></div>
+                            <?php if ($_SESSION['is_admin'] ?? false) : ?>
+                                <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=1" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                    <span class="status-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #d97706;"></span> En attente
+                                </a>
+                                <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=2" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                    <span class="status-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #7faad4;"></span> Fait
+                                </a>
+                                <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=3" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #0f2e48; text-decoration: none;">
+                                    <span class="status-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #38a169;"></span> À revoir
+                                </a>
+                                <div class="dropdown-divider" style="height: 1px; background-color: #e2e8f0; margin: 6px 0;"></div>
+                            <?php endif; ?>
 
                             <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=4" class="dropdown-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 600; color: #64748b; text-decoration: none;">
                                 <span class="status-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #94a3b8;"></span> Archivé
                             </a>
                         </div>
-                    </div>
-                <?php else: ?>
-                    <?php if (($details_ticket['id_statut'] ?? null) == 1) : ?>
-                        <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="181" height="35" rx="4" fill="#d97706" />
-                            <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">En attente</text>
-                        </svg>
-                    <?php elseif (($details_ticket['id_statut'] ?? null) == 2) : ?>
-
-                        <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="181" height="35" rx="4" fill="#7faad4" />
-                            <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Fait</text>
-                        </svg>
-                    <?php elseif (($details_ticket['id_statut'] ?? null) == 3) : ?>
-
-                        <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="181" height="35" rx="4" fill="#38a169" />
-                            <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">À revoir</text>
-                        </svg>
-                    <?php else : ?>
-                        <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="181" height="35" rx="4" fill="#94a3b8" />
-                            <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Archivé</text>
-                        </svg>
-                    <?php endif; ?>
-
-                <?php endif; ?>
             </div>
+        <?php else: ?>
+            <div style="display: flex; align-items: center; gap: 10px;">
+
+                <?php if (($details_ticket['id_statut'] ?? null) == 1) : ?>
+                    <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="181" height="35" rx="4" fill="#d97706" />
+                        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">En attente</text>
+                    </svg>
+                <?php elseif (($details_ticket['id_statut'] ?? null) == 2) : ?>
+                    <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="181" height="35" rx="4" fill="#7faad4" />
+                        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Fait</text>
+                    </svg>
+                <?php elseif (($details_ticket['id_statut'] ?? null) == 3) : ?>
+                    <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="181" height="35" rx="4" fill="#38a169" />
+                        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">À revoir</text>
+                    </svg>
+                <?php else : ?>
+                    <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="181" height="35" rx="4" fill="#94a3b8" />
+                        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Archivé</text>
+                    </svg>
+                <?php endif; ?>
+
+                <?php if (($details_ticket['id_statut'] ?? null) != 4) : ?>
+                    <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=4"
+                        style="display: inline-flex; align-items: center; gap: 6px; padding: 0 14px; height: 35px; background-color: #94a3b8; color: white; border-radius: 4px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; font-size: 14px; text-decoration: none;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="21 8 21 21 3 21 3 8"></polyline>
+                            <rect x="1" y="3" width="22" height="5"></rect>
+                            <line x1="10" y1="12" x2="14" y2="12"></line>
+                        </svg>
+                        Archiver
+                    </a>
+                <?php endif; ?>
+
+            </div>
+        <?php endif; ?>
+        </div>
         </div>
         <div class="thread-container">
 

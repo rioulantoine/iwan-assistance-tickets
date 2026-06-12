@@ -1,6 +1,6 @@
 <?php
 // ControllerDetails_ticket.php
-// Fichier qui permet de gérer la page Détails ticket
+// Fichier qui permet de gérer la page Pétails ticket
 require_once __DIR__ . '/../Model/ModelDetails_ticket.php';
 
 // 1. Récupération des informations de base du ticket
@@ -20,22 +20,26 @@ $ecart_date_ticket = '';
 // =========================================================================
 //   BLOC DE CALCUL DE LA DURÉE / ANCIENNETÉ
 // =========================================================================
-$est_resolu = ((int)($details_ticket['id_statut'] ?? 0) === 2 || !empty($details_ticket['date_resolution']));
+// Un ticket est considéré comme traité s'il est "Fait" (2) OU "Archivé" (4)
+$id_statut_actuel = (int)($details_ticket['id_statut'] ?? 0);
+$est_resolu = ($id_statut_actuel === 2 || $id_statut_actuel === 4 || !empty($details_ticket['date_resolution']));
 
 if (isset($details_ticket['date_creation'])) {
     $date_creation_obj = new DateTime($details_ticket['date_creation']);
 
     if ($est_resolu) {
-        // CAS 1 : Le ticket est résolu -> On calcule le temps qu'a pris le traitement
-        $date_fin_obj = new DateTime($details_ticket['date_resolution']);
+        // CAS 1 : Le ticket est clôturé/fait -> On calcule le temps qu'a pris le traitement
+        // Si la date_resolution est vide (ex: archivage direct), on se rabat sur la date actuelle
+        $date_fin_brute = !empty($details_ticket['date_resolution']) ? $details_ticket['date_resolution'] : date('Y-m-d H:i:s');
+        $date_fin_obj = new DateTime($date_fin_brute);
         $interval = $date_creation_obj->diff($date_fin_obj);
 
         if ($interval->days > 0) {
-            $ecart_date_ticket = 'Résolu en : ' . $interval->format('%aj %hh');
+            $ecart_date_ticket = 'Traité en : ' . $interval->format('%aj %hh');
         } elseif ($interval->h > 0) {
-            $ecart_date_ticket = 'Résolu en : ' . $interval->format('%hh %imin');
+            $ecart_date_ticket = 'Traité en : ' . $interval->format('%hh %imin');
         } else {
-            $ecart_date_ticket = 'Résolu en : ' . $interval->format('%imin');
+            $ecart_date_ticket = 'Traité en : ' . $interval->format('%imin');
         }
     } else {
         // CAS 2 : Le ticket est toujours ouvert -> On calcule son ancienneté par rapport à "maintenant"
@@ -58,7 +62,6 @@ $id_ticket = $details_ticket['id_ticket'];
 $reponses = get_reponse_ticket($id_ticket);
 
 foreach ($reponses as &$reponse) {
-    // On crée une nouvelle clé 'pieces_jointes' dans le tableau de la réponse
     $reponse['pieces_jointes'] = get_pieces_jointes_par_reponse($reponse['id_reponse']);
 }
 unset($reponse);
@@ -90,12 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_ticket_post = $details_ticket['id_ticket'];
         $id_parent = trim($_POST['id_parent'] ?? '');
 
-        if ($_SESSION['is_admin'] ?? false) {
-            $est_admin = 1;
-        } else {
-            $est_admin = 0;
-        }
-
+        $est_admin = ($_SESSION['is_admin'] ?? false) ? 1 : 0;
         $erreurs = [];
 
         // Vérification titre
@@ -120,22 +118,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $date_envoi = date('Y-m-d H:i:s');
 
             if (!empty($id_parent)) {
-                $id_reponse = inserer_nouvelle_reponse(
-                    $titre,
-                    $contenu,
-                    $date_envoi,
-                    $est_admin,
-                    $id_ticket_post,
-                    $id_parent
-                );
+                $id_reponse = inserer_nouvelle_reponse($titre, $contenu, $date_envoi, $est_admin, $id_ticket_post, $id_parent);
             } else {
-                $id_reponse = inserer_nouvelle_reponse(
-                    $titre,
-                    $contenu,
-                    $date_envoi,
-                    $est_admin,
-                    $id_ticket_post
-                );
+                $id_reponse = inserer_nouvelle_reponse($titre, $contenu, $date_envoi, $est_admin, $id_ticket_post);
             }
 
             maj($id_ticket_post, null, "Nouvelle réponse");
@@ -161,14 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         continue;
                     }
 
-                    inserer_piece_jointe(
-                        $nom_original,
-                        $nom_stockage,
-                        $type,
-                        $taille,
-                        date('Y-m-d H:i:s'),
-                        $id_reponse
-                    );
+                    inserer_piece_jointe($nom_original, $nom_stockage, $type, $taille, date('Y-m-d H:i:s'), $id_reponse);
                 }
             }
             header("Location: index.php?page=detail_ticket&ticket=" . urlencode($details_ticket['numero_ticket']) . "#reponse-" . $id_reponse);
