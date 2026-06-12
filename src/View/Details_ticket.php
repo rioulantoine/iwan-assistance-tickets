@@ -87,7 +87,7 @@
                 <?php endif; ?>
 
                 <?php if ($_SESSION['is_admin'] ?? false) : ?>
-                    <d<div class="status-dropdown-container" style="position: relative; display: inline-block;">
+                    <div class="status-dropdown-container" style="position: relative; display: inline-block;">
 
                         <button id="statusDropdownBtn" class="dropdown-trigger-btn" type="button" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; display: block; outline: none;">
 
@@ -112,7 +112,7 @@
                             <?php else : ?>
                                 <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <rect width="181" height="35" rx="4" fill="#94a3b8" />
-                                    <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Archivé</text>
+                                    <text x="46%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14"><?= !empty($details_ticket['date_resolution']) ? 'Traité' : 'Archivé' ?></text>
                                     <path d="M153 15 L158 20 L163 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             <?php endif; ?>
@@ -139,47 +139,47 @@
                                 <span class="status-dot" style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: #94a3b8;"></span> Archivé
                             </a>
                         </div>
-            </div>
-        <?php else: ?>
-            <div style="display: flex; align-items: center; gap: 10px;">
+                    </div>
+                <?php else: ?>
+                    <div style="display: flex; align-items: center; gap: 10px;">
 
-                <?php if (($details_ticket['id_statut'] ?? null) == 1) : ?>
-                    <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="181" height="35" rx="4" fill="#d97706" />
-                        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">En attente</text>
-                    </svg>
-                <?php elseif (($details_ticket['id_statut'] ?? null) == 2) : ?>
-                    <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="181" height="35" rx="4" fill="#7faad4" />
-                        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Fait</text>
-                    </svg>
-                <?php elseif (($details_ticket['id_statut'] ?? null) == 3) : ?>
-                    <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="181" height="35" rx="4" fill="#38a169" />
-                        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">À revoir</text>
-                    </svg>
-                <?php else : ?>
-                    <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="181" height="35" rx="4" fill="#94a3b8" />
-                        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Archivé</text>
-                    </svg>
+                        <?php if (($details_ticket['id_statut'] ?? null) == 1) : ?>
+                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="181" height="35" rx="4" fill="#d97706" />
+                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">En attente</text>
+                            </svg>
+                        <?php elseif (($details_ticket['id_statut'] ?? null) == 2) : ?>
+                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="181" height="35" rx="4" fill="#7faad4" />
+                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Fait</text>
+                            </svg>
+                        <?php elseif (($details_ticket['id_statut'] ?? null) == 3) : ?>
+                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="181" height="35" rx="4" fill="#38a169" />
+                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">À revoir</text>
+                            </svg>
+                        <?php else : ?>
+                            <svg width="181" height="35" viewBox="0 0 181 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="181" height="35" rx="4" fill="#94a3b8" />
+                                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14"><?= !empty($details_ticket['date_resolution']) ? 'Traité' : 'Archivé' ?></text>
+                            </svg>
+                        <?php endif; ?>
+
+                        <?php if (($details_ticket['id_statut'] ?? null) != 4) : ?>
+                            <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=4"
+                                style="display: inline-flex; align-items: center; gap: 6px; padding: 0 14px; height: 35px; background-color: #94a3b8; color: white; border-radius: 4px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; font-size: 14px; text-decoration: none;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="21 8 21 21 3 21 3 8"></polyline>
+                                    <rect x="1" y="3" width="22" height="5"></rect>
+                                    <line x1="10" y1="12" x2="14" y2="12"></line>
+                                </svg>
+                                Archiver
+                            </a>
+                        <?php endif; ?>
+
+                    </div>
                 <?php endif; ?>
-
-                <?php if (($details_ticket['id_statut'] ?? null) != 4) : ?>
-                    <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=4"
-                        style="display: inline-flex; align-items: center; gap: 6px; padding: 0 14px; height: 35px; background-color: #94a3b8; color: white; border-radius: 4px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; font-size: 14px; text-decoration: none;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="21 8 21 21 3 21 3 8"></polyline>
-                            <rect x="1" y="3" width="22" height="5"></rect>
-                            <line x1="10" y1="12" x2="14" y2="12"></line>
-                        </svg>
-                        Archiver
-                    </a>
-                <?php endif; ?>
-
             </div>
-        <?php endif; ?>
-        </div>
         </div>
         <div class="thread-container">
 
