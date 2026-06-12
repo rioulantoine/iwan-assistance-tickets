@@ -18,9 +18,9 @@ $date_ticket = isset($details_ticket['date_creation']) ? date('d/m/Y H:i', strto
 $ecart_date_ticket = '';
 
 // =========================================================================
-// 🛠️ BLOC DE CALCUL DE LA DURÉE / ANCIENNETÉ (INTÉGRÉ ICI)
+//   BLOC DE CALCUL DE LA DURÉE / ANCIENNETÉ
 // =========================================================================
-$est_resolu = ((int)($details_ticket['id_statut'] ?? 0) === 3 || !empty($details_ticket['date_resolution']));
+$est_resolu = ((int)($details_ticket['id_statut'] ?? 0) === 2 || !empty($details_ticket['date_resolution']));
 
 if (isset($details_ticket['date_creation'])) {
     $date_creation_obj = new DateTime($details_ticket['date_creation']);

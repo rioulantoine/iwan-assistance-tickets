@@ -41,12 +41,12 @@ function get_pieces_jointes_par_ticket($num_ticket)
 /**
  * Met a jour le statut d'un ticket et les dates de résolution et d'archivage en fonction du nouveau statut
  * @param string $num_ticket Le numéro unique du ticket à modifier
- * @param int $id_statut L'ID du nouveau statut (1: En attente, 2: En cours, 3: Résolu, 4: Archivé)
+ * @param int $id_statut L'ID du nouveau statut (1: En attente, 2: Fait, 3: À revoir, 4: Archivé)
  */
 function modifier_statut_ticket($num_ticket, $id_statut)
 {
     $pdo = get_bdd();
-    $id_resolu = 3;
+    $id_resolu = 2;
     $id_archive = 4;
 
     if ($id_statut == $id_resolu) {

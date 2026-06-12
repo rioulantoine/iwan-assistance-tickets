@@ -8,10 +8,10 @@ if (!empty($num_ticket) && $nouvel_id_statut >= 1 && $nouvel_id_statut <= 4) {
 
     modifier_statut_ticket($num_ticket, $nouvel_id_statut);
 }
-if ($nouvel_id_statut === 2) {
-    $message = "En cours de résolution";
-} elseif ($nouvel_id_statut === 3) {
+if ($nouvel_id_statut === 1) {
     $message = "Ticket résolu";
+} elseif ($nouvel_id_statut === 3) {
+    $message = "Ticket à revoir";
 } else {
     $message = "Changement de statut";
 }
