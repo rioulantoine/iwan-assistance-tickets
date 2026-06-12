@@ -116,8 +116,8 @@
                     <select name="statut_filtre" onchange="this.form.submit()">
                         <option value="" <?= (!isset($_GET['statut_filtre']) || $_GET['statut_filtre'] === '') ? 'selected' : '' ?>>Tous les statuts</option>
                         <option value="1" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '1') ? 'selected' : '' ?>>En attente</option>
-                        <option value="2" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '2') ? 'selected' : '' ?>>En cours</option>
-                        <option value="3" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '3') ? 'selected' : '' ?>>Résolu</option>
+                        <option value="2" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '2') ? 'selected' : '' ?>>Fait</option>
+                        <option value="3" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '3') ? 'selected' : '' ?>>À revoir</option>
                         <option value="4" <?= (isset($_GET['statut_filtre']) && $_GET['statut_filtre'] === '4') ? 'selected' : '' ?>>Archivé</option>
                     </select>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -152,10 +152,10 @@
                 <div class="select-wrapper">
                     <select name="groupe" onchange="this.form.submit()">
                         <option value="" <?= (!isset($_GET['groupe']) || $_GET['groupe'] === '') ? 'selected' : '' ?>>Filtres groupés...</option>
-                        <option value="1" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '1') ? 'selected' : '' ?>>Suivi / Cette semaine / En cours</option>
-                        <option value="2" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '2') ? 'selected' : '' ?>>Suivi / Cette semaine / Urgent / En cours</option>
-                        <option value="3" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '3') ? 'selected' : '' ?>>Ticket / Cette semaine / En cours</option>
-                        <option value="4" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '4') ? 'selected' : '' ?>>Ticket / Cette semaine / Urgent / En cours</option>
+                        <option value="1" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '1') ? 'selected' : '' ?>>Suivi / Cette semaine / En attente</option>
+                        <option value="2" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '2') ? 'selected' : '' ?>>Suivi / Cette semaine / Urgent / En attente</option>
+                        <option value="3" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '3') ? 'selected' : '' ?>>Ticket / Cette semaine / En attent</option>
+                        <option value="4" <?= (isset($_GET['groupe']) && $_GET['groupe'] === '4') ? 'selected' : '' ?>>Ticket / Cette semaine / Urgent / En attente</option>
                     </select>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>

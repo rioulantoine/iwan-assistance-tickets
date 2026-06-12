@@ -12,9 +12,9 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
 if (isset($_GET['groupe']) && $_GET['groupe'] !== '') {
     $groupe = (int)$_GET['groupe'];
 
-    // Dans tous les cas (1, 2, 3, 4), la date est forcée sur "Cette semaine" (1) et le statut sur "En cours" (2)
+    // Dans tous les cas (1, 2, 3, 4), la date est forcée sur "Cette semaine" (1) et le statut sur "En attente" (1)
     $_GET['date_filtre'] = '1';
-    $_GET['statut_filtre'] = '2';
+    $_GET['statut_filtre'] = '1';
 
     switch ($groupe) {
         case 1:
@@ -92,7 +92,8 @@ $liste_tickets = get_tickets($filtres);
 foreach ($liste_tickets as &$ticket) {
     // Initialisation des objets de date
     $date_creation_obj = new DateTime($ticket['date_creation']);
-    $est_resolu = ((int)$ticket['id_statut'] === 3 || !empty($ticket['date_resolution']));
+    // APRÈS
+    $est_resolu = ((int)$ticket['id_statut'] === 3 && !empty($ticket['date_resolution']));
 
     if ($est_resolu) {
         $date_fin_calcul = new DateTime($ticket['date_resolution']);
