@@ -18,6 +18,7 @@ function envoyer_mail(string $destinataire, string $sujet, string $corps_html): 
 
 function template_nouveau_ticket_admin(
     string $numero_ticket,
+    string $nom_entreprise,
     string $prenom,
     string $nom,
     string $email,
@@ -32,6 +33,7 @@ function template_nouveau_ticket_admin(
     $email       = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
     $titre       = htmlspecialchars($titre, ENT_QUOTES, 'UTF-8');
     $description = htmlspecialchars($description, ENT_QUOTES, 'UTF-8');
+    $nom_entreprise = htmlspecialchars($nom_entreprise, ENT_QUOTES, 'UTF-8');
 
     return "
     <!DOCTYPE html>
@@ -75,6 +77,14 @@ function template_nouveau_ticket_admin(
 
                                 <!-- Détails -->
                                 <table width='100%' cellpadding='0' cellspacing='0'>
+                                 <tr>
+                                        <td style='padding:8px 0; border-bottom:1px solid #eeeeee;'>
+                                            <span style='color:#888888; font-size:13px;'>Entreprise</span>
+                                        </td>
+                                        <td style='padding:8px 0; border-bottom:1px solid #eeeeee; text-align:right;'>
+                                            <span style='color:#333333; font-size:13px; font-weight:600;'>{$nom_entreprise}</span>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td style='padding: 8px 0; border-bottom:1px solid #eeeeee;'>
                                             <span style='color:#888888; font-size:13px;'>Déclarant</span>

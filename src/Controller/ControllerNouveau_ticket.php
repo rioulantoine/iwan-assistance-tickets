@@ -140,15 +140,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
             if ($id_ticket) {
                 require_once __DIR__ . '/../Mail/Mail.php';
-                $email_admin = get_email_admin();
+                require_once __DIR__ . '/../Model/ModelMail.php';
+                $email_admin = "timeo.dupe@gmail.com"; //get_email_admin();
 
                 $urgences = ['1' => 'Bloquant / Très urgent', '2' => 'Urgent', '3' => 'Normal', '4' => 'Non urgent'];
                 $libelle_urgence = $urgences[$niveau_urgence] ?? 'Normal';
                 $date_formatee = (new DateTime($date_creation))->format('d/m/Y à H:i');
-
+                $nom_entreprise = get_nom_client_par_id($id_entreprise);
                 $sujet = "Nouveau ticket créé : {$titre}";
                 $corps = template_nouveau_ticket_admin(
                     $numero_ticket,
+                    $nom_entreprise,
                     $prenom_declarant,
                     $nom_declarant,
                     $email,
