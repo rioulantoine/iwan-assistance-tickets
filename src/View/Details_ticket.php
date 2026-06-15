@@ -306,7 +306,7 @@
                         <form method="POST" action="">
                             <input type="hidden" name="action" value="modifier_notes">
                             <label for="desc_suivi" style="display:block; margin-top:20px; margin-bottom:8px; font-weight:600; color:#0f2e48; font-size: 16px;">Notes du suivi :</label>
-                            <textarea id="desc_suivi" name="description" class="suivi-notes-textarea" style="width: 100%; min-height: 150px; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit; font-size: 14px; resize: vertical; box-sizing: border-box;"><?= htmlspecialchars($details_ticket['description'] ?? '') ?></textarea>
+                            <textarea id="desc_suivi" name="description" class="suivi-notes-textarea" style="width: 100%; min-height: 350px; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit; font-size: 14px; resize: vertical; box-sizing: border-box;"><?= htmlspecialchars($details_ticket['description'] ?? '') ?></textarea>
                             <button type="submit" class="btn-submit-notes" style="margin-top: 12px; background: #805ad5; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; display:inline-flex; align-items:center; gap:8px;">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>

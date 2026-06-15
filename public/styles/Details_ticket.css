@@ -32,6 +32,7 @@ main {
     outline: none;
     border-color: #805ad5 !important;
     box-shadow: 0 0 0 3px rgba(128, 83, 213, 0.15);
+    
 }
 
 .btn-submit-notes:hover {
