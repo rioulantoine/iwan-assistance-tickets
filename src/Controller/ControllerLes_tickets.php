@@ -119,5 +119,6 @@ foreach ($liste_tickets as &$ticket) {
     $ticket['duree_traitement'] = $duree_texte;
 }
 unset($ticket);
+$ticket_suivi = (int)($filtres['ticket-suivi'] ?? 0);
 
 require_once __DIR__ . '/../View/Les_tickets.php';
