@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             maj($details_ticket['id_ticket'], $num_ticket, "Modification des notes de suivi");
         }
 
-        header("Location: index.php?page=detail_ticket&ticket=" . urlencode($num_ticket));
+        header("Location: index.php?page=admin_tickets");
         exit;
     }
 
