@@ -4,7 +4,6 @@ function ouvrirModalEdition(bouton) {
 
     document.getElementById('badge_nom_entreprise').innerText = nomEntreprise;
 
-    // C'est cette ligne qui donne la valeur au formulaire !
     document.getElementById('edit_id_client').value = bouton.getAttribute('data-id');
 
     document.getElementById('edit_nom_entreprise').value = nomEntreprise;
@@ -19,7 +18,6 @@ function ouvrirModalEdition(bouton) {
     document.getElementById('edit_telephone').value = bouton.getAttribute('data-telephone');
     document.getElementById('edit_observation').value = bouton.getAttribute('data-observation');
     
-    // 🛠️ CORRECTION : On place la logique du lien ICI, à l'intérieur de la fonction
     const id = bouton.getAttribute('data-id');
     const lienSuppression = document.getElementById('lien_supprimer_client');
     if (lienSuppression) {

@@ -12,7 +12,7 @@
 <main>
     <div class="container-tickets">
         <?php
-        // On définit le lien dynamiquement dans une variable PHP
+
         $lien_ticket = (($ticket_suivi ?? 0) === 0)
             ? "index.php?page=nouveau_ticket"
             : "index.php?page=nouveau_ticket&tab=suivi";
