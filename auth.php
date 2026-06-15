@@ -44,7 +44,9 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
 } else {
     // S'il n'y a aucun ID dans l'URL, on vérifie si on n'en a pas déjà un valide en session
     if (!isset($_SESSION['is_admin']) && !isset($_SESSION['id_client'])) {
-        die("ERREUR : Lien invalide ou expiré. Impossible d'ouvrir l'application sans identification");
+        session_destroy();
+        require_once __DIR__ . '/src/View/Client_inexistant.php';
+        exit();
     }
 
     // 🛠️ DEUXIÈME SÉCURITÉ : Si l'utilisateur navigue sur le site avec une session existante,
