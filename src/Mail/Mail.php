@@ -163,6 +163,10 @@ function template_nouveau_ticket_admin(
                             <td style='background-color:#f0f4f8; padding:20px 40px; text-align:center;'>
                                 <p style='margin:0; color:#aaaaaa; font-size:12px;'>
                                     Iwan Assistance — Ceci est un mail automatique, merci de ne pas y répondre.
+                                    <br>
+                                    Utilisez le système de ticket pour répondre.        
+                                    <br>
+                                    Nous contacter au 02 40 28 86 38 ou par mail à contact@iwan.fr 
                                 </p>
                             </td>
                         </tr>
