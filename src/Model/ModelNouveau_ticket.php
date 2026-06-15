@@ -140,6 +140,7 @@ function generer_numero_ticket()
  */
 function inserer_nouveau_ticket(
     $numero_ticket,
+    $type_ticket,
     $nom_declarant,
     $prenom_declarant,
     $telephone,
@@ -155,9 +156,9 @@ function inserer_nouveau_ticket(
     $pdo = get_bdd();
     $sql = "INSERT INTO TICKETS (
                 type, numero_ticket, declarant_nom, declarant_prenom, 
-                declarant_telephone, declarant_email,id_logiciel, titre, description, 
+                declarant_telephone, declarant_email,type_suivi, id_logiciel, titre, description, 
                 date_creation, id_entreprise, id_urgence, id_statut
-            ) VALUES (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            ) VALUES (0, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql);
     $resultat = $stmt->execute([
         $numero_ticket,
@@ -165,6 +166,7 @@ function inserer_nouveau_ticket(
         $prenom_declarant,
         $telephone,
         $email,
+        $type_ticket,
         $id_logiciel,
         $titre,
         $description,

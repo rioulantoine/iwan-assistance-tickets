@@ -437,10 +437,29 @@
                         </div>
 
 
-
-                        <div class="groupe-input">
-                            <label for="titre">Titre</label>
-                            <input type="text" id="titre" name="titre" placeholder="Entrez le titre du ticket" maxlength="50" required value="<?= htmlspecialchars($_POST['titre'] ?? '') ?>" />
+                        <div class="ligne-double">
+                            <div class="groupe-input">
+                                <label for="titre">Titre</label>
+                                <input type="text" id="titre" name="titre" placeholder="Entrez le titre du ticket" maxlength="50" required value="<?= htmlspecialchars($_POST['titre'] ?? '') ?>" />
+                            </div>
+                            <?php if ($_SESSION['is_admin']): ?>
+                                <div class="groupe-input">
+                                    <label for="type_ticket">Type de suivi</label>
+                                    <select id="type_ticket" name="type_ticket" required>
+                                        <option value="" disabled selected>Choisissez un type de suivi</option>
+                                        <option value="DEMANDE_DE_DEV" <?= ($_POST['type_ticket'] ?? '') === 'DEMANDE_DE_DEV' ? 'selected' : '' ?>>DEMANDE DE DEV</option>
+                                        <option value="BUG" <?= ($_POST['type_ticket'] ?? '') === 'BUG' ? 'selected' : '' ?>>BUG</option>
+                                        <option value="QUESTION_D'UTILISATION" <?= ($_POST['type_ticket'] ?? '') === "QUESTION_D'UTILISATION" ? 'selected' : '' ?>>QUESTION D'UTILISATION</option>
+                                        <option value="MAJ" <?= ($_POST['type_ticket'] ?? '') === 'MAJ' ? 'selected' : '' ?>>MAJ</option>
+                                        <option value="SUPPORT" <?= ($_POST['type_ticket'] ?? '') === 'SUPPORT' ? 'selected' : '' ?>>SUPPORT</option>
+                                        <option value="DEMANDE_DE_DEVIS" <?= ($_POST['type_ticket'] ?? '') === 'DEMANDE_DE_DEVIS' ? 'selected' : '' ?>>DEMANDE DE DEVIS</option>
+                                        <option value="QUESTION_ADMINISTRATIVE" <?= ($_POST['type_ticket'] ?? '') === 'QUESTION_ADMINISTRATIVE' ? 'selected' : '' ?>>QUESTION ADMINISTRATIVE</option>
+                                        <option value="INSTALL_LOGICIEL" <?= ($_POST['type_ticket'] ?? '') === 'INSTALL_LOGICIEL' ? 'selected' : '' ?>>INSTALL LOGICIEL</option>
+                                        <option value="SUPPORT_LOGICIEL" <?= ($_POST['type_ticket'] ?? '') === 'SUPPORT_LOGICIEL' ? 'selected' : '' ?>>SUPPORT_LOGICIEL</option>
+                                        <option value="AUTRE" <?= ($_POST['type_ticket'] ?? '') === 'AUTRE' ? 'selected' : '' ?>>AUTRE</option>
+                                    </select>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="detail-ticket">

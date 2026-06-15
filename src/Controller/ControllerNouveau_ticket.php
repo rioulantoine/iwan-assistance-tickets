@@ -86,6 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $niveau_urgence = trim($_POST['niveau_urgence'] ?? '3');
         $titre = trim($_POST['titre'] ?? '');
         $description = trim($_POST['description'] ?? '');
+        $type_ticket = trim($_POST['type_ticket'] ?? '');
         $erreurs = [];
 
         if ($id_logiciel === '') $id_logiciel = null;
@@ -104,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!in_array($niveau_urgence, $urgences_valides)) $erreurs[] = "Le niveau d'urgence est invalide.";
         if (empty($titre)) $erreurs[] = "Le titre est obligatoire.";
         if (empty($description)) $erreurs[] = "La description est obligatoire.";
-
         // Résolution de l'ID entreprise cible
         if ($_SESSION['is_admin'] ?? false) {
             $nom_entreprise = trim($_POST['nom_entreprise'] ?? '');
@@ -126,6 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $id_ticket = inserer_nouveau_ticket(
                 $numero_ticket,
+                $type_ticket,
                 $nom_declarant,
                 $prenom_declarant,
                 $telephone,
