@@ -165,7 +165,7 @@
                             </svg>
                         <?php endif; ?>
 
-                        <?php if (($details_ticket['id_statut'] ?? null) != 4) : ?>
+                        <?php if (($details_ticket['id_statut'] ?? null) != 4 && (($details_ticket['type'] ?? 0) === 0)) : ?>
                             <a href="index.php?page=changer_statut&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&status=4"
                                 style="display: inline-flex; align-items: center; gap: 6px; padding: 0 14px; height: 35px; background-color: #94a3b8; color: white; border-radius: 4px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; font-size: 14px; text-decoration: none;">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -302,7 +302,7 @@
                         </p>
                     </div>
 
-                    <?php if ((int)($details_ticket['type'] ?? 0) === 1) : ?>
+                    <?php if ((int)($details_ticket['type'] ?? 0) === 1 && ($_SESSION['is_admin'] ?? false)) : ?>
                         <form method="POST" action="">
                             <input type="hidden" name="action" value="modifier_notes">
                             <label for="desc_suivi" style="display:block; margin-top:20px; margin-bottom:8px; font-weight:600; color:#0f2e48; font-size: 16px;">Notes du suivi :</label>

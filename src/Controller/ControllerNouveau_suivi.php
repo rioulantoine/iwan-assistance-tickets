@@ -84,7 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     require_once __DIR__ . '/../Model/ModelMail.php';
                     $date_formatee = (new DateTime($date))->format('d/m/Y à H:i');
                     $sujet = "Nouveau suivi créé : {$titre}";
+                    $id_lien = $id_entreprise;
                     $corps = template_nouveau_suivi(
+                        $id_lien,
                         $numero_suivi,
                         $nom_entreprise,
                         $date_formatee,
