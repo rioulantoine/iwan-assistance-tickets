@@ -179,7 +179,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $mail_envoye = envoyer_mail($email_admin, $sujet, $corps);
                 }
 
+                // Gestion optionnelle des fichiers téléversés
+                $fichiers = $_FILES['fichier'] ?? null;
+                if (!empty($fichiers['name'][0]) && $id_ticket) {
+                    $dossier = __DIR__ . '/../../public/uploads/';
+                    if (!is_dir($dossier)) mkdir($dossier, 0777, true);
 
+                    for ($i = 0; $i < count($fichiers['name']); $i++) {
+                        $nom_original = preg_replace('/[^a-zA-Z0-9._-]/', '_', $fichiers['name'][$i]);
+                        $tmp = $fichiers['tmp_name'][$i];
+                        $type = $fichiers['type'][$i];
+                        $taille = $fichiers['size'][$i];
+                        $extension = pathinfo($nom_original, PATHINFO_EXTENSION);
+                        $nom_stockage = uniqid() . '.' . $extension;
+
+                        if (move_uploaded_file($tmp, $dossier . $nom_stockage)) {
+                            inserer_piece_jointe($nom_original, $nom_stockage, $type, $taille, date('Y-m-d H:i:s'), $id_ticket);
+                        }
+                    }
+                }
 
                 if ($_SESSION['is_admin'] ?? false) {
                     header("Location: index.php?page=accueil");
@@ -189,25 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             }
 
-            // Gestion optionnelle des fichiers téléversés
-            $fichiers = $_FILES['fichier'] ?? null;
-            if (!empty($fichiers['name'][0]) && $id_ticket) {
-                $dossier = __DIR__ . '/../../public/uploads/';
-                if (!is_dir($dossier)) mkdir($dossier, 0777, true);
 
-                for ($i = 0; $i < count($fichiers['name']); $i++) {
-                    $nom_original = preg_replace('/[^a-zA-Z0-9._-]/', '_', $fichiers['name'][$i]);
-                    $tmp = $fichiers['tmp_name'][$i];
-                    $type = $fichiers['type'][$i];
-                    $taille = $fichiers['size'][$i];
-                    $extension = pathinfo($nom_original, PATHINFO_EXTENSION);
-                    $nom_stockage = uniqid() . '.' . $extension;
-
-                    if (move_uploaded_file($tmp, $dossier . $nom_stockage)) {
-                        inserer_piece_jointe($nom_original, $nom_stockage, $type, $taille, date('Y-m-d H:i:s'), $id_ticket);
-                    }
-                }
-            }
 
             if ($id_ticket) {
                 if ($_SESSION['is_admin'] ?? false) {

@@ -152,7 +152,7 @@ function template_nouveau_ticket_admin(
                         
                         <tr>
                             <td style='padding: 0 40px 36px;' align='center'>
-                                <a href='https://iwan.fr/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID=1'
+                            <a href='http://localhost/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID=1'
                                 style='display:inline-block; background-color:#0f2e48; color:#ffffff; text-decoration:none; font-size:14px; font-weight:600; padding:14px 32px; border-radius:6px; letter-spacing:0.5px;'>
                                 Voir le ticket
                                 </a>

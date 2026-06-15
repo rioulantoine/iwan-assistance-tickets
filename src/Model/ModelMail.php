@@ -16,7 +16,7 @@ function get_email_admin(): string
 /**
  * Récupère le nom et prénom d'un client par son id
  */
-function get_nom_client_par_id(int $id_client): string
+function get_nom_client_par_id(string $id_client): string
 {
     $pdo = get_bdd();
     $stmt = $pdo->prepare("SELECT nom_entreprise FROM CLIENT WHERE id_client = ?");
