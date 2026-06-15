@@ -78,7 +78,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // --- Redirection directe en cas de succès ---
             if ($id_suivi) {
-                // 🛠️ Nettoyage : Plus besoin d'unset($_SESSION['entreprise_selectionnee']) ici
+                $notifier_client = isset($_POST['notifier_client']) && $_POST['notifier_client'] === '1';
+                if ($notifier_client) {
+                    require_once __DIR__ . '/../Mail/Mail.php';
+                    require_once __DIR__ . '/../Model/ModelMail.php';
+                    $date_formatee = (new DateTime($date))->format('d/m/Y à H:i');
+                    $sujet = "Nouveau suivi créé : {$titre}";
+                    $corps = template_nouveau_suivi(
+                        $numero_suivi,
+                        $nom_entreprise,
+                        $date_formatee,
+                        $type_suivi,
+                        $prenom_contact,
+                        $nom_contact,
+                        $email,
+                        $telephone,
+                        $titre,
+                        $notes
+                    );
+                    $mail_envoye = envoyer_mail($email, $sujet, $corps);
+                    if ($mail_envoye) {
+                        $_SESSION['flash_message'] = "Le ticket <strong>{$numero_suivi}</strong> a été créé et notifié.";
+                        $_SESSION['flash_type']    = "success";
+                    } else {
+
+                        $raison_serveur = $_SESSION['serveur_mail_erreur'] ?? "Le serveur a refusé la commande mail().";
+                        unset($_SESSION['serveur_mail_erreur']);
+
+                        $_SESSION['flash_message'] = "Ticket créé, mais échec du mail.<br><small style='color:#ffcccc;'>Rapport serveur : " . htmlspecialchars($raison_serveur) . "</small>";
+                        $_SESSION['flash_type']    = "error";
+                    }
+                }
+
+
                 header("Location: index.php?page=accueil");
                 exit();
             } else {

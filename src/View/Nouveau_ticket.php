@@ -601,8 +601,23 @@
                             <label for="suivi_description">Notes</label>
                             <textarea id="suivi_description" name="description" placeholder="Saisissez ici le résumé complet de la conversation, les consignes laissées ou les actions à mener..."></textarea>
                         </div>
+                        <div class="ligne-footer">
 
-                        <button type="submit" class="btn-submit" name="nouveau-suivi">Enregistrer le suivi d'appel</button>
+                            <button type="submit" class="btn-submit" name="nouveau-suivi">Enregistrer le suivi d'appel</button>
+                            <div class="form-group-checkbox">
+                                <label class="custom-checkbox-container">
+                                    <div class="checkbox-wrapper">
+                                        <input type="checkbox" name="notifier_client" id="notifier_client" value="1">
+                                        <div class="checkbox-box">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <span class="checkbox-label">Notifier le client par e-mail</span>
+                                </label>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
