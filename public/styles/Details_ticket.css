@@ -926,3 +926,115 @@ main {
     box-shadow: 0 0 0 3px rgba(15, 46, 72, 0.2);
     border-color: #0f2e48;
 }
+
+
+
+
+
+
+
+
+
+/* Conteneur global */
+.dropdown-container-light {
+    position: relative;
+    display: inline-block;
+    min-width: 220px;
+}
+
+.btn-trigger-blue {
+    width: 100%;
+    height: 35px; 
+    background-color: #475569;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px; 
+    padding: 0 16px; 
+    font-size: 14px; 
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+}
+
+.btn-trigger-blue:hover {
+    background-color: #526074; 
+}
+
+
+.dropdown-menu-light {
+    display: none; 
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%; 
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    padding: 14px 0;
+    box-sizing: border-box;
+}
+
+.dropdown-item-light {
+    display: flex;
+    align-items: center; 
+    gap: 12px;
+    padding: 10px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f2e48;
+    text-decoration: none;
+    white-space: normal; 
+    line-height: 1.3; /* 🎯 Ajout : aère un peu le texte quand il passe sur 2 lignes */
+    transition: background-color 0.15s ease;
+}
+
+/* Le titre gris en majuscules */
+.dropdown-title-light {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 20px 14px 20px;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Chaque option de la liste */
+.dropdown-item-light {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px;
+    font-weight: 700; /* Texte gras comme sur l'image */
+    color: #0f2e48; /* Texte bleu marine foncé */
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+}
+
+/* Effet au survol d'une ligne (gris très clair) */
+.dropdown-item-light:hover {
+    background-color: #f8fafc; 
+}
+
+/* Le petit point devant le texte */
+.dot-neutral {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #475569; /* Gris neutre */
+    flex-shrink: 0;
+}

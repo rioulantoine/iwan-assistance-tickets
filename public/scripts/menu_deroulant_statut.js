@@ -62,3 +62,24 @@ document.addEventListener('DOMContentLoaded', function () {
                         });
                     }
                 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const btnSuivi = document.getElementById('typeSuiviDropdownBtn');
+    const menuSuivi = document.getElementById('typeSuiviDropdownMenu');
+
+    if (!btnSuivi || !menuSuivi) return;
+
+    // Ouverture / Fermeture
+    btnSuivi.addEventListener('click', function(e) {
+        e.stopPropagation(); 
+        const isVisible = menuSuivi.style.display === 'block';
+        menuSuivi.style.display = isVisible ? 'none' : 'block';
+    });
+
+    // Fermeture si clic à l'extérieur
+    document.addEventListener('click', function(e) {
+        if (!menuSuivi.contains(e.target) && e.target !== btnSuivi) {
+            menuSuivi.style.display = 'none';
+        }
+    });
+});

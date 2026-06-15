@@ -12,7 +12,19 @@ if ($details_ticket === false) {
     header("Location: index.php?page=accueil");
     exit;
 }
-
+// Tableau des options de suivi
+$types_suivi = [
+    'DEMANDE DE DEV',
+    'BUG',
+    'QUESTION D\'UTILISATION',
+    'MAJ',
+    'SUPPORT',
+    'DEMANDE DE DEVIS',
+    'QUESTION ADMINISTRATIVE',
+    'INSTALL LOGICIEL',
+    'SUPPORT_LOGICIEL',
+    'AUTRE'
+];
 // 2. Formatage de la date de création
 $date_ticket = isset($details_ticket['date_creation']) ? date('d/m/Y H:i', strtotime($details_ticket['date_creation'])) : 'Date non spécifiée';
 $ecart_date_ticket = '';
@@ -83,6 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: index.php?page=admin_tickets");
         exit;
     }
+
+
 
     // ==========================================
     // ACTION : AJOUT D'UNE NOUVELLE RÉPONSE

@@ -37,6 +37,18 @@ function get_pieces_jointes_par_ticket($num_ticket)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Modifier le type
+ */
+function modifier_type($num_ticket, $type)
+{
+    $pdo = get_bdd();
+    $sql = "UPDATE TICKETS
+        SET type_suivi = ?
+        WHERE numero_ticket = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$type, $num_ticket]);
+}
 
 /**
  * Met a jour le statut d'un ticket et les dates de résolution et d'archivage en fonction du nouveau statut

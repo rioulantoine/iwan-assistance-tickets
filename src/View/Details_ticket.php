@@ -87,6 +87,27 @@
                 <?php endif; ?>
 
                 <?php if ($_SESSION['is_admin'] ?? false) : ?>
+
+                    <div class="dropdown-container-light">
+                        <button id="typeSuiviDropdownBtn" class="btn-trigger-blue" type="button">
+                            <span id="btnTextSuivi"><?= !empty($details_ticket['type_suivi']) ? htmlspecialchars($details_ticket['type_suivi']) : 'Choisissez un type' ?></span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+
+                        <div class="dropdown-menu-light" id="typeSuiviDropdownMenu">
+                            <div class="dropdown-title-light">CHANGER LE TYPE DE SUIVI :</div>
+
+                            <?php foreach (($types_suivi ?? []) as $type) : ?>
+                                <a href="index.php?page=changer_type&ticket=<?= urlencode($details_ticket['numero_ticket'] ?? '') ?>&type=<?= urlencode($type) ?>" class="dropdown-item-light">
+                                    <span class="dot-neutral"></span>
+                                    <?= htmlspecialchars($type) ?>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
                     <div class="status-dropdown-container" style="position: relative; display: inline-block;">
 
                         <button id="statusDropdownBtn" class="dropdown-trigger-btn" type="button" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; display: block; outline: none;">
