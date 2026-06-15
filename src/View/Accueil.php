@@ -24,7 +24,7 @@ require_once __DIR__ . '/../Controller/ControllerHeader.php';
         <div class="tableau-de-bord">
             <div class="header-text">
                 <?php if ($_SESSION['is_admin'] ?? false) : ?>
-                    <h1>Tableau de bord</h1>
+                    <h1>Tableau de bord de IWAN</h1>
                 <?php else: ?>
                     <h1>Tableau de bord de <strong><?= htmlspecialchars($nom_client ?? '') ?></strong></h1>
                 <?php endif; ?>
