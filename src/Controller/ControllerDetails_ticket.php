@@ -153,11 +153,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once __DIR__ . '/../Model/ModelMail.php';
             // Envoi mail à l'admin si c'est un client qui répond
             if ($est_admin && $_POST['notifier_client']) {
+                $id_lien = $details_ticket['id_entreprise'];
                 $email_client = $details_ticket['declarant_email'];
                 $nom_entreprise = $details_ticket['nom_entreprise'];
                 $date_formatee = (new DateTime($date_envoi))->format('d/m/Y à H:i');
                 $sujet = "Nouvelle réponse de IWAN sur le ticket : {$details_ticket['titre']}";
                 $corps = template_reponse_ticket(
+                    $id_lien,
                     $details_ticket['numero_ticket'],
                     $details_ticket['titre'],
                     $nom_entreprise,
@@ -167,14 +169,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 );
                 envoyer_mail($email_client, $sujet, $corps);
             } elseif ($est_admin === 0) {
-
+                $id_lien = 1;
                 $email_admin = "timeo.dupe@gmail.com"; // get_email_admin();
-
                 $nom_entreprise = $details_ticket['nom_entreprise'];
                 $date_formatee = (new DateTime($date_envoi))->format('d/m/Y à H:i');
 
                 $sujet = "Nouvelle réponse sur le ticket : {$details_ticket['titre']}";
                 $corps = template_reponse_ticket(
+                    $id_lien,
                     $details_ticket['numero_ticket'],
                     $details_ticket['titre'],
                     $nom_entreprise,
