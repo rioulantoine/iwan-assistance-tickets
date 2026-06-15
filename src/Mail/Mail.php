@@ -437,8 +437,6 @@ function template_nouveau_suivi(
                             <td style='background-color:#f0f4f8; padding:20px 40px; text-align:center;'>
                                 <p style='margin:0; color:#aaaaaa; font-size:12px; line-height:1.5;'>
                                     Iwan Assistance — Ceci est un mail automatique, merci de ne pas y répondre.
-                                    <br>
-                                    Utilisez l'espace d'assistance en ligne pour ajouter un commentaire.        
                                     <br><br>
                                     Nous contacter au <strong>02 40 28 86 38</strong> ou par mail à <a href='mailto:contact@iwan.fr' style='color:#94a3b8;'>contact@iwan.fr</a>
                                 </p>
