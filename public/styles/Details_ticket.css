@@ -847,3 +847,81 @@ main {
     transition: opacity 0.15s;
 }
 .close-flash:hover { opacity: 1; }
+
+
+
+/* Affichage de la checkbox pour notifier le client ou non */
+.form-group-checkbox {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5%;
+}
+
+.custom-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.custom-checkbox-container:hover .checkbox-box {
+    border-color: #0f2e48;
+    background-color: #f8fafc;
+}
+
+
+.checkbox-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+
+.checkbox-box {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px; 
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff; 
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+}
+
+
+.checkbox-box svg {
+    transform: scale(0);
+    transition: transform 0.15s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+}
+
+
+.checkbox-wrapper input[type="checkbox"]:checked + .checkbox-box {
+    background-color: #0f2e48; 
+    border-color: #0f2e48;
+}
+
+
+.checkbox-wrapper input[type="checkbox"]:checked + .checkbox-box svg {
+    transform: scale(1);
+}
+
+
+
+
+
+.checkbox-wrapper input[type="checkbox"]:focus-visible + .checkbox-box {
+    box-shadow: 0 0 0 3px rgba(15, 46, 72, 0.2);
+    border-color: #0f2e48;
+}

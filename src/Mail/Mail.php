@@ -206,23 +206,33 @@ function template_reponse_ticket(
                         <tr>
                             <td style='background-color:#0f2e48; padding:32px 40px; text-align:center;'>
                                 <h1 style='margin:0; color:#ffffff; font-size:22px; font-weight:600;'>Iwan Assistance</h1>
-                                <p style='margin:6px 0 0; color:#a8c4d8; font-size:13px;'>Nouvelle réponse client</p>
-                            </td>
+                            " . (($_SESSION['is_admin'] ?? false) ? "
+                            <p style='margin:6px 0 0; color:#a8c4d8; font-size:13px;'>
+                                Nouvelle réponse d'IWAN
+                            </p>
+                        " : "
+                            <p style='margin:6px 0 0; color:#a8c4d8; font-size:13px;'>
+                                Nouvelle réponse client
+                            </p>
+                        ") . "                            
+                        </td>
                         </tr>
 
                         <!-- BODY -->
                         <tr>
                             <td style='padding:36px 40px;'>
-                                <p style='margin:0 0 24px; color:#333333; font-size:15px;'>
-                                    Un client a apporté une réponse sur le ticket suivant.
-                                </p>
-
-                                <!-- Numéro ticket -->
-                                <div style='background-color:#f0f4f8; border-left:4px solid #0f2e48; border-radius:4px; padding:14px 18px; margin-bottom:24px;'>
-                                    <p style='margin:0; color:#0f2e48; font-size:14px; font-weight:bold;'>#{$numero_ticket}</p>
-                                    <p style='margin:4px 0 0; color:#555555; font-size:15px;'>{$titre_ticket}</p>
-                                </div>
-
+                        " . (($_SESSION['is_admin'] ?? false) ? "
+                            <p style='margin:0 0 12px; color:#333333; font-size:15px;'>
+                                Bonjour,
+                            </p>
+                            <p style='margin:0 0 24px; color:#333333; font-size:15px; line-height: 1.5;'>
+                                IWAN a apporté une réponse à votre ticket. Vous trouverez les détails de cette mise à jour ci-dessous.
+                            </p>
+                        " : "
+                            <p style='margin:0 0 24px; color:#333333; font-size:15px; line-height: 1.5;'>
+                                Un client a apporté une nouvelle réponse sur le ticket suivant et est en attente de traitement.
+                            </p>
+                        ") . "
                                 <!-- Détails -->
                                 <table width='100%' cellpadding='0' cellspacing='0'>
                                     <tr>
@@ -235,10 +245,10 @@ function template_reponse_ticket(
                                     </tr>
                                     <tr>
                                         <td style='padding:8px 0; border-bottom:1px solid #eeeeee;'>
-                                            <span style='color:#888888; font-size:13px;'>Titre de la réponse</span>
+                                            <span style='color:#888888; font-size:13px;'>Titre du ticket</span>
                                         </td>
                                         <td style='padding:8px 0; border-bottom:1px solid #eeeeee; text-align:right;'>
-                                            <span style='color:#333333; font-size:13px;'>{$titre_reponse}</span>
+                                            <span style='color:#333333; font-size:13px;'>{$titre_ticket}</span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -250,7 +260,11 @@ function template_reponse_ticket(
                                         </td>
                                     </tr>
                                 </table>
-
+                                <!-- Nom du ticket -->
+                                <p style='margin:0 0 8px; color:#888888; font-size:13px;'>Titre de la réponse</p>
+                                <div style='background-color:#f0f4f8; border-left:4px solid #0f2e48; border-radius:4px; padding:14px 18px; margin-bottom:24px;'>
+                                    <p style='margin:4px 0 0; color:#555555; font-size:15px;'>{$titre_reponse}</p>
+                                </div>
                                 <!-- Contenu -->
                                 <div style='margin-top:24px;'>
                                     <p style='margin:0 0 8px; color:#888888; font-size:13px;'>Message</p>
@@ -274,6 +288,10 @@ function template_reponse_ticket(
                             <td style='background-color:#f0f4f8; padding:20px 40px; text-align:center;'>
                                 <p style='margin:0; color:#aaaaaa; font-size:12px;'>
                                     Iwan Assistance — Ceci est un mail automatique, merci de ne pas y répondre.
+                                    <br>
+                                    Utilisez le système de ticket pour répondre.        
+                                    <br>
+                                    Nous contacter au 02 40 28 86 38 ou par mail à contact@iwan.fr 
                                 </p>
                             </td>
                         </tr>

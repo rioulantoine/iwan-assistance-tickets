@@ -497,8 +497,22 @@
                                 <label for="reply-title">Titre</label>
                                 <input type="text" id="reply-title" name="titre" placeholder="Entrez le titre de votre réponse" <?= !($_SESSION['is_admin'] ?? false) ? 'required' : '' ?>>
                             </div>
-
-                            <div class="textarea-wrapper">
+                            <?php if ($_SESSION['is_admin']): ?>
+                                <div class="form-group-checkbox">
+                                    <label class="custom-checkbox-container">
+                                        <div class="checkbox-wrapper">
+                                            <input type="checkbox" name="notifier_client" id="notifier_client" value="1">
+                                            <div class="checkbox-box">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <span class="checkbox-label">Notifier le client par e-mail</span>
+                                    </label>
+                                </div>
+                            <?php endif; ?>
+                            <div class=" textarea-wrapper">
                                 <textarea name="contenu" placeholder="Entrez votre réponse..." required></textarea>
 
                                 <div class="textarea-actions">
