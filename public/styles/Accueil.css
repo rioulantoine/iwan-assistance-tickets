@@ -10,7 +10,7 @@ main {
     justify-content: space-between; 
     align-items: center; 
     width: 100%;
-    margin-bottom: 24px; 
+    margin-bottom: -1%; 
    padding: 1% 2%;
 }
 
@@ -661,7 +661,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    margin-top: 20px;
+
 }
 
 /* ==============================
