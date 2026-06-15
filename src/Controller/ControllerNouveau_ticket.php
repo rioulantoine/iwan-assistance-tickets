@@ -74,7 +74,7 @@ if (!($_SESSION['is_admin'] ?? false)) {
 // ==========================================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // L'Action A ("selectionner_entreprise") a été retirée d'ici (gérée à 100% en JS)
+
 
     // Action B : Enregistrement du ticket final
     if (isset($_POST['nouveau-ticket'])) {
@@ -141,7 +141,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($id_ticket) {
                 require_once __DIR__ . '/../Mail/Mail.php';
                 require_once __DIR__ . '/../Model/ModelMail.php';
-                $email_admin = "timeo.dupe@gmail.com"; //get_email_admin();
 
                 $urgences = ['1' => 'Bloquant / Très urgent', '2' => 'Urgent', '3' => 'Normal', '4' => 'Non urgent'];
                 $libelle_urgence = $urgences[$niveau_urgence] ?? 'Normal';
@@ -159,20 +158,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $libelle_urgence,
                     $date_formatee
                 );
+                $notifier_client = isset($_POST['notifier_client']) && $_POST['notifier_client'] === '1';
 
-                $mail_envoye = envoyer_mail($email_admin, $sujet, $corps);
+                if ($_SESSION['is_admin'] && $notifier_client) {
+                    $mail_envoye = envoyer_mail($email, $sujet, $corps);
 
-                if ($mail_envoye) {
-                    $_SESSION['flash_message'] = "Le ticket <strong>{$numero_ticket}</strong> a été créé et notifié.";
-                    $_SESSION['flash_type']    = "success";
-                } else {
-                    // 🔍 On récupère l'erreur brute que le serveur a renvoyée
-                    $raison_serveur = $_SESSION['serveur_mail_erreur'] ?? "Le serveur IONOS a refusé la commande mail().";
-                    unset($_SESSION['serveur_mail_erreur']); // On nettoie la session
+                    if ($mail_envoye) {
+                        $_SESSION['flash_message'] = "Le ticket <strong>{$numero_ticket}</strong> a été créé et notifié.";
+                        $_SESSION['flash_type']    = "success";
+                    } else {
 
-                    $_SESSION['flash_message'] = "Ticket créé, mais échec du mail.<br><small style='color:#ffcccc;'>Rapport serveur : " . htmlspecialchars($raison_serveur) . "</small>";
-                    $_SESSION['flash_type']    = "error";
+                        $raison_serveur = $_SESSION['serveur_mail_erreur'] ?? "Le serveur a refusé la commande mail().";
+                        unset($_SESSION['serveur_mail_erreur']);
+
+                        $_SESSION['flash_message'] = "Ticket créé, mais échec du mail.<br><small style='color:#ffcccc;'>Rapport serveur : " . htmlspecialchars($raison_serveur) . "</small>";
+                        $_SESSION['flash_type']    = "error";
+                    }
+                } elseif ($_SESSION['id_client']) {
+                    $email_admin = "timeo.dupe@gmail.com"; //get_email_admin();
+                    $mail_envoye = envoyer_mail($email_admin, $sujet, $corps);
                 }
+
+
 
                 if ($_SESSION['is_admin'] ?? false) {
                     header("Location: index.php?page=accueil");
