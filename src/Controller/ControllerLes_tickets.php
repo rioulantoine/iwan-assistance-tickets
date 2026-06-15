@@ -8,6 +8,8 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
     header('Location: index.php?page=accueil');
     exit();
 }
+$ticket_suivi = $_GET['ticket_suivi'] ?? 0;
+
 // Filtres par groupe
 if (isset($_GET['groupe']) && $_GET['groupe'] !== '') {
     $groupe = (int)$_GET['groupe'];
