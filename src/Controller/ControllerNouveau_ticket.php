@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $date_formatee = (new DateTime($date_creation))->format('d/m/Y à H:i');
                 $nom_entreprise = get_nom_client_par_id($id_entreprise);
                 $sujet = "Nouveau ticket créé : {$titre}";
-                $corps = template_nouveau_ticket_admin(
+                $corps = template_nouveau_ticket_client(
                     $numero_ticket,
                     $nom_entreprise,
                     $prenom_declarant,
@@ -160,11 +160,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $titre,
                     $description,
                     $libelle_urgence,
-                    $date_formatee
+                    $date_formatee,
+                    $id_entreprise
                 );
                 $notifier_client = isset($_POST['notifier_client']) && $_POST['notifier_client'] === '1';
 
                 if ($_SESSION['is_admin'] && $notifier_client) {
+                    $corps = template_nouveau_ticket_client(
+                        $numero_ticket,
+                        $nom_entreprise,
+                        $prenom_declarant,
+                        $nom_declarant,
+                        $email,
+                        $titre,
+                        $description,
+                        $libelle_urgence,
+                        $date_formatee,
+                        $id_entreprise
+                    );
                     $mail_envoye = envoyer_mail($email, $sujet, $corps);
 
                     if ($mail_envoye) {
@@ -181,6 +194,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } elseif (!empty($_SESSION['id_client'])) {
 
                     $email_admin = $_ENV['MAIL_ADMIN'] ?? '';
+                    $id_admin = $_ENV['ID_IWAN'];
+                    $corps = template_nouveau_ticket_admin(
+                        $numero_ticket,
+                        $nom_entreprise,
+                        $prenom_declarant,
+                        $nom_declarant,
+                        $email,
+                        $titre,
+                        $description,
+                        $libelle_urgence,
+                        $date_formatee,
+                        $id_admin
+                    );
 
                     if (!empty($email_admin)) {
 

@@ -58,7 +58,8 @@ function template_nouveau_ticket_admin(
     string $titre,
     string $description,
     string $urgence,
-    string $date_creation
+    string $date_creation,
+    string $id_admin
 ): string {
     // Protection XSS
     $prenom      = htmlspecialchars($prenom, ENT_QUOTES, 'UTF-8');
@@ -151,7 +152,7 @@ function template_nouveau_ticket_admin(
                         
                         <tr>
                             <td style='padding: 0 40px 36px;' align='center'>
-                            <a href='https://iwan.fr/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID=1'
+                            <a href='https://iwan.fr/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID={$id_admin}'
                                 style='display:inline-block; background-color:#0f2e48; color:#ffffff; text-decoration:none; font-size:14px; font-weight:600; padding:14px 32px; border-radius:6px; letter-spacing:0.5px;'>
                                 Voir le ticket
                                 </a>
@@ -178,7 +179,136 @@ function template_nouveau_ticket_admin(
     </body>
     </html>";
 }
+function template_nouveau_ticket_client(
+    string $numero_ticket,
+    string $nom_entreprise,
+    string $prenom,
+    string $nom,
+    string $email,
+    string $titre,
+    string $description,
+    string $urgence,
+    string $date_creation,
+    string $id_entreprise
+): string {
+    // Protection XSS
+    $prenom      = htmlspecialchars($prenom, ENT_QUOTES, 'UTF-8');
+    $nom         = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
+    $email       = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+    $titre       = htmlspecialchars($titre, ENT_QUOTES, 'UTF-8');
+    $description = htmlspecialchars($description, ENT_QUOTES, 'UTF-8');
+    $nom_entreprise = htmlspecialchars($nom_entreprise, ENT_QUOTES, 'UTF-8');
 
+    return "
+<!DOCTYPE html>
+    <html lang='fr'>
+    <head>
+        <meta charset='UTF-8'>
+    </head>
+    <body style='margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, sans-serif;'>
+
+        <table width='100%' cellpadding='0' cellspacing='0' style='background-color:#f4f6f8; padding: 40px 0;'>
+            <tr>
+                <td align='center'>
+                    <table width='600' cellpadding='0' cellspacing='0' style='background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08);'>
+
+                        <tr>
+                            <td style='background-color:#0f2e48; padding: 32px 40px; text-align:center;'>
+                                <h1 style='margin:0; color:#ffffff; font-size:22px; font-weight:600; letter-spacing:0.5px;'>
+                                    Iwan Assistance
+                                </h1>
+                                <p style='margin:6px 0 0; color:#a8c4d8; font-size:13px;'>
+                                    Nouveau ticket créé
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style='padding: 36px 40px;'>
+                                <table width='100%' cellpadding='0' cellspacing='0' style='margin-bottom: 28px;'>
+                                    <tr>
+                                        <td style='padding:8px 0; border-bottom:1px solid #eeeeee;'>
+                                            <span style='color:#888888; font-size:13px;'>Entreprise</span>
+                                        </td>
+                                        <td style='padding:8px 0; border-bottom:1px solid #eeeeee; text-align:right;'>
+                                            <span style='color:#333333; font-size:13px; font-weight:600;'>{$nom_entreprise}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style='padding: 8px 0; border-bottom:1px solid #eeeeee;'>
+                                            <span style='color:#888888; font-size:13px;'>Déclarant</span>
+                                        </td>
+                                        <td style='padding: 8px 0; border-bottom:1px solid #eeeeee; text-align:right;'>
+                                            <span style='color:#333333; font-size:13px; font-weight:600;'>{$prenom} {$nom}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style='padding: 8px 0; border-bottom:1px solid #eeeeee;'>
+                                            <span style='color:#888888; font-size:13px;'>Email</span>
+                                        </td>
+                                        <td style='padding: 8px 0; border-bottom:1px solid #eeeeee; text-align:right;'>
+                                            <span style='color:#333333; font-size:13px;'>{$email}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style='padding: 8px 0; border-bottom:1px solid #eeeeee;'>
+                                            <span style='color:#888888; font-size:13px;'>Urgence</span>
+                                        </td>
+                                        <td style='padding: 8px 0; border-bottom:1px solid #eeeeee; text-align:right;'>
+                                            <span style='color:#333333; font-size:13px;'>{$urgence}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style='padding: 8px 0; border-bottom:1px solid #eeeeee;'>
+                                            <span style='color:#888888; font-size:13px;'>Date</span>
+                                        </td>
+                                        <td style='padding: 8px 0; border-bottom:1px solid #eeeeee; text-align:right;'>
+                                            <span style='color:#333333; font-size:13px;'>{$date_creation}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div style='background-color:#f0f4f8; border-left:4px solid #0f2e48; border-radius:4px; padding:14px 18px; margin-bottom:24px;'>
+                                    <p style='margin:4px 0 0; color:#555555; font-size:15px;'>{$titre}</p>
+                                </div>
+
+                                <div style='margin-top:24px;'>
+                                    <p style='margin:0 0 8px; color:#888888; font-size:13px;'>Description</p>
+                                    <p style='margin:0; color:#333333; font-size:14px; line-height:1.6; background-color:#f9fafb; border-radius:4px; padding:14px;'>
+                                    " . nl2br($description) . "                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td style='padding: 0 40px 36px;' align='center'>
+                            <a href='https://iwan.fr/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID={$id_entreprise}'
+                                style='display:inline-block; background-color:#0f2e48; color:#ffffff; text-decoration:none; font-size:14px; font-weight:600; padding:14px 32px; border-radius:6px; letter-spacing:0.5px;'>
+                                Voir le ticket
+                                </a>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td style='background-color:#f0f4f8; padding:20px 40px; text-align:center;'>
+                                <p style='margin:0; color:#aaaaaa; font-size:12px;'>
+                                    Iwan Assistance — Ceci est un mail automatique, merci de ne pas y répondre.
+                                    <br>
+                                    Utilisez le système de ticket pour répondre.        
+                                    <br>
+                                    Nous contacter au <strong>02 40 28 86 38</strong> ou par mail à <a href='mailto:contact@iwan.fr' style='color:#94a3b8;'>contact@iwan.fr</a>
+                                </p>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </body>
+    </html>";
+}
 function template_reponse_ticket(
     string $id_lien,
     string $numero_ticket,
