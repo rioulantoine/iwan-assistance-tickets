@@ -11,7 +11,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// auth.php profite maintenant de $_ENV qui est chargé juste au-dessus !
+
 require_once __DIR__ . '/auth.php';
 
 $base = $_ENV['BASE_URL'] ?? '';

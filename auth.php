@@ -20,8 +20,8 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
         $_SESSION['name'] = 'IWAN';
     } else {
 
-        // 🛠️ SEURITÉ CLIENT : On vérifie si cet ID existe bien dans notre base de données
-        $id_numerique = (int)$id_url;
+        // On vérifie si cet ID existe bien dans notre base de données
+        $id_numerique = $id_url;
         $pdo = get_bdd();
         $stmt = $pdo->prepare("SELECT COUNT(id_client) FROM CLIENT WHERE id_client = ?");
         $stmt->execute([$id_numerique]);
