@@ -178,9 +178,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION['flash_message'] = "Ticket créé, mais échec du mail.<br><small style='color:#ffcccc;'>Rapport serveur : " . htmlspecialchars($raison_serveur) . "</small>";
                         $_SESSION['flash_type']    = "error";
                     }
-                } elseif ($_SESSION['id_client']) {
-                    $email_admin = $_ENV['MAIL_ADMIN'] ?? 'Erreur email';
-                    $mail_envoye = envoyer_mail($email_admin, $sujet, $corps);
+                } elseif (!empty($_SESSION['id_client'])) {
+
+                    $email_admin = $_ENV['MAIL_ADMIN'] ?? '';
+
+                    if (!empty($email_admin)) {
+
+                        $mail_envoye = envoyer_mail($email_admin, $sujet, $corps);
+
+                        if (!$mail_envoye) {
+                            error_log("Erreur : Échec de l'envoi du mail de notification à l'admin.");
+                        }
+                    } else {
+                        error_log("Alerte IWAN : MAIL_ADMIN introuvable dans le .env, notification annulée.");
+                    }
                 }
 
                 // Gestion optionnelle des fichiers téléversés
