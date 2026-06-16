@@ -32,8 +32,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $observation = trim($_POST['observation'] ?? '');
 
     if (!empty($id_client) && !empty($nom_entreprise)) {
-        // Envoi de $id_logiciel à la fonction
-        $succes = modifier_entreprise_par_id($id_client, $nom_entreprise, $nouvel_id_client, $id_logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation);
+
+
+        $succes = modifier_entreprise_par_id(
+            $id_client,
+            $nouvel_id_client,
+            $nom_entreprise,
+            $id_logiciel,
+            $nom,
+            $prenom,
+            $cp,
+            $ville,
+            $email,
+            $telephone,
+            $observation
+        );
 
         if ($succes) {
             $_SESSION['flash_message'] = "Les modifications ont été enregistrées avec succès.";

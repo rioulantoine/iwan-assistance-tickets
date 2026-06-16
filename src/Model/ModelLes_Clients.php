@@ -53,7 +53,7 @@ function compter_entreprises_filtres($recherche)
 /**
  * Modifier les informations d'une entreprise
  */
-function modifier_entreprise_par_id($id_client, $nom_entreprise, $nouvel_id_client, $id_logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation)
+function modifier_entreprise_par_id($ancien_id, $nouvel_id, $nom_entreprise, $id_logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation)
 {
     $pdo = get_bdd();
 
@@ -73,7 +73,7 @@ function modifier_entreprise_par_id($id_client, $nom_entreprise, $nouvel_id_clie
     try {
         $stmt = $pdo->prepare($sql);
         return $stmt->execute([
-            $nouvel_id_client,
+            $nouvel_id,
             $nom_entreprise,
             $nom,
             $prenom,
@@ -81,12 +81,13 @@ function modifier_entreprise_par_id($id_client, $nom_entreprise, $nouvel_id_clie
             $ville,
             $email,
             $telephone,
-            $id_logiciel, // ID numérique transmis ici
+            $id_logiciel,
             $observation,
-            $id_client
+            $ancien_id
         ]);
     } catch (PDOException $e) {
-        return false;
+        // Bloque la page et affiche la vraie erreur MySQL si ça échoue (ex: Clé étrangère)
+        die("Erreur MySQL : " . $e->getMessage());
     }
 }
 
