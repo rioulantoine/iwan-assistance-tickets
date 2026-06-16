@@ -22,7 +22,7 @@
             <span>Tableau de bord</span>
         </a>
         <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): ?>
-            <a href="index.php?page=admin_tickets&date_filtre=&date_debut=&date_fin=&statut_filtre=&urgence_filtre=&ticket_suivi=0&groupe=&recherche=" class="link-with-icon">
+            <a href="index.php?page=admin_tickets&date_filtre=&date_debut=&date_fin=&statut_filtre=1&urgence_filtre=&ticket_suivi=0&groupe=&recherche=" class="link-with-icon">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -38,7 +38,7 @@
                 </svg>
                 <span>Les tickets</span>
             </a>
-            <a href="index.php?page=admin_tickets&date_filtre=&date_debut=&date_fin=&statut_filtre=&urgence_filtre=&ticket_suivi=1&groupe=&recherche=" class="link-with-icon">
+            <a href="index.php?page=admin_tickets&date_filtre=&date_debut=&date_fin=&statut_filtre=1&urgence_filtre=&ticket_suivi=1&groupe=&recherche=" class="link-with-icon">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"

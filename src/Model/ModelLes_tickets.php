@@ -42,8 +42,12 @@ function get_nb_only_tickets($filtres)
     }
 
     if (!empty($filtres['statut'])) {
-        $sql .= " AND id_statut = :id_statut";
-        $params['id_statut'] = (int)$filtres['statut'];
+        // Si un statut précis est demandé, on filtre uniquement sur celui-ci
+        $sql .= " AND id_statut = :statut";
+        $params['statut'] = $filtres['statut'];
+    } else {
+        // Si le filtre est vide, on prend tout le monde SAUF le statut 4
+        $sql .= " AND id_statut != 4";
     }
 
     if (!empty($filtres['urgence'])) {
@@ -169,8 +173,12 @@ function get_tickets($filtres)
     }
     // Filtre statut 
     if (!empty($filtres['statut'])) {
+        // Si un statut précis est demandé, on filtre uniquement sur celui-ci
         $sql .= " AND t.id_statut = :statut";
         $params['statut'] = $filtres['statut'];
+    } else {
+        // Si le filtre est vide, on prend tout le monde SAUF le statut 4
+        $sql .= " AND t.id_statut != 4";
     }
 
     // Filtre urgence 

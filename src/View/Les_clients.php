@@ -212,6 +212,10 @@
                             <input type="text" id="edit_prenom" name="prenom">
                         </div>
                         <div class="groupe-input">
+                            <label for="edit_identifiant_client">Identifiant client <span class="required">*</span></label>
+                            <input type="text" id="edit_identifiant_client" name="identifiant_client" value="<?= htmlspecialchars($client['id_client'] ?? '') ?>" required>
+                        </div>
+                        <div class="groupe-input">
                             <label for="edit_logiciel">Logiciel <span class="required"></span></label>
                             <select id="edit_logiciel" name="id_logiciel">
                                 <option value="" disabled>Choisissez un logiciel</option>

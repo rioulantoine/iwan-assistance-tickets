@@ -1,11 +1,11 @@
 function ouvrirModalEdition(bouton) {
     const modal = document.getElementById('modalEditionEntreprise');
     const nomEntreprise = bouton.getAttribute('data-entreprise');
+    const id = bouton.getAttribute('data-id'); // On stocke l'ID dans une variable pour s'en servir plusieurs fois
 
     document.getElementById('badge_nom_entreprise').innerText = nomEntreprise;
-
-    document.getElementById('edit_id_client').value = bouton.getAttribute('data-id');
-
+    document.getElementById('edit_id_client').value = id;
+    document.getElementById('edit_identifiant_client').value = id;
     document.getElementById('edit_nom_entreprise').value = nomEntreprise;
     document.getElementById('edit_nom').value = bouton.getAttribute('data-nom');
     document.getElementById('edit_prenom').value = bouton.getAttribute('data-prenom');
@@ -18,7 +18,6 @@ function ouvrirModalEdition(bouton) {
     document.getElementById('edit_telephone').value = bouton.getAttribute('data-telephone');
     document.getElementById('edit_observation').value = bouton.getAttribute('data-observation');
     
-    const id = bouton.getAttribute('data-id');
     const lienSuppression = document.getElementById('lien_supprimer_client');
     if (lienSuppression) {
         lienSuppression.href = "index.php?page=supprimer_client&client=" + id;

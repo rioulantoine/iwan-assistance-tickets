@@ -53,25 +53,27 @@ function compter_entreprises_filtres($recherche)
 /**
  * Modifier les informations d'une entreprise
  */
-function modifier_entreprise_par_id($id_client, $nom_entreprise, $id_logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation)
+function modifier_entreprise_par_id($id_client, $nom_entreprise, $nouvel_id_client, $id_logiciel, $nom, $prenom, $cp, $ville, $email, $telephone, $observation)
 {
     $pdo = get_bdd();
 
     $sql = "UPDATE CLIENT 
-            SET nom_entreprise = ?, 
+            SET id_client = ?,
+                nom_entreprise = ?, 
                 nom = ?, 
                 prenom = ?, 
                 cp = ?, 
                 ville = ?, 
                 email = ?, 
                 telephone = ?, 
-                id_logiciel = ?, -- CORRECTION : le nom de ta colonne SQL est id_logiciel
+                id_logiciel = ?, 
                 observation = ? 
             WHERE id_client = ?";
 
     try {
         $stmt = $pdo->prepare($sql);
         return $stmt->execute([
+            $nouvel_id_client,
             $nom_entreprise,
             $nom,
             $prenom,
