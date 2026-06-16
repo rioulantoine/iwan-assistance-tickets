@@ -140,6 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $id_statut
             );
             if ($id_ticket) {
+                // ====================================================
+                //  ENVOI DU MAIL AU CLIENT OU A L'ADMIN
+                // ===================================================
                 require_once __DIR__ . '/../Mail/Mail.php';
                 require_once __DIR__ . '/../Model/ModelMail.php';
 
@@ -176,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION['flash_type']    = "error";
                     }
                 } elseif ($_SESSION['id_client']) {
-                    $email_admin = "timeo.dupe@gmail.com"; //get_email_admin();
+                    $email_admin = $_ENV['MAIL_ADMIN'] ?? 'Erreur email';
                     $mail_envoye = envoyer_mail($email_admin, $sujet, $corps);
                 }
 

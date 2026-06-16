@@ -24,7 +24,7 @@ function envoyer_mail(string $destinataire, string $sujet, string $corps_html): 
         $mail->Username   = MAIL_FROM;
         $mail->Password   = SMTP_PASSWORD;
 
-        // On utilise ENCRYPTION_SMTPS pour le SSL/TLS pur
+        // ENCRYPTION_SMTPS pour le SSL/TLS pur
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = SMTP_PORT;
 
@@ -47,8 +47,8 @@ function envoyer_mail(string $destinataire, string $sujet, string $corps_html): 
     }
 }
 
-// ... Tes fonctions de templates "template_nouveau_ticket_admin" restent en dessous sans changement
-// ... Tes fonctions de templates (template_nouveau_ticket_admin, etc.) restent en dessous sans changement
+
+
 function template_nouveau_ticket_admin(
     string $numero_ticket,
     string $nom_entreprise,
@@ -151,7 +151,7 @@ function template_nouveau_ticket_admin(
                         
                         <tr>
                             <td style='padding: 0 40px 36px;' align='center'>
-                            <a href='http://localhost/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID=1'
+                            <a href='https://iwan.fr/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID=1'
                                 style='display:inline-block; background-color:#0f2e48; color:#ffffff; text-decoration:none; font-size:14px; font-weight:600; padding:14px 32px; border-radius:6px; letter-spacing:0.5px;'>
                                 Voir le ticket
                                 </a>
@@ -165,7 +165,7 @@ function template_nouveau_ticket_admin(
                                     <br>
                                     Utilisez le système de ticket pour répondre.        
                                     <br>
-                                    Nous contacter au 02 40 28 86 38 ou par mail à contact@iwan.fr 
+                                    Nous contacter au <strong>02 40 28 86 38</strong> ou par mail à <a href='mailto:contact@iwan.fr' style='color:#94a3b8;'>contact@iwan.fr</a>
                                 </p>
                             </td>
                         </tr>
@@ -277,7 +277,7 @@ function template_reponse_ticket(
                     <!-- BOUTON -->
                     <tr>
                         <td style='padding: 0 40px 36px;' align='center'>
-                            <a href='http://localhost/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID={$id_lien}'
+                            <a href='https://iwan.fr/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_ticket}&ID={$id_lien}'
                             style='display:inline-block; background-color:#0f2e48; color:#ffffff; text-decoration:none; font-size:14px; font-weight:600; padding:14px 32px; border-radius:6px; letter-spacing:0.5px;'>
                             Voir le ticket
                             </a>
@@ -291,7 +291,7 @@ function template_reponse_ticket(
                                     <br>
                                     Utilisez le système de ticket pour répondre.        
                                     <br>
-                                    Nous contacter au 02 40 28 86 38 ou par mail à contact@iwan.fr 
+                                    Nous contacter au <strong>02 40 28 86 38</strong> ou par mail à <a href='mailto:contact@iwan.fr' style='color:#94a3b8;'>contact@iwan.fr</a>
                                 </p>
                             </td>
                         </tr>
@@ -428,7 +428,7 @@ function template_nouveau_suivi(
                         
                         <tr>
                             <td style='padding: 0 40px 36px;' align='center'>
-                                <a href='http://localhost/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_suivi}&ID={$id_lien}'
+                                <a href='https://iwan.fr/iwan-assistance-tickets/index.php?page=detail_ticket&ticket={$numero_suivi}&ID={$id_lien}'
                                    style='display:inline-block; background-color:#0f2e48; color:#ffffff; text-decoration:none; font-size:14px; font-weight:600; padding:14px 32px; border-radius:6px; letter-spacing:0.5px;'>
                                     Consulter le dossier d'assistance
                                 </a>

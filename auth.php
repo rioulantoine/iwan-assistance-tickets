@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// 🛠️ AJOUT : On inclut le modèle de la BDD pour pouvoir faire des requêtes
+// On inclut le modèle de la BDD pour pouvoir faire des requêtes
 require_once __DIR__ . '/src/Model/ModelBDD.php';
 
 $id_iwan = $_ENV['ID_IWAN'] ?? 'Erreur ID';
@@ -31,7 +31,7 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
             // Si le client n'existe pas, on détruit tout et on affiche la page d'erreur
             session_destroy();
             require_once __DIR__ . '/src/View/Client_inexistant.php';
-            exit(); // 🛑 On coupe le script ici
+            exit();
         }
 
         // Si le client existe, on continue la procédure normale d'authentification
@@ -49,7 +49,7 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
         exit();
     }
 
-    // 🛠️ DEUXIÈME SÉCURITÉ : Si l'utilisateur navigue sur le site avec une session existante,
+    // Si l'utilisateur navigue sur le site avec une session existante,
     // on vérifie que son compte n'a pas été supprimé entre-temps
     if (isset($_SESSION['id_client']) && !$_SESSION['is_admin']) {
         $pdo = get_bdd();

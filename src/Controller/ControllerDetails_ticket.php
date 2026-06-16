@@ -184,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 envoyer_mail($email_client, $sujet, $corps);
             } elseif ($est_admin === 0) {
                 $id_lien = 1;
-                $email_admin = "timeo.dupe@gmail.com"; // get_email_admin();
+                $email_admin = $_ENV['MAIL_ADMIN'] ?? 'Erreur email';
                 $nom_entreprise = $details_ticket['nom_entreprise'];
                 $date_formatee = (new DateTime($date_envoi))->format('d/m/Y à H:i');
 

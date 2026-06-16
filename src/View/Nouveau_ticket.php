@@ -444,9 +444,9 @@
                             </div>
                             <?php if ($_SESSION['is_admin']): ?>
                                 <div class="groupe-input">
-                                    <label for="type_ticket">Type de suivi</label>
-                                    <select id="type_ticket" name="type_ticket" required>
-                                        <option value="" disabled selected>Choisissez un type de suivi</option>
+                                    <label for="type_ticket">Type de ticket</label>
+                                    <select id="type_ticket" name="type_ticket">
+                                        <option value="" disabled selected>Choisissez un type de ticket</option>
                                         <option value="DEMANDE_DE_DEV" <?= ($_POST['type_ticket'] ?? '') === 'DEMANDE_DE_DEV' ? 'selected' : '' ?>>DEMANDE DE DEV</option>
                                         <option value="BUG" <?= ($_POST['type_ticket'] ?? '') === 'BUG' ? 'selected' : '' ?>>BUG</option>
                                         <option value="QUESTION_D'UTILISATION" <?= ($_POST['type_ticket'] ?? '') === "QUESTION_D'UTILISATION" ? 'selected' : '' ?>>QUESTION D'UTILISATION</option>
